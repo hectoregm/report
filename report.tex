@@ -8,46 +8,58 @@
 \maketitle
 \tableofcontents
 \section{Introducción}
-Este reporte se enfoca al diseño e implementacion de la aplicacion
-PEAT (Progressive Energy Audit Tool) que es una aplicacion web que
+Este reporte se enfoca al diseño e implementación de la aplicación
+PEAT (Progressive Energy Audit Tool) que es una aplicación web que
 ayuda a usuarios de PyMES identificar y monitorear su gasto en
-energia, para de esta forma darle un mayor control en sus costos de
-energia.
+energía, para de esta forma darle un mayor control en sus costos de
+energía.
 
-PEAT es producto de una licitacion auspiciada por Pacific Gas and
+PEAT es producto de una licitación auspiciada por Pacific Gas and
 Electric Company (PG\&E), proveedora de gas natural y electricidad
 para casi dos tercios del norte de California, USA, para
-el desarrollo de una aplicacion web enfocada a usuarios PyMES.
+el desarrollo de una aplicación web enfocada a usuarios PyMES.
 
 Su desarrollo era de importancia critica para PG\&E y al gobierno de
 California puesto que su funcionamiento era un requisito en una nueva
-ley de facturacion de energia electrica en 2013. La nueva ley buscaba
-lograr distribuir la carga de la red electrica, una de las formas
+ley de facturación de energía eléctrica en 2013. La nueva ley buscaba
+lograr distribuir la carga de la red eléctrica, una de las formas
 principales para lograr esto era desincentivar el uso de la red
-electrica en horas picos al darle la facultad a las utilidades como PG\&E
+eléctrica en horas picos al darle la facultad a las utilidades como PG\&E
 de cobrar tasas mucho mas altas en estas horas.
 \section{Planteamiento del problema}
-Aunque PG\&E tiene todos los datos de consumo electrico y/o gas de
+Aunque PG\&E tiene todos los datos de consumo eléctrico y/o gas de
 sus clientes, y dado el despliegue previo de los nuevos medidores
 inteligentes en la mayor parte de sus clientes se tenia acceso a
-informacion muy detallada del consumo de energia.
+información muy detallada del consumo de energía.
 
-Para darle la mayor informacion y valor a las empresas era
-vital obtener mayor contexto de su entorno de operacion: numero
+Para darle la mayor información y valor a las empresas era
+vital obtener mayor contexto de su entorno de operación: numero
 de edificios asociados a la cuenta, rubro de la empresa, numero de
-empleados, etc. Entre mayor informacion se pudiera captar sobre la
-empresa el sistema daria un desglose mas detallado y util de sus
-consumos de energia. El objetivo era dar la mayor utilidad posible con
-la menor informacion disponible pero fomentando al usuario el dar
-mas informacion para darle un mejor monitoreo de su consumo.
+empleados, etc. Entre mayor información se pudiera captar sobre la
+empresa el sistema daría un desglose mas detallado y útil de sus
+consumos de energía. El objetivo era dar la mayor utilidad posible con
+la menor información disponible pero fomentando al usuario el dar
+mas información para darle un mejor monitoreo de su consumo.
 
-La compañia C3 Energy, en la que trabaje y que gano esta licitacion,
-contaba con una infraestructura para el procesamiento de una gran
-cantidad de datos de consumo de energia puesto que tenia un sistema
-de monitoreo de consumo de energia pero enfocada a empresas
-multinacionales. El reto ahora era que pasaba de tener una docena
-de clientes, con los cuales se trataba directamente, a lidear con
-cientos de miles de empresas PyMES en las cuales se obtenia una
-parte de la informacion por parte de PG\&E y otra parte por el
+La compañía C3 Energy, en la que trabaje y que gano esta licitación,
+contaba con la infraestructura para el procesamiento de una gran
+cantidad de datos de consumo de energía puesto que tenia un sistema
+de monitoreo de consumo de energía pero enfocada a empresas de nivel
+multinacional. El reto era que se pasaba de tener una docena
+de clientes, con los cuales se trataba directamente, a lidiar con
+cientos de miles de empresas PyMES en las cuales se obtenía una
+parte de la información por parte de PG\&E y otra parte por el
 empresario.
+
+En resumen el sistema tenia los siguientes principales requerimientos:
+\begin{itemize}
+\item Tiene que tener una interfase web, usando como autentificacion
+  sus credenciales de acceso en el portal web de PG\&E
+\item El sistema debe dar información útil aunque el usuario solo de
+  el mínimo de información sobre su empresa.
+\item El sistema debe proporcionar recomendaciones para disminuir sus
+  gastos en energía en base a su consumo e información proporcionada
+  hasta el momento
+\item Soportar por lo menos a mil usuarios concurrentes
+\end{itemize}
 \end{document}
