@@ -1,4 +1,11 @@
 \documentclass{article}
+\usepackage[
+left=4cm,% left margin
+right=4cm,% right margin
+top=4cm, % top margin
+bottom=4cm,% bottom margin
+letterpaper% other options: a0paper, a1paper, a2paper, a3paper, a4paper, a5paper, a6paper, and many more.
+]{geometry}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \author{Héctor E. Gómez Morales}
@@ -61,5 +68,59 @@ En resumen el sistema tenia los siguientes principales requerimientos:
   gastos en energía en base a su consumo e información proporcionada
   hasta el momento
 \item Soportar por lo menos a mil usuarios concurrentes
+\end{itemize}
+\section{Arquitectura}
+En C3 tenian ya una infraestructura para el procesamiento de datos de
+consumo electrico y de gas. Su sistema hacia un compendio de varias
+bases de datos externas relacionadas con temas de energia, todo esto era
+concentrado en una base de datos central en la que se usaba Oracle
+Database 10g para este rol. Tambien se contaba con un cluster de
+Apache Cassandra lo cuales se usaban para realizar el procesamiento
+inicial de los datos y realizar analisis posteriores.
+
+Sobre esta capa de datos se tenia un API que que permitia el
+hacer consultas y operaciones sobre los datos contenidos en este
+sistema. Este API estaba implementado en Javascript bajo la maquina
+Rhino que corre en JVM, por lo que ciertas rutinas criticas se
+fueron reimplementando en Java.
+
+Su aplicacion para empresas multinacionales involucraba un single page
+application implementado con Javascript. Dado que el backend tenia
+una jerarquia de objectos en javascript esta jerarquia era serializada
+y reconstruida en el navegador del usuario, haciendose un gran reuso
+de codigo. Tambien se hacia un uso extenso de la biblioteca Ext JS
+que es un framework en Javascript para construir grandes aplicaciones
+del tipo rich application, se hacia particularmente uso de la creacion
+de graficas de todo tipo para la interfase de usuario del cliente.
+
+Entonces tenemos que tanto en el frontend como en el backend se hacia
+uso de Javascript principalmente con un nucleo de Java para las partes
+que requerian un rendimiento optimo. Esto tenia varias ventajas:
+
+\begin{itemize}
+  \item Reducir al minimo el cambio de contexto entre lenguajes entre
+    el frontend y el backend
+  \item Reducir sustancialmente la cantidad de codigo redudante al no
+    tenerse que reimplementar la jerarquia de objetos, que era pasada
+    por el server en forma serializada por JSON y deserializada por el
+    cliente
+  \item Habia una unica representacion de una clase por ejemplo la
+    clase de edificios la misma clase de Javascript que se usaba para
+    esta representacion era usada tanto en el server como en el
+    cliente.
+\end{itemize}
+
+En primera instancia se pensaba realizar el mismo tipo de aplicacion
+para cubrir los requerimientos de PEAT, es decir realizar un cliente
+de Javascript que hiciera uso del API y jerarquia de objetos ya
+existente (con varias adicciones y modificaciones) y de Ext JS
+para la interfase de usuario. Pero en los primeros prototipos se
+lograron visualizar varios problemas con este acercamiento:
+\begin{itemize}
+  \item El tiempo para realizar la precarga de todos los modulos y
+    objetos dados por el API en el cliente tomaba un tiempo
+    considerable (5+ secs) dado que este sistema era usado por un muy
+    reducido numero de personas y que cuando era cargado era usado
+    extensamente este penalty por arranque era tolerable
 \end{itemize}
 \end{document}
