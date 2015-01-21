@@ -63,58 +63,104 @@ En resumen el sistema tenia los siguientes principales requerimientos:
   hasta el momento
 \item Soportar por lo menos a mil usuarios concurrentes
 \end{itemize}
-\section{Arquitectura}
-En C3 tenian ya una infraestructura para el procesamiento de datos de
-consumo electrico y de gas. Su sistema hacia un compendio de varias
-bases de datos externas relacionadas con temas de energia, todo esto era
-concentrado en una base de datos central en la que se usaba Oracle
-Database 10g para este rol. Tambien se contaba con un cluster de
-Apache Cassandra lo cuales se usaban para realizar el procesamiento
-inicial de los datos y realizar analisis posteriores.
 
-Sobre esta capa de datos se tenia un API que que permitia el
-hacer consultas y operaciones sobre los datos contenidos en este
-sistema. Este API estaba implementado en Javascript bajo la maquina
-Rhino que corre en JVM, por lo que ciertas rutinas criticas se
-fueron reimplementando en Java.
+\section{Arquitectura Pre-PEAT}
+En C3 Energy ya se contaba con toda una infraestructura para el
+procesamiento y análisis en tiempo real de datos de consumo eléctrico
+y de gas.
 
-Su aplicacion para empresas multinacionales involucraba un single page
-application implementado con Javascript. Dado que el backend tenia
-una jerarquia de objectos en javascript esta jerarquia era serializada
-y reconstruida en el navegador del usuario, haciendose un gran reuso
-de codigo. Tambien se hacia un uso extenso de la biblioteca Ext JS
-que es un framework en Javascript para construir grandes aplicaciones
-del tipo rich application, se hacia particularmente uso de la creacion
-de graficas de todo tipo para la interfase de usuario del cliente.
+En grandes rasgos el sistema constaba de cuatro capas una capa de
+almacenamiento de información que era de referencia o datos ya
+procesados, otra capa en las que se hacia el análisis de los datos
+y que también tomaba el rol de capa de cache. La tercera capa era el
+servidor que servia el API para permitía acceder y realizar análisis
+sobre las capas de datos anteriores y finalmente la cuarta capa que
+era el cliente que realizaba llamadas al API para presentar la
+información al usuario final.
+
+\subsection{Bases de Datos}
+Las dos primeras capas realizaban y almacenaban información obtenida
+de un gran numero de bases de datos externas relacionadas con temas
+de energía. Todos estos datos eran concentrados en una base de datos
+central en la que se usaba Oracle Database 10g para este rol.
+
+También se contaba con un cluster de Apache Cassandra el cual era usado
+para realizar el análisis en tiempo real de los datos, ademas de servir
+como capa de cache para los datos mas solicitados en el sistema.
+
+\subsection{Servidor y API}
+Sobre la anterior bases de datos se tenia un API que que permita el
+hacer consultas y operaciones sobre los datos contenidos y/o analizados
+en este sistema. Este API estaba implementado en Javascript bajo Rhino
+que corre bajo el JVM, esto daba la ventaja que se podía realizar la
+implementación de rutinas criticas en un lenguaje con mejor
+rendimiento como Java. De esta forma se tenia que el núcleo del
+servidor estaba implementado en Java con el resto del API implementado
+en Javascript.
+
+\subsection{Aplicaciones}
+Las aplicaciones ya existentes para empresas multinacionales eran del tipo
+SPA (Single Page Application) que son aplicaciones web que tienen el fin
+de dar una experiencia de usuario similar a la de una aplicación de escritorio.
+Esto era implementado usando un framework hecho dentro de la compañía
+en Javascript. Se tenia una gran jerarquía de objetos que era
+compartida tanto en el servidor como en el cliente, así se tenia que
+había una sola fuente de la descripción de los objetos del sistema.
+
+Se hacia un uso extenso de la biblioteca Ext JS que es un framework
+en Javascript para construir aplicaciones del tipo SPA, se hacia un particular
+uso de su facultad para rápidamente generar todo tipo de gráficas para mostrar
+información al usuario.
 
 Entonces tenemos que tanto en el frontend como en el backend se hacia
-uso de Javascript principalmente con un nucleo de Java para las partes
-que requerian un rendimiento optimo. Esto tenia varias ventajas:
+uso de Javascript principalmente con un núcleo de Java para las partes
+que requerían un rendimiento optimo. Esto tenia varias ventajas:
 
 \begin{itemize}
-\item Reducir al minimo el cambio de contexto entre lenguajes entre
+\item Reducir al mínimo el cambio de contexto entre lenguajes entre
   el frontend y el backend
-\item Reducir sustancialmente la cantidad de codigo redudante al no
-  tenerse que reimplementar la jerarquia de objetos, que era pasada
+\item Reducir sustancialmente la cantidad de código redundante al no
+  tenerse que reimplementar la jerarquía de objetos, que era pasada
   por el server en forma serializada por JSON y deserializada por el
   cliente
-\item Habia una unica representacion de una clase por ejemplo la
+\item Había una única representación de una clase por ejemplo la
   clase de edificios la misma clase de Javascript que se usaba para
-  esta representacion era usada tanto en el server como en el
+  esta representación era usada tanto en el server como en el
   cliente.
 \end{itemize}
 
-En primera instancia se pensaba realizar el mismo tipo de aplicacion
+En primera instancia se pensaba realizar el mismo tipo de aplicación
 para cubrir los requerimientos de PEAT, es decir realizar un cliente
-de Javascript que hiciera uso del API y jerarquia de objetos ya
-existente (con varias adicciones y modificaciones) y de Ext JS
+de Javascript que hiciera uso del API y jerarquía de objetos ya
+existente (con ciertas adicciones y modificaciones) y de Ext JS
 para la interfase de usuario. Pero en los primeros prototipos se
 lograron visualizar varios problemas con este acercamiento:
+
 \begin{itemize}
-\item El tiempo para realizar la precarga de todos los modulos y
+\item El tiempo para realizar la precarga de todos los módulos y
   objetos dados por el API en el cliente tomaba un tiempo
-  considerable (5+ secs) dado que este sistema era usado por un muy
+  considerable (5+ segs). Dado que este sistema era usado por un muy
   reducido numero de personas y que cuando era cargado era usado
-  extensamente este penalty por arranque era tolerable
+  extensamente este penalti por arranque era tolerable
+\item El tipo de inferfases y experiencia de usuario que se obtenía
+  usando Ext JS eran excelentes para el contexto de mostrar una gran
+  cantidad de información al usuario, en PEAT esta información era menor
+  y la importancia era de que la experiencia de usuario fuera lo mas fluida y
+  rápida posible
+\end{itemize}
+
+Entonces se vio el de usar otro tipo de herramientas para construir
+aplicaciones finales al usuario que permitieran rehusar todo el API
+y jerarquía de objetos asociada a esta.
+
+Después de varios prototipos con varios stacks de tecnología se decido
+usar Ruby on Rails que hace uso de lenguaje de programación.
+Las razones principales fueron:
+\begin{itemize}
+\item Gran integración con una gran cantidad de utilerias y bibliotecas para
+  desarrollar, diseñar y implementar interfases de usuario
+\item Una gran soporte por Rails y bibliotecas de terceros para
+  realizar extensas pruebas unitarias, funcionales y de integración,
+  por medio de librerías como rspec, cucumber, capybara, etc.
 \end{itemize}
 \end{document}
