@@ -1,11 +1,5 @@
 \documentclass{article}
-\usepackage[
-left=4cm,% left margin
-right=4cm,% right margin
-top=4cm, % top margin
-bottom=4cm,% bottom margin
-letterpaper% other options: a0paper, a1paper, a2paper, a3paper, a4paper, a5paper, a6paper, and many more.
-]{geometry}
+\usepackage[left=4cm,right=4cm,top=4cm,bottom=4cm,letterpaper]{geometry}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \author{Héctor E. Gómez Morales}
@@ -98,16 +92,16 @@ uso de Javascript principalmente con un nucleo de Java para las partes
 que requerian un rendimiento optimo. Esto tenia varias ventajas:
 
 \begin{itemize}
-  \item Reducir al minimo el cambio de contexto entre lenguajes entre
-    el frontend y el backend
-  \item Reducir sustancialmente la cantidad de codigo redudante al no
-    tenerse que reimplementar la jerarquia de objetos, que era pasada
-    por el server en forma serializada por JSON y deserializada por el
-    cliente
-  \item Habia una unica representacion de una clase por ejemplo la
-    clase de edificios la misma clase de Javascript que se usaba para
-    esta representacion era usada tanto en el server como en el
-    cliente.
+\item Reducir al minimo el cambio de contexto entre lenguajes entre
+  el frontend y el backend
+\item Reducir sustancialmente la cantidad de codigo redudante al no
+  tenerse que reimplementar la jerarquia de objetos, que era pasada
+  por el server en forma serializada por JSON y deserializada por el
+  cliente
+\item Habia una unica representacion de una clase por ejemplo la
+  clase de edificios la misma clase de Javascript que se usaba para
+  esta representacion era usada tanto en el server como en el
+  cliente.
 \end{itemize}
 
 En primera instancia se pensaba realizar el mismo tipo de aplicacion
@@ -117,10 +111,10 @@ existente (con varias adicciones y modificaciones) y de Ext JS
 para la interfase de usuario. Pero en los primeros prototipos se
 lograron visualizar varios problemas con este acercamiento:
 \begin{itemize}
-  \item El tiempo para realizar la precarga de todos los modulos y
-    objetos dados por el API en el cliente tomaba un tiempo
-    considerable (5+ secs) dado que este sistema era usado por un muy
-    reducido numero de personas y que cuando era cargado era usado
-    extensamente este penalty por arranque era tolerable
+\item El tiempo para realizar la precarga de todos los modulos y
+  objetos dados por el API en el cliente tomaba un tiempo
+  considerable (5+ secs) dado que este sistema era usado por un muy
+  reducido numero de personas y que cuando era cargado era usado
+  extensamente este penalty por arranque era tolerable
 \end{itemize}
 \end{document}
