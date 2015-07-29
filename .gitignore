@@ -1,5 +1,5 @@
-report.aux
-report.dvi
-report.log
-report.pdf
-report.toc
+*.aux
+*.dvi
+*.log
+*.pdf
+*.toc

@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[left=4cm,right=4cm,top=4cm,bottom=4cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\author{Héctor E. Gómez Morales}
+\title{Proyecto para la Opción de Titulación por Trabajo Profesional: \\
+  Proyecto PEAT (Progressive Energy Audit Tool)}
+\begin{document}
+\author{ Alumno: Héctor Enrique Gómez Morales \and
+  Tutor: Karla Ramírez Pulido}
+\maketitle
+\section{Introducción}
+Este proyecto aborda el diseño e implementación de la aplicación
+PEAT (Progressive Energy Audit Tool) que es una aplicación web que
+permite a los usuarios de PyMES identificar y monitorear su gasto en
+energía, para de esta forma darle un mayor control en sus costos de
+energía.
+
+PEAT es producto de una licitación auspiciada por Pacific Gas and
+Electric Company (PG\&E), proveedora de gas natural y electricidad
+para casi dos tercios del norte de California, USA, para
+el desarrollo de una aplicación web enfocada a usuarios PyMES.
+
+Esta aplicación fue desarrollada siendo parte de la compañía Software Next Door
+en el cargo de Senior Software Enginner.
+
+Las actividades que desarrolle  durante este proyecto fueron:
+\begin{itemize}
+\item Implementación de la interfase de usuario.
+\item Implementación de una librería que no solo permitiera realizar consultas
+  al backend existente si no que preservara la jerarquía de clases.
+\item Diseño e implementación de un pruebas unitarias, funcionales e integración.
+\item Implementación de un sistema de despliegue continuo de la aplicación.
+\item Realización de optimizaciones, de arquitectura y de código, para asegurar el soporte de hasta mil usuarios concurrentes.
+\end{itemize}
+
+\section{Justificación}
+
+Su desarrollo era de importancia critica para PG\&E y al gobierno de
+California puesto que su funcionamiento era un requisito en una nueva
+ley de facturación de energía eléctrica en 2013. La nueva ley buscaba
+lograr distribuir la carga de la red eléctrica, una de las formas
+principales para lograr esto era desincentivar el uso de la red
+eléctrica en horas picos al darle la facultad a las utilidades como PG\&E
+de cobrar tasas mucho mas altas en estas horas.
+
+\section{Planteamiento del problema}
+PG\&E ha realizado el despliegue de medidores inteligentes en la
+mayor parte de sus clientes con lo que se tenia acceso a una información
+muy detallada del consumo de energía de sus clientes.
+
+Para darle el mayor valor e información a las empresas era
+vital obtener mayor contexto de su entorno de operación: numero
+de edificios asociados a la cuenta, rubro de la empresa, numero de
+empleados, etc. Entre mayor información se pudiera captar sobre la
+empresa el sistema tendría mas facilidad en obtener un desglose
+mas correcto y útil de sus consumos de energía.
+
+El objetivo era dar la mayor utilidad posible con la menor
+información disponible pero fomentando al usuario el dar mas
+información para darle un mejor control de su consumo energético.
+
+La compañía C3 Energy, en la que trabaje y que gano esta licitación,
+contaba con la infraestructura para el procesamiento de una gran
+cantidad de datos de consumo de energía puesto que tenia un sistema
+de monitoreo de consumo de energía pero enfocada a empresas de nivel
+multinacional. El reto era que se pasaba de tener una docena
+de clientes, con los cuales se trataba directamente, a lidiar con
+cientos de miles de empresas PyMES en las cuales se obtenía una
+parte de la información por parte de PG\&E y otra parte por el
+empresario.
+
+En grandes rasgos el sistema tenia los siguientes requerimientos:
+\begin{itemize}
+\item Tener una interfase web, usando como autentificación
+  sus credenciales de acceso en el portal web de PG\&E.
+\item El sistema debe dar información útil aunque el usuario solo de
+  el mínimo de información sobre su empresa.
+\item El sistema debe proporcionar recomendaciones para disminuir sus
+  gastos en energía en base a su consumo e información proporcionada
+  hasta el momento
+\item Soportar por lo menos a mil usuarios concurrentes
+\end{itemize}
+\end{document}
