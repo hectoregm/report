@@ -51,20 +51,24 @@ en Ruby, dada sus ventajas para realizar aplicaciones web.
 
 Durante este proyecto se implemento una biblioteca no solo para hacer uso de
 los web services ya existentes, si no que la biblioteca facilitaba la creación
-de clases y objectos en Ruby basados en la jerarquia de clases definida
-en Javascript. Usando otra de las fortalezas de Ruby que es la metaprogramacion
-para asi crear al vuelo las clases y sus atributos segun las especificaciones
-mandadas por el servidor, por lo que de este modo se preservaba la jerarquia
+de clases y objetos en Ruby basados en la jerarquía de clases definida
+en Javascript. Usando otra de las fortalezas de Ruby que es la metaprogramación
+para así crear al vuelo las clases y sus atributos según las especificaciones
+mandadas por el servidor, por lo que de este modo se preservaba la jerarquía
 de clases de un lenguaje a otro.
 
-Otro punto de creciente importancia es el despligue de una aplicación, en tiempos
+Otro punto de creciente importancia es el despliegue de una aplicación, en tiempos
 pasados para las aplicaciones web se tenían tres capas: la base de datos,
 el servidor de la aplicación y el servidor web. Ahora se tienen mas servicios
 que deben estar en linea sobre todo para garantizar un servicio concurrente:
-un cache, un equilibrador de carga, servidor de colas, etc. Por lo que tratar
+caches, equilibradores de carga, servidores de cola, etc. Por lo que tratar
 de automatizar el despliegue de una aplicación en sus diferentes contextos,
 desarrollo, producción y pruebas, es de vital importancia para el desarrollo
 en tiempo y en forma.
+
+Durante este proyecto se hacen uso extensivo de estas técnicas: la metaprogramación
+y el despliegue continuo, para permitir un desarrollo acelerado el aun permite
+obtener rápidamente retroalimentación del usuario final.
 
 \section{Descripción General del Trabajo}
 Su desarrollo era de importancia critica para PG\&E y al gobierno de
