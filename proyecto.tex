@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \author{Héctor E. Gómez Morales}
 \title{Proyecto para la Opción de Titulación por Trabajo Profesional: \\
-  Proyecto PEAT (Progressive Energy Audit Tool)}
+  Sistema PEAT (Progressive Energy Audit Tool)}
 \begin{document}
 \author{ Alumno: Héctor Enrique Gómez Morales \and
   Tutor: Karla Ramírez Pulido}
@@ -17,11 +17,6 @@ permite a los usuarios de pequeñas y medianas empresas (PyMES)
 identificar y monitorear sus gastos en energía, para de esta forma
 darle un mayor control en sus costos de energía.
 
-PEAT es producto de una licitación auspiciada por Pacific Gas and
-Electric Company (PG\&E), proveedora de gas natural y electricidad
-para casi dos tercios del norte de California, USA, para
-el desarrollo de una aplicación web enfocada a usuarios PyMES.
-
 Esta aplicación fue desarrollada siendo parte de la compañía
 \textbf{Software Next Door} en el cargo de \textbf{Senior Software Engineer}.
 
@@ -29,7 +24,7 @@ Las actividades que desarrolle durante este proyecto fueron:
 \begin{itemize}
 \item Implementación de la interfase de usuario.
 \item Implementación de una biblioteca que no solo permite realizar consultas
-  al backend existente si no que preserva la jerarquía de clases.
+  al backend existente si no que mantiene la jerarquía de clases.
 \item Diseño e implementación de pruebas unitarias, funcionales e integración.
 \item Implementación de un sistema de despliegue continuo de la aplicación.
 \item Realización de optimizaciones, de arquitectura y de código,
@@ -54,7 +49,7 @@ los web services ya existentes, si no que la biblioteca facilitaba la creación
 de clases y objetos en Ruby basados en la jerarquía de clases definida
 en Javascript. Usando otra de las fortalezas de Ruby que es la metaprogramación
 para así crear al vuelo las clases y sus atributos según las especificaciones
-mandadas por el servidor, por lo que de este modo se preservaba la jerarquía
+mandadas por el servidor, por lo que de este modo se mantenía la jerarquía
 de clases de un lenguaje a otro.
 
 Otro punto de creciente importancia es el despliegue de una aplicación, en tiempos
@@ -71,6 +66,11 @@ y el despliegue continuo, para permitir un desarrollo acelerado el aun permite
 obtener rápidamente retroalimentación del usuario final.
 
 \section{Descripción General del Trabajo}
+PEAT es producto de una licitación auspiciada por Pacific Gas and
+Electric Company (PG\&E), proveedora de gas natural y electricidad
+para casi dos tercios del norte de California, USA, para
+el desarrollo de una aplicación web enfocada a usuarios PyMES.
+
 Su desarrollo era de importancia critica para PG\&E y al gobierno de
 California puesto que su funcionamiento era un requisito en una nueva
 ley de facturación de energía eléctrica en 2013. La nueva ley buscaba
@@ -79,8 +79,7 @@ principales para lograr esto era desincentivar el uso de la red
 eléctrica en horas picos al darle la facultad a las utilidades como PG\&E
 de cobrar tasas mucho mas altas en estas horas.
 
-
-PG\&E ha realizado el despliegue de medidores inteligentes en la
+PG\&E había realizado el despliegue de medidores inteligentes en la
 mayor parte de sus clientes con lo que se tenia acceso a una información
 muy detallada del consumo de energía de sus clientes.
 
@@ -95,11 +94,12 @@ El objetivo era dar la mayor utilidad posible con la menor
 información disponible pero fomentando al usuario el dar mas
 información para darle un mejor control de su consumo energético.
 
-La compañía C3 Energy, en la que trabaje y que gano esta licitación,
-contaba con la infraestructura para el procesamiento de una gran
+La compañía C3 Energy, en la que trabaje por medio de Software Next Door,
+gano esta licitación puesto que ya contaba con la infraestructura
+para el procesamiento de una gran
 cantidad de datos de consumo de energía puesto que tenia un sistema
 de monitoreo de consumo de energía pero enfocada a empresas de nivel
-multinacional. El reto era que se pasaba de tener una docena
+multinacional. El reto era que se pasaba de un alcance de una docena
 de clientes, con los cuales se trataba directamente, a lidiar con
 cientos de miles de empresas PyMES en las cuales se obtenía una
 parte de la información por parte de PG\&E y otra parte por el
