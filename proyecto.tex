@@ -3,6 +3,10 @@
 \usepackage[left=4cm,right=4cm,top=4cm,bottom=4cm,letterpaper]{geometry}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
+
+\renewcommand{\refname}{whatever}
+\addto{\captionsspanish}{\renewcommand{\refname}{}}
+
 \author{Héctor E. Gómez Morales}
 \title{Proyecto para la Opción de Titulación\\
   por Trabajo Profesional:\\
@@ -19,7 +23,7 @@ permite a los usuarios de pequeñas y medianas empresas (PyMES)
 identificar y monitorear sus gastos en energía, con el fin de obtener
 un mayor control en sus costos de energía.
 
-Este sistema fue desarrollada siendo parte de la compañía
+Este sistema fue desarrollado siendo parte de la compañía
 \textbf{Software Next Door} en el cargo de \textbf{Senior Software Engineer}.
 
 Las actividades que desarrollé durante este proyecto fueron:
@@ -30,7 +34,7 @@ Las actividades que desarrollé durante este proyecto fueron:
   de objetos de Javascript a Ruby.
 \item Diseño e implementación de pruebas unitarias, funcionales e integración.
 \item Implementación de un sistema de despliegue continuo de la aplicación, por
-  medio de una atomización máxima de todos los pasos para lograr el despliegue
+  medio de una automatización máxima de todos los pasos para lograr el despliegue
   del sistema.
 \item Realización de optimizaciones tanto del lado de la de arquitectura como
   del código desarrollado, para asegurar el soporte de por lo menos mil usuarios concurrentes.
@@ -39,7 +43,7 @@ Las actividades que desarrollé durante este proyecto fueron:
 \section{Justificación}
 En una gran cantidad de proyectos es suficiente
 el hacer uso de un solo lenguaje de programación para llevar a buen
-termino un proyecto, es decir, terminarlo exitosamente.
+término un proyecto, es decir, terminarlo exitosamente.
 Sin embargo conforme pasa el tiempo, las necesidades
 de las compañías y usuarios exigen que hagamos uso de una serie de
 tecnologías que representan casi siempre el uso de mas de un lenguaje
@@ -73,52 +77,50 @@ y el despliegue continuo, para permitir un desarrollo acelerado, con el fin de
 obtener rápidamente retroalimentación del usuario final.
 
 \section{Descripción general del trabajo}
-PEAT es producto de una licitación auspiciada por Pacific Gas and
-Electric Company (PG\&E), proveedora de gas natural y electricidad
-para casi dos tercios del norte de California, USA, para
-el desarrollo de una aplicación web enfocada a usuarios PyMES.
+Pacific Gas and Electric Company (PG\&E) es una compañía proveedora de gas natural
+y electricidad, una de las grandes en Estados Unidos con sede en
+San Francisco, California. El sistema PEAT es el resultado de una licitación
+iniciada por PG\&E para el desarrollo de un sistema enfocado a usuarios PyMES.
 
-Su desarrollo era de importancia critica para PG\&E y al gobierno de
-California puesto que su funcionamiento era un requisito en una nueva
-ley de facturación de energía eléctrica en 2013. La nueva ley buscaba
-lograr distribuir la carga de la red eléctrica, una de las formas
+Su desarrollo es de importancia critica para PG\&E y al gobierno de
+California puesto que su funcionamiento es un requisito en una nueva
+ley de facturación de energía eléctrica desde el 2013. La nueva ley buscaba
+lograr distribuir la carga de la red eléctrica y una de las formas
 principales para lograr esto era desincentivar el uso de la red
-eléctrica en horas picos al darle la facultad a las utilidades como PG\&E
+eléctrica en horas pico al darle la facultad a las utilidades como PG\&E
 de cobrar tasas mucho mas altas en estas horas.
 
 PG\&E había realizado el despliegue de medidores inteligentes en la
-mayor parte de sus clientes con lo que se tenia acceso a una información
+mayor parte de sus clientes, por lo que se tenía acceso a una información
 muy detallada del consumo de energía de sus clientes.
 
 Para darle el mayor valor e información a las empresas era
-vital obtener mayor contexto de su entorno de operación: numero
+vital obtener mayor información de su entorno de operación: numero
 de edificios asociados a la cuenta, rubro de la empresa, numero de
-empleados, etc. Entre mayor información se pudiera captar sobre la
+empleados, etcétera. Entre mayor información se pudiera captar sobre la
 empresa el sistema tendría mas facilidad en obtener un desglose
 mas correcto y útil de sus consumos de energía.
 
-El objetivo era dar la mayor utilidad posible con la menor
-información disponible pero fomentando al usuario el dar mas
-información para darle un mejor control de su consumo energético.
+El objetivo es dar la mayor utilidad posible con la menor
+información disponible fomentando en el usuario el dar mas
+información para así darle un mejor control acerca de su consumo energético.
 
-La compañía C3 Energy, en la que trabaje por medio de Software Next Door,
-gano esta licitación puesto que ya contaba con la infraestructura
-para el procesamiento de una gran
-cantidad de datos de consumo de energía puesto que tenia un sistema
-de monitoreo de consumo de energía pero enfocada a empresas de nivel
-multinacional. El reto era que se pasaba de un alcance de una docena
-de clientes, con los cuales se trataba directamente, a lidiar con
-cientos de miles de empresas PyMES en las cuales se obtenía una
-parte de la información por parte de PG\&E y otra parte por el
-empresario.
+Cabe mencionar que la compañía C3 Energy, en la que trabajé
+por medio de Software Next Door, compañía quien gano esta licitación puesto
+que ya contaba con la infraestructura necesaria para el procesamiento
+de una gran cantidad de datos de consumo de energía, ya que cuenta un sistema
+de monitoreo de consumo de energía enfocada a empresas de nivel
+multinacional. El reto era pasar de un sistema y procesos diseñados
+para una docena de clientes de gran tamaño, a un sistema que diera
+servicio a cientos de miles de clientes PyMES.
 
-En grandes rasgos el sistema tenia los siguientes requerimientos:
+A grandes rasgos el sistema cuenta con siguientes requerimientos:
 \begin{itemize}
-\item Tener una interfase web, usando como autentificación
-  sus credenciales de acceso en el portal web de PG\&E.
-\item El sistema debe dar información útil aunque el usuario solo de
+\item Autentificar a los usuarios por uso de credenciales de acceso
+  obtenidas en portal web de PG\&E.
+\item Dar información útil aunque el usuario solo de
   el mínimo de información sobre su empresa.
-\item El sistema debe proporcionar recomendaciones para disminuir sus
+\item Proporcionar recomendaciones para disminuir sus
   gastos en energía en base a su consumo e información proporcionada
   hasta el momento
 \item Soportar por lo menos a mil usuarios concurrentes
@@ -127,14 +129,15 @@ En grandes rasgos el sistema tenia los siguientes requerimientos:
 \section{Índice}
 \begin{enumerate}
 \item Introducción
+\item Situacion Actual
+\item Fundamentos teoricos para el desarrollo del sistema PEAT
   \begin{enumerate}[label*=\arabic*.]
   \item{Patrón Modelo-Vista-Controlador}
   \item{Servicios web RESTful}
   \item{Desarrollo guiado por pruebas}
   \item{Ruby, metaprogramación y lenguajes DSL}
   \end{enumerate}
-\item Planteamiento del problema
-\item Desarrollo
+\item Diseño e implmentacion del sistema PEAT
   \begin{enumerate}[label*=\arabic*.]
   \item Arquitectura previa
   \item Interfase de usuario
@@ -144,12 +147,18 @@ En grandes rasgos el sistema tenia los siguientes requerimientos:
   \item Despliegue continuo
   \end{enumerate}
 \item Conclusiones
+\item Bibliografía
 \end{enumerate}
+
+\section{Bibliografía Propuesta}
+ \nocite{*}
+\bibliographystyle{plain}
+\bibliography{biblio}
 
 \vspace*{5cm}
 \noindent\begin{tabular}{ll}
-\makebox[2.5in]{\hrulefill} & \makebox[2.5in]{\hrulefill}\\
-Héctor Enrique Gómez Morales& M. en A.O. Karla Ramírez Pulido\\
+\makebox[2.5in]{\hrulefill} & \makebox[3in]{\hrulefill}\\
+Héctor Enrique Gómez Morales& M. en I. y M. en A.O. Karla Ramírez Pulido\\
 %Alumno&     Tutor\\% adds space between the two sets of signatures
 \end{tabular}
 \end{document}
