@@ -46,7 +46,7 @@ el hacer uso de un solo lenguaje de programación para llevar a buen
 término un proyecto, es decir, terminarlo exitosamente.
 Sin embargo conforme pasa el tiempo, las necesidades
 de las compañías y usuarios exigen que hagamos uso de una serie de
-tecnologías que representan casi siempre el uso de mas de un lenguaje
+tecnologías que representan casi siempre el uso de más de un lenguaje
 de programación. Lo anterior, es debido a que ningún lenguaje de programación
 actualmente es universalmente el mejor en todos los contextos posibles de uso.
 
@@ -66,7 +66,7 @@ Otro punto de creciente importancia es el despliegue de una aplicación, por un
 lado hace algunos años las aplicaciones web se desarrollaban bajo el modelo de
 tres capas: la base de datos, el servidor de la aplicación y el servidor web.
 Ahora se tienen mas servicios
-que deben estar en linea sobre todo para garantizar un servicio concurrente:
+que deben estar en línea sobre todo para garantizar un servicio concurrente:
 caches, equilibradores de carga, servidores de cola, etc. Por lo que tratar
 de automatizar el despliegue de una aplicación en sus diferentes contextos,
 desarrollo, producción y pruebas, es de vital importancia para el desarrollo
@@ -82,12 +82,12 @@ y electricidad, una de las grandes en Estados Unidos con sede en
 San Francisco, California. El sistema PEAT es el resultado de una licitación
 iniciada por PG\&E para el desarrollo de un sistema enfocado a usuarios PyMES.
 
-Su desarrollo es de importancia critica para PG\&E y al gobierno de
+Su desarrollo es de importancia crítica para PG\&E y al gobierno de
 California puesto que su funcionamiento es un requisito en una nueva
 ley de facturación de energía eléctrica desde el 2013. La nueva ley buscaba
 lograr distribuir la carga de la red eléctrica y una de las formas
 principales para lograr esto era desincentivar el uso de la red
-eléctrica en horas pico al darle la facultad a las utilidades como PG\&E
+eléctrica en horas pico al darle la facultad a las compañías como PG\&E
 de cobrar tasas mucho mas altas en estas horas.
 
 PG\&E había realizado el despliegue de medidores inteligentes en la
@@ -106,38 +106,44 @@ información disponible fomentando en el usuario el dar mas
 información para así darle un mejor control acerca de su consumo energético.
 
 Cabe mencionar que la compañía C3 Energy, en la que trabajé
-por medio de Software Next Door, compañía quien gano esta licitación puesto
+por medio de Software Next Door, compañía quien ganó esta licitación puesto
 que ya contaba con la infraestructura necesaria para el procesamiento
-de una gran cantidad de datos de consumo de energía, ya que cuenta un sistema
+de una gran cantidad de datos de consumo de energía, ya que tiene un sistema
 de monitoreo de consumo de energía enfocada a empresas de nivel
 multinacional. El reto era pasar de un sistema y procesos diseñados
 para una docena de clientes de gran tamaño, a un sistema que diera
 servicio a cientos de miles de clientes PyMES.
 
-A grandes rasgos el sistema cuenta con siguientes requerimientos:
+A grandes rasgos el sistema cuenta con los siguientes requerimientos:
 \begin{itemize}
 \item Autentificar a los usuarios por uso de credenciales de acceso
   obtenidas en portal web de PG\&E.
 \item Dar información útil aunque el usuario solo de
   el mínimo de información sobre su empresa.
 \item Proporcionar recomendaciones para disminuir sus
-  gastos en energía en base a su consumo e información proporcionada
-  hasta el momento
-\item Soportar por lo menos a mil usuarios concurrentes
+  gastos en energía con base en el consumo e información proporcionada
+  hasta el momento.
+\item Soportar por lo menos a mil usuarios concurrentes.
 \end{itemize}
 
 \section{Índice}
+Introducción
 \begin{enumerate}
-\item Introducción
-\item Situacion Actual
-\item Fundamentos teoricos para el desarrollo del sistema PEAT
+\item Situación Actual
   \begin{enumerate}[label*=\arabic*.]
-  \item{Patrón Modelo-Vista-Controlador}
+  \item{Contexto}
+  \item{Objetivo primario}
+  \item{Objetivos secundarios}
+  \item{Propuesta}
+  \end{enumerate}
+\item Fundamentos teóricos para el desarrollo del sistema PEAT
+  \begin{enumerate}[label*=\arabic*.]
+  \item{Patrón Modelo-Vista-Controlador (MVC)}
   \item{Servicios web RESTful}
   \item{Desarrollo guiado por pruebas}
   \item{Ruby, metaprogramación y lenguajes DSL}
   \end{enumerate}
-\item Diseño e implmentacion del sistema PEAT
+\item Diseño e implementación del sistema PEAT
   \begin{enumerate}[label*=\arabic*.]
   \item Arquitectura previa
   \item Interfase de usuario
@@ -151,8 +157,8 @@ A grandes rasgos el sistema cuenta con siguientes requerimientos:
 \end{enumerate}
 
 \section{Bibliografía Propuesta}
- \nocite{*}
-\bibliographystyle{plain}
+\nocite{*}
+\bibliographystyle{acm}
 \bibliography{biblio}
 
 \vspace*{5cm}
