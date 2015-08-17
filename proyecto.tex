@@ -76,7 +76,7 @@ obtener rápidamente retroalimentación del usuario final.
 
 \section{Descripción general del trabajo}
 Pacific Gas and Electric Company (PG\&E) es una compañía proveedora de gas natural
-y electricidad, una de las grandes en Estados Unidos con sede en
+y electricidad, una de las más grandes compañías de Estados Unidos con sede en
 San Francisco, California. El sistema PEAT es el resultado de una licitación
 iniciada por PG\&E para el desarrollo de un sistema enfocado a usuarios PyMES.
 
@@ -84,7 +84,7 @@ Su desarrollo es de importancia crítica para PG\&E y al gobierno de
 California puesto que su funcionamiento es un requisito en una nueva
 ley de facturación de energía eléctrica desde el 2013. La nueva ley buscaba
 lograr distribuir la carga de la red eléctrica y una de las formas
-principales para lograr esto era desincentivar el uso de la red
+principales para lograr esto era necesario desincentivar el uso de la red
 eléctrica en horas pico al darle la facultad a las compañías como PG\&E
 de cobrar tasas mucho mas altas en estas horas.
 
@@ -92,16 +92,33 @@ PG\&E había realizado el despliegue de medidores inteligentes en la
 mayor parte de sus clientes, por lo que se tenía acceso a una información
 muy detallada del consumo de energía de sus clientes.
 
-Para darle el mayor valor e información a las empresas era
-vital obtener mayor información de su entorno de operación: numero
+Para darle el mayor valor e información a las empresas es necesario el
+obtener mayor información de su entorno de operación: numero
 de edificios asociados a la cuenta, rubro de la empresa, numero de
 empleados, etcétera. Entre mayor información se pudiera captar sobre la
 empresa el sistema tendría mas facilidad en obtener un desglose
 mas correcto y útil de sus consumos de energía.
 
-El objetivo es dar la mayor utilidad posible con la menor
-información disponible fomentando en el usuario el dar mas
-información para así darle un mejor control acerca de su consumo energético.
+El objetivo general es dar la mayor utilidad posible con la menor
+información disponible fomentando en el usuario el compartir mas
+información sobre su empresa para así obtener un mejor control
+acerca de su consumo energético.
+
+Como objetivos secundarios se tiene:
+\begin{itemize}
+\item Implementación de una interfaz que permita la obtención
+  de información del usuario de una forma eficaz y sencilla.
+\item Autentificar a los usuarios por uso de credenciales de acceso
+  obtenidas en el portal web de PG\&E.
+\item Dar información útil aunque el usuario solo de
+  el mínimo de información sobre su empresa.
+\item Proporcionar recomendaciones para disminuir sus
+  gastos en energía con base en el consumo e información proporcionada
+  hasta el momento.
+\item Soportar por lo menos a mil usuarios concurrentes.
+\item Implementar la infraestructura para el despliegue continuo de la
+  aplicación. 
+\end{itemize}
 
 Cabe mencionar que la compañía C3 Energy, en la que trabajé
 por medio de Software Next Door, compañía quien ganó esta licitación puesto
@@ -111,18 +128,6 @@ de monitoreo de consumo de energía enfocada a empresas de nivel
 multinacional. El reto era pasar de un sistema y procesos diseñados
 para una docena de clientes de gran tamaño, a un sistema que diera
 servicio a cientos de miles de clientes PyMES.
-
-A grandes rasgos el sistema cuenta con los siguientes requerimientos:
-\begin{itemize}
-\item Autentificar a los usuarios por uso de credenciales de acceso
-  obtenidas en portal web de PG\&E.
-\item Dar información útil aunque el usuario solo de
-  el mínimo de información sobre su empresa.
-\item Proporcionar recomendaciones para disminuir sus
-  gastos en energía con base en el consumo e información proporcionada
-  hasta el momento.
-\item Soportar por lo menos a mil usuarios concurrentes.
-\end{itemize}
 
 \section{Índice}
 Introducción
