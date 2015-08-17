@@ -42,33 +42,30 @@ Las actividades que desarrollé durante este proyecto fueron:
 \end{itemize}
 
 \section{Justificación}
-En una gran cantidad de proyectos es suficiente
-el hacer uso de un solo lenguaje de programación para llevar a buen
-término un proyecto, es decir, terminarlo exitosamente.
-Sin embargo conforme pasa el tiempo, las necesidades
-de las compañías y usuarios exigen que hagamos uso de una serie de
-tecnologías que representan casi siempre el uso de más de un lenguaje
-de programación. Lo anterior, es debido a que ningún lenguaje de programación
-actualmente es universalmente el mejor en todos los contextos posibles de uso.
+En una gran cantidad de proyectos resulta ser suficiente el hacer uso de un
+único lenguaje de programación para llevar a buen término el proyecto, es decir,
+terminarlo exitosamente. Sin embargo conforme pasa el tiempo, las necesidades
+de las compañías y usuarios cambian, lo cual provoca que hagamos uso de una serie de
+tecnologías no previstas en un inicio, lo cual representa casi siempre el uso
+de más de un lenguaje de programación. Lo anterior, es debido a que ningún
+lenguaje de programación actualmente es el mejor en todos los contextos
+posibles de uso.
 
-En este proyecto se tiene que la mayor parte del \textit{backend} esta implementado
-en Javascript, con un núcleo escrito en Java. Mientras que PEAT fue escrito
-en Ruby, dada sus ventajas para realizar aplicaciones web.
+En el proyecto de implementación del PEAT se cuenta con tres partes principalmente para su desarrollo: (a) el \textit{backend}  implementado en su mayoría usando Javascript, con un núcleo escrito en Java, (b) una biblioteca en Ruby que permite la interacción del \textit{backend} con aplicaciones web y (c) el \textit{frontend} escrito con Ruby, dada sus ventajas para realizar aplicaciones web.
 
 Durante este proyecto se implementó una biblioteca no solo para hacer uso de
-los servicios web ya existentes, sino que la biblioteca facilitaba la creación
+los servicios web ya existentes, sino para facilitar la creación
 de clases y objetos en Ruby basados en la jerarquía de clases definida
-en Javascript. Usando otra de las fortalezas de Ruby que es la metaprogramación
-para así crear ``al vuelo'' las clases y sus atributos según las especificaciones
-enviadas por el servidor, manteniendo así la jerarquía de clases de un lenguaje
-a otro.
+en Javascript. Cabe mencionar que haciendo uso de otra de las fortalezas de Ruby
+que es la metaprogramación de crear ``al vuelo'' las clases y sus atributos
+según las especificaciones enviadas por el servidor, manteniendo así la
+jerarquía de clases de un lenguaje a otro.
 
-Otro punto de creciente importancia es el despliegue de una aplicación, por un
+Otro punto de creciente importancia es el despliegue de una aplicación, ya que por un
 lado hace algunos años las aplicaciones web se desarrollaban bajo el modelo de
-tres capas: la base de datos, el servidor de la aplicación y el servidor web.
-Ahora se tienen mas servicios
+tres capas: la base de datos, el servidor de la aplicación y el servidor web; actualmente se tienen mas servicios
 que deben estar en línea sobre todo para garantizar un servicio concurrente:
-caches, equilibradores de carga, servidores de cola, etc. Por lo que tratar
+caches, equilibradores de carga, servidores de cola, etcétera. Por lo que tratar
 de automatizar el despliegue de una aplicación en sus diferentes contextos,
 desarrollo, producción y pruebas, es de vital importancia para el desarrollo
 de software en tiempo y en forma.
