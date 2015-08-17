@@ -158,15 +158,22 @@ Introducción
     \end{enumerate}
   \item Biblioteca Bezel
     \begin{enumerate}[label*=\arabic*.]
-    \item Propuesta inicial
+    \item Arquitectura
     \item Metaprogramación
     \item Pruebas de rendimiento
     \end{enumerate}
   \item Pruebas de integración
     \begin{enumerate}[label*=\arabic*.]
-    \item Pruebas de integracion con PG\&E
+    \item Pruebas de conexiones concurrentes (CloudTest)
+    \item Pruebas de integración con PG\&E
     \end{enumerate}
   \item Optimizaciones y cache
+    \begin{enumerate}[label*=\arabic*.]
+    \item Balanceo de carga
+    \item Configuración Nginx y Passenger
+    \item Piscina de conexiones HTTP
+    \item Cache inicial e invalidación del cache
+    \end{enumerate}
   \item Despliegue continuo
   \end{enumerate}
 \item Conclusiones
@@ -178,7 +185,7 @@ Introducción
 \bibliographystyle{acm}
 \bibliography{biblio}
 
-\vspace*{3cm}
+\vspace*{2cm}
 \noindent\begin{tabular}{ll}
 \makebox[2.5in]{\hrulefill} & \makebox[3in]{\hrulefill}\\
 Héctor Enrique Gómez Morales& M. en I. y M. en A.O. Karla Ramírez Pulido\\

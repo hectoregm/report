@@ -2,27 +2,27 @@
 
 \bibitem{4_beck_2003}
 {\sc Beck, K.}
-\newblock {\em Test-driven development}.
+\newblock {\em Test-driven development}, 1~ed.
 \newblock Addison-Wesley, 2003.
 
 \bibitem{5_black_2009}
 {\sc Black, D.~A.}
-\newblock {\em The well-grounded Rubyist}.
+\newblock {\em The well-grounded Rubyist}, 1~ed.
 \newblock Manning, 2009.
 
 \bibitem{1_richardson_2007}
 {\sc Leonard, R.}
-\newblock {\em RESTful Web services}.
+\newblock {\em RESTful Web services}, 1~ed.
 \newblock O'Reilly, 2007.
 
 \bibitem{2_perrotta_2010}
 {\sc Perrotta, P.}
-\newblock {\em Metaprogramming Ruby}.
+\newblock {\em Metaprogramming Ruby}, 1~ed.
 \newblock Pragmatic Bookshelf, 2010.
 
 \bibitem{3_sommerville_2011}
 {\sc Sommerville, I.}
-\newblock {\em Software engineering}.
+\newblock {\em Software engineering}, 9~ed.
 \newblock Pearson, 2011.
 
 \end{thebibliography}
