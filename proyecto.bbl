@@ -10,10 +10,20 @@
 \newblock {\em The well-grounded Rubyist}, 1~ed.
 \newblock Manning, 2009.
 
+\bibitem{7_burns_copeland_2012}
+{\sc Burns, A., and Copeland, T.}
+\newblock {\em Deploying Rails}, 1~ed.
+\newblock Pragmatic Bookshelf, 2012.
+
 \bibitem{1_richardson_2007}
 {\sc Leonard, R.}
 \newblock {\em RESTful Web services}, 1~ed.
 \newblock O'Reilly, 2007.
+
+\bibitem{6_olsen_2008}
+{\sc Olsen, R.}
+\newblock {\em Design patterns in Ruby}, 1~ed.
+\newblock Addison-Wesley, 2008.
 
 \bibitem{2_perrotta_2010}
 {\sc Perrotta, P.}

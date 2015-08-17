@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: proyecto.aux
 The style file: acm.bst
 Database file #1: biblio.bib
-You've used 5 entries,
+You've used 7 entries,
             2253 wiz_defined-function locations,
-            554 strings with 4216 characters,
-and the built_in function-call counts, 1167 in all, are:
-= -- 105
-> -- 35
+            563 strings with 4345 characters,
+and the built_in function-call counts, 1658 in all, are:
+= -- 150
+> -- 54
 < -- 0
-+ -- 16
-- -- 10
-* -- 62
-:= -- 204
-add.period$ -- 15
-call.type$ -- 5
-change.case$ -- 20
++ -- 24
+- -- 16
+* -- 90
+:= -- 288
+add.period$ -- 21
+call.type$ -- 7
+change.case$ -- 29
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 65
-empty$ -- 116
-format.name$ -- 10
-if$ -- 246
+cite$ -- 7
+duplicate$ -- 91
+empty$ -- 162
+format.name$ -- 16
+if$ -- 350
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 10
-newline$ -- 28
-num.names$ -- 10
-pop$ -- 35
+int.to.str$ -- 7
+missing$ -- 14
+newline$ -- 38
+num.names$ -- 14
+pop$ -- 50
 preamble$ -- 1
-purify$ -- 15
+purify$ -- 22
 quote$ -- 0
-skip$ -- 30
+skip$ -- 42
 stack$ -- 0
-substring$ -- 26
-swap$ -- 10
+substring$ -- 36
+swap$ -- 14
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 10
+type$ -- 14
 warning$ -- 0
-while$ -- 10
-width$ -- 6
-write$ -- 57
+while$ -- 14
+width$ -- 8
+write$ -- 79
