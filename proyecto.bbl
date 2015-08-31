@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{4_beck_2003}
 {\sc Beck, K.}
@@ -15,10 +15,30 @@
 \newblock {\em Deploying Rails}, 1~ed.
 \newblock Pragmatic Bookshelf, 2012.
 
+\bibitem{9_fowler_2003}
+{\sc Fowler, M.}
+\newblock {\em Patterns of enterprise application architecture}, 1~ed.
+\newblock Addison-Wesley, 2003.
+
+\bibitem{11_fowler_beck_1999}
+{\sc Fowler, M., and Beck, K.}
+\newblock {\em Refactoring}, 1~ed.
+\newblock Addison-Wesley, 1999.
+
+\bibitem{8_henderson_2006}
+{\sc Henderson, C.}
+\newblock {\em Building scalable web sites}, 1~ed.
+\newblock O'Reilly, 2006.
+
 \bibitem{1_richardson_2007}
 {\sc Leonard, R.}
 \newblock {\em RESTful Web services}, 1~ed.
 \newblock O'Reilly, 2007.
+
+\bibitem{13_metz_2013}
+{\sc Metz, S.}
+\newblock {\em Practical object-oriented design in Ruby}, 1~ed.
+\newblock Addison-Wesley, 2012.
 
 \bibitem{6_olsen_2008}
 {\sc Olsen, R.}
@@ -30,9 +50,19 @@
 \newblock {\em Metaprogramming Ruby}, 1~ed.
 \newblock Pragmatic Bookshelf, 2010.
 
+\bibitem{12_rappin_2010}
+{\sc Rappin, N.}
+\newblock {\em Rails test prescriptions}.
+\newblock Pragmatic Bookshelf, 2010.
+
 \bibitem{3_sommerville_2011}
 {\sc Sommerville, I.}
 \newblock {\em Software engineering}, 9~ed.
 \newblock Pearson, 2011.
+
+\bibitem{10_zakas_2010}
+{\sc Zakas, N.~C.}
+\newblock {\em High performance JavaScript}, 1~ed.
+\newblock O'Reilly/Yahoo! Press, 2010.
 
 \end{thebibliography}
