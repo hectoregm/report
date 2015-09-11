@@ -1,13 +1,83 @@
-\documentclass{article}
-\usepackage[left=4cm,right=4cm,top=4cm,bottom=4cm,letterpaper]{geometry}
+\documentclass{book}
+%\usepackage[left=4cm,right=4cm,top=4cm,bottom=4cm,letterpaper]{geometry}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
-\author{Héctor E. Gómez Morales}
-\title{Reporte Trabajo Profesional: Sistema PEAT (Progressive Energy
-  Audit Tool)}
+\usepackage{graphicx}
+\usepackage{mathptmx}
+
+%\author{Héctor E. Gómez Morales}
+%\title{Reporte Trabajo Profesional: Sistema PEAT (Progressive Energy
+%  Audit Tool)}
+
 \begin{document}
-\maketitle
+
+\thispagestyle{empty}
+
+\frontmatter
+
+\begin{minipage}{.3\textwidth}
+  \flushleft
+  \center{\includegraphics[scale=.09]{imagenes/unam.pdf}}
+
+  \vspace{20pt}
+
+  \center{
+    \rule{.5pt}{.6\textheight}
+    \hspace{7pt}
+    \rule{2pt}{.6\textheight}
+    \hspace{7pt}
+    \rule{.5pt}{.6\textheight}
+  } \\
+
+  \center{\includegraphics[scale=.22]{imagenes/ciencias.pdf}}
+\end{minipage}
+\begin{minipage}{.7\textwidth}
+\flushright
+
+\center{
+
+  \center{
+    \LARGE{U}\large{NIVERSIDAD} \LARGE{N}\large{ACIONAL} 
+    \LARGE{A}\large{UTÓNOMA} \\[10pt]
+    \large{DE} 
+    \LARGE{M}\large{ÉXICO} 
+  } \\
+  \rule{\textwidth}{2pt}
+  \\
+  \hrulefill\\[1cm]
+  
+  \LARGE{F}\large{ACULTAD DE } \LARGE{C}\large{IENCIAS}\\[2cm]
+
+  \large{
+Diseño e implementación del sistema PEAT (Progressive Energy Audit Tool)  }\\[2cm]
+
+  \huge{
+REPORTE DE TRABAJO PROFESIONAL  }\\[1cm]
+
+  \large{QUE PARA OBTENER EL TÍTULO DE:}\\[1cm]
+
+  \large{
+Licenciado en Ciencias de la Computación  }\\[1cm]
+
+  \large{PRESENTA:}\\[1cm]
+
+  \large{
+Héctor Enrique Gómez Morales  }\\[1cm]
+
+  \large{
+TUTORA  }\\[1cm]
+
+  \large{
+Karla Ramírez Pulido  }
+}
+
+\end{minipage}
+
+%\maketitle
 \tableofcontents
+
+\mainmatter
+
 \section{Introducción}
 Este reporte se enfoca al diseño e implementación de la aplicación
 PEAT (Progressive Energy Audit Tool) que es una aplicación web que

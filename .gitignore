@@ -1,8 +1,8 @@
 *.aux
 *.dvi
 *.log
-*.pdf
 *.toc
 *.zip
 *.bbl
 *.blg
+report.pdf
