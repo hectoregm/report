@@ -2,15 +2,15 @@
 
 \section{Contexto}
 De 2000 a 2002 se tuvo una crisis energética en el estado de California en los
-Estados Unidos, esta crisis provoco que el gobierno del estado empezara a
+Estados Unidos de América, esta crisis provocó que el gobierno del estado empezara a
 tomar decisiones de largo plazo en su estrategia energética. En los años
-subsecuentes se aprobó nuevas leyes para incentivar el uso de energía renovable,
+subsecuentes se aprobaron nuevas leyes para incentivar el uso de energía renovable,
 la producción de energía, etcétera.
 
 Para el 2010 se aprobó una nueva legislación que permitía un nuevo esquema
 de cobro a las empresas generadoras de electricidad. Este nuevo esquema
 llamado \textit{hora de consumo} (\textit{time-of-use} TOU) define que las
-tasas de cobro varían en función de la temporada y la hora del día en que
+tasas de cobro varíen en función de la temporada y la hora del día en que
 se usa la energía eléctrica, en contraste con las tasas fijas tradicionales.
 
 En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociadas:
@@ -24,27 +24,28 @@ En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociad
   1 pm a 7 pm.
 \end{itemize}
 
-El objetivo de un esquema \texttt{TOU} es el desplazar la carga del sistema
-eléctrico, alentando a los usuarios a cambiar su demanda durante periodos
-de alta demanda a periodos de menor demanda, el bajar la demanda en los periodos
-de mas alta demanda provoca que se reduzcan los costos de generación de energía.
+El objetivo de un esquema \texttt{TOU} es el distribuir la carga del sistema
+eléctrico, alentando a los usuarios a cambiar su consumo durante periodos
+de demanda alta a periodos de demanda baja, al bajar la demanda en los periodos
+de demanda alta provoca que se reduzcan los costos de generación de energía de
+forma general.
 
 Un esquema \texttt{TOU} es solo posible con la llegada de los medidores
 inteligentes, a diferencia de los antiguos medidores analógicos los medidores
 inteligentes son capaces de medir el consumo de electricidad de forma instantánea,
 de distinguir y facturar el consumo de electricidad según el momento en que se
-esta realizando el consumo. Desde inicios del 2010 PG\&E empezó el despliegue
+esta realizando el consumo. Desde inicios del 2010 PG\&E empezó la instalación
 de medidores inteligentes, por lo que para inicios del 2012 ya casi había
-completado la transición de los medidores.
+completado la transición de los medidores en su territorio de servicio.
 
-Como fecha de arranque del nuevo esquema se puso el mes de noviembre del 2012,
+Como fecha de arranque de la nueva legislación se puso el mes de noviembre del 2012,
 las empresas como PG\&E podían iniciar la transición a un esquema \texttt{TOU}
 de sus usuarios PyMES. Una parte vital para permitir esta transición es que
 PG\&E brindara herramientas para que el usuario final pudiera analizar sus
 gastos de energía y tomar decisiones sobre su consumo de energía según las
 nuevas tarifas y su historial de consumo.
 
-En este contexto es que nace el sistema \textit{Progressive
+En esta situación es que nace el sistema \textit{Progressive
   Energy Audit Tool} \ (PEAT) para solventar la necesidad de información
 del usuario final sobre sus gastos de energía en una forma detallada para
 que este pueda identificar y monitorear sus gastos de energía eléctrica.
@@ -55,3 +56,23 @@ El objetivo general del sistema es dar la mayor utilidad posible con la menor
 información disponible, fomentando en el usuario final el compartir dicha
 información sobre su empresa, obteniendo un mejor control
 acerca de su consumo energético.
+
+\section{Objetivos secundarios}
+
+Los objetivos secundarios que apoyan al objetivo general de este trabajo son:
+\begin{itemize}
+\item Implementación de una interfaz que permita la obtención
+  de información del usuario de una forma eficaz y sencilla.
+\item Autentificar a los usuarios mediante el uso de credenciales de acceso
+  obtenidas en el portal web de PG\&E.
+\item Dar información útil aunque el usuario solo proporcione el
+  mínimo de información sobre su empresa.
+\item Proporcionar recomendaciones para disminuir sus
+  gastos en energía con base en el consumo e información proporcionada
+  hasta el momento.
+\item Soportar por lo menos a mil usuarios concurrentes.
+\item Implementar la infraestructura para el despliegue continuo de la
+  aplicación.
+\end{itemize}
+
+\section{Propuesta de desarrollo}
