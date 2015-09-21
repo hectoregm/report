@@ -9,7 +9,7 @@ la producción de energía, etcétera.
 
 Para el 2010 se aprobó una nueva legislación que permitía un nuevo esquema
 de cobro a las empresas generadoras de electricidad. Este nuevo esquema
-llamado \textit{hora de consumo} (\textit{time-of-use} TOU) define que las
+llamado \textit{hora de consumo} (\textit{time-of-use TOU}) define que las
 tasas de cobro varíen en función de la temporada y la hora del día en que
 se usa la energía eléctrica, en contraste con las tasas fijas tradicionales.
 
@@ -24,8 +24,8 @@ En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociad
   1 pm a 7 pm.
 \end{itemize}
 
-El objetivo de un esquema \texttt{TOU} es el distribuir la carga del sistema
-eléctrico, alentando a los usuarios a cambiar su consumo durante periodos
+El objetivo de un esquema \texttt{TOU} es el distribuir la carga de la red
+eléctrica, alentando a los usuarios a cambiar su consumo durante periodos
 de demanda alta a periodos de demanda baja, al bajar la demanda en los periodos
 de demanda alta provoca que se reduzcan los costos de generación de energía de
 forma general.
@@ -35,9 +35,9 @@ inteligentes, a diferencia de los antiguos medidores analógicos los medidores
 inteligentes son capaces de medir el consumo de electricidad de forma instantánea,
 de distinguir y facturar el consumo de electricidad según el momento en que se
 esta realizando el consumo. Desde inicios del 2010 Pacific Gas and
-Electric Company (PG\&E) empezó la instalación
-de medidores inteligentes, por lo que para inicios del 2012 ya casi había
-completado la transición de los medidores en su territorio de servicio.
+Electric Company (PG\&E) empezó la instalación de medidores inteligentes
+en su territorio, por lo que para inicios del 2012 ya casi había
+completado la transición de los medidores.
 
 Como fecha de arranque de la nueva legislación se puso el mes de noviembre del 2012,
 las empresas como PG\&E podían iniciar la transición a un esquema \texttt{TOU}
@@ -48,14 +48,21 @@ nuevas tarifas y su historial de consumo.
 
 En esta situación es que nace el sistema \textit{Progressive
   Energy Audit Tool} \ (PEAT) para solventar la necesidad de información
-del usuario final sobre sus gastos de energía en una forma detallada para
-que este pueda identificar y monitorear sus gastos de energía eléctrica.
+del usuario final sobre sus gastos de energía en una forma detallada.
+La licitación para la implementación del sistema \texttt{PEAT} fue puesta
+a concurso por parte PG\&E siendo la compañía C3 Energy la ganadora de dicha
+licitación  ya que contaba con la infraestructura necesaria para el
+procesamiento de una gran cantidad de datos de consumo de energía,
+tiene un sistema de monitoreo de consumo de energía enfocada a empresas de nivel
+multinacional. El reto era pasar de un sistema y procesos diseñados
+para una docena de clientes, a un sistema que diera servicio a
+cientos de miles de clientes PyMES.
 
 \section{Objetivo general}
 
-El objetivo general del sistema es dar la mayor utilidad posible con la menor
-información disponible, fomentando en el usuario final el compartir dicha
-información sobre su empresa, obteniendo un mejor control
+El objetivo general del sistema \texttt{PEAT} es dar la mayor utilidad posible
+con la menor información disponible, fomentando en el usuario final el
+compartir más información sobre su empresa, obteniendo un mejor control
 acerca de su consumo energético.
 
 \section{Objetivos secundarios}
@@ -74,6 +81,70 @@ Los objetivos secundarios que apoyan al objetivo general de este trabajo son:
 \item Soportar por lo menos a mil usuarios concurrentes.
 \item Implementar la infraestructura para el despliegue continuo de la
   aplicación.
+\end{itemize}
+
+\section{Arquitectura Previa}
+En C3 Energy ya se contaba con toda una infraestructura para el
+procesamiento y análisis en tiempo real de datos de consumo eléctrico
+y de gas.
+
+En grandes rasgos el sistema constaba de cuatro capas una capa de
+almacenamiento de información que era de referencia o datos ya
+procesados, otra capa en las que se hacia el análisis de los datos
+y que también tomaba el rol de capa de cache. La tercera capa era el
+servidor que servía el API para permitía acceder y realizar análisis
+sobre las capas de datos anteriores y finalmente la cuarta capa que
+era el cliente que realizaba llamadas al API para presentar la
+información al usuario final.
+
+\subsection{Bases de Datos}
+Las dos primeras capas realizaban y almacenaban información obtenida
+de un gran numero de bases de datos externas relacionadas con temas
+de energía. Todos estos datos eran concentrados en una base de datos
+central en la que se usaba Oracle Database 10g para este rol.
+
+También se contaba con un cluster de Apache Cassandra el cual era usado
+para realizar el análisis en tiempo real de los datos, además de servir
+como capa de cache para los datos mas solicitados en el sistema.
+
+\subsection{Servidor y API}
+Sobre la anterior bases de datos se tenia un API que que permita el
+hacer consultas y operaciones sobre los datos contenidos y/o analizados
+en este sistema. Este API estaba implementado en Javascript bajo Rhino
+que corre bajo la maquina virtual de Java (JVM), esto daba la ventaja
+que se podía realizar la implementación de rutinas criticas en un
+lenguaje con mejor rendimiento como Java. De esta forma se tenia que el
+núcleo del servidor estaba implementado en Java con el resto del API
+implementado en Javascript.
+
+\subsection{Aplicaciones}
+Las aplicaciones ya existentes para empresas multinacionales eran del tipo
+SPA (Single Page Application) que son aplicaciones web que tienen el fin
+de dar una experiencia de usuario similar a la de una aplicación de escritorio.
+Esto era implementado usando un framework hecho dentro de la compañía
+en Javascript. Se tenia una gran jerarquía de objetos que era
+compartida tanto en el servidor como en el cliente, así se tenia que
+había una sola fuente de la descripción de los objetos del sistema.
+
+Se hacia un uso extenso de la biblioteca Ext JS que es un framework
+en Javascript para construir aplicaciones del tipo SPA, se hacia un uso particular
+a su facultad para rápidamente generar todo tipo de gráficas para mostrar
+información al usuario.
+
+Entonces tenemos que tanto en el frontend como en el backend se hacia
+uso de Javascript principalmente con un núcleo de Java para las partes
+que requerían un rendimiento óptimo. Esto tenia varias ventajas:
+
+\begin{itemize}
+\item Reducir al mínimo el cambio de contexto entre lenguajes entre
+  el frontend y el backend.
+\item Reducir sustancialmente la cantidad de código redundante al no
+  tenerse que reimplementar la jerarquía de objetos, que era pasada
+  por el servidor en forma serializada por JSON y deserializada por el
+  cliente
+\item Había una única representación de una clase por ejemplo la
+  clase de edificios era una clase de Javascript que se usaba para
+  tanto en el servidor como en el cliente.
 \end{itemize}
 
 \section{Propuesta de desarrollo}
