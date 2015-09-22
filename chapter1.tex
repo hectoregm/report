@@ -65,30 +65,38 @@ con la menor información disponible, fomentando en el usuario final el
 compartir más información sobre su empresa, obteniendo un mejor control
 acerca de su consumo energético.
 
+El sistema debe permitir el ingreso progresivo de información, por medio de una
+serie de preguntas especificas al usuario, dando mejores recomendaciones para
+bajar su consumo energético conforme el sistema obtiene mas información.
+
+El sistema debe permitir el monitoreo y revisión del consumo energético de forma
+detallada, ya sea en horas, días, meses y años.
+
 \section{Objetivos secundarios}
 
 Los objetivos secundarios que apoyan al objetivo general de este trabajo son:
 \begin{itemize}
 \item Implementación de una interfaz que permita la obtención
   de información del usuario de una forma eficaz y sencilla.
-\item Autentificar a los usuarios mediante el uso de credenciales de acceso
-  obtenidas en el portal web de PG\&E.
 \item Dar información útil aunque el usuario solo proporcione el
   mínimo de información sobre su empresa.
 \item Proporcionar recomendaciones para disminuir sus
   gastos en energía con base en el consumo e información proporcionada
   hasta el momento.
+\item Autentificar a los usuarios mediante el uso de credenciales de acceso
+  obtenidas en el portal web de PG\&E.
 \item Soportar por lo menos a mil usuarios concurrentes.
 \item Implementar la infraestructura para el despliegue continuo de la
-  aplicación.
+  aplicación, permitiendo una retroalimentación continua sobre el
+  funcionamiento del sistema.
 \end{itemize}
 
-\section{Arquitectura Previa}
+\section{Arquitectura previa}
 En C3 Energy ya se contaba con toda una infraestructura para el
 procesamiento y análisis en tiempo real de datos de consumo eléctrico
 y de gas.
 
-En grandes rasgos el sistema constaba de cuatro capas una capa de
+En grandes rasgos el sistema consta de cuatro capas una capa de
 almacenamiento de información que era de referencia o datos ya
 procesados, otra capa en las que se hacia el análisis de los datos
 y que también tomaba el rol de capa de cache. La tercera capa era el
@@ -97,10 +105,10 @@ sobre las capas de datos anteriores y finalmente la cuarta capa que
 era el cliente que realizaba llamadas al API para presentar la
 información al usuario final.
 
-\subsection{Bases de Datos}
-Las dos primeras capas realizaban y almacenaban información obtenida
+\subsection{Bases de datos}
+Las dos primeras capas almacenan y analizan la información obtenida
 de un gran numero de bases de datos externas relacionadas con temas
-de energía. Todos estos datos eran concentrados en una base de datos
+de energía. Todos estos datos son concentrados en una base de datos
 central en la que se usaba Oracle Database 10g para este rol.
 
 También se contaba con un cluster de Apache Cassandra el cual era usado
