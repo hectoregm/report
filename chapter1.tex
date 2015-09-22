@@ -61,16 +61,16 @@ cientos de miles de clientes PyMES.
 \section{Objetivo general}
 
 El objetivo general del sistema \texttt{PEAT} es dar la mayor utilidad posible
-con la menor información disponible, fomentando en el usuario final el
-compartir más información sobre su empresa, obteniendo un mejor control
+a usuarios PyMES con la menor información disponible, fomentando en el usuario
+el compartir más información sobre su empresa, obteniendo un mejor control
 acerca de su consumo energético.
 
-El sistema debe permitir el ingreso progresivo de información, por medio de una
-serie de preguntas especificas al usuario, dando mejores recomendaciones para
-bajar su consumo energético conforme el sistema obtiene mas información.
-
-El sistema debe permitir el monitoreo y revisión del consumo energético de forma
-detallada, ya sea en horas, días, meses y años.
+El sistema debe además permitir el ingreso progresivo de información, por medio
+de una serie de preguntas especificas al usuario, dando mejores recomendaciones
+para bajar su consumo energético conforme el sistema obtiene mas información.
+A partir de la información obtenida el sistema debe permitir el monitoreo
+y revisión del consumo energético de forma detallada, ya sea en horas,
+días, meses y años.
 
 \section{Objetivos secundarios}
 
@@ -96,14 +96,18 @@ En C3 Energy ya se contaba con toda una infraestructura para el
 procesamiento y análisis en tiempo real de datos de consumo eléctrico
 y de gas.
 
-En grandes rasgos el sistema consta de cuatro capas una capa de
-almacenamiento de información que era de referencia o datos ya
-procesados, otra capa en las que se hacia el análisis de los datos
-y que también tomaba el rol de capa de cache. La tercera capa era el
-servidor que servía el API para permitía acceder y realizar análisis
-sobre las capas de datos anteriores y finalmente la cuarta capa que
-era el cliente que realizaba llamadas al API para presentar la
-información al usuario final.
+El sistema consta de cuatro capas:
+
+\begin{itemize}
+\item Una capa de almacenamiento de información que era de referencia
+  o datos ya procesados
+\item Una capa de análisis en las que se hacia el análisis de los datos
+  y que también tomaba el rol de capa de cache.
+\item Una capa de servicios web que permitía acceder a los datos contenidos
+  en las capas anteriores.
+\item Una capa en donde están los sistemas que hacen uso de los
+  servicios web para dar información al usuario final.
+\end{itemize}
 
 \subsection{Bases de datos}
 Las dos primeras capas almacenan y analizan la información obtenida
@@ -125,22 +129,25 @@ lenguaje con mejor rendimiento como Java. De esta forma se tenia que el
 núcleo del servidor estaba implementado en Java con el resto del API
 implementado en Javascript.
 
-\subsection{Aplicaciones}
-Las aplicaciones ya existentes para empresas multinacionales eran del tipo
-SPA (Single Page Application) que son aplicaciones web que tienen el fin
-de dar una experiencia de usuario similar a la de una aplicación de escritorio.
-Esto era implementado usando un framework hecho dentro de la compañía
-en Javascript. Se tenia una gran jerarquía de objetos que era
-compartida tanto en el servidor como en el cliente, así se tenia que
-había una sola fuente de la descripción de los objetos del sistema.
+\subsection{Sistemas en producción}
+Los sistemas ya existentes para varias empresas multinacionales
+eran del tipo \textit{SPA (Single Page Application)} que son sistemas web
+que tienen el fin de dar una experiencia de usuario similar a la
+de una aplicación de escritorio.
+
+Estos sistemas eran implementados usando un framework hecho dentro
+de la compañía usando Javascript. Se tenia una gran jerarquía de clases
+que era compartida tanto para el servidor como con el cliente,
+así se tenia que había una sola fuente de la descripción
+de las clases y objetos del sistema.
 
 Se hacia un uso extenso de la biblioteca Ext JS que es un framework
-en Javascript para construir aplicaciones del tipo SPA, se hacia un uso particular
+en Javascript para construir sistemas \textit{SPA}, se hacia un uso particular
 a su facultad para rápidamente generar todo tipo de gráficas para mostrar
 información al usuario.
 
-Entonces tenemos que tanto en el frontend como en el backend se hacia
-uso de Javascript principalmente con un núcleo de Java para las partes
+Entonces tenemos que tanto en el \textit{frontend} como en el \textit{backend}
+se hacia uso de Javascript principalmente con un núcleo de Java para las partes
 que requerían un rendimiento óptimo. Esto tenia varias ventajas:
 
 \begin{itemize}
@@ -151,7 +158,7 @@ que requerían un rendimiento óptimo. Esto tenia varias ventajas:
   por el servidor en forma serializada por JSON y deserializada por el
   cliente
 \item Había una única representación de una clase por ejemplo la
-  clase de edificios era una clase de Javascript que se usaba para
+  clase \textit{Building} era una clase de Javascript que se usaba para
   tanto en el servidor como en el cliente.
 \end{itemize}
 
