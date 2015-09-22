@@ -163,3 +163,44 @@ que requerían un rendimiento óptimo. Esto tenia varias ventajas:
 \end{itemize}
 
 \section{Propuesta de desarrollo}
+
+En primera instancia se pensaba realizar el mismo tipo de aplicación
+para cubrir los requerimientos de PEAT, es decir realizar un cliente
+de Javascript que hiciera uso del API y jerarquía de objetos ya
+existente (con ciertas adicciones y modificaciones) y de Ext JS
+para la interfase de usuario. Pero en los primeros prototipos se
+lograron visualizar varios problemas con este acercamiento:
+
+\begin{itemize}
+\item El tiempo para realizar la precarga de todos los módulos y
+  objetos dados por el API en el cliente tomaba un tiempo
+  considerable (5+ segs.). Los sistema anteriores eran usados
+  por un numero reducido de personas autorizadas, que hacían uso
+  extensivo del sistema en sesiones de larga duración, por lo
+  que este tiempo de arranque era tolerable.
+\item El tipo de interfases y experiencia de usuario que se obtenía
+  usando Ext JS eran excelentes para el contexto de mostrar una gran
+  cantidad de información al usuario, en PEAT esta información era menor
+  y la importancia era de que la experiencia de usuario fuera lo mas fluida y
+  rápida posible
+\end{itemize}
+
+Entonces se vio el de usar otro tipo de herramientas para construir
+aplicaciones finales al usuario pero que permitieran rehusar todo el API
+y jerarquía de objetos asociada a esta.
+
+Después de varios prototipos con varios stacks de tecnología se decido
+usar Ruby y el framework Ruby on Rails.
+Las razones principales fueron:
+\begin{itemize}
+\item Gran integración con una gran cantidad de utilerías y bibliotecas para
+  desarrollar, diseñar y implementar interfases de usuario.
+\item Ruby tiene una gran capacidad para implementar Domain Specific Languages (DSL)
+  que permiten realizar lenguajes específicos al problema que se esta resolviendo,
+  en nuestro caso realizar una integración con una jerarquía de clases
+\item Una gran soporte por Rails y bibliotecas de terceros para
+  realizar extensas pruebas unitarias, funcionales y de integración,
+  por medio de librerías como rspec, cucumber, capybara, etc.
+\end{itemize}
+
+\jcimage{1.0}{imagenes/PEAT-Architecture.png}{Esquema de alto nivel de la arquitectura para PEAT}
