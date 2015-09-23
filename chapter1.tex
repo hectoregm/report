@@ -85,6 +85,8 @@ Los objetivos secundarios que apoyan al objetivo general de este trabajo son:
   hasta el momento.
 \item Autentificar a los usuarios mediante el uso de credenciales de acceso
   obtenidas en el portal web de PG\&E.
+\item Diseñar e implementar una suite de pruebas unitarias, funcionales
+  y de integración para los módulos críticos del sistema.
 \item Soportar por lo menos a mil usuarios concurrentes.
 \item Implementar la infraestructura para el despliegue continuo de la
   aplicación, permitiendo una retroalimentación continua sobre el
@@ -163,13 +165,13 @@ que requerían un rendimiento óptimo. Esto tenia varias ventajas:
 \end{itemize}
 
 \section{Propuesta de desarrollo}
-
-En primera instancia se pensaba realizar el mismo tipo de aplicación
-para cubrir los requerimientos de \texttt{PEAT}, es decir realizar un cliente
+En primera instancia se pensaba realizar el mismo tipo de sistema
+a los que se venían desarrollando para cubrir los requerimientos
+de \texttt{PEAT}, es decir realizar un cliente
 de Javascript que hiciera uso del API y jerarquía de objetos ya
-existente (con ciertas adicciones y modificaciones) y de Ext JS
-para la interfase de usuario. Pero en los primeros prototipos se
-lograron visualizar varios problemas con este acercamiento:
+existente (con ciertas adicciones y modificaciones). Pero en los
+primeros prototipos se lograron visualizar varios problemas con
+este acercamiento:
 
 \begin{itemize}
 \item El tiempo para realizar la precarga de todos los módulos y
@@ -180,27 +182,31 @@ lograron visualizar varios problemas con este acercamiento:
   que este tiempo de arranque era tolerable.
 \item El tipo de interfases y experiencia de usuario que se obtenía
   usando Ext JS eran excelentes para el contexto de mostrar una gran
-  cantidad de información al usuario, en \texttt{PEAT} esta información era menor
-  y la importancia era de que la experiencia de usuario fuera lo mas fluida y
-  rápida posible
+  cantidad de información al usuario, en \texttt{PEAT} el volumen
+  era menor y la importancia era de que la experiencia de usuario
+  fuera lo mas fluida y rápida posible.
 \end{itemize}
 
 Entonces se vio el de usar otro tipo de herramientas para construir
 aplicaciones finales al usuario pero que permitieran rehusar todo el API
-y jerarquía de objetos asociada a esta.
+y jerarquía de objetos implementados hasta ese momento.
 
 Después de varios prototipos con varios stacks de tecnología se decido
 usar Ruby y el framework Ruby on Rails.
+
 Las razones principales fueron:
 \begin{itemize}
+\item Ruby tiene un gran soporte para la metaprogramación, es decir para la cremación
+  de clases y sus atributos ``al vuelo''. Esto sera de vital importancia para lograr
+  una buena integración con la jerarquía de clases ya definida en el \textit{backend}.
+\item Ruby tiene una gran capacidad para implementar Domain Specific Languages (DSL)
+  que permiten realizar lenguajes específicos al problema que se esta resolviendo.
+  Característica que sera usada para lograr la integración con el
+  \texttt{backend} y la automatización del despliegue de la aplicación.
 \item Gran integración con una gran cantidad de utilerías y bibliotecas para
   desarrollar, diseñar y implementar interfases de usuario.
-\item Ruby tiene una gran capacidad para implementar Domain Specific Languages (DSL)
-  que permiten realizar lenguajes específicos al problema que se esta resolviendo,
-  en nuestro caso realizar una integración con una jerarquía de clases
-\item Una gran soporte por Rails y bibliotecas de terceros para
-  realizar extensas pruebas unitarias, funcionales y de integración,
-  por medio de librerías como rspec, cucumber, capybara, etc.
+\item Gran soporte para realizar extensas pruebas unitarias, funcionales
+  y de integración, por medio de librerías como rspec, cucumber, capybara, etc.
 \end{itemize}
 
 En el proyecto de implementación del sistema \texttt{PEAT}
@@ -213,14 +219,37 @@ framework Ruby on Rails.
 
 El \textit{frontend} seria implementado por medio del framework Ruby on Rails,
 haciendo uso de alguna biblioteca para dar estructura a los módulos de Javascript
-que se usaran en la vista. Para las gráficas se haría uso de Ext JS por su gran
-facilidad para implementar cualquier tipo de gráfica.
+que se usaran en la vista. Para las gráficas y manejo de datos se seguiría
+haciendo uso de Ext JS por su gran facilidad para implementar cualquier tipo
+de gráfica.
 
 El servidor de \texttt{PEAT} tendría el rol de recibir las peticiones de la
-interfaz web y coordinar las peticiones necesarias al backend. El trabajo de
+interfaz web y coordinar las peticiones necesarias al \textit{backend}. El trabajo de
 la realización de las peticiones a los servicios web ya existentes y la creación
 de clases y objetos en Ruby basados en la jerarquía de clases definida en Javascript
-seria realizado por la biblioteca \texttt{Bezel} que igual seria implementada
+seria realizado por la biblioteca \texttt{Bezel}, la cual seria implementada
 desde cero.
+
+Aunque en la parte del \texttt{backend} se tenia un sistema de procesamiento
+y análisis de datos ya en producción era necesario el diseño e implementación
+de dos nuevos componentes en el \texttt{backend}. El primero era el modulo de
+recomendaciones (\textit{Recommendations API}) el cual según las respuestas
+dadas del usuario debía poder generar recomendaciones hechas a la medida al
+contexto de operación de cada usuario. El segundo modulo era el modulo de
+desagregación (\textit{Disaggregation API}) que tomaba los datos de consumo
+del usuario y usando aprendizaje de maquina separaba este consumo en sus
+diferentes partes.
+
+Para acelerar el desarrollo del sistema se propuso que se hiciera la implementación
+del frontend y del backend en forma concurrente, dado que una parte significativa
+estaría en desarrollo se haría uso de datos estáticos contenidos en una base de
+datos como PostgreSQL mientras se esperaba en la implementación de los nuevos
+componentes del backend y de la implementación de la librería \texttt{Bezel}.
+
+Dado que al principio el frontend haría uso de un backend provisional con datos
+estáticos al hacer el cambio al backend final se tendrían varias incompatibilidades
+para acelerar este proceso de integración se propuso el uso de una suite de
+pruebas de integración principalmente para asegurar que la transición fuera exitosa
+y con la menor cantidad de bugs.
 
 \jcimage{1.0}{imagenes/PEAT-Architecture.png}{Esquema de alto nivel de la arquitectura para \texttt{PEAT}}
