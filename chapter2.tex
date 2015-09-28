@@ -2,7 +2,7 @@
 
 \section{Patrón Modelo-Vista-Controlador (MVC)}
 El patrón Modelo Vista Controlador (\texttt{MVC}) es probablemente el patrón
-mas utilizado y citado para el desarrollo de interfaces de usuario.
+mas utilizado y citado para el desarrollo de interfaces de usuario y sistemas web.
 \texttt{MVC} consiste de tres tipos de objetos:
 
 \begin{itemize}
@@ -11,6 +11,8 @@ mas utilizado y citado para el desarrollo de interfaces de usuario.
 \item Controlador: Define la forma en que la interfaz reacciona a la entrada
   del usuario.
 \end{itemize}
+
+\jcimage{1.0}{imagenes/MVC-Rails.png}{Patrón MVC en Rails.}
 
 Su uso extensivo se da porque permite una clara división de responsabilidades
 entre la presentacion (vista y controlador) y el dominio (modelo).
@@ -22,3 +24,18 @@ Este enfoque permite conectar múltiples vistas a un modelo para proporcionar
 diferentes presentaciones. También puede crear nuevas vistas para un modelo
 sin reescribir este ultimo.
 
+En el framework Rails se hace uso de \texttt{MVC} como patrón base para
+construir sistemas. El modelo sigue siendo el responsable de almacenar
+el estado del sistema, en el caso general esto se almacena fuera del sistema
+casi siempre en una base de datos, en \texttt{PEAT} se hace uso de
+\texttt{PostgreSQLQ} temporalmente mientras se hacia la implementacion
+de los servicios web faltantes, pero en la integracion final los modelos
+son objetos obtenidos por medio de los servicios web. Al hacer uso de \texttt{MVC}
+hacer la sustitucion de modelos 
+Las vistas siguen siendo representaciones del 
+
+
+Aunque temporalmente se hace uso de una base de datos para almacenar
+el estado de los modelos del sistema, en la integracion final los modelos
+son objetos obtenidos por los servicios web del \textit{backend} por
+medio de la biblioteca \texttt{Bezel}.
