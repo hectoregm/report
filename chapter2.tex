@@ -1,7 +1,9 @@
 \chapter{Fundamentos teóricos}
 
 \section{Patrón Modelo-Vista-Controlador (MVC)}
-El patrón Modelo Vista Controlador (\texttt{MVC}) es probablemente el patron mas utilizado y citado para el desarrollo de interfaces de usuario. \texttt{MVC} consiste de tres tipos de objetos:
+El patrón Modelo Vista Controlador (\texttt{MVC}) es probablemente el patrón
+mas utilizado y citado para el desarrollo de interfaces de usuario.
+\texttt{MVC} consiste de tres tipos de objetos:
 
 \begin{itemize}
 \item Modelo: Representa la información de dominio del sistema.
@@ -9,3 +11,14 @@ El patrón Modelo Vista Controlador (\texttt{MVC}) es probablemente el patron ma
 \item Controlador: Define la forma en que la interfaz reacciona a la entrada
   del usuario.
 \end{itemize}
+
+Su uso extensivo se da porque permite una clara división de responsabilidades
+entre la presentacion (vista y controlador) y el dominio (modelo).
+\texttt{MVC} desacopla vistas y modelos mediante el establecimiento de un
+protocolo de suscribirse / notificar entre ellos. La vista debe asegurarse
+de que su aspecto visual refleje el estado del modelo. Cada vez que cambian
+los datos del modelo, el modelo notifica a las vistas que depende de ella.
+Este enfoque permite conectar múltiples vistas a un modelo para proporcionar
+diferentes presentaciones. También puede crear nuevas vistas para un modelo
+sin reescribir este ultimo.
+
