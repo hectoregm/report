@@ -15,27 +15,53 @@ mas utilizado y citado para el desarrollo de interfaces de usuario y sistemas we
 \jcimage{1.0}{imagenes/MVC-Rails.png}{Patrón MVC en Rails.}
 
 Su uso extensivo se da porque permite una clara división de responsabilidades
-entre la presentacion (vista y controlador) y el dominio (modelo).
+entre la presentación (vista y controlador) y el dominio (modelo).
 \texttt{MVC} desacopla vistas y modelos mediante el establecimiento de un
 protocolo de suscribirse / notificar entre ellos. La vista debe asegurarse
 de que su aspecto visual refleje el estado del modelo. Cada vez que cambian
 los datos del modelo, el modelo notifica a las vistas que depende de ella.
 Este enfoque permite conectar múltiples vistas a un modelo para proporcionar
 diferentes presentaciones. También puede crear nuevas vistas para un modelo
-sin reescribir este ultimo.
+sin reescribir este ultimo \cite[pag.~4]{14_gamma_1995}.
 
-En el framework Rails se hace uso de \texttt{MVC} como patrón base para
-construir sistemas. El modelo sigue siendo el responsable de almacenar
-el estado del sistema, en el caso general esto se almacena fuera del sistema
-casi siempre en una base de datos, en \texttt{PEAT} se hace uso de
-\texttt{PostgreSQLQ} temporalmente mientras se hacia la implementacion
-de los servicios web faltantes, pero en la integracion final los modelos
-son objetos obtenidos por medio de los servicios web. Al hacer uso de \texttt{MVC}
-hacer la sustitucion de modelos 
-Las vistas siguen siendo representaciones del 
+\subsection{MVC y Rails}
+\texttt{MVC} fue ideado originalmente para aplicaciones gráficas convencionales,
+donde los desarrolladores encontraron que la separación de responsabilidades
+fomentadas por el patrón llevan a un menor acoplamiento lo que hacia al código
+mucho mas fácil de escribir y mantener.
 
+En el framework Rails se hace uso de \texttt{MVC} como patrón de arquitectura
+base para construir sistemas web. En Rails se los modelos se definen haciendo
+uso de la biblioteca \texttt{ActiveRecord}, esta biblioteca implementa una capa
+de \textit{Object-relational mapping} (\texttt{ORM}) para facilitar el acceso
+de información contenida en bases de datos relacionales, dado que es el caso
+típico en sistemas web convencionales.
 
-Aunque temporalmente se hace uso de una base de datos para almacenar
-el estado de los modelos del sistema, en la integracion final los modelos
-son objetos obtenidos por los servicios web del \textit{backend} por
-medio de la biblioteca \texttt{Bezel}.
+En Rails, la vista es responsable de la creación de la totalidad o parte de la
+respuesta dada para ser mostrada en un navegador. En su forma mas simple, una
+vista es un trozo de código \texttt{HTML} que muestra un texto fijo. Mas típicamente
+se requiere mostrar contenido dinámico creado por una acción en un controlador.
+El contenido dinámico es generado por medio de plantillas, el esquema
+de plantillas más común es llamada \textit{Embedded Ruby} (\texttt{ERB}),
+el cual inserta pedazos de codigo Ruby dentro de una vista, similar a la forma
+como se hace en otros frameworks como PHP o JSP. También se pude hacer uso de
+\texttt{ERB} para construir pedazos de código Javascript en el servidor
+para ser ejecutados en el servidor, lo cual permite crear interfases
+dinámicas haciendo uso de AJAX.
+
+Finalmente en Rails los controladores son el centro lógico del sistema. Coordina
+la interacción entre el usuario, las vistas y el modelo \cite[pag.~29]{15_agile_hansson}.
+
+\subsection{MVC y PEAT}
+\texttt{PEAT} saca provecho de \texttt{MVC} de las siguientes maneras:
+
+\begin{enumerate}
+\item Modelo: Dado que en un principio los servicios web de recomendaciones y
+  disagregacion estaban en construcción se hizo uso de \texttt{ActiveRecord}
+  para tener datos reales pero estáticos para permitir la implementación
+  de la interfaz de usuario. Posteriormente se reemplazaron estos modelos
+  por nuevos modelos que hacían uso de los servicios web del \textit{backend},
+  por medio de la biblioteca \texttt{Bezel}.
+\item Vista: Haciendo uso de plantillas se generan representaciones \texttt{HTML}
+  y \texttt{JSON} de los principales modelos del sistema.
+\end{enumerate}
