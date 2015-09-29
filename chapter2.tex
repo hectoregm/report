@@ -6,8 +6,8 @@ mas utilizado y citado para el desarrollo de interfaces de usuario y sistemas we
 \texttt{MVC} consiste de tres tipos de objetos:
 
 \begin{itemize}
-\item Modelo: Representa la información de dominio del sistema.
-\item Vista: Es una representación visual del modelo.
+\item Modelo: Representación de la información de dominio del sistema.
+\item Vista: Representación visual del modelo.
 \item Controlador: Define la forma en que la interfaz reacciona a la entrada
   del usuario.
 \end{itemize}
@@ -30,8 +30,8 @@ donde los desarrolladores encontraron que la separación de responsabilidades
 fomentadas por el patrón llevan a un menor acoplamiento lo que hacia al código
 mucho mas fácil de escribir y mantener.
 
-En el framework Rails se hace uso de \texttt{MVC} como patrón de arquitectura
-base para construir sistemas web. En Rails se los modelos se definen haciendo
+En el marco de trabajo Rails se hace uso de \texttt{MVC} como patrón de arquitectura
+para construir sistemas web. En Rails se los modelos se definen haciendo
 uso de la biblioteca \texttt{ActiveRecord}, esta biblioteca implementa una capa
 de \textit{Object-relational mapping} (\texttt{ORM}) para facilitar el acceso
 de información contenida en bases de datos relacionales, dado que es el caso
@@ -43,11 +43,11 @@ vista es un trozo de código \texttt{HTML} que muestra un texto fijo. Mas típic
 se requiere mostrar contenido dinámico creado por una acción en un controlador.
 El contenido dinámico es generado por medio de plantillas, el esquema
 de plantillas más común es llamada \textit{Embedded Ruby} (\texttt{ERB}),
-el cual inserta pedazos de codigo Ruby dentro de una vista, similar a la forma
-como se hace en otros frameworks como PHP o JSP. También se pude hacer uso de
+el cual inserta pedazos de código Ruby dentro de una vista, similar a la forma
+como se hace en otros marcos de trabajo como PHP o JSP. También se pude hacer uso de
 \texttt{ERB} para construir pedazos de código Javascript en el servidor
 para ser ejecutados en el servidor, lo cual permite crear interfases
-dinámicas haciendo uso de AJAX.
+dinámicas haciendo uso \texttt{AJAX}.
 
 Finalmente en Rails los controladores son el centro lógico del sistema. Coordina
 la interacción entre el usuario, las vistas y el modelo \cite[pag.~29]{15_agile_hansson}.
@@ -61,7 +61,10 @@ la interacción entre el usuario, las vistas y el modelo \cite[pag.~29]{15_agile
   para tener datos reales pero estáticos para permitir la implementación
   de la interfaz de usuario. Posteriormente se reemplazaron estos modelos
   por nuevos modelos que hacían uso de los servicios web del \textit{backend},
-  por medio de la biblioteca \texttt{Bezel}.
+  por medio de la biblioteca \texttt{Bezel}. Dado que hay un desacoplamiento
+  entre los modelos y las vistas esto no implico grandes cambios al hacer el
+  reemplazo.
 \item Vista: Haciendo uso de plantillas se generan representaciones \texttt{HTML}
-  y \texttt{JSON} de los principales modelos del sistema.
+  y \texttt{JSON} de los principales modelos del sistema. Para ciertos modelos se
+  tenia una tercera representación en forma de \texttt{PDF} del modelo.
 \end{enumerate}
