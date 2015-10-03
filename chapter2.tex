@@ -70,22 +70,33 @@ la interacción entre el usuario, las vistas y el modelo \cite[pag.~29]{15_agile
 \end{enumerate}
 
 \section{Servicios web RESTful}
-UN servicio web es un metodo de comunicacion entre dos dispositivos sobre una red,
-su creacion es por la necesidad de que diferentes sistemas necesitan intercambiar
-datos entre ellos, y el servicio web es el metodo de comunicacion que permite a
-los sistemas el intecambiar datos a traves del Internet.
+Un servicio web es un método de comunicación entre dos dispositivos sobre una red,
+su creación es por la necesidad de que diferentes sistemas necesitan intercambiar
+datos entre ellos, y el servicio web es el método de comunicación que permite a
+los sistemas el intercambiar datos a través del Internet.
 
-La Transferencia de Estado Representacional \texttt{REST} es una arquitectura
-de software para desarrollar servicios web.
+La Transferencia de Estado Representacional (\texttt{REST}) es una arquitectura
+de software para desarrollar servicios web. \texttt{REST} tiene cuatro
+características clave:
 
-Los servicios web que implementan una arquitectura \texttt{REST}
+\begin{itemize}
+\item Protocolo cliente/servidor sin estado (\texttt{stateless}): cada mensaje
+  \texttt{HTTP} contiene toda la información necesaria para comprender la
+  petición. Esto hace que ni el cliente ni el servidor necesitan recordar ningún
+  estado de las comunicaciones entre mensajes.
+\item Representacional (\texttt{representational}): Se define la existencia
+  de recursos (elementos de información). Cada recurso tiene una serie de
+  representaciones posibles. Por ejemplo una lista de bugs por arreglar (recurso)
+  puede ser presentado en forma de un documento XML, una pagina HTML o un archivo
+  CSV (representaciones).
+\item Direccionabilidad (\texttt{addressability}): Siendo la capacidad para
+  identificar los recursos del sistema. Cada recurso es direccionable únicamente
+  a través de su \texttt{URI}.
+\item Interfaz uniforme (\texttt{uniform interface}): Se tiene un conjunto de
+  operaciones bien definidas que se aplican a todos los recursos del sistema.
+  Se usan los verbos de \texttt{HTTP} pare definir las operaciones mas importantes
+  que son GET, POST, PUT y DELETE.
+\end{itemize}
 
-
-Un servicio web es una forma estandarizada para integratrar sistemas web usando XML, JSON, etc por medio de un protocolo de Internet como HTTP.
-
-La Transferencia de Estado Representacional (Representational State Transfer) o
-REST es un estilo de arquitectura software para sistemas hipermedia distribuidos
-como la World Wide Web. El término se originó en el año 2000, en una tesis doctoral
-sobre la web escrita por Roy Fielding, uno de los principales autores de la
-especificación del protocolo HTTP y ha pasado a ser ampliamente utilizado por
-la comunidad de desarrollo.
+Los servicios web que implementan una arquitectura \texttt{REST} se hacen llamar
+RESTful.
