@@ -76,19 +76,22 @@ datos entre ellos, y el servicio web es el método de comunicación que permite 
 los sistemas el intercambiar datos a través del Internet.
 
 La Transferencia de Estado Representacional (\texttt{REST}) es una arquitectura
-de software para desarrollar servicios web. \texttt{REST} tiene cuatro
-características clave:
+de software para desarrollar servicios web. En \texttt{REST} se define la
+existencia de recursos (elementos de información), donde cada recurso tiene un
+conjunto de representaciones posibles. Por ejemplo una lista de bugs por arreglar
+(recurso) puede ser presentado en forma de un documento XML, una pagina HTML
+o un archivo CSV (representaciones). Además se tienen cuatro características
+clave \cite[pag.~79]{1_richardson_2007}:
 
 \begin{itemize}
 \item Protocolo cliente/servidor sin estado (\texttt{stateless}): cada mensaje
   \texttt{HTTP} contiene toda la información necesaria para comprender la
   petición. Esto hace que ni el cliente ni el servidor necesitan recordar ningún
   estado de las comunicaciones entre mensajes.
-\item Representacional (\texttt{representational}): Se define la existencia
-  de recursos (elementos de información). Cada recurso tiene una serie de
-  representaciones posibles. Por ejemplo una lista de bugs por arreglar (recurso)
-  puede ser presentado en forma de un documento XML, una pagina HTML o un archivo
-  CSV (representaciones).
+\item Conectividad (\texttt{connectedness}): Las representaciones son un hipermedio
+  en el cual se tienen ligas a otros recursos. Como resultado de esto, es posible
+  navegar de un recurso \texttt{REST} a muchos otros, sin necesidad de una
+  infraestructura adicional.
 \item Direccionabilidad (\texttt{addressability}): Siendo la capacidad para
   identificar los recursos del sistema. Cada recurso es direccionable únicamente
   a través de su \texttt{URI}.
@@ -100,3 +103,7 @@ características clave:
 
 Los servicios web que implementan una arquitectura \texttt{REST} se hacen llamar
 RESTful.
+
+\subsection{REST y Rails}
+
+\subsection{REST y PEAT}
