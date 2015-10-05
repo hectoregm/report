@@ -111,11 +111,15 @@ manejo de peticiones se basa en esta arquitectura.
 
 En \texttt{REST} se hace uso de un conjunto finito de verbos para operar sobre otro
 conjunto de objetos. Dado que estamos usando HTTP como capa de transporte, los
-verbos corresponden a los metodos HTTP (GET, PUT, PATCH, POST y DELETE).
+verbos corresponden a los métodos HTTP (GET, PUT, PATCH, POST y DELETE).
 Los objetos corresponden a los recursos del sistema, los cuales son etiquetados
 usando URLs.
 
-Cuando un navegador solicita una pagina a Rails por medio de una peticion de una direccion URL utilizando un metodo HTTP especifico. Cada metodo es una peticion para realizar una operacion sobre un recurso. En Rails se define una ruta de recursos la cual asigna un numero de peticiones asociadas a las acciones de un controlador.
+Cuando un navegador solicita una pagina a Rails por medio de una petición de una
+dirección URL utilizando un método HTTP especifico. Cada método es una petición
+para realizar una operación sobre un recurso. En Rails se define una ruta de
+recursos la cual asigna un numero de peticiones asociadas a las acciones de
+un controlador.
 
 Tomando como ejemplo como recurso el concepto de edificio, cuando Rails recibe una
 solicitud entrante para:
@@ -124,20 +128,20 @@ solicitud entrante para:
 DELETE /buildings/17
 \end{verbatim}
 
-Entonces se pide al router que asigne una accion del controlador. Si se tiene
+Entonces se pide al router que asigne una acción del controlador. Si se tiene
 que la primera ruta coincidente es:
 
 \begin{verbatim}
 resources :buildings
 \end{verbatim}
 
-Entonces Rails tendria que enviar la solicitud al metodo destroy en el controlador
+Entonces Rails tendría que enviar la solicitud al método destroy en el controlador
 buildings con {id: 17}.
 
-Tambien se tiene que Rails saca todo el provecho del hecho de que REST define
-una interfaz uniforme para generar rapidamente las rutas a un recurso dado
+También se tiene que Rails saca todo el provecho del hecho de que REST define
+una interfaz uniforme para generar rápidamente las rutas a un recurso dado
 
-Usando todavia el ejemplo anterior se ve por la Figura 2.2 como se definen
+Usando todavía el ejemplo anterior se ve por la Figura 2.2 como se definen
 las URLs y sus verbos asociados para manejar el recurso.
 
 \jcimage{1.0}{imagenes/REST-Rails.png}{REST en Rails.}
