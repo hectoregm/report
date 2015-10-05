@@ -144,12 +144,15 @@ el desarrollo de servicios web.
 La arquitectura \texttt{REST} influye en las tres partes principales de \texttt{PEAT}
 
 \begin{itemize}
-\item \textit{Frontend}: Haciendo uso de Rails se define todo un servicio web de tipo
-  RESTful para proveer de información a la interfaz gráfica del sistema.
-\item \textit{Backend}: Los servicios web que componen el \textit{backend} son
-  del tipo RESTful.
+\item \textit{Frontend}: Por medio de Rails se implementa un servicio web RESTful
+  para proveer de información a la interfaz gráfica del sistema.
+\item \textit{Backend}: Los servicios web que componen el \textit{backend}, como el
+  sistema de recomendaciones, son del tipo RESTful. El recurso principal del sistema
+  es el de edificio (\textit{Building}) del cual se tienen alrededor los demas
+  recursos del sistema.
 \item \textit{Middleware}: La biblioteca \texttt{Bezel} saca provecho del hecho
-  de que el backend sea de tipo RESTful para facilitar la integración del sistema,
-  dado que hacer un mapeo de recursos a clases y objetos es directa.
+  de que el \textit{backend} sea de tipo RESTful para facilitar la integración del
+  sistema,  dado que hacer un mapeo de los recursos a clases y objetos es
+  casi directa.
 
 \end{itemize}
