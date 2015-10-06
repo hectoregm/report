@@ -24,6 +24,7 @@ En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociad
   1 pm a 7 pm.
 \end{itemize}
 
+% FIXME: Rehacer el párrafo, se vuelve redundante al final
 El objetivo de un esquema \texttt{TOU} es el distribuir la carga de la red
 eléctrica, alentando a los usuarios a cambiar su consumo durante periodos
 de demanda alta a periodos de demanda baja, al bajar la demanda en los periodos
@@ -196,9 +197,10 @@ usar Ruby y el marco de trabajo Ruby on Rails.
 
 Las razones principales fueron:
 \begin{itemize}
-\item Ruby tiene un gran soporte para la metaprogramación, es decir para la cremación
-  de clases y sus atributos ``al vuelo''. Esto sera de vital importancia para lograr
-  una buena integración con la jerarquía de clases ya definida en el \textit{backend}.
+\item Ruby tiene un gran soporte para la metaprogramación, es decir para la
+  creación de clases y sus atributos ``al vuelo''. Esto sera de vital
+  importancia para lograr una buena integración con la jerarquía de clases
+  ya definida en el \textit{backend}.
 \item Ruby tiene una gran capacidad para implementar Domain Specific Languages (DSL)
   que permiten realizar lenguajes específicos al problema que se esta resolviendo.
   Característica que sera usada para lograr la integración con el
@@ -217,18 +219,18 @@ la interacción del \textit{backend} son el servidor de \texttt{PEAT} y
 (c) el \textit{frontend} escrito también con Ruby haciendo uso del
 marco de trabajo Ruby on Rails.
 
-El \textit{frontend} seria implementado por medio del marco de trabajo Ruby on Rails,
-haciendo uso de alguna biblioteca para dar estructura a los módulos de Javascript
-que se usaran en la vista. Para las gráficas y manejo de datos se seguiría
-haciendo uso de Ext JS por su gran facilidad para implementar cualquier tipo
-de gráfica.
+El \textit{frontend} seria implementado por medio del marco de trabajo
+Ruby on Rails (Rails), haciendo uso de alguna biblioteca para dar estructura
+a los módulos de Javascript que se usaran en la vista. Para las gráficas
+y manejo de datos se seguiría haciendo uso de Ext JS por su gran facilidad
+para implementar cualquier tipo de gráfica.
 
-El servidor de \texttt{PEAT} tendría el rol de recibir las peticiones de la
-interfaz web y coordinar las peticiones necesarias al \textit{backend}. El trabajo de
-la realización de las peticiones a los servicios web ya existentes y la creación
-de clases y objetos en Ruby basados en la jerarquía de clases definida en Javascript
-seria realizado por la biblioteca \texttt{Bezel}, la cual seria implementada
-desde cero.
+El servidor de Rails tendría el rol de recibir las peticiones de la
+interfaz web y coordinar las peticiones necesarias al \textit{backend}. El trabajo
+de la realización de las peticiones a los servicios web ya existentes
+y la creación de clases y objetos en Ruby basados en la jerarquía de clases
+definida en Javascript seria realizado por la biblioteca \texttt{Bezel},
+la cual seria implementada desde cero.
 
 Aunque en la parte del \texttt{backend} se tenia un sistema de procesamiento
 y análisis de datos ya en producción era necesario el diseño e implementación
@@ -238,7 +240,7 @@ dadas del usuario debía poder generar recomendaciones hechas a la medida al
 contexto de operación de cada usuario. El segundo modulo era el modulo de
 desagregación (\textit{Disaggregation API}) que tomaba los datos de consumo
 del usuario y usando aprendizaje de maquina separaba este consumo en sus
-diferentes partes.
+diferentes partes. %FIXME: Ser mas especifico en la desagregacion.
 
 Para acelerar el desarrollo del sistema se propuso que se hiciera la implementación
 del frontend y del backend en forma concurrente, dado que una parte significativa
@@ -247,7 +249,7 @@ datos como PostgreSQL mientras se esperaba en la implementación de los nuevos
 componentes del backend y de la implementación de la librería \texttt{Bezel}.
 
 Dado que al principio el frontend haría uso de un backend provisional con datos
-estáticos al hacer el cambio al backend final se tendrían varias incompatibilidades
+estáticos al hacer el cambio al backend final se tendrían varias incompatibilidades,
 para acelerar este proceso de integración se propuso el uso de una suite de
 pruebas de integración principalmente para asegurar que la transición fuera exitosa
 y con la menor cantidad de bugs.
