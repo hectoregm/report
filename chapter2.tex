@@ -159,3 +159,33 @@ La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
   casi directa.
 
 \end{itemize}
+
+
+\section{Desarrollo guiado por pruebas y por comportamiento}
+El desarrollo guiado por pruebas (TDD) y el desarrollo guiado por comportamiento
+(BDD) son practicas de ingeniería de software que involucran el escribir las pruebas
+antes de escribir el código a probar y la refactorización que involucra revisar el
+diseño y remover cualquier duplicación.
+
+Mientras en TDD el enfoque es probar unidades de código (función, clase o modulo)
+en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
+completo.
+
+TDD/BDD definen un ciclo de pasos para guiar el desarrollo:
+
+\begin{enumerate}
+\item Rojo: Se escribe una prueba y se verifica que esta falla.
+\item Verde: Se implementa el mínimo código de forma que la prueba pase
+  satisfactoriamente
+\item Refactorizar: Se elimina toda duplicación generada en hacer que
+  la prueba pase.
+\end{enumerate}
+
+\jcimage{1.0}{imagenes/TDD-BDD.png}{Ciclo TDD/BDD.}
+
+El objetivo en cualquier proyecto es código limpio que funcione, mediante TDD/BDD
+se usa la técnica de divide y vencerás, resolviendo primero la parte de
+"que funcione" del problema para luego resolver la parte de "código limpio",
+esto en oposición al desarrollo típico. Esto provoca que el diseño este en
+constante evolución y en constante revisión, obteniendo un diseño emergente
+lo cual nos da una de las grandes ventajas de TDD y BDD.
