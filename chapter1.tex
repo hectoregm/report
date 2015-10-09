@@ -71,7 +71,7 @@ El sistema consta de cuatro capas:
 \item Una capa de almacenamiento de información que era de referencia
   o datos ya procesados
 \item Una capa de análisis en las que se hacia el análisis de los datos
-  y que también tomaba el rol de capa de cache.
+  y que también tomaba el rol de capa de caché.
 \item Una capa de servicios web que permitía acceder a los datos contenidos
   en las capas anteriores.
 \item Una capa en donde están los sistemas que hacen uso de los
@@ -82,50 +82,57 @@ El sistema consta de cuatro capas:
 Las dos primeras capas almacenan y analizan la información obtenida
 de un gran numero de bases de datos externas relacionadas con temas
 de energía. Todos estos datos son concentrados en una base de datos
-central en la que se usaba Oracle Database 10g para este rol.
+central en la que se usaba Oracle Database 10g\footnote{Es un sistema de
+  gestión de base de datos de tipo objeto-relacional desarrollado por Oracle.}
+para este rol.
 
-También se contaba con un cluster de Apache Cassandra el cual era usado
-para realizar el análisis en tiempo real de los datos, además de servir
-como capa de cache para los datos mas solicitados en el sistema.
+También se contaba con un \textit{cluster} de Apache Cassandra\footnote{Es
+  una base de datos de tipo NoSQL distribuida, basada en un modelo de almacenamiento
+clave-valor, es desarrollada por Apache Software Foundation.}
+el cual era usado para realizar el análisis en tiempo real de los datos,
+además de servir como capa de caché para los datos mas solicitados en el sistema.
 
 \subsection{Servidor y API}
-Sobre la anterior bases de datos se tenia un API que que permita el
-hacer consultas y operaciones sobre los datos contenidos y/o analizados
-en este sistema. Este API estaba implementado en Javascript bajo Rhino
-que corre bajo la maquina virtual de Java (JVM), esto daba la ventaja
-que se podía realizar la implementación de rutinas criticas en un
-lenguaje con mejor rendimiento como Java. De esta forma se tenia que el
-núcleo del servidor estaba implementado en Java con el resto del API
-implementado en Javascript.
+Sobre la base de datos anterior anterior se tenia un API\footnote{
+  \textit{Application Programming Interface} es el conjunto de procedimientos
+  que ofrece una biblioteca para ser utilizado por otro software.}
+que que permita el hacer consultas y operaciones sobre los datos contenidos
+y/o analizados en este sistema.
+Este API estaba implementado en Javascript bajo Rhino\footnote{Un interprete
+  de Javascript de codigo abierto desarrollado en Java.}
+el cual se ejecuta bajo la maquina virtual de Java (\textit{Java Virtual Machine},
+JVM), obteniendo como ventaja el poder realizar la implementación de rutinas
+criticas en un lenguaje con mejor rendimiento como lo es Java. De esta forma
+se tenía el núcleo del servidor implementado en Java con el resto del API
+implementada en Javascript.
 
 \subsection{Sistemas en producción}
-Los sistemas ya existentes para varias empresas multinacionales
-eran del tipo \textit{SPA (Single Page Application)} que son sistemas web
+Los sistemas existentes hasta ese momento (2012) para varias empresas multinacionales
+eran del tipo SPA (\textit{Single Page Application}) los cuales son sistemas web
 que tienen el fin de dar una experiencia de usuario similar a la
 de una aplicación de escritorio.
 
-Estos sistemas eran implementados usando un marco de trabajo hecho dentro
-de la compañía usando Javascript. Se tenia una gran jerarquía de clases
-que era compartida tanto para el servidor como con el cliente,
-así se tenia que había una sola fuente de la descripción
-de las clases y objetos del sistema.
+Estos sistemas fueron implementados usando un marco de trabajo hecho dentro
+de la compañía usando Javascript. Se tenía una gran jerarquía de clases
+que era compartida tanto con el servidor como con el cliente, obteniendo una
+sola fuente de la descripción de las clases y objetos del sistema.
 
-Se hacia un uso extenso de la biblioteca Ext JS que es un marco de trabajo
-en Javascript para construir sistemas \textit{SPA}, se hacia un uso particular
-a su facultad para rápidamente generar todo tipo de gráficas para mostrar
-información al usuario.
+Se utilizaba la biblioteca Ext JS la cual es un marco de trabajo
+en Javascript para construir sistemas SPA, principalmente usada para generar
+todo tipo de gráficas rápidamente y mostrar información al usuario.
 
-Entonces tenemos que tanto en el \textit{frontend} como en el \textit{backend}
-se hacia uso de Javascript principalmente con un núcleo de Java para las partes
-que requerían un rendimiento óptimo. Esto tenia varias ventajas:
+Por lo descrito en los parrafos anteriores podemos decir que tanto en el
+\textit{frontend} como en el \textit{backend} se hacia uso del lenguaje
+de programación Javascript principalmente con un núcleo de Java para las partes
+que requerían un rendimiento, por lo que las ventajas al usarlo son:
 
 \begin{itemize}
 \item Reducir al mínimo el cambio de contexto entre lenguajes entre
-  el frontend y el backend.
+  el \textit{frontend} y el \textit{backend}.
 \item Reducir sustancialmente la cantidad de código redundante al no
   tenerse que reimplementar la jerarquía de objetos, que era pasada
   por el servidor en forma serializada por JSON y deserializada por el
-  cliente
+  cliente.
 \item Había una única representación de una clase por ejemplo la
   clase \textit{Building} era una clase de Javascript que se usaba para
   tanto en el servidor como en el cliente.
