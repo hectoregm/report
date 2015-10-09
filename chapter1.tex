@@ -196,36 +196,37 @@ también con Ruby haciendo uso del marco de trabajo Ruby on Rails.
 El \textit{frontend} es implementado por medio del marco de trabajo
 Ruby on Rails (Rails), haciendo uso de la biblioteca \textit{Backbone.js}
 para dar estructura a los módulos de Javascript que se utilizan en la vista.
-Para las gráficas y manejo de datos se seguira haciendo uso de Ext JS
+Para las gráficas y manejo de datos se seguirá haciendo uso de Ext JS
 por su gran facilidad para implementar cualquier tipo de gráficas.
 
-El servidor de Rails tendría el rol de recibir las peticiones de la
-interfaz web y coordinar las peticiones necesarias al \textit{backend}. El trabajo
+El servidor de Rails recibirá las peticiones de la interfaz web y
+coordinará las peticiones necesarias al \textit{backend}. El trabajo
 de la realización de las peticiones a los servicios web ya existentes
 y la creación de clases y objetos en Ruby basados en la jerarquía de clases
-definida en Javascript seria realizado por la biblioteca \texttt{Bezel},
-la cual seria implementada desde cero.
+definida en Javascript será realizada por la biblioteca \texttt{Bezel},
+la cual será implementada desde cero.
 
-Aunque en la parte del \texttt{backend} se tenia un sistema de procesamiento
-y análisis de datos ya en producción era necesario el diseño e implementación
-de dos nuevos componentes en el \texttt{backend}. El primero era el modulo de
-recomendaciones (\textit{Recommendations API}) el cual según las respuestas
-dadas del usuario debía poder generar recomendaciones hechas a la medida al
-contexto de operación de cada usuario. El segundo modulo era el modulo de
-desagregación (\textit{Disaggregation API}) que tomaba los datos de consumo
-del usuario y usando aprendizaje de maquina separaba este consumo en sus
-diferentes partes. %FIXME: Ser mas especifico en la desagregacion.
+Aunque en la parte del \texttt{backend} se tiene un sistema de procesamiento
+y análisis de datos, es necesario diseñar e implementar dos nuevos componentes
+en el \texttt{backend}. El primero era el modulo de recomendaciones
+(\textit{Recommendations API}), el cual según las respuestas obtenidas por el
+usuario se utilizan para generar recomendaciones hechas a la medida del
+contexto de operación de cada usuario. El segundo modulo es el modulo de
+desagregación (\textit{Disaggregation API}) que toma los datos de consumo
+del usuario y usando aprendizaje de maquina separa este consumo en sus
+diferentes partes. %FIXME: Ser mas especifico en la desagregación.
 
-Para acelerar el desarrollo del sistema se propuso que se hiciera la implementación
-del frontend y del backend en forma concurrente, dado que una parte significativa
-estaría en desarrollo se haría uso de datos estáticos contenidos en una base de
-datos como PostgreSQL mientras se esperaba en la implementación de los nuevos
-componentes del backend y de la implementación de la librería \texttt{Bezel}.
+Para acelerar el desarrollo del sistema se implemento el frontend y el backend
+en forma concurrente, dado que una parte significativa estaría en desarrollo
+se haría uso de datos estáticos contenidos en una base de datos como PostgreSQL
+mientras se esperaba en la implementación de los nuevos componentes del backend
+y de la implementación de la librería \texttt{Bezel}.
 
-Dado que al principio el frontend haría uso de un backend provisional con datos
-estáticos al hacer el cambio al backend final se tendrían varias incompatibilidades,
-para acelerar este proceso de integración se propuso el uso de una suite de
-pruebas de integración principalmente para asegurar que la transición fuera exitosa
-y con la menor cantidad de bugs.
+Dado que al principio el \textit{frontend} haría uso de un \textit{backend}
+provisional con datos estáticos al hacer el cambio al \textit{backend} final
+se tendrían varias incompatibilidades, para acelerar este proceso de integración
+se propuso el uso de un conjunto de pruebas de integración utilizadas
+principalmente para asegurar que la transición fuera exitosa y con la menor
+cantidad de errores.
 
 \jcimage{1.0}{imagenes/PEAT-Architecture.png}{Esquema de alto nivel de la arquitectura para \texttt{PEAT}}
