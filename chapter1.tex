@@ -141,62 +141,63 @@ que requerían un rendimiento, por lo que las ventajas al usarlo son:
 \section{Propuesta de desarrollo}
 En primera instancia se pensaba realizar el mismo tipo de sistema
 a los que se venían desarrollando para cubrir los requerimientos
-de \texttt{PEAT}, es decir realizar un cliente
-de Javascript que hiciera uso del API y jerarquía de objetos ya
-existente (con ciertas adicciones y modificaciones). Pero en los
-primeros prototipos se lograron visualizar varios problemas con
-este acercamiento:
+de \texttt{PEAT}, es decir desarrollar un cliente de Javascript
+que hiciera uso del API y jerarquía de objetos ya
+existente (con ciertas adicciones y modificaciones). Los primeros
+prototipos presentaban varios problemas bajo este esquema:
 
 \begin{itemize}
 \item El tiempo para realizar la precarga de todos los módulos y
   objetos dados por el API en el cliente tomaba un tiempo
-  considerable (5+ segs.). Los sistema anteriores eran usados
+  considerable (5+ segundos.). Los sistema anteriores eran usados
   por un numero reducido de personas autorizadas, que hacían uso
   extensivo del sistema en sesiones de larga duración, por lo
   que este tiempo de arranque era tolerable.
 \item El tipo de interfases y experiencia de usuario que se obtenía
-  usando Ext JS eran excelentes para el contexto de mostrar una gran
-  cantidad de información al usuario, en \texttt{PEAT} el volumen
-  era menor y la importancia era de que la experiencia de usuario
-  fuera lo mas fluida y rápida posible.
+  usando Ext JS eran excelentes en ese contexto pues mostraban una gran
+  cantidad de información al usuario, por otro lado en \texttt{PEAT}
+  el volumen de información era menor y el aspecto de mayor relevancia
+  era el mostrar al usuario dicha información de manera mas fluida y rápida.
 \end{itemize}
 
-Entonces se vio el de usar otro tipo de herramientas para construir
-aplicaciones finales al usuario pero que permitieran rehusar todo el API
-y jerarquía de objetos implementados hasta ese momento.
+Para solucionar los problemas antes mencionados, se tomo la decisión de
+usar otro tipo de herramientas para construir aplicaciones finales al usuario,
+que permitieran reusar todo el API y la jerarquía de objetos implementados
+hasta ese momento.
 
-Después de varios prototipos con varios stacks de tecnología se decido
-usar Ruby y el marco de trabajo Ruby on Rails.
+Después de desarrollar varios prototipos con diferentes tecnologías se decidió
+usar el lenguaje de programación Ruby y el marco de trabajo Ruby on Rails (Rails)
+las razones principales fueron:
 
-Las razones principales fueron:
 \begin{itemize}
-\item Ruby tiene un gran soporte para la metaprogramación, es decir para la
-  creación de clases y sus atributos ``al vuelo''. Esto sera de vital
+\item Ruby tiene un gran soporte para la metaprogramación, es decir, para la
+  creación de clases y sus atributos ``al vuelo'', lo cual es de vital
   importancia para lograr una buena integración con la jerarquía de clases
   ya definida en el \textit{backend}.
-\item Ruby tiene una gran capacidad para implementar Domain Specific Languages (DSL)
-  que permiten realizar lenguajes específicos al problema que se esta resolviendo.
-  Característica que sera usada para lograr la integración con el
+\item Ruby tiene una gran capacidad para implementar lenguajes de dominio
+  especifico (DSL), son lenguajes diseñados para solucionar problemas de un dominio
+  en particular, característica que sera usada para lograr la integración con el
   \texttt{backend} y la automatización del despliegue de la aplicación.
 \item Gran integración con una gran cantidad de utilerías y bibliotecas para
   desarrollar, diseñar y implementar interfases de usuario.
 \item Gran soporte para realizar extensas pruebas unitarias, funcionales
-  y de integración, por medio de librerías como rspec, cucumber, capybara, etc.
+  y de integración, por medio de bibliotecas como \textit{RSpec}, \textit{Cucumber},
+  \textit{Capybara}, etcétera.
 \end{itemize}
 
 En el proyecto de implementación del sistema \texttt{PEAT}
-se tienen tres partes principales de desarrollo:
+cuenta con tres partes principales de desarrollo:
 (a) el \textit{backend}  implementado en su mayoría usando
-Javascript, con un núcleo escrito en Java, (b) una biblioteca en Ruby que permite
-la interacción del \textit{backend} son el servidor de \texttt{PEAT} y
-(c) el \textit{frontend} escrito también con Ruby haciendo uso del
-marco de trabajo Ruby on Rails.
+Javascript, con un núcleo escrito en Java, (b) \texttt{Bezel}
+una biblioteca en Ruby que permite la interacción del \textit{backend}
+con el servidor de \texttt{PEAT} y (c) el \textit{frontend} escrito
+también con Ruby haciendo uso del marco de trabajo Ruby on Rails.
 
-El \textit{frontend} seria implementado por medio del marco de trabajo
-Ruby on Rails (Rails), haciendo uso de alguna biblioteca para dar estructura
-a los módulos de Javascript que se usaran en la vista. Para las gráficas
-y manejo de datos se seguiría haciendo uso de Ext JS por su gran facilidad
-para implementar cualquier tipo de gráfica.
+El \textit{frontend} es implementado por medio del marco de trabajo
+Ruby on Rails (Rails), haciendo uso de la biblioteca \textit{Backbone.js}
+para dar estructura a los módulos de Javascript que se utilizan en la vista.
+Para las gráficas y manejo de datos se seguira haciendo uso de Ext JS
+por su gran facilidad para implementar cualquier tipo de gráficas.
 
 El servidor de Rails tendría el rol de recibir las peticiones de la
 interfaz web y coordinar las peticiones necesarias al \textit{backend}. El trabajo
