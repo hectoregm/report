@@ -6,8 +6,43 @@ a los usuarios de pequeñas y medianas empresas (PyMES) identificar y monitorear
 sus gastos de energía eléctrica, con el fin de obtener un mayor control
 en los costos de ésta.
 
-% TODO: Agregar mas de lo que se escribió en el proyecto. Lo mejor seria
-% poner lo que puse en la justificación.
+En una gran cantidad de proyectos resulta ser suficiente el hacer uso de un
+único lenguaje de programación para llevar a buen término el proyecto, es decir,
+terminarlo de forma exitosa. Sin embargo conforme pasa el tiempo, las necesidades
+de las compañías y usuarios cambian, lo cual provoca que hagamos uso de una serie de
+tecnologías no previstas en un inicio, esto representa casi siempre el uso
+de más de un lenguaje de programación\footnote{Debido a que ningún
+lenguaje de programación actualmente es el mejor en todos los contextos
+posibles de uso}.
+
+En el proyecto de implementación del sistema PEAT cuenta con tres partes principales
+de desarrollo: (a) el \textit{backend}  implementado en su mayoría usando
+el lenguaje de programación Javascript, con un núcleo escrito en el lenguaje de
+programación Java, (b) una biblioteca en el lenguaje de programación Ruby que permite
+la interacción del \textit{backend} con aplicaciones web y (c) el \textit{frontend}
+escrito con Ruby, dada sus ventajas para realizar sistemas web.
+
+Durante este proyecto se implementó una biblioteca no solo para hacer uso de
+los servicios web ya existentes, sino para facilitar la creación
+de clases y objetos en Ruby basados en la jerarquía de clases definida
+en Javascript. Cabe mencionar que haciendo uso de una de las fortalezas de Ruby
+como lo es la metaprogramación para la creación de clases y sus
+atributos ``al vuelo'', según las especificaciones enviadas por el servidor,
+se mantiene así la jerarquía de clases de un lenguaje a otro, lo cual fue uno
+de los objetivos cumplidos durante el proyecto.
+
+Otro punto de creciente importancia es el despliegue de una aplicación, ya que por un
+lado hace algunos años las aplicaciones web se desarrollaban bajo el modelo de
+tres capas: la base de datos, el servidor de la aplicación y el servidor web;
+actualmente se tienen mas servicios que deben estar en línea sobre todo para
+garantizar un servicio concurrente; caches, equilibradores de carga, servidores
+de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en sus
+diferentes contextos, desarrollo, producción y pruebas, es de vital importancia
+para el desarrollo de software en tiempo y en forma.
+
+Durante este proyecto se hacen uso extensivo de técnicas como la metaprogramación
+y el despliegue continuo, para permitir un desarrollo acelerado, con el fin de
+obtener rápidamente retroalimentación del usuario final.
 
 El sistema \texttt{PEAT} es resultado del trabajo en conjunto de tres compañías:
 Pacific Gas and Electric Company (PG\&E), C3 Energy y Software Next Door.
@@ -17,7 +52,19 @@ más grandes compañías de Estados Unidos con sede en San Francisco, California
 El sistema \texttt{PEAT} es el resultado de una licitación iniciada por PG\&E,
 siendo ganadora de dicha licitación la compañía C3 Energy.
 
-% TODO: Escribir sobre de que va a tratar cada capitulo.
+Este trabajo esta dividido en tres capítulos los cuales son:
+\begin{itemize}
+\item \textit{Capitulo 1, Situación actual}: Se da una descripción del contexto
+  que dio pie al desarrollo del sistema \texttt{PEAT}, después se da una
+  descripción de la arquitectura y sistemas con los que se tuvo como punto de
+  partida para su implementación. Finalmente se define la propuesta de desarrollo
+  del sistema.
+\item \textit{Capitulo 2, Fundamentos teóricos}: Se da una resumen de los conceptos
+  teóricos mas influyentes en el diseño e implementación del sistema \texttt{PEAT}.
+\item \textit{Capitulo 3, Diseño e implementación del sistema PEAT}: Se desarrolla y
+  describe la implementación del sistema \texttt{PEAT}, dando la justificación
+  de las decisiones tomadas durante su implementación.
+\end{itemize}
 
 \section*{Objetivo general}
 
