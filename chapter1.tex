@@ -24,7 +24,6 @@ En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociad
   1 pm a 7 pm.
 \end{itemize}
 
-% FIXME: Rehacer el párrafo, se vuelve redundante al final
 El objetivo de un esquema \texttt{TOU} es el distribuir la carga de la red
 eléctrica, alentando a los usuarios a cambiar su consumo durante periodos
 de demanda alta a periodos de demanda baja, al bajar la demanda en los periodos
@@ -121,7 +120,7 @@ Se utilizaba la biblioteca Ext JS la cual es un marco de trabajo
 en Javascript para construir sistemas SPA, principalmente usada para generar
 todo tipo de gráficas rápidamente y mostrar información al usuario.
 
-Por lo descrito en los parrafos anteriores podemos decir que tanto en el
+Por lo descrito en los párrafos anteriores podemos decir que tanto en el
 \textit{frontend} como en el \textit{backend} se hacia uso del lenguaje
 de programación Javascript principalmente con un núcleo de Java para las partes
 que requerían un rendimiento, por lo que las ventajas al usarlo son:
@@ -139,12 +138,12 @@ que requerían un rendimiento, por lo que las ventajas al usarlo son:
 \end{itemize}
 
 \section{Propuesta de desarrollo}
-En primera instancia se pensaba realizar el mismo tipo de sistema
-a los que se venían desarrollando para cubrir los requerimientos
-de \texttt{PEAT}, es decir desarrollar un cliente de Javascript
-que hiciera uso del API y jerarquía de objetos ya
-existente (con ciertas adicciones y modificaciones). Los primeros
-prototipos presentaban varios problemas bajo este esquema:
+La primera propuesta para el desarrollo de \texttt{PEAT} consistía
+en implementar una aplicación de tipo SPA, como los otros sistemas
+existentes dentro de C3 Energy, es decir desarrollar un cliente
+de Javascript que hiciera uso del API y jerarquía de objetos
+ya existente (con ciertas adicciones y modificaciones).
+Los primeros prototipos presentaban varios problemas bajo este esquema:
 
 \begin{itemize}
 \item El tiempo para realizar la precarga de todos los módulos y
@@ -187,11 +186,13 @@ las razones principales fueron:
 
 En el proyecto de implementación del sistema \texttt{PEAT}
 cuenta con tres partes principales de desarrollo:
-(a) el \textit{backend}  implementado en su mayoría usando
-Javascript, con un núcleo escrito en Java, (b) \texttt{Bezel}
+(a) el \textit{backend} (Figura 1.1 - A) implementado en su mayoría usando
+Javascript, con un núcleo escrito en Java, (b) \texttt{Bezel} (Figura 1.1 - B)
 una biblioteca en Ruby que permite la interacción del \textit{backend}
-con el servidor de \texttt{PEAT} y (c) el \textit{frontend} escrito
+con el servidor de \texttt{PEAT} y (c) el \textit{frontend} (Figura 1.1 - C) escrito
 también con Ruby haciendo uso del marco de trabajo Ruby on Rails.
+
+\jcimage{1.0}{imagenes/Arquitectura-PEAT.png}{Esquema de alto nivel de la arquitectura para el sistema \texttt{PEAT}}
 
 El \textit{frontend} es implementado por medio del marco de trabajo
 Ruby on Rails (Rails), haciendo uso de la biblioteca \textit{Backbone.js}
@@ -228,5 +229,3 @@ se tendrían varias incompatibilidades, para acelerar este proceso de integraci�
 se propuso el uso de un conjunto de pruebas de integración utilizadas
 principalmente para asegurar que la transición fuera exitosa y con la menor
 cantidad de errores.
-
-\jcimage{1.0}{imagenes/Arquitectura-PEAT.png}{Esquema de alto nivel de la arquitectura para el sistema \texttt{PEAT}}
