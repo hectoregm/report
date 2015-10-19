@@ -4,6 +4,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{mathptmx}
+\usepackage[backend=biber,style=trad-abbrv]{biblatex}
+
+\addbibresource{biblio.bib}
 
 \newcommand{\jcimage}[3]{\begin{figure}[h!]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\end{figure}\vskip10pt}
 
@@ -80,8 +83,7 @@ M. en I. Karla Ramírez Pulido  }
 \include{chapter2}
 
 \backmatter
-%\nocite{*}
-\bibliographystyle{acm}
-\bibliography{biblio}
+
+\printbibliography
 
 \end{document}
