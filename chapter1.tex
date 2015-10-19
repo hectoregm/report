@@ -70,7 +70,7 @@ El sistema consta de cuatro capas:
 \begin{itemize}
 \item Una capa de almacenamiento de información que era de referencia
   o datos ya procesados
-\item Una capa de análisis en las que se hacia el análisis de los datos
+\item Una capa de análisis en las que se hacía el análisis de los datos
   y que también tomaba el rol de capa de caché.
 \item Una capa de servicios web que permitía acceder a los datos contenidos
   en las capas anteriores.
@@ -99,10 +99,10 @@ Sobre la base de datos anterior anterior se tenia un API\footnote{
 que que permita el hacer consultas y operaciones sobre los datos contenidos
 y/o analizados en este sistema.
 Este API estaba implementado en Javascript bajo Rhino\footnote{Un interprete
-  de Javascript de codigo abierto desarrollado en Java.}
-el cual se ejecuta bajo la maquina virtual de Java (\textit{Java Virtual Machine},
+  de Javascript de código abierto desarrollado en Java.}
+el cual se ejecuta bajo la máquina virtual de Java (\textit{Java Virtual Machine},
 JVM), obteniendo como ventaja el poder realizar la implementación de rutinas
-criticas en un lenguaje con mejor rendimiento como lo es Java. De esta forma
+críticas en un lenguaje con mejor rendimiento como lo es Java. De esta forma
 se tenía el núcleo del servidor implementado en Java con el resto del API
 implementada en Javascript.
 
@@ -122,7 +122,7 @@ en Javascript para construir sistemas SPA, principalmente usada para generar
 todo tipo de gráficas rápidamente y mostrar información al usuario.
 
 Por lo descrito en los párrafos anteriores podemos decir que tanto en el
-\textit{frontend} como en el \textit{backend} se hacia uso del lenguaje
+\textit{frontend} como en el \textit{backend} se hacía uso del lenguaje
 de programación Javascript principalmente con un núcleo de Java para las partes
 que requerían un rendimiento, por lo que las ventajas al usarlo son:
 
@@ -133,7 +133,7 @@ que requerían un rendimiento, por lo que las ventajas al usarlo son:
   tenerse que reimplementar la jerarquía de objetos, que era pasada
   por el servidor en forma serializada por JSON y deserializada por el
   cliente.
-\item Había una única representación de una clase por ejemplo la
+\item Existía una única representación de una clase por ejemplo la
   clase \textit{Building} era una clase de Javascript que se usaba para
   tanto en el servidor como en el cliente.
 \end{itemize}
@@ -141,7 +141,7 @@ que requerían un rendimiento, por lo que las ventajas al usarlo son:
 \section{Propuesta de desarrollo}
 La primera propuesta para el desarrollo de \texttt{PEAT} consistía
 en implementar una aplicación de tipo SPA, como los otros sistemas
-existentes dentro de C3 Energy, es decir desarrollar un cliente
+existentes dentro de C3 Energy, es decir, desarrollar un cliente
 de Javascript que hiciera uso del API y jerarquía de objetos
 ya existente (con ciertas adicciones y modificaciones).
 Los primeros prototipos presentaban varios problemas bajo este esquema:
@@ -149,7 +149,7 @@ Los primeros prototipos presentaban varios problemas bajo este esquema:
 \begin{itemize}
 \item El tiempo para realizar la precarga de todos los módulos y
   objetos dados por el API en el cliente tomaba un tiempo
-  considerable (5+ segundos.). Los sistema anteriores eran usados
+  considerable (5+ segundos.). Los sistemas anteriores eran usados
   por un numero reducido de personas autorizadas, que hacían uso
   extensivo del sistema en sesiones de larga duración, por lo
   que este tiempo de arranque era tolerable.
@@ -157,7 +157,7 @@ Los primeros prototipos presentaban varios problemas bajo este esquema:
   usando Ext JS eran excelentes en ese contexto pues mostraban una gran
   cantidad de información al usuario, por otro lado en \texttt{PEAT}
   el volumen de información era menor y el aspecto de mayor relevancia
-  era el mostrar al usuario dicha información de manera mas fluida y rápida.
+  era el mostrar al usuario dicha información de manera mas fluída y rápida.
 \end{itemize}
 
 Para solucionar los problemas antes mencionados, se tomo la decisión de
@@ -177,7 +177,7 @@ las razones principales fueron:
 \item Ruby tiene una gran capacidad para implementar lenguajes de dominio
   especifico (DSL), son lenguajes diseñados para solucionar problemas de un dominio
   en particular, característica que sera usada para lograr la integración con el
-  \texttt{backend} y la automatización del despliegue de la aplicación.
+  \textit{backend} y la automatización del despliegue de la aplicación.
 \item Gran integración con una gran cantidad de utilerías y bibliotecas para
   desarrollar, diseñar y implementar interfases de usuario.
 \item Gran soporte para realizar extensas pruebas unitarias, funcionales
@@ -195,7 +195,7 @@ también con Ruby haciendo uso del marco de trabajo Ruby on Rails.
 
 \jcimage{1.0}{imagenes/Arquitectura-PEAT.png}{Esquema de alto nivel de la arquitectura para el sistema \texttt{PEAT}}
 
-El \textit{frontend} es implementado por medio del marco de trabajo
+El \textit{frontend} está implementado por medio del marco de trabajo
 Ruby on Rails (Rails), haciendo uso de la biblioteca \textit{Backbone.js}
 para dar estructura a los módulos de Javascript que se utilizan en la vista.
 Para las gráficas y manejo de datos se seguirá haciendo uso de Ext JS
@@ -208,21 +208,23 @@ y la creación de clases y objetos en Ruby basados en la jerarquía de clases
 definida en Javascript será realizada por la biblioteca \texttt{Bezel},
 la cual será implementada desde cero.
 
-Aunque en la parte del \texttt{backend} se tiene un sistema de procesamiento
+Aunque en la parte del \textit{backend} se tiene un sistema de procesamiento
 y análisis de datos, es necesario diseñar e implementar dos nuevos componentes
-en el \texttt{backend}. El primero era el modulo de recomendaciones
+en el \textit{backend}. El primero era el módulo de recomendaciones
 (\textit{Recommendations API}), el cual según las respuestas obtenidas por el
 usuario se utilizan para generar recomendaciones hechas a la medida del
-contexto de operación de cada usuario. El segundo modulo es el modulo de
+contexto de operación de cada usuario. El segundo módulo es el módulo de
 desagregación (\textit{Disaggregation API}) que toma los datos de consumo
-del usuario y usando aprendizaje de maquina separa este consumo en sus
-diferentes partes. %FIXME: Ser mas especifico en la desagregación.
+del usuario y usando aprendizaje de máquina separa este consumo en sus
+diferentes partes.
 
-Para acelerar el desarrollo del sistema se implemento el frontend y el backend
-en forma concurrente, dado que una parte significativa estaría en desarrollo
-se haría uso de datos estáticos contenidos en una base de datos como PostgreSQL
-mientras se esperaba en la implementación de los nuevos componentes del backend
-y de la implementación de la librería \texttt{Bezel}.
+%FIXME: Redactar mejor la parte final.
+Para acelerar el desarrollo del sistema se implementó el \textit{frontend}
+y el \textit{backend} en forma concurrente, dado que una parte significativa
+estaría en desarrollo se hizo uso de datos estáticos contenidos en una base de datos
+como PostgreSQL mientras se esperaba en la implementación de los nuevos
+componentes del \textit{backend} y de la implementación de la biblioteca
+\texttt{Bezel}.
 
 Dado que al principio el \textit{frontend} haría uso de un \textit{backend}
 provisional con datos estáticos al hacer el cambio al \textit{backend} final
