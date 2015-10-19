@@ -6,19 +6,19 @@ mas utilizado y citado para el desarrollo de interfaces de usuario y sistemas we
 MVC consiste de tres tipos de objetos:
 
 \begin{itemize}
-\item Modelo: Representación de la información de dominio del sistema.
-\item Vista: Representación visual del modelo.
-\item Controlador: Define la forma en que la interfaz reacciona a la entrada
+\item Modelo: representación de la información de dominio del sistema.
+\item Vista: representación visual del modelo.
+\item Controlador: define la forma en que la interfaz reacciona a la entrada
   del usuario.
 \end{itemize}
 
-\jcimage{1.0}{imagenes/MVC-Rails.png}{Patrón MVC para sistemas web.}
+\jcimage{1.0}{imagenes/MVC-Rails.png}{Patrón MVC para sistemas web \cite{15_agile_hansson}.}
 
 MVC fue ideado originalmente para aplicaciones gráficas convencionales,
 donde los desarrolladores encontraron que la separación de responsabilidades,
 entre la presentación (vista y controlador) y el dominio (modelo), fomentadas
 por el patrón llevan a un menor acoplamiento lo que hacia al código
-mucho mas fácil de escribir y mantener.
+mucho mas fácil de escribir y mantener (Ver Figura 2.1).
 
 MVC desacopla vistas y modelos mediante el establecimiento de un
 protocolo de suscripción / notificación. La vista debe asegurarse
@@ -26,12 +26,12 @@ de que su aspecto visual refleje el estado del modelo. Cada vez que cambian
 los datos del modelo, el modelo notifica a las vistas que depende de ella.
 Este enfoque permite conectar múltiples vistas a un modelo para proporcionar
 diferentes presentaciones. También puede crear nuevas vistas para un modelo
-sin reescribir este ultimo \cite[pag.~4]{14_gamma_1995}.
+sin reescribir este último \cite{14_gamma_1995}.
 
 \subsection{MVC y Rails}
 En el marco de trabajo Rails se hace uso de MVC como patrón de arquitectura
 para implementar sistemas web. En Rails los modelos se definen haciendo
-uso de la biblioteca ActiveRecord, esta biblioteca implementa el
+uso de la biblioteca \textit{ActiveRecord}, esta biblioteca implementa el
 patrón de mapeo objeto-relacional (\textit{Object-relational mapping}
 (\textit{ORM})) para facilitar el acceso de información contenida en
 bases de datos relacionales, dado que es el caso típico en sistemas web
@@ -51,13 +51,13 @@ dinámicas haciendo uso de \textit{Asynchronous JavaScript and XML} (AJAX).
 
 Finalmente en Rails los controladores son el centro lógico del sistema. Coordinan
 la interacción entre el usuario, las vistas y el modelo
-\cite[pag.~29]{15_agile_hansson}.
+\cite{15_agile_hansson}.
 
 \subsection{MVC y PEAT}
 \texttt{PEAT} saca provecho del patrón MVC de las siguientes maneras:
 
 \begin{enumerate}
-\item Modelo: Dado que en un principio los servicios web de recomendaciones y
+\item Modelo: dado que en un principio los servicios web de recomendaciones y
   desagregación estaban en construcción se hizo uso de la biblioteca ActiveRecord
   para tener datos reales estáticos para permitir la implementación
   de la interfaz de usuario. Posteriormente se reemplazaron estos modelos
@@ -65,7 +65,7 @@ la interacción entre el usuario, las vistas y el modelo
   por medio de la biblioteca \texttt{Bezel}. Dado que hay un desacoplamiento
   entre los modelos y las vistas esto no implico grandes cambios al hacer el
   reemplazo.
-\item Vista: Haciendo uso de plantillas se generan representaciones HTML
+\item Vista: haciendo uso de plantillas se generan representaciones HTML
   y JSON de los principales modelos del sistema. Para ciertos modelos como
   las recomendaciones se tenia una tercera representación en forma de PDF
   del modelo.
