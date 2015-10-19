@@ -75,39 +75,34 @@ la interacción entre el usuario, las vistas y el modelo
 \section{Servicios web RESTful}
 La \textit{World Wide Web Consortium} (W3C) define que un servicio web
 en general es un sistema de software diseñado para dar suporte a interacciones
-maquina-maquina a través de una red informática. Su implementación es por la
-necesidad de que diferentes sistemas puedan intercambiar datos entre ellos.
+máquina-máquina a través de una red informática \cite{17_w3c_webservice}.
+Su implementación es por la necesidad de que diferentes sistemas puedan
+intercambiar datos entre ellos.
 
-% Cita del glosario de la W3C
-% http://www.w3.org/TR/2004/NOTE-ws-gloss-20040211/#webservice
+La Transferencia de Estado Representacional (\textit{Representational State Transfer}
+ REST) es una arquitectura de software para la implementación de servicios web.
+En REST se define la existencia de recursos (elementos de información), donde
+cada recurso tiene un conjunto de representaciones posibles.
+Por ejemplo una lista de errores por arreglar (recurso) puede ser presentado en
+forma de un documento XML, una pagina HTML o un archivo CSV (representaciones).
 
-%Un servicio web es un método de comunicación entre dos dispositivos sobre una red
-%informática, su implementación es por la necesidad de que diferentes sistemas
-%puedan intercambiar datos entre ellos.
-
-La Transferencia de Estado Representacional (REST) es una arquitectura
-de software para la implementación de servicios web. En REST se define la
-existencia de recursos (elementos de información), donde cada recurso tiene un
-conjunto de representaciones posibles. Por ejemplo una lista de bugs por arreglar
-(recurso) puede ser presentado en forma de un documento XML, una pagina HTML
-o un archivo CSV (representaciones). Además se tienen cuatro características
-principales \cite[pag.~79]{1_richardson_2007}:
+Además se tienen cuatro características principales \cite{1_richardson_2007}:
 
 \begin{itemize}
 \item Protocolo cliente/servidor sin estado (\textit{stateless}): cada mensaje
   HTTP contiene toda la información necesaria para comprender la petición.
   Esto implica que ni el cliente ni el servidor necesitan recordar ningún
   tipo de estado.
-\item Conectividad (\textit{connectedness}): Las representaciones son un hipermedio
+\item Conectividad (\textit{connectedness}): las representaciones son un hipermedio
   en el cual se tienen ligas a otros recursos. Como resultado de esto, es posible
   navegar de un recurso REST a muchos otros, sin necesidad de una
   infraestructura adicional.
-\item Direccionabilidad (\textit{addressability}): La capacidad para
+\item Direccionabilidad (\textit{addressability}): la capacidad para
   identificar los recursos del sistema. Cada recurso es direccionable únicamente
-  a través de su Identificador de Recursos Uniforme (URI).
-\item Interfaz uniforme (\textit{uniform interface}): Se tiene un conjunto de
+  a través de su Identificador de Recursos Uniforme (\textit{Uniform Resource Identifier} URI).
+\item Interfaz uniforme (\textit{uniform interface}): se tiene un conjunto de
   operaciones bien definidas que se aplican a todos los recursos del sistema.
-  Se usan los verbos de HTTP pare definir las operaciones mas importantes
+  Se usan los métodos de HTTP pare definir las operaciones mas importantes
   que son GET, POST, PUT, PATCH y DELETE.
 \end{itemize}
 
@@ -123,10 +118,10 @@ En REST se hace uso de un conjunto finito de verbos para operar sobre otro
 conjunto de objetos. Dado que estamos usando HTTP como capa de transporte, los
 verbos corresponden a los métodos HTTP (GET, POST, PUT, PATCH, y DELETE).
 Los objetos corresponden a los recursos del sistema, los cuales son etiquetados
-usando URLs.
+usando URL.
 
-Un navegador solicita paginas de Rails al hacer una petición para una dirección URI
-haciendo uso de un método HTTP especifico, como GET o POST. Cada método es una
+Un navegador solicita páginas de Rails al hacer una petición para una dirección URI
+haciendo uso de un método HTTP específico, como GET o POST. Cada método es una
 petición para realizar una operación sobre el recurso.
 
 Haciendo uso de la interfaz uniforme, Rails define toda un conjunto de rutas
@@ -141,19 +136,19 @@ En la Figura 2.2 se pueden ver las rutas y verbos asociados para las principales
 operaciones sobre el recurso \textit{buildings}, esto acelera en gran medida
 el desarrollo de servicios web.
 
-\jcimage{1.0}{imagenes/REST-Rails.png}{Rutas y verbos para el recurso \textit{buildings}.}
+\jcimage{1.0}{imagenes/REST-Rails.png}{Rutas y verbos para el recurso \textit{buildings} \cite{18_rails_rest}.}
 
 \subsection{REST y PEAT}
 La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
 
 \begin{itemize}
-\item \textit{Frontend}: Por medio de Rails se implementa un servicio web RESTful
+\item \textit{Frontend}: por medio de Rails se implementa un servicio web RESTful
   para proveer de información a la interfaz gráfica del sistema.
-\item \textit{Backend}: Los servicios web que componen el \textit{backend}, como el
+\item \textit{Backend}: los servicios web que componen el \textit{backend}, como el
   sistema de recomendaciones, son del tipo RESTful. El recurso principal del sistema
   es el de edificio (\textit{Building}) del cual se tienen alrededor los demás
   recursos del sistema.
-\item \textit{Middleware}: La biblioteca \texttt{Bezel} saca provecho del hecho
+\item \textit{Middleware}: la biblioteca \texttt{Bezel} saca provecho del hecho
   de que el \textit{backend} sea de tipo RESTful para facilitar la integración del
   sistema, dado que hacer un mapeo de los recursos a clases y objetos es
   casi directa.
@@ -162,30 +157,24 @@ La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
 
 
 \section{Desarrollo guiado por pruebas y por comportamiento}
-El desarrollo guiado por pruebas (TDD) y el desarrollo guiado por comportamiento
-(BDD) son practicas de ingeniería de software que involucran el escribir las pruebas
+El desarrollo guiado por pruebas (\textit{Test Driven Development} TDD) y el
+desarrollo guiado por comportamiento (\textit{Behavior Driven Development} BDD)
+son practicas de ingeniería de software que involucran el escribir las pruebas
 antes de escribir el código a probar y la refactorización que involucra revisar el
 diseño y remover cualquier duplicación.
 
-Mientras en TDD el enfoque es probar unidades de código (función, clase o modulo)
+Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo)
 en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
 completo.
 
 TDD/BDD definen un ciclo de pasos para guiar el desarrollo:
 
 \begin{enumerate}
-\item Rojo: Se escribe una prueba y se verifica que esta falla.
-\item Verde: Se implementa el mínimo código de forma que la prueba pase
+\item Rojo: se escribe una prueba y se verifica que esta falla.
+\item Verde: se implementa el mínimo código de forma que la prueba pase
   satisfactoriamente
-\item Refactorizar: Se elimina toda duplicación generada en hacer que
+\item Refactorizar: se elimina toda duplicación generada en hacer que
   la prueba pase.
 \end{enumerate}
 
 %\jcimage{1.0}{imagenes/TDD-BDD.png}{Ciclo TDD/BDD.}
-
-El objetivo en cualquier proyecto es código limpio que funcione, mediante TDD/BDD
-se usa la técnica de divide y vencerás, resolviendo primero la parte de
-"que funcione" del problema para luego resolver la parte de "código limpio",
-esto en oposición al desarrollo típico. Esto provoca que el diseño este en
-constante evolución y en constante revisión, obteniendo un diseño emergente
-lo cual nos da una de las grandes ventajas de TDD y BDD.
