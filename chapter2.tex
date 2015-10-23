@@ -3,7 +3,7 @@
 \section{Patrón Modelo-Vista-Controlador (MVC)}
 El patrón Modelo Vista Controlador (MVC) es probablemente el patrón
 mas utilizado y citado para el desarrollo de interfaces de usuario y sistemas web.
-MVC consiste de tres tipos de objetos:
+MVC consiste de tres tipos de objetos \cite{22_martin_fowler_mvc}:
 
 \begin{itemize}
 \item Modelo: representación de la información de dominio del sistema.
@@ -12,6 +12,7 @@ MVC consiste de tres tipos de objetos:
   del usuario.
 \end{itemize}
 
+% FIXME: Hacer diagrama en español de MVC en sistemas web
 \jcimage{1.0}{imagenes/MVC-Rails.png}{Patrón MVC para sistemas web \cite{15_agile_hansson}.}
 
 MVC fue ideado originalmente para aplicaciones gráficas convencionales,
@@ -32,8 +33,8 @@ sin reescribir este último \cite{14_gamma_1995}.
 En el marco de trabajo Rails se hace uso de MVC como patrón de arquitectura
 para implementar sistemas web. En Rails los modelos se definen haciendo
 uso de la biblioteca \textit{ActiveRecord}, esta biblioteca implementa el
-patrón de mapeo objeto-relacional (\textit{Object-relational mapping}
-(\textit{ORM})) para facilitar el acceso de información contenida en
+patrón de mapeo objeto-relacional (\textit{Object-relational mapping},
+ORM) para facilitar el acceso de información contenida en
 bases de datos relacionales, dado que es el caso típico en sistemas web
 convencionales.
 
@@ -42,10 +43,10 @@ ser mostrada en un navegador. En su forma mas simple, una
 vista es un trozo de código HTML que muestra un texto fijo. Mas típicamente
 se requiere mostrar contenido dinámico creado por una acción en un controlador.
 El contenido dinámico es generado por medio de plantillas, el esquema
-de plantillas más común es llamada \textit{Embedded Ruby} (ERB),
-el cual inserta pedazos de código Ruby dentro de una vista, similar a la forma
+de plantillas más común es llamado Ruby Embebido (\textit{Embedded Ruby}, ERB),
+el cual inserta pedazos de código de Ruby dentro de una vista, similar a la forma
 como se hace en otros marcos de trabajo como PHP o JSP. También se pude hacer uso de
-ERB para incrustar pedazos de código Javascript en el servidor
+Ruby Embebido para incrustar pedazos de código Javascript en el servidor,
 para ser ejecutados en el navegador, lo cual permite crear interfases
 dinámicas haciendo uso de \textit{Asynchronous JavaScript and XML} (AJAX).
 
@@ -54,37 +55,37 @@ la interacción entre el usuario, las vistas y el modelo
 \cite{15_agile_hansson}.
 
 \subsection{MVC y PEAT}
-\texttt{PEAT} saca provecho del patrón MVC de las siguientes maneras:
+\texttt{PEAT} saca provecho del patrón MVC de las siguientes maneras \cite{15_agile_hansson}:
 
 \begin{enumerate}
 \item Modelo: dado que en un principio los servicios web de recomendaciones y
   desagregación estaban en construcción se hizo uso de la biblioteca ActiveRecord
   para tener datos reales estáticos para permitir la implementación
-  de la interfaz de usuario. Posteriormente se reemplazaron estos modelos
+  de la interfaz de usuario. Posteriormente se reemplazaron éstos modelos
   por nuevos modelos que hacían uso de los servicios web del \textit{backend},
   por medio de la biblioteca \texttt{Bezel}. Dado que hay un desacoplamiento
-  entre los modelos y las vistas esto no implico grandes cambios al hacer el
+  entre los modelos y las vistas esto no implicó grandes cambios al hacer el
   reemplazo.
-\item Vista: haciendo uso de plantillas se generan representaciones HTML
-  y JSON de los principales modelos del sistema. Para ciertos modelos como
-  las recomendaciones se tenia una tercera representación en forma de PDF
-  del modelo.
-% FIXME: Escribir sobre beneficios en contexto de los controladores
+\item Vista: haciendo uso de plantillas se generan representaciones de los
+  principales modelos del sistema en HTML y JSON. Para ciertos modelos, como
+  las recomendaciones y los reportes de consumo, se tenia una tercera
+  representación en forma de PDF del modelo.
 \end{enumerate}
 
 \section{Servicios web RESTful}
-La \textit{World Wide Web Consortium} (W3C) define que un servicio web
-en general es un sistema de software diseñado para dar suporte a interacciones
+La \textit{World Wide Web Consortium}, W3C, define que un servicio web
+en general es un sistema de software diseñado para dar soporte a interacciones
 máquina-máquina a través de una red informática \cite{17_w3c_webservice}.
-Su implementación es por la necesidad de que diferentes sistemas puedan
-intercambiar datos entre ellos.
+Su implementación nació de tener diferentes sistemas que puedan intercambiar
+datos entre ellos.
 
-La Transferencia de Estado Representacional (\textit{Representational State Transfer}
- REST) es una arquitectura de software para la implementación de servicios web.
+La Transferencia de Estado Representacional (\textit{Representational State Transfer}, REST) es una arquitectura de software para la implementación de servicios web.
 En REST se define la existencia de recursos (elementos de información), donde
 cada recurso tiene un conjunto de representaciones posibles.
 Por ejemplo una lista de errores por arreglar (recurso) puede ser presentado en
 forma de un documento XML, una pagina HTML o un archivo CSV (representaciones).
+
+\vspace{2.5mm}
 
 Además se tienen cuatro características principales \cite{1_richardson_2007}:
 
@@ -99,11 +100,11 @@ Además se tienen cuatro características principales \cite{1_richardson_2007}:
   infraestructura adicional.
 \item Direccionabilidad (\textit{addressability}): la capacidad para
   identificar los recursos del sistema. Cada recurso es direccionable únicamente
-  a través de su Identificador de Recursos Uniforme (\textit{Uniform Resource Identifier} URI).
+  a través de su Identificador de Recursos Uniforme (\textit{Uniform Resource Identifier}, URI).
 \item Interfaz uniforme (\textit{uniform interface}): se tiene un conjunto de
   operaciones bien definidas que se aplican a todos los recursos del sistema.
-  Se usan los métodos de HTTP pare definir las operaciones mas importantes
-  que son GET, POST, PUT, PATCH y DELETE.
+  Se usan los métodos de HTTP para definir las operaciones más importantes
+  como son GET, POST, PUT, PATCH y DELETE.
 \end{itemize}
 
 Los servicios web que implementan una arquitectura REST se suelen llamar
@@ -118,15 +119,15 @@ En REST se hace uso de un conjunto finito de verbos para operar sobre otro
 conjunto de objetos. Dado que estamos usando HTTP como capa de transporte, los
 verbos corresponden a los métodos HTTP (GET, POST, PUT, PATCH, y DELETE).
 Los objetos corresponden a los recursos del sistema, los cuales son etiquetados
-usando URL.
+usando un (\textit{Uniform Resource Locator} URL).
 
 Un navegador solicita páginas de Rails al hacer una petición para una dirección URI
 haciendo uso de un método HTTP específico, como GET o POST. Cada método es una
 petición para realizar una operación sobre el recurso.
 
-Haciendo uso de la interfaz uniforme, Rails define toda un conjunto de rutas
-para un recurso, tomando como ejemplo el concepto de edificio. Se define
-el recurso y sus rutas asociadas con lo siguiente:
+Haciendo uso de la interfaz uniforme, Rails define todo un conjunto de rutas
+para un recurso, tomando como ejemplo el concepto de edificio (\textit{Building}),
+entonces, se define el recurso y sus rutas asociadas con lo siguiente:
 
 \begin{verbatim}
 resources :buildings
@@ -136,6 +137,7 @@ En la Figura 2.2 se pueden ver las rutas y verbos asociados para las principales
 operaciones sobre el recurso \textit{buildings}, esto acelera en gran medida
 el desarrollo de servicios web.
 
+% FIXME: Hacer tabla de rutas para building y en español
 \jcimage{1.0}{imagenes/REST-Rails.png}{Rutas y verbos para el recurso \textit{buildings} \cite{18_rails_rest}.}
 
 \subsection{REST y PEAT}
@@ -146,35 +148,36 @@ La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
   para proveer de información a la interfaz gráfica del sistema.
 \item \textit{Backend}: los servicios web que componen el \textit{backend}, como el
   sistema de recomendaciones, son del tipo RESTful. El recurso principal del sistema
-  es el de edificio (\textit{Building}) del cual se tienen alrededor los demás
+  es el de edificio (\textit{Building}) del cual se tiene alrededor de los demás
   recursos del sistema.
-\item \textit{Middleware}: la biblioteca \texttt{Bezel} saca provecho del hecho
-  de que el \textit{backend} sea de tipo RESTful para facilitar la integración del
-  sistema, dado que hacer un mapeo de los recursos a clases y objetos es
-  casi directa.
+\item \textit{Middleware}: la biblioteca \texttt{Bezel} se beneficia gracias al hecho
+  de que el \textit{backend} sea de tipo RESTful, pues facilita la integración del
+  sistema, dado que hace un mapeo casi directo de los recursos a clases y objetos.
 
 \end{itemize}
 
 
 \section{Desarrollo guiado por pruebas y por comportamiento}
-El desarrollo guiado por pruebas (\textit{Test Driven Development} TDD) y el
-desarrollo guiado por comportamiento (\textit{Behavior Driven Development} BDD)
-son practicas de ingeniería de software que involucran el escribir las pruebas
-antes de escribir el código a probar y la refactorización que involucra revisar el
-diseño y remover cualquier duplicación.
+El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) y el
+desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
+son prácticas de ingeniería de software que involucran el escribir las pruebas
+antes de escribir el código fuente y la refactorización que involucra revisar el
+diseño y remover cualquier repetición.
 
-Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo)
+Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo),
 en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
 completo.
+
+\vspace{2.5mm}
 
 TDD/BDD definen un ciclo de pasos para guiar el desarrollo:
 
 \begin{enumerate}
-\item Rojo: se escribe una prueba y se verifica que esta falla.
+\item Rojo: se escribe una prueba y se verifica que ésta falle.
 \item Verde: se implementa el mínimo código de forma que la prueba pase
   satisfactoriamente
-\item Refactorizar: se elimina toda duplicación generada en hacer que
-  la prueba pase.
+\item Refactorizar: se elimina toda repetición que se origino al
+  hacer que la prueba pase satisfactoriamente.
 \end{enumerate}
 
 %\jcimage{1.0}{imagenes/TDD-BDD.png}{Ciclo TDD/BDD.}
