@@ -13,6 +13,8 @@ llamado hora de consumo (\textit{time-of-use} \texttt{TOU}) define que las
 tasas de cobro varíen en función de la temporada y la hora del día en que
 se usa la energía eléctrica, en contraste con las tasas fijas tradicionales.
 
+\vspace{2.5mm}
+
 En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociadas
 \cite{16_pge_time_of_use_2015}:
 
@@ -65,61 +67,66 @@ En C3 Energy ya se contaba con toda una infraestructura para el
 procesamiento y análisis en tiempo real de datos de consumo eléctrico
 y de gas.
 
+\vspace{2.5mm}
+
 El sistema consta de cuatro capas:
 
 \begin{itemize}
 \item Una capa de almacenamiento de información que era de referencia
   o datos ya procesados
 \item Una capa de análisis en las que se hacía el análisis de los datos
-  y que también tomaba el rol de capa de caché.
+  y que también tomaba el rol de la capa de caché.
 \item Una capa de servicios web que permitía acceder a los datos contenidos
   en las capas anteriores.
-\item Una capa en donde están los sistemas que hacen uso de los
+\item Una capa en donde se encuentran los sistemas que hacen uso de los
   servicios web para dar información al usuario final.
 \end{itemize}
 
 \subsection{Bases de datos}
 Las dos primeras capas almacenan y analizan la información obtenida
-de un gran numero de bases de datos externas relacionadas con temas
+de un gran número de bases de datos externas relacionadas con temas
 de energía. Todos estos datos son concentrados en una base de datos
 central en la que se usaba Oracle Database 10g\footnote{Es un sistema de
   gestión de base de datos de tipo objeto-relacional desarrollado por Oracle.}
 para este rol.
 
 También se contaba con un \textit{cluster} de Apache Cassandra\footnote{Es
-  una base de datos de tipo NoSQL distribuida, basada en un modelo de almacenamiento
-clave-valor, es desarrollada por Apache Software Foundation.}
-el cual era usado para realizar el análisis en tiempo real de los datos,
-además de servir como capa de caché para los datos mas solicitados en el sistema.
+  una base de datos de tipo NoSQL distribuida, basada en un modelo de
+  almacenamiento clave-valor, es desarrollada por Apache Software
+  Foundation \cite{19_apache_cassandra}.} el cual era usado para realizar
+el análisis en tiempo real de los datos, además de servir como capa
+de caché para los datos mas solicitados en el sistema.
 
 \subsection{Servidor y API}
-Sobre la base de datos anterior anterior se tenia un API\footnote{
+Sobre la base de datos anterior anterior se tenía un API\footnote{
   \textit{Application Programming Interface} es el conjunto de procedimientos
-  que ofrece una biblioteca para ser utilizado por otro software.}
-que que permita el hacer consultas y operaciones sobre los datos contenidos
+  que ofrece una biblioteca para ser utilizado por otro
+  software \cite{3_sommerville_2011}.}
+la cual permitía el hacer consultas y operaciones sobre los datos contenidos
 y/o analizados en este sistema.
-Este API estaba implementado en Javascript bajo Rhino\footnote{Un interprete
-  de Javascript de código abierto desarrollado en Java.}
+Este API estaba implementado en Javascript bajo Rhino\footnote{Un intérprete
+  de Javascript de código abierto desarrollado en Java \cite{20_mozilla_rhino}.}
 el cual se ejecuta bajo la máquina virtual de Java (\textit{Java Virtual Machine},
-JVM), obteniendo como ventaja el poder realizar la implementación de rutinas
-críticas en un lenguaje con mejor rendimiento como lo es Java. De esta forma
-se tenía el núcleo del servidor implementado en Java con el resto del API
-implementada en Javascript.
+JVM), obteniendo como ventaja principal el poder realizar la implementación
+de rutinas críticas en un lenguaje con mejor rendimiento como lo es Java.
+De esta forma se tenía el núcleo del servidor implementado en Java con el
+resto del API implementada en Javascript.
 
 \subsection{Sistemas en producción}
 Los sistemas existentes hasta ese momento (2012) para varias empresas multinacionales
 eran del tipo SPA (\textit{Single Page Application}) los cuales son sistemas web
 que tienen el fin de dar una experiencia de usuario similar a la
-de una aplicación de escritorio.
+de una aplicación de escritorio \cite{21_mikowski_powell}.
 
 Estos sistemas fueron implementados usando un marco de trabajo hecho dentro
 de la compañía usando Javascript. Se tenía una gran jerarquía de clases
-que era compartida tanto con el servidor como con el cliente, obteniendo una
+la cual era compartida tanto con el servidor como con el cliente, obteniendo una
 sola fuente de la descripción de las clases y objetos del sistema.
 
-Se utilizaba la biblioteca Ext JS la cual es un marco de trabajo
-en Javascript para construir sistemas SPA, principalmente usada para generar
-todo tipo de gráficas rápidamente y mostrar información al usuario.
+Se utilizaba el marco de trabajo Ext JS, enfocado a construir sistemas SPA
+en Javascript, usado principalmente por la facilidad para generar
+todo tipo de gráficas rápidamente y de esta forma mostrar una gran cantidad
+de información al usuario.
 
 Por lo descrito en los párrafos anteriores podemos decir que tanto en el
 \textit{frontend} como en el \textit{backend} se hacía uso del lenguaje
@@ -134,7 +141,7 @@ que requerían un rendimiento, por lo que las ventajas al usarlo son:
   por el servidor en forma serializada por JSON y deserializada por el
   cliente.
 \item Existía una única representación de una clase por ejemplo la
-  clase \textit{Building} era una clase de Javascript que se usaba para
+  clase \textit{Building} era una clase de Javascript que se usaba
   tanto en el servidor como en el cliente.
 \end{itemize}
 
