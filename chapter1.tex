@@ -147,8 +147,8 @@ que requerían un rendimiento, por lo que las ventajas al usarlo son:
 
 \section{Propuesta de desarrollo}
 La primera propuesta para el desarrollo de \texttt{PEAT} consistía
-en implementar una aplicación de tipo SPA, como los otros sistemas
-existentes dentro de C3 Energy, es decir, desarrollar un cliente
+en implementar una aplicación de tipo SPA (como los otros sistemas
+existentes dentro de C3 Energy), es decir, desarrollar un cliente
 de Javascript que hiciera uso del API y jerarquía de objetos
 ya existente (con ciertas adicciones y modificaciones).
 Los primeros prototipos presentaban varios problemas bajo este esquema:
@@ -156,8 +156,8 @@ Los primeros prototipos presentaban varios problemas bajo este esquema:
 \begin{itemize}
 \item El tiempo para realizar la precarga de todos los módulos y
   objetos dados por el API en el cliente tomaba un tiempo
-  considerable (5+ segundos.). Los sistemas anteriores eran usados
-  por un numero reducido de personas autorizadas, que hacían uso
+  considerable (5+ segundos). Los sistemas anteriores eran usados
+  por un número reducido de personas autorizadas, que hacían uso
   extensivo del sistema en sesiones de larga duración, por lo
   que este tiempo de arranque era tolerable.
 \item El tipo de interfases y experiencia de usuario que se obtenía
@@ -167,7 +167,7 @@ Los primeros prototipos presentaban varios problemas bajo este esquema:
   era el mostrar al usuario dicha información de manera mas fluída y rápida.
 \end{itemize}
 
-Para solucionar los problemas antes mencionados, se tomo la decisión de
+Para solucionar los problemas antes mencionados, se tomó la decisión de
 usar otro tipo de herramientas para construir aplicaciones finales al usuario,
 que permitieran reusar todo el API y la jerarquía de objetos implementados
 hasta ese momento.
@@ -182,9 +182,10 @@ las razones principales fueron:
   importancia para lograr una buena integración con la jerarquía de clases
   ya definida en el \textit{backend}.
 \item Ruby tiene una gran capacidad para implementar lenguajes de dominio
-  especifico (DSL), son lenguajes diseñados para solucionar problemas de un dominio
-  en particular, característica que sera usada para lograr la integración con el
-  \textit{backend} y la automatización del despliegue de la aplicación.
+  especifico (\textit{Domain Specific Language} DSL), son lenguajes diseñados
+  para solucionar problemas de un dominio en particular, característica
+  que será usada para lograr la integración con el \textit{backend}
+  y la automatización del despliegue de la aplicación.
 \item Gran integración con una gran cantidad de utilerías y bibliotecas para
   desarrollar, diseñar y implementar interfases de usuario.
 \item Gran soporte para realizar extensas pruebas unitarias, funcionales
@@ -220,22 +221,24 @@ y análisis de datos, es necesario diseñar e implementar dos nuevos componentes
 en el \textit{backend}. El primero era el módulo de recomendaciones
 (\textit{Recommendations API}), el cual según las respuestas obtenidas por el
 usuario se utilizan para generar recomendaciones hechas a la medida del
-contexto de operación de cada usuario. El segundo módulo es el módulo de
+contexto de operación de cada usuario. El segundo módulo es el de
 desagregación (\textit{Disaggregation API}) que toma los datos de consumo
 del usuario y usando aprendizaje de máquina separa este consumo en sus
 diferentes partes.
 
-%FIXME: Redactar mejor la parte final.
 Para acelerar el desarrollo del sistema se implementó el \textit{frontend}
-y el \textit{backend} en forma concurrente, dado que una parte significativa
-estaría en desarrollo se hizo uso de datos estáticos contenidos en una base de datos
-como PostgreSQL mientras se esperaba en la implementación de los nuevos
-componentes del \textit{backend} y de la implementación de la biblioteca
-\texttt{Bezel}.
+y el \textit{backend} en forma concurrente y dado que una parte significativa
+estaría en desarrollo se optó por usar datos estáticos contenidos
+en una base de datos como PostgreSQL, mientras se esperaba en la implementación
+de los nuevos componentes del \textit{backend} y de la implementación de la
+biblioteca \texttt{Bezel}.
 
 Dado que al principio el \textit{frontend} haría uso de un \textit{backend}
-provisional con datos estáticos al hacer el cambio al \textit{backend} final
+provisional con datos estáticos, al hacer el cambio al \textit{backend} final
 se tendrían varias incompatibilidades, para acelerar este proceso de integración
 se propuso el uso de un conjunto de pruebas de integración utilizadas
 principalmente para asegurar que la transición fuera exitosa y con la menor
 cantidad de errores.
+
+%FIXME: Falta párrafo de cierre del capitulo.
+% Como se puede ver en este capitulo ...
