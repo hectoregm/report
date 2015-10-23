@@ -13,7 +13,7 @@ de las compañías y usuarios cambian, lo cual provoca que hagamos uso de una se
 tecnologías no previstas en un inicio, representa casi siempre el uso
 de más de un lenguaje de programación\footnote{Debido a que ningún
 lenguaje de programación actualmente es el mejor en todos los contextos
-posibles de uso}.
+posibles de uso.}.
 
 En el proyecto de implementación del sistema PEAT cuenta con tres partes principales
 de desarrollo: (a) el \textit{backend}  implementado en su mayoría usando
@@ -39,9 +39,47 @@ de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en s
 diferentes contextos, desarrollo, producción y pruebas, es de vital importancia
 para el desarrollo de software en tiempo y en forma.
 
-Durante este proyecto se hacen uso extensivo de técnicas como la metaprogramación
+Durante este proyecto se hace uso extensivo de técnicas como la metaprogramación
 y el despliegue continuo, para permitir un desarrollo acelerado, con el fin de
 obtener rápidamente retroalimentación del usuario final.
+
+\section*{Objetivo general}
+
+El objetivo general del sistema \texttt{PEAT} es dar la mayor utilidad posible
+a usuarios PyMES con la menor información disponible, fomentando en el usuario
+el compartir más información sobre su empresa, obteniendo un mejor control
+acerca de su consumo energético.
+
+El sistema debe además permitir el ingreso progresivo de información, por medio
+de una serie de preguntas específicas al usuario, dando mejores recomendaciones
+para bajar su consumo energético conforme el sistema obtiene mas información.
+A partir de la información obtenida el sistema debe permitir el monitoreo
+y revisión del consumo energético de forma detallada, ya sea en horas,
+días, meses y años.
+
+\section*{Objetivos secundarios}
+
+Los objetivos secundarios que apoyan al objetivo general de este trabajo son:
+\begin{itemize}
+\item Implementación de una interfaz que permita la obtención
+  de información del usuario de una forma eficaz y sencilla.
+\item Dar información útil aunque el usuario solo proporcione el
+  mínimo de información sobre su empresa.
+\item Proporcionar recomendaciones para disminuir sus
+  gastos en energía con base en el consumo e información proporcionada
+  hasta el momento.
+\item Autentificar a los usuarios mediante el uso de credenciales de acceso
+  obtenidas en el portal web de PG\&E.
+\item Diseñar e implementar un conjunto de pruebas unitarias, funcionales
+  y de integración para los módulos críticos del sistema.
+\item Soportar por lo menos a mil usuarios concurrentes.
+\item Implementar la infraestructura para el despliegue continuo de la
+  aplicación, permitiendo una retroalimentación contínua sobre el
+  funcionamiento del sistema.
+\end{itemize}
+
+% FIXME: Usar un mejor subtitulo
+\section*{Organización del trabajo}
 
 Este trabajo esta dividido en tres capítulos los cuales son:
 \begin{itemize}
@@ -65,38 +103,3 @@ Cabe mencionar que PG\&E es una compañía proveedora de gas natural y electrici
 más grandes compañías de Estados Unidos con sede en San Francisco, California.
 El sistema \texttt{PEAT} es el resultado de una licitación iniciada por PG\&E,
 siendo ganadora de dicha licitación la compañía C3 Energy.
-
-\section*{Objetivo general}
-
-El objetivo general del sistema \texttt{PEAT} es dar la mayor utilidad posible
-a usuarios PyMES con la menor información disponible, fomentando en el usuario
-el compartir más información sobre su empresa, obteniendo un mejor control
-acerca de su consumo energético.
-
-El sistema debe además permitir el ingreso progresivo de información, por medio
-de una serie de preguntas especificas al usuario, dando mejores recomendaciones
-para bajar su consumo energético conforme el sistema obtiene mas información.
-A partir de la información obtenida el sistema debe permitir el monitoreo
-y revisión del consumo energético de forma detallada, ya sea en horas,
-días, meses y años.
-
-\section*{Objetivos secundarios}
-
-Los objetivos secundarios que apoyan al objetivo general de este trabajo son:
-\begin{itemize}
-\item Implementación de una interfaz que permita la obtención
-  de información del usuario de una forma eficaz y sencilla.
-\item Dar información útil aunque el usuario solo proporcione el
-  mínimo de información sobre su empresa.
-\item Proporcionar recomendaciones para disminuir sus
-  gastos en energía con base en el consumo e información proporcionada
-  hasta el momento.
-\item Autentificar a los usuarios mediante el uso de credenciales de acceso
-  obtenidas en el portal web de PG\&E.
-\item Diseñar e implementar una suite de pruebas unitarias, funcionales
-  y de integración para los módulos críticos del sistema.
-\item Soportar por lo menos a mil usuarios concurrentes.
-\item Implementar la infraestructura para el despliegue continuo de la
-  aplicación, permitiendo una retroalimentación continua sobre el
-  funcionamiento del sistema.
-\end{itemize}
