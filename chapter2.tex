@@ -253,9 +253,8 @@ Además BDD hace uso de lenguajes DSL que tratan de ser lo mas cercano a un
 lenguaje natural (casi siempre ingles) con el cual expresar el comportamiento
 y los resultados esperados del sistema.
 
-En BDD se tiene que las pruebas son pruebas de aceptación que especifican el
-comportamiento de varias partes del sistema trabajando juntas.
-
+En BDD se tienen pruebas de aceptación que especifican el comportamiento de
+varias partes del sistema trabajando juntas.
 
 En las pruebas de integracion se definen una serie de escenarios los cuales
 surgen de los casos de uso definidos para el sistema. Estos escenarios casi
@@ -263,50 +262,27 @@ siempre se especifican en un lenguaje DSL que hace uso de lenguaje natural
 (casi siempre ingles) para definir el comportamiento esperado del sistema.
 
 \subsubsection{Cucumber}
-Cucumber es una biblioteca que permite el definir y ejecutar pruebas de
-aceptacion/integracion escritas usando BDD. Define un lenguaje llamado
-Gherkin que permite escribir escenarios en texto de lenguaje natural
+Cucumber es un marco de trabajo que permite el definir y ejecutar pruebas de
+aceptacion siguiendo el proceso BDD. Define un lenguaje llamado
+Gherkin que permite escribir escenarios en lenguaje natural. De esta manera
+se puede tener que personas no tecnicas, como el cliente o stakeholders,
+puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptacion.
 
-Con escenario tiene la siguiente forma:
+Un ejemplo de una prueba de aceptación es el siguiente:
 \begin{verbatim}
+Característica:
+ Para disminuir mis costos de energía eléctrica
+ Como un usuario del sistema PEAT
+ Quiero saber sobre las posibles mejoras a mi edificio
+
+  Esquema del escenario: Desplegar la lista de recomendaciones
+    Dado que ingreso al sistema como el usuario @user1 por primera vez
+    Y que tengo una cuenta y un edificio
+    Cuando me entro a la pagina de recomendaciones
+    Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
 \end{verbatim}
 
-
-
-
-
-
-
-son prácticas de ingeniería de software que involucran el escribir las pruebas
-antes de escribir el código fuente y la refactorización que involucra revisar el
-diseño y remover cualquier repetición \cite{4_beck_2003}\cite{23_chelimsky_2010}.
-
-Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo),
-en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
-completo.
 \subsection{TDD/BDD y PEAT}
 
-
-El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) y el
-desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
-son prácticas de ingeniería de software que involucran el escribir las pruebas
-antes de escribir el código fuente y la refactorización que involucra revisar el
-diseño y remover cualquier repetición \cite{4_beck_2003}\cite{23_chelimsky_2010}.
-
-Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo),
-en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
-completo.
-
-\vspace{2.5mm}
-
-TDD/BDD definen un ciclo de pasos para guiar el desarrollo:
-
-\begin{enumerate}
-\item Rojo: se escribe una prueba y se verifica que ésta falle.
-\item Verde: se implementa el mínimo código de forma que la prueba pase
-  satisfactoriamente
-\item Refactorizar: se elimina toda repetición que se origino al
-  hacer que la prueba pase satisfactoriamente.
-\end{enumerate}
 
 %\jcimage{1.0}{imagenes/TDD-BDD.png}{Ciclo TDD/BDD.}
