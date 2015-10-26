@@ -157,12 +157,47 @@ La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
 \end{itemize}
 
 
-\section{Desarrollo guiado por pruebas y por comportamiento}
+\section{Desarrollo guiado por pruebas y comportamiento}
 El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) y el
 desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
 son prácticas de ingeniería de software que involucran el escribir las pruebas
 antes de escribir el código fuente y la refactorización que involucra revisar el
-diseño y remover cualquier repetición.
+diseño y remover cualquier repetición \cite{4_beck_2003}\cite{23_chelimsky_2010}.
+
+\subsection{Desarrollo guiado por pruebas (TDD)}
+TDD es una practica de software que involucra el escribir las pruebas antes de
+realizar la implementación, esto mejora el diseño y el alcance de la implementacion.
+
+Al escribir las pruebas antes que el codigo fuente, contrario a lo habitual, permite que las pruebas ayuden a guiar el diseño del codigo fuente en pequeños pasos. En el largo plazo esto crear un codigo fuente bien estructurado que es facil de mantener y extender.
+
+\begin{enumerate}
+\item Implementar una prueba: esta prueba debe ser breve y debe probar
+  solamente una unidad de código (función, clase o módulo).
+\item Asegurar que la prueba falle: se verifica que la prueba falle antes
+  de escribir cualquier codigo. Esto es para asegurar que la prueba realmente
+  hace lo que se espera de ella.
+\item Implemtar la nueva funcionalidad: se implementa el mínimo código de
+  forma que la prueba pase satisfactoriamente.
+\item Mejorar el codigo fuente: se elimina toda repetición que se origino al
+  hacer que la prueba pase satisfactoriamente y se realizan cualquier otra
+  optimización o abtrasccion necesaria. Esta proceso recibe el nombre de
+  refactorizacion, es parte vital para el diseño del sistema.
+\end{enumerate}
+
+TDD permite el diseñar el software continuamente y en forma incremental, haciendo que el diseño corresponda a cambios en el codigo fuente del sistema.
+
+El diseño sucede en tres diferentes etapas en el proceso TDD:
+\begin{itemize}
+  \item Cuando se decide que prueba realizar 
+\end{itemize}
+
+Al continuamente tener que el codigo fuente esta superditado a las pruebas tiende
+a producir codigo fuente que esta compuesto por un p
+\subsubsection{Ventajas}
+
+\subsection{Desarrollo guiado por comportamiento (BDD)}
+\subsection{TDD/BDD y PEAT}
+
 
 Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo),
 en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
