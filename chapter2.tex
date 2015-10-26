@@ -158,46 +158,140 @@ La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
 
 
 \section{Desarrollo guiado por pruebas y comportamiento}
+El tener código fuente que sea limpio y que además tenga la funcionalidad deseada
+es uno de los principales objetivos en cualquier sistema. Cabe señalar que
+por código limpio se entiende por código fuente que sea fácil de entender
+y de modificar \cite{4_beck_2003}.
+
+El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) y el
+desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
+son prácticas de ingeniería de software que tiene por objetivo el obtener código
+limpio y funcional.
+
+\subsection{Desarrollo guiado por pruebas (TDD)}
+TDD es una practica de software que involucra el escribir las pruebas antes de
+realizar la implementación, esto mejora el diseño y eficacia de la implementación.
+Al escribir las pruebas antes que el código fuente, contrario al proceso habitual,
+permite que las pruebas ayuden a guiar el diseño del código fuente en pequeños
+pasos. En el largo plazo este proceso implementa un código fuente bien
+estructurado que es fácil de mantener y de modificar\cite{4_beck_2003}.
+
+\vspace{2.5mm}
+
+El proceso clásico en TDD es el siguiente \cite{12_rappin_2010}:
+\begin{enumerate}
+\item Implementar una prueba: esta prueba debe ser breve y debe probar
+  solamente una unidad de código (función, clase o módulo).
+\item Asegurar que la prueba falle: se verifica que la prueba falle antes
+  de escribir cualquier código. Esto es para asegurar que la prueba realmente
+  hace lo que se espera de ella.
+\item Implementar la nueva funcionalidad: se implementa el mínimo código de
+  forma que la prueba pase satisfactoriamente.
+\item Mejorar el código fuente: se elimina toda repetición que se origino al
+  implementar la nueva funcionalidad para lograr que la prueba pase
+  satisfactoriamente, también se realiza cualquier otra optimización y/o
+  abstracción necesaria. Esta proceso recibe el nombre de
+  refactorización, es parte vital del proceso.
+\end{enumerate}
+
+Este proceso se repite hasta que se termina de implementar toda la funcionalidad
+del sistema. Al seguir este proceso, en teoría, se asegura que el código fuente
+siempre es lo mas simple posible y que esta completamente.
+
+\subsubsection{Ventajas}
+TDD va mas allá de la mera verificación al hacer uso de las pruebas para
+mejorar la estructura del código fuente, por esto es que TDD es una practica
+de software y no solamente una herramienta de verificación.
+
+Al continuamente alinear el código fuente a las pruebas se obtiene código fuente
+conformado por pequeños métodos, cada uno de los cuales tiene solamente tiene
+una sola responsabilidad. Estos métodos tienden a tener bajo acoplamiento y
+con pocos efectos laterales, lo que facilita su comprensión y mantenimiento.
+
+\subsubsection{Desventajas}
+TDD no es un substituto para pruebas de aceptación, es decir pruebas que confirman
+que el software funciona según los requerimientos del cliente.
+
+TDD asume que se conoce el resultado esperado que se quiere verificar,
+cuando los requerimientos no son totalmente claros entonces TDD no es tan benéfico
+puesto que es difícil escribir pruebas de un proceso que no se conocen en detalle.
+
+\subsubsection{RSpec}
+RSpec es un marco de trabajo del proceso TDD/BDD para el lenguaje de programación
+Ruby. RSpec define un lenguaje de dominio especifico (DSL) para implementar pruebas
+unitarias y de aceptación \cite{23_chelimsky_2010}.
+
+Un ejemplo de una prueba unitaria es:
+\begin{verbatim}
+describe Bezel::Client do
+  # Contexto de la prueba, teniendo el API versión 2 del servidor C3.
+  context "v2" do
+
+    # Nombre de la prueba
+    it "escapes unicode sequences" do
+      body = Bezel.client.send(:generate_body,{"value"=>"Déconnexion"})
+
+      # Aserciones sobre el comportamiento esperado.
+      body.should_not include('é')
+      body.should include('\u00e9')
+    end
+  end
+end
+\end{verbatim}
+
+El método \textit{it} crea un ejemplo del comportamiento de \textit{Bezel::Client}
+dentro de un contexto, el cual es que el servidor C3 esta corriendo la versión 2.
+
+\subsection{Desarrollo guiado por comportamiento (BDD)}
+BDD es igual que TDD una practica de software que involucra el escribir las pruebas
+antes de escribir el código fuente y la refactorización continua del código fuente.
+Pero mientras que TDD se enfoca en probar unidades de código en BDD el enfoque es
+probar el comportamiento en la interacción de un subconjunto de módulos del
+sistema.
+
+Además BDD hace uso de lenguajes DSL que tratan de ser lo mas cercano a un
+lenguaje natural (casi siempre ingles) con el cual expresar el comportamiento
+y los resultados esperados del sistema.
+
+En BDD se tiene que las pruebas son pruebas de aceptación que especifican el
+comportamiento de varias partes del sistema trabajando juntas.
+
+
+En las pruebas de integracion se definen una serie de escenarios los cuales
+surgen de los casos de uso definidos para el sistema. Estos escenarios casi
+siempre se especifican en un lenguaje DSL que hace uso de lenguaje natural
+(casi siempre ingles) para definir el comportamiento esperado del sistema.
+
+\subsubsection{Cucumber}
+Cucumber es una biblioteca que permite el definir y ejecutar pruebas de
+aceptacion/integracion escritas usando BDD. Define un lenguaje llamado
+Gherkin que permite escribir escenarios en texto de lenguaje natural
+
+Con escenario tiene la siguiente forma:
+\begin{verbatim}
+\end{verbatim}
+
+
+
+
+
+
+
+son prácticas de ingeniería de software que involucran el escribir las pruebas
+antes de escribir el código fuente y la refactorización que involucra revisar el
+diseño y remover cualquier repetición \cite{4_beck_2003}\cite{23_chelimsky_2010}.
+
+Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo),
+en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
+completo.
+\subsection{TDD/BDD y PEAT}
+
+
 El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) y el
 desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
 son prácticas de ingeniería de software que involucran el escribir las pruebas
 antes de escribir el código fuente y la refactorización que involucra revisar el
 diseño y remover cualquier repetición \cite{4_beck_2003}\cite{23_chelimsky_2010}.
-
-\subsection{Desarrollo guiado por pruebas (TDD)}
-TDD es una practica de software que involucra el escribir las pruebas antes de
-realizar la implementación, esto mejora el diseño y el alcance de la implementacion.
-
-Al escribir las pruebas antes que el codigo fuente, contrario a lo habitual, permite que las pruebas ayuden a guiar el diseño del codigo fuente en pequeños pasos. En el largo plazo esto crear un codigo fuente bien estructurado que es facil de mantener y extender.
-
-\begin{enumerate}
-\item Implementar una prueba: esta prueba debe ser breve y debe probar
-  solamente una unidad de código (función, clase o módulo).
-\item Asegurar que la prueba falle: se verifica que la prueba falle antes
-  de escribir cualquier codigo. Esto es para asegurar que la prueba realmente
-  hace lo que se espera de ella.
-\item Implemtar la nueva funcionalidad: se implementa el mínimo código de
-  forma que la prueba pase satisfactoriamente.
-\item Mejorar el codigo fuente: se elimina toda repetición que se origino al
-  hacer que la prueba pase satisfactoriamente y se realizan cualquier otra
-  optimización o abtrasccion necesaria. Esta proceso recibe el nombre de
-  refactorizacion, es parte vital para el diseño del sistema.
-\end{enumerate}
-
-TDD permite el diseñar el software continuamente y en forma incremental, haciendo que el diseño corresponda a cambios en el codigo fuente del sistema.
-
-El diseño sucede en tres diferentes etapas en el proceso TDD:
-\begin{itemize}
-  \item Cuando se decide que prueba realizar 
-\end{itemize}
-
-Al continuamente tener que el codigo fuente esta superditado a las pruebas tiende
-a producir codigo fuente que esta compuesto por un p
-\subsubsection{Ventajas}
-
-\subsection{Desarrollo guiado por comportamiento (BDD)}
-\subsection{TDD/BDD y PEAT}
-
 
 Mientras en TDD el enfoque es probar unidades de código (función, clase o módulo),
 en BDD el enfoque es probar el comportamiento de partes del sistema o el sistema
