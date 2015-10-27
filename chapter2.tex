@@ -196,7 +196,7 @@ El proceso clásico en TDD es el siguiente \cite{12_rappin_2010}:
 
 Este proceso se repite hasta que se termina de implementar toda la funcionalidad
 del sistema. Al seguir este proceso, en teoría, se asegura que el código fuente
-siempre es lo mas simple posible y que esta completamente.
+siempre es lo mas simple posible y que esta completamente verificado.
 
 \subsubsection{Ventajas}
 TDD va mas allá de la mera verificación al hacer uso de las pruebas para
@@ -217,9 +217,9 @@ cuando los requerimientos no son totalmente claros entonces TDD no es tan benéf
 puesto que es difícil escribir pruebas de un proceso que no se conocen en detalle.
 
 \subsubsection{RSpec}
-RSpec es un marco de trabajo del proceso TDD/BDD para el lenguaje de programación
-Ruby. RSpec define un lenguaje de dominio especifico (DSL) para implementar pruebas
-unitarias y de aceptación \cite{23_chelimsky_2010}.
+\textit{RSpec} es un marco de trabajo del proceso TDD/BDD para el lenguaje de
+programación Ruby. \textit{RSpec} define un lenguaje de dominio especifico (DSL)
+para implementar pruebas unitarias y de aceptación \cite{23_chelimsky_2010}.
 
 Un ejemplo de una prueba unitaria es:
 \begin{verbatim}
@@ -243,30 +243,43 @@ El método \textit{it} crea un ejemplo del comportamiento de \textit{Bezel::Clie
 dentro de un contexto, el cual es que el servidor C3 esta corriendo la versión 2.
 
 \subsection{Desarrollo guiado por comportamiento (BDD)}
-BDD es igual que TDD una practica de software que involucra el escribir las pruebas
-antes de escribir el código fuente y la refactorización continua del código fuente.
-Pero mientras que TDD se enfoca en probar unidades de código en BDD el enfoque es
-probar el comportamiento en la interacción de un subconjunto de módulos del
-sistema.
+En BDD es una practica de software surgida de TDD, al igual que esta ultima
+involucra escribir las pruebas antes de escribir el código fuente y la
+refactorización continua del código fuente. Pero mientras que TDD se enfoca
+en describir el comportamiento de unidades de código en BDD el enfoque es
+describir el comportamiento de la interacción de un subconjunto de módulos
+del sistema.
 
-Además BDD hace uso de lenguajes DSL que tratan de ser lo mas cercano a un
-lenguaje natural (casi siempre ingles) con el cual expresar el comportamiento
-y los resultados esperados del sistema.
+En BDD la unidad de prueba son las pruebas de aceptación las cuales definen
+una serie de escenarios, los cuales surgen de los casos de uso del sistema.
+Estos escenarios casi siempre se especifican en un lenguaje DSL que hace uso
+de lenguaje natural (casi siempre ingles) para definir el comportamiento
+esperado del sistema.
 
-En BDD se tienen pruebas de aceptación que especifican el comportamiento de
-varias partes del sistema trabajando juntas.
+%% Además BDD se hace uso de lenguajes DSL que tratan de ser lo mas cercanos a un
+%% lenguaje natural, generalmente siendo el ingles pero no limitado a este.
+%% Haciendo uso de este lenguaje DSL se implementan pruebas de aceptación que
+%% especifican el comportamiento y los resultados esperados del sistema.
 
-En las pruebas de integracion se definen una serie de escenarios los cuales
-surgen de los casos de uso definidos para el sistema. Estos escenarios casi
-siempre se especifican en un lenguaje DSL que hace uso de lenguaje natural
-(casi siempre ingles) para definir el comportamiento esperado del sistema.
+\subsubsection{Ventajas}
+En BDD se guía el diseño del código fuente del sistema a través de las pruebas
+de aceptación que se especifican en colaboración con el cliente, por lo que
+se obtiene software que funciona según los requerimientos del cliente.
+
+\subsubsection{Desventajas}
+BDD no es un substituto para pruebas unitarias, dado que el enfoque de
+las pruebas de aceptación es sobre el comportamiento de grandes bloques
+del sistema y no en los detalles del sistema.
+
+Para obtener el mayor beneficio con BDD es necesario especificar las pruebas
+de aceptación con el cliente y gente de negocio, lo cual no siempre es posible.
 
 \subsubsection{Cucumber}
-Cucumber es un marco de trabajo que permite el definir y ejecutar pruebas de
-aceptacion siguiendo el proceso BDD. Define un lenguaje llamado
-Gherkin que permite escribir escenarios en lenguaje natural. De esta manera
-se puede tener que personas no tecnicas, como el cliente o stakeholders,
-puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptacion.
+Cucumber es un marco de trabajo que permite el especificar y ejecutar pruebas de
+aceptación siguiendo el proceso BDD. Define un lenguaje llamado Gherkin que
+permite escribir escenarios en lenguaje natural. De esta manera
+se puede tener que personas no técnicas, como el cliente o gente de negocio,
+puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptación.
 
 Un ejemplo de una prueba de aceptación es el siguiente:
 \begin{verbatim}
@@ -276,13 +289,18 @@ Característica:
  Quiero saber sobre las posibles mejoras a mi edificio
 
   Esquema del escenario: Desplegar la lista de recomendaciones
-    Dado que ingreso al sistema como el usuario @user1 por primera vez
+    Dado que ingreso al sistema como el usuario @juan por primera vez
     Y que tengo una cuenta y un edificio
     Cuando me entro a la pagina de recomendaciones
     Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
 \end{verbatim}
 
 \subsection{TDD/BDD y PEAT}
-
+Dado que TDD y BDD se enfocan en el comportamiento a diferentes niveles
+de un sistema éstos son complementarios y permite subsanar sus respectivas
+desventajas. Así que en la implementación del sistema PEAT se hizo uso de
+TDD y BDD para guiar el diseño del sistema, haciendo uso de los marcos
+de trabajo \textit{RSpec} y \textit{Cucumber} para realizar la especificación
+de las pruebas unitarias y de aceptacion del sistema.
 
 %\jcimage{1.0}{imagenes/TDD-BDD.png}{Ciclo TDD/BDD.}
