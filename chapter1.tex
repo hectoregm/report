@@ -28,8 +28,8 @@ En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociad
 \end{itemize}
 
 El objetivo de un esquema \texttt{TOU} es el distribuir la carga de la red
-eléctrica, alentando a los usuarios a cambiar su consumo durante periodos
-de demanda alta a periodos de demanda baja, al bajar la demanda en los periodos
+eléctrica, alentando a los usuarios a cambiar su consumo durante períodos
+de demanda alta a períodos de demanda baja, al bajar la demanda en los períodos
 de demanda alta provoca que se reduzcan los costos de generación de energía de
 forma general.
 
@@ -57,9 +57,9 @@ La licitación para la implementación del sistema \texttt{PEAT} fue puesta
 a concurso por parte PG\&E siendo la compañía C3 Energy la ganadora de dicha
 licitación  ya que contaba con la infraestructura necesaria para el
 procesamiento de una gran cantidad de datos de consumo de energía,
-tiene un sistema de monitoreo de consumo de energía enfocada a empresas de nivel
-multinacional. El reto era pasar de un sistema y procesos diseñados
-para una docena de clientes, a un sistema que diera servicio a
+además contaba con un sistema de monitoreo de consumo de energía enfocada
+a empresas de nivel multinacional. El reto era pasar de un sistema y procesos
+diseñados para una docena de clientes, a un sistema que diera servicio a
 cientos de miles de clientes PyMES.
 
 \section{Arquitectura previa}
@@ -92,7 +92,7 @@ para este rol.
 
 También se contaba con un \textit{cluster} de Apache Cassandra\footnote{Es
   una base de datos de tipo NoSQL distribuida, basada en un modelo de
-  almacenamiento clave-valor, es desarrollada por Apache Software
+  almacenamiento llave-valor, es desarrollada por Apache Software
   Foundation \cite{19_apache_cassandra}.} el cual era usado para realizar
 el análisis en tiempo real de los datos, además de servir como capa
 de caché para los datos mas solicitados en el sistema.
@@ -118,7 +118,7 @@ eran del tipo SPA (\textit{Single Page Application}) los cuales son sistemas web
 que tienen el fin de dar una experiencia de usuario similar a la
 de una aplicación de escritorio \cite{21_mikowski_powell}.
 
-Estos sistemas fueron implementados usando un marco de trabajo hecho dentro
+Estos sistemas fueron implementados usando un marco de trabajo desarrollado dentro
 de la compañía usando Javascript. Se tenía una gran jerarquía de clases
 la cual era compartida tanto con el servidor como con el cliente, obteniendo una
 sola fuente de la descripción de las clases y objetos del sistema.
@@ -131,13 +131,14 @@ de información al usuario.
 Por lo descrito en los párrafos anteriores podemos decir que tanto en el
 \textit{frontend} como en el \textit{backend} se hacía uso del lenguaje
 de programación Javascript principalmente con un núcleo de Java para las partes
-que requerían un rendimiento, por lo que las ventajas al usarlo son:
+que requerían un rendimiento óptimo para manejar peticiones concurrentes,
+por lo que las ventajas al usarlo son:
 
 \begin{itemize}
 \item Reducir al mínimo el cambio de contexto entre lenguajes entre
   el \textit{frontend} y el \textit{backend}.
 \item Reducir sustancialmente la cantidad de código redundante al no
-  tenerse que reimplementar la jerarquía de objetos, que era pasada
+  tener que reimplementar la jerarquía de objetos, que era pasada
   por el servidor en forma serializada por JSON y deserializada por el
   cliente.
 \item Existía una única representación de una clase por ejemplo la
@@ -182,7 +183,7 @@ las razones principales fueron:
   importancia para lograr una buena integración con la jerarquía de clases
   ya definida en el \textit{backend}.
 \item Ruby tiene una gran capacidad para implementar lenguajes de dominio
-  especifico (\textit{Domain Specific Language} DSL), son lenguajes diseñados
+  específico (\textit{Domain Specific Language} DSL), son lenguajes diseñados
   para solucionar problemas de un dominio en particular, característica
   que será usada para lograr la integración con el \textit{backend}
   y la automatización del despliegue de la aplicación.
@@ -209,27 +210,27 @@ para dar estructura a los módulos de Javascript que se utilizan en la vista.
 Para las gráficas y manejo de datos se seguirá haciendo uso de Ext JS
 por su gran facilidad para implementar cualquier tipo de gráficas.
 
-El servidor de Rails recibirá las peticiones de la interfaz web y
-coordinará las peticiones necesarias al \textit{backend}. El trabajo
+El servidor de Rails recibe las peticiones de la interfaz web y
+coordina las peticiones necesarias al \textit{backend}. El trabajo
 de la realización de las peticiones a los servicios web ya existentes
 y la creación de clases y objetos en Ruby basados en la jerarquía de clases
-definida en Javascript será realizada por la biblioteca \texttt{Bezel},
-la cual será implementada desde cero.
+definida en Javascript es realizada por la biblioteca \texttt{Bezel},
+la cual es implementada desde cero.
 
 Aunque en la parte del \textit{backend} se tiene un sistema de procesamiento
 y análisis de datos, es necesario diseñar e implementar dos nuevos componentes
-en el \textit{backend}. El primero era el módulo de recomendaciones
+en el \textit{backend}. El primero es el módulo de recomendaciones
 (\textit{Recommendations API}), el cual según las respuestas obtenidas por el
 usuario se utilizan para generar recomendaciones hechas a la medida del
 contexto de operación de cada usuario. El segundo módulo es el de
 desagregación (\textit{Disaggregation API}) que toma los datos de consumo
-del usuario y usando aprendizaje de máquina separa este consumo en sus
+del usuario y usando aprendizaje de máquina separa dicho consumo en sus
 diferentes partes.
 
 Para acelerar el desarrollo del sistema se implementó el \textit{frontend}
 y el \textit{backend} en forma concurrente y dado que una parte significativa
-estaría en desarrollo se optó por usar datos estáticos contenidos
-en una base de datos como PostgreSQL, mientras se esperaba en la implementación
+estaría en desarrollo, se optó por usar datos estáticos contenidos
+en una base de datos como PostgreSQL, mientras se esperaba la implementación
 de los nuevos componentes del \textit{backend} y de la implementación de la
 biblioteca \texttt{Bezel}.
 
