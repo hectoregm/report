@@ -32,26 +32,26 @@ sin reescribir este último \cite{14_gamma_1995}.
 \subsection{MVC y Rails}
 En el marco de trabajo Rails se hace uso de MVC como patrón de arquitectura
 para implementar sistemas web. En Rails los modelos se definen haciendo
-uso de la biblioteca \textit{ActiveRecord}, esta biblioteca implementa el
+uso de la biblioteca \textit{ActiveRecord}, la cual implementa el
 patrón de mapeo objeto-relacional (\textit{Object-relational mapping},
-ORM) para facilitar el acceso de información contenida en
+ORM) esto facilita el acceso de información contenida en
 bases de datos relacionales, dado que es el caso típico en sistemas web
 convencionales.
 
 En Rails, la vista es responsable de la creación de la respuesta dada para
 ser mostrada en un navegador. En su forma mas simple, una
-vista es un trozo de código HTML que muestra un texto fijo. Mas típicamente
-se requiere mostrar contenido dinámico creado por una acción en un controlador.
-El contenido dinámico es generado por medio de plantillas, el esquema
+vista es un trozo de código HTML que muestra un texto fijo. Frecuentemente
+se requiere mostrar contenido dinámico creado por una acción en un controlador,
+por lo que el contenido dinámico es generado por medio de plantillas, el esquema
 de plantillas más común es llamado Ruby Embebido (\textit{Embedded Ruby}, ERB),
 el cual inserta pedazos de código de Ruby dentro de una vista, similar a la forma
 como se hace en otros marcos de trabajo como PHP o JSP. También se pude hacer uso de
 Ruby Embebido para incrustar pedazos de código Javascript en el servidor,
-para ser ejecutados en el navegador, lo cual permite crear interfases
+que serán ejecutados en el navegador, lo cual permite crear interfases
 dinámicas haciendo uso de \textit{Asynchronous JavaScript and XML} (AJAX).
 
-Finalmente en Rails los controladores son el centro lógico del sistema. Coordinan
-la interacción entre el usuario, las vistas y el modelo
+Finalmente en Rails los controladores son el centro lógico del sistema, ya que
+coordinan la interacción entre el usuario, las vistas y el modelo
 \cite{15_agile_hansson}.
 
 \subsection{MVC y PEAT}
@@ -59,17 +59,20 @@ la interacción entre el usuario, las vistas y el modelo
 
 \begin{enumerate}
 \item Modelo: dado que en un principio los servicios web de recomendaciones y
-  desagregación estaban en construcción se hizo uso de la biblioteca ActiveRecord
-  para tener datos reales estáticos para permitir la implementación
-  de la interfaz de usuario. Posteriormente se reemplazaron éstos modelos
-  por nuevos modelos que hacían uso de los servicios web del \textit{backend},
-  por medio de la biblioteca \texttt{Bezel}. Dado que hay un desacoplamiento
-  entre los modelos y las vistas esto no implicó grandes cambios al hacer el
-  reemplazo.
+  desagregación estaban en construcción se hizo uso de la biblioteca
+  \textit{ActiveRecord} para tener datos reales estáticos que permitieran
+  la implementación de la interfaz de usuario.
+  Posteriormente se reemplazaron estos modelos por nuevos modelos que hacían
+  uso de los servicios web del \textit{backend}, por medio de la biblioteca
+  \texttt{Bezel}. 
+  El realizar este reemplazo no implicó grandes cambios, dado el desacoplamiento
+  existente entre los modelos y las vistas.
 \item Vista: haciendo uso de plantillas se generan representaciones de los
-  principales modelos del sistema en HTML y JSON. Para ciertos modelos, como
-  las recomendaciones y los reportes de consumo, se tenia una tercera
-  representación en forma de PDF del modelo.
+  principales modelos del sistema en HTML y JSON.
+
+  Sin embargo, para ciertos modelos, como las \textit{recomendaciones} y los
+  \textit{reportes de consumo}, se tenia una tercera representación en forma
+  de PDF del modelo.
 \end{enumerate}
 
 \section{Servicios web RESTful}
