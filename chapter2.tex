@@ -64,7 +64,7 @@ coordinan la interacción entre el usuario, las vistas y el modelo
   la implementación de la interfaz de usuario.
   Posteriormente se reemplazaron estos modelos por nuevos modelos que hacían
   uso de los servicios web del \textit{backend}, por medio de la biblioteca
-  \texttt{Bezel}. 
+  \texttt{Bezel}.
   El realizar este reemplazo no implicó grandes cambios, dado el desacoplamiento
   existente entre los modelos y las vistas.
 \item Vista: haciendo uso de plantillas se generan representaciones de los
@@ -139,6 +139,28 @@ resources :buildings
 En la Figura 2.2 se pueden ver las rutas y verbos asociados para las principales
 operaciones sobre el recurso \textit{buildings}, esto acelera en gran medida
 el desarrollo de servicios web.
+
+\begin{center}
+  \begin{tabular}{|m{1.2cm}|m{2.5cm}|m{3cm}|m{3.5cm}|}
+    \hline
+    Método HTTP & Ruta & Controlador\#Acción & Usado para \\
+    \hline\hline
+    GET & /buildings & buildings\#index & Listar todos los edificios\\
+    \hline
+    GET & /buildings/new & buildings\#new & Regresar una forma para crear un edificio\\ [2ex]
+    \hline
+    POST & /buildings & buildings\#create & Crear un nuevo edificio\\
+    \hline
+    GET & /buildings/:id & buildings\#show & Mostrar un edificio especifico\\
+    \hline
+    GET & /buildings/:id/edit & buildings\#edit & Regresar una forma para editar un edificio\\
+    \hline
+    PATCH & /buildings/:id & buildings\#update & Actualizar un edificio\\
+    \hline
+    DELETE & /buildings/:id & buildings\#destroy & Borrar un edificio\\
+    \hline
+  \end{tabular}
+\end{center}
 
 % FIXME: Hacer tabla de rutas para building y en español
 \jcimage{1.0}{imagenes/REST-Rails.png}{Rutas y verbos para el recurso \textit{buildings} \cite{18_rails_rest}.}
@@ -285,7 +307,7 @@ pruebas de aceptación siguiendo el proceso BDD. Define un lenguaje llamado
 Gherkin que permite escribir escenarios en lenguaje natural. De esta manera
 permite que personas no técnicas, como el cliente o gente de negocio,
 puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptación
- \cite{23_chelimsky_2010}.
+\cite{23_chelimsky_2010}.
 
 \vspace{2.5mm}
 
