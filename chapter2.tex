@@ -166,7 +166,7 @@ el desarrollo de servicios web.
 \end{table}
 
 \subsection{REST y PEAT}
-La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
+La arquitectura REST influye en las tres partes principales de \texttt{PEAT}.
 
 \begin{itemize}
 \item \textit{Frontend}: por medio de Rails se implementa un servicio web RESTful
@@ -185,8 +185,8 @@ La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
 \section{Desarrollo guiado por pruebas y comportamiento}
 El tener código fuente que sea limpio y que además tenga la funcionalidad deseada
 es uno de los principales objetivos en cualquier sistema. Cabe señalar que
-por código limpio se entiende por código fuente que sea fácil de entender
-y de modificar \cite{4_beck_2003}.
+por código limpio se entenderá en este trabajo, aquel código fuente que sea fácil
+de entender y de modificar \cite{4_beck_2003}.
 
 El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) y el
 desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
@@ -194,7 +194,7 @@ son prácticas de ingeniería de software que tiene por objetivo el obtener cód
 limpio y funcional.
 
 \subsection{Desarrollo guiado por pruebas (TDD)}
-TDD es una practica de software que involucra el escribir las pruebas antes de
+El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) es una practica de software que involucra el escribir las pruebas antes de
 realizar la implementación, esto mejora el diseño y eficacia de la implementación.
 Al escribir las pruebas antes que el código fuente, contrario al proceso habitual,
 permite que las pruebas ayuden a guiar el diseño del código fuente en pequeños
@@ -212,10 +212,10 @@ El proceso clásico en TDD es el siguiente \cite{12_rappin_2010}:
   hace lo que se espera de ella.
 \item Implementar la nueva funcionalidad: se implementa el mínimo código de
   forma que la prueba pase satisfactoriamente.
-\item Mejorar el código fuente: se elimina toda repetición que se origino al
+\item Mejorar el código fuente: se elimina toda repetición que se originó al
   implementar la nueva funcionalidad para lograr que la prueba pase
-  satisfactoriamente, también se realiza cualquier otra optimización y/o
-  abstracción necesaria. Esta proceso recibe el nombre de
+  satisfactoriamente, dentro de esta fase también se realiza cualquier
+  otra optimización y/o abstracción necesaria. Esta proceso recibe el nombre de
   refactorización, es parte vital del proceso.
 \end{enumerate}
 
@@ -225,7 +225,7 @@ siempre es lo mas simple posible y que esta completamente verificado.
 
 \subsubsection{Ventajas}
 TDD va mas allá de la mera verificación al hacer uso de las pruebas para
-mejorar la estructura del código fuente, por esto es que TDD es una practica
+mejorar la estructura del código fuente, por esto es que TDD es una práctica
 de software y no solamente una herramienta de verificación.
 
 Al continuamente alinear el código fuente a las pruebas se obtiene código fuente
@@ -234,7 +234,7 @@ una sola responsabilidad. Estos métodos tienden a tener bajo acoplamiento y
 con pocos efectos laterales, lo que facilita su comprensión y mantenimiento.
 
 \subsubsection{Desventajas}
-TDD no es un substituto para pruebas de aceptación, es decir pruebas que confirman
+TDD no es un substituto para pruebas de aceptación, es decir, pruebas que confirman
 que el software funciona según los requerimientos del cliente.
 
 TDD asume que se conoce el resultado esperado que se quiere verificar,
@@ -249,22 +249,8 @@ para implementar pruebas unitarias y de aceptación \cite{23_chelimsky_2010}.
 \vspace{2.5mm}
 
 Un ejemplo de una prueba unitaria haciendo uso de \textit{RSpec}:
-\begin{verbatim}
-describe Bezel::Client do
-  # Contexto de la prueba, teniendo el API versión 2 del servidor C3.
-  context "v2" do
-
-    # Nombre de la prueba
-    it "escapes unicode sequences" do
-      body = Bezel.client.send(:generate_body,{"value"=>"Déconnexion"})
-
-      # Aserciones sobre el comportamiento esperado.
-      body.should_not include('é')
-      body.should include('\u00e9')
-    end
-  end
-end
-\end{verbatim}
+% Ejemplo de prueba en RSpec
+\lstinputlisting[language=Ruby]{code/rspec-example.rb}
 
 El método \textit{it} crea un ejemplo del comportamiento de \textit{Bezel::Client}
 dentro de un contexto, el cual es que el servidor C3 esta corriendo la versión 2.
