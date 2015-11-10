@@ -136,14 +136,15 @@ entonces, se define el recurso y sus rutas asociadas con lo siguiente:
 resources :buildings
 \end{verbatim}
 
-En la Figura 2.2 se pueden ver las rutas y verbos asociados para las principales
+En el Cuadro \ref{table:rest} se pueden ver las rutas y métodos asociados para las principales
 operaciones sobre el recurso \textit{buildings}, esto acelera en gran medida
 el desarrollo de servicios web.
 
-\begin{center}
+\begin{table}[h!]
+  \centering
   \begin{tabular}{|m{1.2cm}|m{2.5cm}|m{3cm}|m{3.5cm}|}
     \hline
-    Método HTTP & Ruta & Controlador\#Acción & Usado para \\
+    \rowcolor{lightgray} \textbf{Método HTTP} & \textbf{Ruta} & \textbf{Controlador\#Acción} & \textbf{Usado para}\\
     \hline\hline
     GET & /buildings & buildings\#index & Listar todos los edificios\\
     \hline
@@ -160,10 +161,9 @@ el desarrollo de servicios web.
     DELETE & /buildings/:id & buildings\#destroy & Borrar un edificio\\
     \hline
   \end{tabular}
-\end{center}
-
-% FIXME: Hacer tabla de rutas para building y en español
-\jcimage{1.0}{imagenes/REST-Rails.png}{Rutas y verbos para el recurso \textit{buildings} \cite{18_rails_rest}.}
+  \caption{Rutas y métodos para el recurso \textit{buildings} \cite{18_rails_rest}.}
+  \label{table:rest}
+\end{table}
 
 \subsection{REST y PEAT}
 La arquitectura REST influye en las tres partes principales de \texttt{PEAT}
