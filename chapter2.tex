@@ -89,7 +89,7 @@ forma de un documento XML, una pagina HTML o un archivo CSV (representaciones).
 
 \vspace{2.5mm}
 
-Además se tienen cuatro características principales \cite{1_richardson_2007}:
+Se tienen cuatro características principales \cite{1_richardson_2007}:
 
 \begin{itemize}
 \item Protocolo cliente/servidor sin estado (\textit{stateless}): cada mensaje
@@ -97,7 +97,7 @@ Además se tienen cuatro características principales \cite{1_richardson_2007}:
   Esto implica que ni el cliente ni el servidor necesitan recordar ningún
   tipo de estado.
 \item Conectividad (\textit{connectedness}): las representaciones son un hipermedio
-  en el cual se tienen ligas a otros recursos. Como resultado de esto, es posible
+  en el cual se tienen ligas a otros recursos, como resultado de esto, es posible
   navegar de un recurso REST a muchos otros, sin necesidad de una
   infraestructura adicional.
 \item Direccionabilidad (\textit{addressability}): la capacidad para
@@ -135,9 +135,9 @@ entonces, se define el recurso y sus rutas asociadas con lo siguiente:
 resources :buildings
 \end{verbatim}
 
-En el Cuadro \ref{table:rest} se pueden ver las rutas y métodos asociados para las principales
-operaciones sobre el recurso \textit{buildings}, esto acelera en gran medida
-el desarrollo de servicios web.
+En la Tabla \ref{table:rest} se pueden ver las rutas y métodos asociados para
+las principales operaciones sobre el recurso \textit{buildings}, esto acelera
+en gran medida el desarrollo de servicios web.
 
 \begin{table}[h!]
   \centering
@@ -252,6 +252,7 @@ Un ejemplo de una prueba unitaria haciendo uso de \textit{RSpec}:
 % Ejemplo de prueba en RSpec
 \lstinputlisting[language=Ruby]{code/rspec-example.rb}
 
+% FIXME: Add better description of the example from rspec
 El método \textit{it} (en la línea 6) crea un ejemplo del comportamiento de
 \textit{Bezel::Client} dentro de un contexto, el cual es que el servidor C3
 esta corriendo la versión 2.
@@ -269,11 +270,6 @@ una serie de escenarios, los cuales surgen de los casos de uso del sistema.
 Estos escenarios casi siempre se especifican en un lenguaje DSL que hace uso
 de lenguaje natural (casi siempre inglés) para definir el comportamiento
 esperado del sistema \cite{23_chelimsky_2010}.
-
-%% Además BDD se hace uso de lenguajes DSL que tratan de ser lo mas cercanos a un
-%% lenguaje natural, generalmente siendo el ingles pero no limitado a este.
-%% Haciendo uso de este lenguaje DSL se implementan pruebas de aceptación que
-%% especifican el comportamiento y los resultados esperados del sistema.
 
 \subsubsection{Ventajas}
 En BDD se guía el diseño del código fuente del sistema a través de las pruebas
@@ -316,6 +312,8 @@ Característica:
 Gherkin es un lenguaje que usa el indentado para definir la estructura, de manera
 que los saltos de linea dividen las diferentes declaraciones,
 la mayoría de las lineas empiezan con palabras clave.
+
+% FIXME: , por ejemplo (cuales usas en el ejemplo) hay que explicarlo mas.
 
 \vspace{2.5mm}
 
