@@ -347,14 +347,67 @@ El lenguaje de programación Ruby es un lenguaje dinámico con una gramática co
 pero expresiva y con una biblioteca de clases base con un API extenso y poderoso.
 Ruby toma inspiración de otros lenguajes de programación como Lisp, Smalltalk y Perl.
 
-Ruby es un lenguaje orientado a objetos puro, pero también es adecuado para los
-paradigmas funcionales y imperativos, y incluye poderosas capacidades para
+Ruby es un lenguaje orientado a objetos puro, pero también tiene es posible
+usar los paradigmas funcional e imperativo, y incluye poderosas capacidades para
 la metaprogramación las cuales son usadas para crear fácilmente lenguajes
 de dominio especifico (\textit{Domain Specific Language} DSL)
 \cite{24_matsumoto_2008}.
 
-\subsection{Metaprogramación}
-Metaprogramacion es escribir código fuente que manipule las estructuras del lenguaje
-en tiempo de ejecución.
+\subsection{Metaprogramación y Ruby}
+La metaprogramación consiste en escribir programas que implementan o manipular otros
+programas (o a si mismos). Los ejemplos mas comunes de la metaprogramación son los
+compiladores y la generación de código automatizado.
+
+En Ruby la metaprogramación se enfoca en código que se manipula a si mismo en tiempo
+de ejecución, a este tipo de metaprogramación se le da el nombre de metaprogramación
+dinámica para diferenciarla de la Metaprogramacion asociada a la generación de
+código y a los compiladores \cite{2_perrotta_2010}.
+
+Ruby es un lenguaje de programación muy dinámico:
+\begin{itemize}
+\item Permite crear clases y módulos en tiempo de ejecución.
+\item Permite agregar nuevos métodos a clases en tiempo de ejecución.
+\item Define varios \textit{callbacks} para eventos relacionados con clases, módulos
+  y métodos.
+\end{itemize}
+También se tiene un API de reflexión, el cual permite que un programa examine su estado y estructura, pero además permite que un programa altere su estado y estructura.
+
+El API de reflexión junto con el uso de bloques e iteradores y el uso opcional de
+paréntesis para la aplicación de funciones hacen de Ruby un lenguaje
+ideal para la metaprogramación \cite{24_matsumoto_2008}.
 
 \subsection{Lenguajes de dominio especifico}
+Lenguajes de programación como Ruby o C++ son lenguajes de propósito general
+(\textit{General Purpose Language} GPL), es decir, lenguajes que son diseñados
+para ser usados para implementar software en una gran variedad de dominios.
+En contrapuesto se tienen los lenguajes de dominio especifico
+(\textit{Domain Specific Language} DSL) los cuales están diseñados a problemas en
+un dominio especifico.
+
+\subsubsection{DSL internos y externos}
+
+Para implementar un DSL se tienen dos rutas:
+\begin{itemize}
+\item definir la gramatica del lenguaje haciendo uso de herramientas como
+  ANTLR o Yacc, los cuales son DSL para escribir parsers de lenguajes. Luego
+  se tiene que escribir un interprete de la gramática definida. Este tipo
+  de DSL se les da el nombre de DSL internos.
+\item tomar un lenguaje GPL y modificarlo para que se asemeje al DSL que
+  se necesita. Este tipo de DSL se les da el nombre de DSL externos.
+\end{itemize}
+
+En el siguiente ejemplo se tiene un ejemplo de código Ruby que usa la biblioteca
+markaby para generar HTML. En este caso se tiene un DSL para generar HTML haciendo
+uso de Ruby como lenguaje GPL base.
+\lstinputlisting[language=Ruby]{code/dsl-example.rb}
+
+El ejemplo anterior es codigo valido en Ruby, pero tiene la forma de un lenguaje
+especifico para generar HTML. Markaby define un DSL interno, porque hace uso
+de Ruby para implementar su DSL.
+
+Una gran ventaja de los DSL internos es que facilmente se puede hacer uso del GPL
+subyaciente cuando sea necesario, aunque la sintasis del DSL interno esta limitado
+por la sintasis del lenguaje GPL. Este puede ser un gran limitante en otros lenguajes
+como en Java en el cual es posible implementar DSL internos pero no dejan de parecerse a Java por lo rigido de la sintaxis, mientras que la sintaxis de Ruby es
+flexible lo que permite que los DSL internos definidos con este se vean mas
+adaptados al problema en cuestion.
