@@ -17,12 +17,12 @@ MVC consiste de tres tipos de objetos \cite{22_martin_fowler_mvc}:
 MVC fue ideado originalmente para aplicaciones gráficas convencionales,
 donde los desarrolladores encontraron que la separación de responsabilidades,
 entre la presentación (vista y controlador) y el dominio (modelo), fomentadas
-por el patrón llevan a un menor acoplamiento lo que hacia al código
-mucho mas fácil de escribir y mantener (Ver Figura 2.1).
+por el patrón llevan a un menor acoplamiento lo que con lleva una escritura
+de código fuente y mantenimiento del mismo mucho mas sencillas (Ver Figura 2.1).
 
 MVC desacopla vistas y modelos mediante el establecimiento de un
-protocolo de suscripción / notificación. La vista debe asegurarse
-de que su aspecto visual refleje el estado del modelo. Cada vez que cambian
+protocolo de suscripción / notificación. La vista debe asegurar que el
+aspecto visual refleje el estado del modelo. Cada vez que cambian
 los datos del modelo, el modelo notifica a las vistas que depende de ella.
 Este enfoque permite conectar múltiples vistas a un modelo para proporcionar
 diferentes presentaciones. También puede crear nuevas vistas para un modelo
@@ -39,15 +39,16 @@ convencionales.
 
 En Rails, la vista es responsable de la creación de la respuesta dada para
 ser mostrada en un navegador. En su forma mas simple, una
-vista es un trozo de código HTML que muestra un texto fijo. Frecuentemente
+% FIXME: Añadir fuente.
+vista ``es un trozo de código HTML que muestra un texto fijo". Frecuentemente
 se requiere mostrar contenido dinámico creado por una acción en un controlador,
 por lo que el contenido dinámico es generado por medio de plantillas, el esquema
-de plantillas más común es llamado Ruby Embebido (\textit{Embedded Ruby}, ERB),
+más común de plantillas es llamado Ruby Embebido (\textit{Embedded Ruby}, ERB),
 el cual inserta pedazos de código de Ruby dentro de una vista, similar a la forma
 como se hace en otros marcos de trabajo como PHP o JSP. También se pude hacer uso de
 Ruby Embebido para incrustar pedazos de código Javascript en el servidor,
 que serán ejecutados en el navegador, lo cual permite crear interfases
-dinámicas haciendo uso de \textit{Asynchronous JavaScript and XML} (AJAX).
+dinámicas haciendo uso de \textit{Asynchronous Javascript and XML} (AJAX).
 
 Finalmente en Rails los controladores son el centro lógico del sistema, ya que
 coordinan la interacción entre el usuario, las vistas y el modelo
@@ -58,19 +59,19 @@ coordinan la interacción entre el usuario, las vistas y el modelo
 
 \begin{enumerate}
 \item Modelo: dado que en un principio los servicios web de recomendaciones y
-  desagregación estaban en construcción se hizo uso de la biblioteca
-  \textit{ActiveRecord} para tener datos reales estáticos que permitieran
-  la implementación de la interfaz de usuario.
-  Posteriormente se reemplazaron estos modelos por nuevos modelos que hacían
+  desagregación estaban en construcción se utilizó la biblioteca
+  \textit{ActiveRecord} con el fin de tener datos reales estáticos que
+  permitieran la implementación de la interfaz de usuario.
+  Posteriormente se reemplazaron éstos por nuevos modelos que hacían
   uso de los servicios web del \textit{backend}, por medio de la biblioteca
   \texttt{Bezel}.
-  El realizar este reemplazo no implicó grandes cambios, dado el desacoplamiento
-  existente entre los modelos y las vistas.
+  Estos cambios no tuvieron un alto impacto en el desarrollo del sistema perse,
+  dado el desacoplamiento existente entre los modelos y las vistas.
 \item Vista: haciendo uso de plantillas se generan representaciones de los
   principales modelos del sistema en HTML y JSON.
 
   Sin embargo, para ciertos modelos, como las \textit{recomendaciones} y los
-  \textit{reportes de consumo}, se tenia una tercera representación en forma
+  \textit{reportes de consumo}, se contaba con una tercera representación en forma
   de PDF del modelo.
 \end{enumerate}
 
