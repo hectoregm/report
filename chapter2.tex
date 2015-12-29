@@ -347,22 +347,22 @@ cambios para obtener nuevamente el comportamiento esperado por el cliente.
 \section{Ruby, metaprogramación y lenguajes DSL}
 El lenguaje de programación Ruby es un lenguaje dinámico con una gramática compleja
 pero expresiva y cuenta con una biblioteca estándar extensa y poderosa.
-Ruby toma inspiración de otros lenguajes de programación como Lisp, Smalltalk y Perl.
-
-Ruby es un lenguaje orientado a objetos puro, pero también permite el uso de
-otros paradigmas como el funcional o imperativo, incluye poderosas capacidades para
-la metaprogramación las cuales son usadas para crear fácilmente lenguajes
-de dominio especifico (\textit{Domain Specific Language} DSL).
+Ruby toma inspiración de otros lenguajes de programación como Lisp, Smalltalk y Perl
 \cite{24_matsumoto_2008}.
+
+Ruby es un lenguaje orientado a objetos puro, sin embargo permite el uso de
+otros paradigmas como el funcional o imperativo, incluye capacidades para la
+metaprogramación las cuales son usadas para crear fácilmente lenguajes de
+dominio especifico (\textit{Domain Specific Language} DSL)\cite{24_matsumoto_2008}.
 
 \subsection{Metaprogramación y Ruby}
 La metaprogramación consiste en escribir programas que implementan o manipulan otros
-programas (o a si mismos). Los ejemplos mas comunes de metaprogramación son los
+programas (o asimismos). Los ejemplos más comúnes de metaprogramación son los
 compiladores y generadores de código automatizado.
 
-En Ruby la metaprogramación se enfoca en código que se manipula a si mismo en tiempo
+En Ruby la metaprogramación se enfoca en código que se manipula asimismo en tiempo
 de ejecución, a este tipo de metaprogramación se le da el nombre de metaprogramación
-dinámica para diferenciarla de la metaprogramación asociada típicamente a
+dinámica, para así diferenciarla de la metaprogramación asociada típicamente a
 los generadores de código y a los compiladores \cite{2_perrotta_2010}.
 
 Ruby es un lenguaje de programación muy dinámico:
@@ -374,7 +374,7 @@ Ruby es un lenguaje de programación muy dinámico:
 \end{itemize}
 
 También se tiene un API de reflexión, el cual permite que un programa examine
-su estado y estructura, pero además permite que un programa altere su propio estado
+su estado y estructura, además permite que un programa altere su propio estado
 y estructura.
 
 El API de reflexión junto con el uso de bloques e iteradores y el uso opcional de
@@ -382,23 +382,23 @@ paréntesis para la aplicación de funciones hacen de Ruby un lenguaje
 ideal para la metaprogramación \cite{24_matsumoto_2008}.
 
 \subsection{Lenguajes de dominio especifico}
-Lenguajes de programación como Ruby o C++ son lenguajes de propósito general
-(\textit{General Purpose Language} GPL), es decir, lenguajes que son diseñados
+Lenguajes de programación como Ruby o C++ son Lenguajes de Propósito General
+(\textit{General Purpose Language}\ GPL), es decir, lenguajes que son diseñados
 para ser usados para implementar software en una gran variedad de dominios.
-En contrapuesto se tienen los lenguajes de dominio especifico
-(\textit{Domain Specific Language} DSL) los cuales están diseñados para problemas
-en un dominio especifico.
+En contrapuesto se tienen los Lenguajes de Dominio Específico
+(\textit{Domain Specific Language}\ DSL) los cuales están diseñados para resolver
+problemas en un dominio específico.
 
 \subsubsection{DSL internos y externos}
 
 Para implementar un DSL se tienen dos rutas:
 \begin{itemize}
-\item definir la gramática del lenguaje haciendo uso de herramientas como
-  ANTLR o Yacc, los cuales son DSL para escribir parsers de lenguajes. Luego
-  se tiene que escribir un interprete de la gramática definida. Este tipo
-  de DSL se les da el nombre de DSL externos.
-\item tomar un lenguaje GPL y modificarlo para que se asemeje al DSL que
-  se necesita. Este tipo de DSL se les da el nombre de DSL internos.
+\item Definir la gramática del lenguaje haciendo uso de herramientas como
+  ANTLR o Yacc, los cuales son DSL para escribir analizadores sintácticos
+  de lenguajes. Posteriormente se tiene que escribir un intérprete para
+  la gramática definida. Este tipo de Lenguajes se les conoce como DSL externos.
+\item Tomar un lenguaje GPL y modificarlo para que se asemeje al DSL que
+  se necesita. A este tipo de DSL se les conoce como DSL internos.
 \end{itemize}
 
 En el siguiente ejemplo se tiene un ejemplo de código Ruby que usa la biblioteca
@@ -406,14 +406,14 @@ En el siguiente ejemplo se tiene un ejemplo de código Ruby que usa la bibliotec
 haciendo uso de Ruby como lenguaje GPL base.
 \lstinputlisting[language=Ruby]{code/dsl-example.rb}
 
-El ejemplo anterior es código valido en Ruby, pero tiene la forma de un lenguaje
+El ejemplo anterior muestra un código válido en Ruby, pero tiene la forma de un lenguaje
 especifico para generar HTML. \textit{Markaby} define un DSL interno, porque hace uso
 de Ruby para implementar su DSL.
 
 Una gran ventaja de los DSL internos es que fácilmente se puede hacer uso del GPL
 subyacente cuando sea necesario, aunque la sintaxis del DSL interno esta limitado
 por la sintaxis del lenguaje GPL. Este puede ser un gran limitante en otros lenguajes
-como en Java, en el cual es posible implementar DSL internos pero no dejan de
-tener un gran parecido a Java por lo rígido de su sintaxis, mientras que la
-sintaxis de Ruby es flexible lo que permite que los DSL internos definidos
+como en Java, en el cual es posible implementar DSL internos. Cabe mencionar que
+éstos no dejan de tener un gran parecido a Java por lo rígido de su sintaxis, mientras
+que la sintaxis de Ruby es flexible lo que permite que los DSL internos definidos
 con este se vean mas adaptados al problema en cuestión.
