@@ -29,12 +29,23 @@ Se tenia un énfasis en la interfase de usuario en el primer ingreso del usuario
 que era critico obtener al menos la siguiente información:
 
 \begin{usecase}
-  \addtitle{Caso de Uso I:}{Ingresar información básica inicial}
-  \addfield{Descripción:}{Foo}
-  \addfield{Actor:}{Cliente}
+  \addtitle{Caso de Uso I:}{Crear perfil inicial de un edificio.}
+  \addfield{Descripción:}{Un cliente PyME entra al sistema  para crear un perfil inicial
+  de un edificio, respondiendo ciertas preguntas básicas sobre el edificio.}
+  \addfield{Actor:}{Cliente PyME}
   \addfield{Precondiciones:}{}
-  \addfield{Flujo normal de eventos:}{}
-  \addfield{Flujo alternativo de eventos:}{}
-  \addfield{Flujo excepcional de eventos:}{}
-  \addfield{Postcondiciones:}{}
+  \addscenario{Flujo normal:}{
+  \item Primera acción
+  \item Segunda acción
+  }
+  \addscenario{Flujo alternativo:}{
+  \item Primera acción
+  \item Segunda acción
+  }
+  \addscenario{Flujo excepcional:}{
+  \item Primera acción
+  \item Segunda acción
+  }
+  \addfield{Postcondiciones:}{
+  }
 \end{usecase}
