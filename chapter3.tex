@@ -5,6 +5,13 @@ interfaz de usuario que fuera lo suficientemente eficaz y sencilla, para así ob
 la mayor cantidad de información del usuario.
 
 \subsection{Configuración inicial}
+
+Los datos de facturación del consumo eléctrico de un cliente no puede ser analizados
+para obtener el numero de edificios (y sus características) a los cuales se les
+proporciona el servicio eléctrico. No se tienen métodos fiables que permitan
+usar solamente los datos de facturación para obtener esta información, así es
+necesario que el usuario responda una serie de preguntas básicas sobre sus edificios.
+
 Para dar el mayor valor al usuario es necesario obtener al menos la siguiente información
 para cada cuenta:
 
@@ -33,19 +40,26 @@ que era critico obtener al menos la siguiente información:
   \addfield{Descripción:}{Un cliente PyME entra al sistema  para crear un perfil inicial
   de un edificio, respondiendo ciertas preguntas básicas sobre el edificio.}
   \addfield{Actor:}{Cliente PyME}
-  \addfield{Precondiciones:}{}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
+    asignado por el sistema de PG\&E.
+  \item Los datos de intervalo y de facturación del cliente esta en el sistema.
+  }
   \addscenario{Flujo normal:}{
-  \item Primera acción
-  \item Segunda acción
-  }
-  \addscenario{Flujo alternativo:}{
-  \item Primera acción
-  \item Segunda acción
-  }
-  \addscenario{Flujo excepcional:}{
-  \item Primera acción
-  \item Segunda acción
+  \item El sistema checa si el cliente tiene mas de una cuenta.
+  \item El sistema despliega el numero de cuenta.
+  \item El usuario puede definir un alias a la cuenta.
+  \item El sistema despliega las direcciones de servicio asociadas a la cuenta.
+  \item El cliente debe ingresar la siguiente información sobre el edificio:
+    \begin{enumerate}
+    \item Tipo.
+    \item Rango de tamaño.
+    \item Antigüedad.
+    \end{enumerate}
+  \item El usuario puede ingresar los datos o cancelar.
   }
   \addfield{Postcondiciones:}{
+    Se genera un identificador único para el perfil del edificio generado, el cual
+    esta asociado a los datos de facturación de la cuenta del cliente PyME.
   }
 \end{usecase}
