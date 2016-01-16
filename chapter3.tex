@@ -1,4 +1,21 @@
 \chapter{Diseño e implementación del sistema PEAT}
+
+\section{Modelo de información}
+
+El objetivo principal del modelo de informacion de PEAT es definir el concepto de edificio
+y su relacion con el consumo energetico del usuario. Asi en PEAT tenemos el concepto de
+edifico el cual es una estructura independiente 
+
+\subsection{Estructura de facturación de PG\&E}
+Un usuario puede tener una o varias cuentas, a su vez cada cuenta puede tener uno o varios
+contratos de servicio. Un contrato de servicio representa los servicios que el usuario
+requiere ya sea de electricidad o gas. Una cuenta también tiene uno o varios edificios/locales
+Cada uno de esos locales tiene uno o varios puntos de servicio. Finalmente un punto de servicio
+puede tener uno varios medidores. Un medidor es un dispositivo instalado en un punto de servicio
+que registra el consumo del servicio, ya sea eléctrico o gas, por el local.
+
+\subsection{Relación Edificio-Facturación}
+
 \section{Interfase de usuario}
 Dentro de los requerimientos del proyecto PEAT se tenia la implementación de una
 interfaz de usuario que fuera lo suficientemente eficaz y sencilla, para así obtener
