@@ -37,7 +37,10 @@ requiere ya sea de electricidad o gas. Una cuenta también tiene una o varias di
 servicio.
 Cada una de estas direcciones tiene uno o varios puntos de servicio. Finalmente un punto
 de servicio puede tener uno varios medidores. Un medidor es un dispositivo instalado en un
-punto de servicio que registra el consumo del servicio, ya sea eléctrico o gas, por el local.
+punto de servicio que registra el consumo del servicio, ya sea eléctrico o gas, por el local
+(Ver Figura 3.1).
+
+\jcimage{1.0}{imagenes/PGE-facturacion.png}{Modelos principales para la facturación en PG\&E.}
 
 El usuario, la cuenta y el contrato de servicio representan el lado demográfico de modelo de
 información, la cual cambia bastante.
@@ -48,8 +51,8 @@ información, la cual cambia bastante.
   tener uno o más contratos de servicio, uno por tipo (eléctrico o gas),
   también tiene una o más direcciones de servicio.
 \item Contrato de servicio: representa los servicios que el cliente adquiere
-  de PG\&E, como la electricidad o el gas. Cada servicio entregado al cliente
-  es un contrato único.
+  de PG\&E, como la electricidad o el gas, puede tener uno o mas puntos
+  de servicio asociados.
 \end{itemize}
 
 La dirección de servicio, el punto de servicio y el medidor representan la parte geográfica
