@@ -42,11 +42,27 @@ punto de servicio que registra el consumo del servicio, ya sea eléctrico o gas,
 El usuario, la cuenta y el contrato de servicio representan el lado demográfico de modelo de
 información, la cual cambia bastante.
 
+\begin{itemize}
+\item Usuario: representa al cliente, puede tener uno o más cuentas.
+\item Cuenta: representa la contabilidad financiera del cliente. Puede
+  tener uno o más contratos de servicio, uno por tipo (eléctrico o gas),
+  también tiene una o más direcciones de servicio.
+\item Contrato de servicio: representa los servicios que el cliente adquiere
+  de PG\&E, como la electricidad o el gas. Cada servicio entregado al cliente
+  es un contrato único.
+\end{itemize}
+
 La dirección de servicio, el punto de servicio y el medidor representan la parte geográfica
 del modelo de información, esta información raramente cambia:
 
 \begin{itemize}
-\item Dirección de servicio: Un local es una ubicación física en donde se prestan los servicios.
+\item Dirección de servicio: es una ubicación física en donde se prestan los servicios, en
+  PEAT son el modelo que se quiere asociar al modelo de local/edificio, puede tener
+  uno o más puntos de servicio.
+\item Punto de servicio: es una coordenada geográfica en donde se conectan los servicios,
+  puede tener uno o más medidores.
+\item Medidor: es un dispositivo instalado en un punto de servicio que registra el
+  consumo del servicio.
 \end{itemize}
 
 
