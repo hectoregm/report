@@ -1,10 +1,29 @@
 \chapter{Diseño e implementación del sistema PEAT}
 
+Para lograr el objetivo del sistema \texttt{PEAT} se dividió en cuatro
+módulos principales con las siguientes características generales:
+
+\begin{itemize}
+\item Perfil sencillo de local (\textit{Simple Building Profile}): en este modulo realiza
+  la configuración inicial del local del usuario, realizando solamente un numero limitado
+  de preguntas básicas.
+\item Perfil detallado de local (\textit{Detailed Building Profile}): en este modulo se
+  encarga del ingreso y/o actualización de las características de un edificio/local.
+\item Plan de ahorro de energía (\textit{Energy Savings Plan}): en este modulo se
+  presenta el consumo de energía de usuario, también debe manejar las recomendaciones
+  que el usuario se ha comprometido a poner en practica.
+\item Recomendaciones (\textit{Recommendations}): en este modulo se genera una lista
+  de medidas de ahorro de energía considerando la información básica y detallada
+  ingresada al sistema hasta el momento. Aparte debe permitir al usuario obtener
+  información detallada sobre las recomendaciones presentadas.
+\end{itemize}
+
 \section{Modelo de información}
 
-El objetivo principal del modelo de informacion de PEAT es definir el concepto de edificio
-y su relacion con el consumo energetico del usuario. Asi en PEAT tenemos el concepto de
-edifico el cual es una estructura independiente 
+El objetivo principal del modelo de información de \texttt{PEAT} es definir el
+concepto de edificio y su relación con el consumo energético del usuario. Así en
+\texttt{PEAT} tenemos el concepto de local/edificio el cual es una estructura
+independiente a la cual se le esta proporcionando un servicio eléctrico o de gas.
 
 \subsection{Estructura de facturación de PG\&E}
 Un usuario puede tener una o varias cuentas, a su vez cada cuenta puede tener uno o varios
@@ -57,7 +76,7 @@ que era critico obtener al menos la siguiente información:
 \begin{usecase}
   \addtitle{Caso de Uso I:}{Crear perfil inicial de un edificio.}
   \addfield{Descripción:}{Un cliente PyME entra al sistema  para crear un perfil inicial
-  de un edificio, respondiendo ciertas preguntas básicas sobre el edificio.}
+    de un edificio, respondiendo ciertas preguntas básicas sobre el edificio.}
   \addfield{Actor:}{Cliente PyME}
   \additemizedfield{Precondiciones:}{
   \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
