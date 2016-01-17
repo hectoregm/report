@@ -18,6 +18,11 @@ módulos principales con las siguientes características generales:
   información detallada sobre las recomendaciones presentadas.
 \end{itemize}
 
+Como se puede ver el modelo de local/edificio es el principal modelo dentro de
+\texttt{PEAT}, por lo que lograr obtener una correcta correspondencia entre
+el consumo energético y un local dado es de vital importancia para dar la
+información mas pertinente al usuario.
+
 \section{Modelo de información}
 
 El objetivo principal del modelo de información de \texttt{PEAT} es definir el
@@ -28,14 +33,30 @@ independiente a la cual se le esta proporcionando un servicio eléctrico o de ga
 \subsection{Estructura de facturación de PG\&E}
 Un usuario puede tener una o varias cuentas, a su vez cada cuenta puede tener uno o varios
 contratos de servicio. Un contrato de servicio representa los servicios que el usuario
-requiere ya sea de electricidad o gas. Una cuenta también tiene uno o varios edificios/locales
-Cada uno de esos locales tiene uno o varios puntos de servicio. Finalmente un punto de servicio
-puede tener uno varios medidores. Un medidor es un dispositivo instalado en un punto de servicio
-que registra el consumo del servicio, ya sea eléctrico o gas, por el local.
+requiere ya sea de electricidad o gas. Una cuenta también tiene una o varias direcciones de
+servicio.
+Cada una de estas direcciones tiene uno o varios puntos de servicio. Finalmente un punto
+de servicio puede tener uno varios medidores. Un medidor es un dispositivo instalado en un
+punto de servicio que registra el consumo del servicio, ya sea eléctrico o gas, por el local.
+
+El usuario, la cuenta y el contrato de servicio representan el lado demográfico de modelo de
+información, la cual cambia bastante.
+
+La dirección de servicio, el punto de servicio y el medidor representan la parte geográfica
+del modelo de información, esta información raramente cambia:
+
+\begin{itemize}
+\item Dirección de servicio: Un local es una ubicación física en donde se prestan los servicios.
+\end{itemize}
+
+
+Para que \texttt{PEAT} pueda darlas mejores recomendaciones al usuario para reducir su consumo
+energético es necesario definir claramente la relación entre un local/edificio y su consumo
+energético medido por uno o varios medidores.
 
 \subsection{Relación Edificio-Facturación}
-El modelo de informacion expuesto presenta un gran reto para lograr los objetivos del sistema,
-puesto que es necesario definir la relacion entre un local y su consumo energetico real.
+El modelo de información expuesto presenta un gran reto para lograr los objetivos del sistema,
+puesto que es necesario definir la relación entre un local y su consumo energetico real.
 
 \section{Interfase de usuario}
 Dentro de los requerimientos del proyecto PEAT se tenia la implementación de una
