@@ -77,11 +77,25 @@ energético medido por uno o varios medidores.
 El modelo de información expuesto presenta un gran reto para lograr los objetivos del sistema,
 puesto que es necesario definir la relación entre un local y su consumo energetico real.
 
-\section{Casos de Uso}
+\section{Casos de uso}
 
-\subsection{Diagrama General}
+\subsection{Diagrama general}
 
-\jcimage{0.5}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de casos de uso de \texttt{PEAT}.}
+En el Figura 3.2 se muestra el diagrama general de casos de uso del sistema
+\texttt{PEAT}. Se tienen 8 casos de uso para \texttt{PEAT} con tres casos de uso
+para la libreria \texttt{Bezel}. Los casos de uso se agrupan en los cuatro modulos
+principales mencionados anteriormente:
+
+\begin{itemize}
+\item Perfil sencillo de local (\textit{Simple Building Profile}): Tiene
+  solo el caso de uso \textit{Crear perfil del edificio} pero este caso de uso
+  es uno de los mas complejos en cuestión de interacción con el usuario y su
+  importancia para obtener las características iniciales del edificio.
+\item Perfil detallado de local (\textit{Detailed Building Profile}): Contiene
+  los casos de uso
+\end{itemize}
+
+\jcimage{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de casos de uso de \texttt{PEAT}.}
 
 \section{Interfase de usuario}
 Dentro de los requerimientos del proyecto PEAT se tenia la implementación de una
