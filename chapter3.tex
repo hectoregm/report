@@ -81,10 +81,11 @@ puesto que es necesario definir la relación entre un local y su consumo energet
 
 \subsection{Diagrama general}
 
-En el Figura 3.2 se muestra el diagrama general de casos de uso del sistema
-\texttt{PEAT}. Se tienen 8 casos de uso para \texttt{PEAT} con tres casos de uso
-para la libreria \texttt{Bezel}. Los casos de uso se agrupan en los cuatro modulos
-principales mencionados anteriormente:
+En la Figura 3.2 se muestra el diagrama general de casos de uso del sistema
+\texttt{PEAT}. Se tienen once casos de uso en total siendo ocho casos para
+\texttt{PEAT} y tres casos para la biblioteca \texttt{Bezel}.
+Los casos de uso se agrupan en los cuatro módulos principales mencionados
+anteriormente:
 
 \begin{itemize}
 \item Perfil sencillo de local (\textit{Simple Building Profile}): Tiene
@@ -92,10 +93,19 @@ principales mencionados anteriormente:
   es uno de los mas complejos en cuestión de interacción con el usuario y su
   importancia para obtener las características iniciales del edificio.
 \item Perfil detallado de local (\textit{Detailed Building Profile}): Contiene
-  los casos de uso
+  los casos de uso \textit{Ver perfil del edificio},
+  \textit{Actualizar perfil del edificio} y \textit{Obtener información del edificio}
+  los cuales se encargan de la administración y obtención de información del
+  edificio.
+\item Plan de ahorro de energía (\textit{Energy Savings Plan}): Contiene los
+  casos de uso \textit{Ver historial de consumo} y \textit{Ver plan de ahorro}
+  que se enfocan a la visualización del consumo eléctrico del usuario y las
+  posibles recomendaciones para disminuir su consumo.
+\item Recomendaciones (\textit{Recommendations}): Contiene los casos de uso
+  \textit{Ver lista de recomendaciones} y \textit{Ver recomendación}.
 \end{itemize}
 
-\jcimage{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de casos de uso de \texttt{PEAT}.}
+\jcimageinline{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de casos de uso de \texttt{PEAT}.}
 
 \section{Interfase de usuario}
 Dentro de los requerimientos del proyecto PEAT se tenia la implementación de una
