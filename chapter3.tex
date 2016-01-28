@@ -122,6 +122,38 @@ anteriormente:
 
 \jcimageinline{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de casos de uso de \texttt{PEAT}.}
 
+\subsection{Crear perfil del edificio}
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Crear perfil del edificio.}
+  \addfield{Descripción:}{Un cliente PyME entra al sistema  para crear un perfil
+    inicial de un edificio, respondiendo ciertas preguntas básicas sobre el
+    edificio.}
+  \addfield{Actor:}{Cliente PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
+    asignado por el sistema de PG\&E.
+  \item Los datos de intervalo y de facturación del cliente esta en el sistema.
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema checa si el cliente tiene mas de una cuenta.
+  \item El sistema despliega el numero de cuenta.
+  \item El usuario puede definir un alias a la cuenta.
+  \item El sistema despliega las direcciones de servicio asociadas a la cuenta.
+  \item El cliente debe ingresar la siguiente información sobre el edificio:
+    \begin{enumerate}
+    \item Tipo.
+    \item Rango de tamaño.
+    \item Antigüedad.
+    \end{enumerate}
+  \item El usuario puede ingresar los datos o cancelar.
+  }
+  \addfield{Postcondiciones:}{
+    Se genera un identificador único para el perfil del edificio generado, el cual
+    esta asociado a los datos de facturación de la cuenta del cliente PyME.
+  }
+\end{usecase}
+
 \section{Interfase de usuario}
 Dentro de los requerimientos del proyecto PEAT se tenia la implementación de una
 interfaz de usuario que fuera lo suficientemente eficaz y sencilla, para así obtener
