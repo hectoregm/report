@@ -5,12 +5,12 @@ módulos principales con las siguientes características generales:
 
 \begin{itemize}
 \item Perfil sencillo del edificio (\textit{Simple Building Profile}): este modulo
-  realiza la configuración inicial del local del usuario, realizando solamente
+  realiza la configuración inicial del edificio del usuario, realizando solamente
   un numero limitado de preguntas básicas para lograr definir las características
   básicas del edificio.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}):
   este modulo se encarga del manejo de las características, básicas y detalladas,
-  de un edificio/local.
+  de un edificio.
 \item Plan de ahorro de energía (\textit{Energy Savings Plan}): este modulo se
   presenta el consumo de energía de usuario, también maneja las recomendaciones
   que el usuario se ha comprometido a poner en acción.
@@ -30,56 +30,67 @@ del edificio.
 \section{Modelo de información}
 
 El objetivo principal del modelo de información de \texttt{PEAT} es definir el
-concepto de edificio y su relación con el consumo energético del usuario. Así en
-\texttt{PEAT} tenemos el concepto de local/edificio el cual es una estructura
-independiente a la cual se le esta proporcionando un servicio eléctrico o de gas.
+concepto de edificio y su relación con el consumo energético del usuario. Así
+tenemos el concepto de edificio el cual es una estructura independiente a la
+cual se le esta proporcionando electricidad o gas.
 
 \subsection{Estructura de facturación de PG\&E}
-Un usuario puede tener una o varias cuentas, a su vez cada cuenta puede tener uno o varios
-contratos de servicio. Un contrato de servicio representa los servicios que el usuario
-requiere ya sea de electricidad o gas. Una cuenta también tiene una o varias direcciones de
-servicio.
-Cada una de estas direcciones tiene uno o varios puntos de servicio. Finalmente un punto
-de servicio puede tener uno varios medidores. Un medidor es un dispositivo instalado en un
-punto de servicio que registra el consumo del servicio, ya sea eléctrico o gas, por el local
-(Ver Figura 3.1).
+Para obtener esta correspondencia entre edificio-consumo es necesario
+tener en cuenta la estructura de facturacion usada por PG\&E puesto
+que de esta estructura es que se obtiene el consumo de electricidad y gas.
 
-\jcimage{1.0}{imagenes/PGE-facturacion.png}{Modelos principales para la facturación en PG\&E.}
-
-El usuario, la cuenta y el contrato de servicio representan el lado demográfico de modelo de
-información, la cual cambia bastante.
+El usuario, la cuenta y el contrato de servicio representan el lado demográfico
+de modelo de información, la cual cambia bastante:
 
 \begin{itemize}
-\item Usuario: representa al cliente, puede tener uno o más cuentas.
-\item Cuenta: representa la contabilidad financiera del cliente. Puede
-  tener uno o más contratos de servicio, uno por tipo (eléctrico o gas),
-  también tiene una o más direcciones de servicio.
+\item Usuario: representa al cliente. Tiene una o mas cuentas.
+\item Cuenta: representa la contabilidad financiera del usuario. Tiene uno o más
+  contratos de servicio, uno por tipo (electricidad o gas), también tiene una o más
+  direcciones de servicio asociadas.
 \item Contrato de servicio: representa los servicios que el cliente adquiere
   de PG\&E, como la electricidad o el gas, puede tener uno o mas puntos
   de servicio asociados.
 \end{itemize}
 
-La dirección de servicio, el punto de servicio y el medidor representan la parte geográfica
-del modelo de información, esta información raramente cambia:
+La dirección de servicio, el punto de servicio y el medidor representan
+la parte geográfica del modelo de información, esta información raramente cambia:
 
 \begin{itemize}
-\item Dirección de servicio: es una ubicación física en donde se prestan los servicios, en
-  PEAT son el modelo que se quiere asociar al modelo de local/edificio, puede tener
-  uno o más puntos de servicio.
-\item Punto de servicio: es una coordenada geográfica en donde se conectan los servicios,
-  puede tener uno o más medidores.
+\item Dirección de servicio: es una ubicación física en donde se prestan los
+  servicios, en \texttt{PEAT} son el modelo que se quiere asociar al modelo
+  de edificio, puede tener uno o más puntos de servicio.
+\item Punto de servicio: es una coordenada geográfica en donde se conectan los
+  servicios, puede tener uno o más medidores.
 \item Medidor: es un dispositivo instalado en un punto de servicio que registra el
   consumo del servicio.
 \end{itemize}
 
+La relación entre todos estos modelos se puede ver en la Figura 3.1.
 
-Para que \texttt{PEAT} pueda darlas mejores recomendaciones al usuario para reducir su consumo
-energético es necesario definir claramente la relación entre un local/edificio y su consumo
-energético medido por uno o varios medidores.
+%% Ahora dentro de la facturación de PG\&E un usuario puede tener una o varias
+%% cuentas, a su vez cada cuenta tiene una o mas contratos de servicio asociados
+%% esto es porque cada contrato representa los servicios que el usuario
+%% requiere ya sea electricidad o gas.
+%% Además cada cuenta tiene una o varias direcciones de servicio en donde se tiene
+%% uno o varios puntos de servicio, donde se realiza la conexión eléctrica o de gas.
+%% Finalmente un punto de servicio puede tener uno o varios medidores, los cuales
+%% son dispositivos que registran el consumo del servicio dado (Ver Figura 3.1).
+
+\jcimage{1.0}{imagenes/PGE-facturacion.png}{Modelos principales para la facturación en PG\&E.}
 
 \subsection{Relación Edificio-Facturación}
-El modelo de información expuesto presenta un gran reto para lograr los objetivos del sistema,
-puesto que es necesario definir la relación entre un local y su consumo energetico real.
+
+Para que \texttt{PEAT} pueda cumplir sus requerimientos funcionales es necesario
+definir claramente la relación entre un edificio y su consumo energético medido
+por uno o varios medidores.
+Aunque los medidores son los que tienen la información de consumo el relacionar
+directamente un medidor con un edificio no es amigable para el usuario.
+Por lo que para facilitar la creación del perfil de un edificio se pide al usuario
+que haga la correspondencia entre las direcciones de servicio asociadas a su cuenta
+y el perfil de edificio que se esta creando.
+El usuario al dar esta correspondencia permite al sistema obtener los puntos
+de servicio y sus medidores asociados al edificio y así obtener su consumo
+energético para el edificio.
 
 \section{Casos de uso}
 
@@ -92,11 +103,11 @@ Los casos de uso se agrupan en los cuatro módulos principales mencionados
 anteriormente:
 
 \begin{itemize}
-\item Perfil sencillo de local (\textit{Simple Building Profile}): Tiene
+\item Perfil sencillo del edificio (\textit{Simple Building Profile}): Tiene
   solo el caso de uso \textit{Crear perfil del edificio} pero este caso de uso
   es uno de los mas complejos en cuestión de interacción con el usuario y su
   importancia para obtener las características iniciales del edificio.
-\item Perfil detallado de local (\textit{Detailed Building Profile}): Contiene
+\item Perfil detallado del edificio (\textit{Detailed Building Profile}): Contiene
   los casos de uso \textit{Ver perfil del edificio},
   \textit{Actualizar perfil del edificio} y \textit{Obtener información del edificio}
   los cuales se encargan de la administración y obtención de información del
