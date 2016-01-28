@@ -4,24 +4,28 @@ Para lograr el objetivo del sistema \texttt{PEAT} se dividió en cuatro
 módulos principales con las siguientes características generales:
 
 \begin{itemize}
-\item Perfil sencillo de local (\textit{Simple Building Profile}): en este modulo realiza
-  la configuración inicial del local del usuario, realizando solamente un numero limitado
-  de preguntas básicas.
-\item Perfil detallado de local (\textit{Detailed Building Profile}): en este modulo se
-  encarga del ingreso y/o actualización de las características de un edificio/local.
-\item Plan de ahorro de energía (\textit{Energy Savings Plan}): en este modulo se
-  presenta el consumo de energía de usuario, también debe manejar las recomendaciones
-  que el usuario se ha comprometido a poner en practica.
-\item Recomendaciones (\textit{Recommendations}): en este modulo se genera una lista
+\item Perfil sencillo del edificio (\textit{Simple Building Profile}): este modulo
+  realiza la configuración inicial del local del usuario, realizando solamente
+  un numero limitado de preguntas básicas para lograr definir las características
+  básicas del edificio.
+\item Perfil detallado del edificio (\textit{Detailed Building Profile}):
+  este modulo se encarga del manejo de las características, básicas y detalladas,
+  de un edificio/local.
+\item Plan de ahorro de energía (\textit{Energy Savings Plan}): este modulo se
+  presenta el consumo de energía de usuario, también maneja las recomendaciones
+  que el usuario se ha comprometido a poner en acción.
+\item Recomendaciones (\textit{Recommendations}): este modulo se genera una lista
   de medidas de ahorro de energía considerando la información básica y detallada
   ingresada al sistema hasta el momento. Aparte debe permitir al usuario obtener
   información detallada sobre las recomendaciones presentadas.
 \end{itemize}
 
-Como se puede ver el modelo de local/edificio es el principal modelo dentro de
+Como se puede ver el modelo de edificio es el principal modelo dentro de
 \texttt{PEAT}, por lo que lograr obtener una correcta correspondencia entre
-el consumo energético y un local dado es de vital importancia para dar la
-información mas pertinente al usuario.
+el consumo energético y un edificio es de vital importancia para dar la
+información mas correcta sobre el consumo del edificio pero también para
+permitir al sistema dar las mejores recomendaciones según las características
+del edificio.
 
 \section{Modelo de información}
 
