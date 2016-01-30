@@ -1,54 +1,53 @@
 \chapter{Diseño e implementación del sistema PEAT}
 
 Para lograr los objetivos del sistema \texttt{PEAT} se dividió en cuatro
-módulos principales:
+componentes principales:
 
 \begin{itemize}
-\item Perfil sencillo del edificio (\textit{Simple Building Profile}): este modulo
-  realiza la configuración inicial del edificio del usuario, realizando solamente
-  un numero limitado de preguntas básicas para lograr definir las características
-  básicas del edificio.
+\item Perfil sencillo del edificio (\textit{Simple Building Profile}): este
+  componente realiza la configuración inicial del edificio, realizando solamente
+  un numero limitado de preguntas básicas para definir las características básicas
+  del edificio.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}):
-  este modulo se encarga del manejo de las características básicas, detalladas y
+  este componente se encarga del manejo de las características básicas, detalladas y
   opcionales de un edificio.
-\item Plan de ahorro de energía (\textit{Energy Savings Plan}): este modulo
-  presenta el consumo de energía del edificio al usuario, también presenta las
-  recomendaciones que el usuario se ha comprometido a poner en acción.
-\item Recomendaciones (\textit{Recommendations}): este modulo genera una lista
+\item Recomendaciones (\textit{Recommendations}): este componente genera una lista
   de medidas de ahorro de energía considerando la información ingresada al sistema
   hasta el momento. Aparte debe permitir al usuario obtener información detallada
-  sobre las recomendaciones dadas.
+  sobre las recomendaciones dadas y finalmente debe permitir indicar que el usuario
+  se compromete a llevar acabo una recomendación.
+\item Plan de ahorro de energía (\textit{Energy Savings Plan}): este componente
+  presenta el consumo de energía del edificio al usuario, también presenta las
+  recomendaciones que el usuario se ha comprometido a poner en acción.
 \end{itemize}
 
 Como se puede ver el modelo de edificio es el principal modelo dentro de
-\texttt{PEAT}, por lo que lograr obtener una correcta correspondencia entre
-el consumo energético y un edificio es de vital importancia para dar la
-información mas correcta sobre edificio. Al tenerse una correcta asignación
-sobre el consumo del edificio el sistema puede dar las mejores recomendaciones
-según las características del edificio.
+\texttt{PEAT}, por lo que obtener una correcta correspondencia entre un
+edificio y su consumo energético es de vital importancia para dar la
+información y recomendaciones mas útiles y fidedignas al usuario.
 
 \section{Modelo de información}
 
 El objetivo principal del modelo de información de \texttt{PEAT} es definir el
-concepto de edificio y su relación con el consumo energético del usuario. Así
+modelo de edificio y su relación con el consumo energético del usuario. Así
 tenemos el concepto de edificio el cual es una estructura independiente a la
-cual se le esta proporcionando electricidad o gas.
+cual se le esta proporcionando un servicio ya sea electricidad o gas.
 
 \subsection{Estructura de facturación de PG\&E}
 Para obtener esta correspondencia entre edificio-consumo es necesario
-tener en cuenta la estructura de facturacion usada por PG\&E puesto
+tener en cuenta la estructura de facturación usada por PG\&E puesto
 que de esta estructura es que se obtiene el consumo de electricidad y gas.
 
 El usuario, la cuenta y el contrato de servicio representan el lado demográfico
-de modelo de información, la cual cambia bastante:
+del modelo de información, la cual cambia bastante:
 
 \begin{itemize}
-\item Usuario: representa al cliente. Tiene una o mas cuentas.
+\item Usuario: representa al cliente. Tiene una o más cuentas.
 \item Cuenta: representa la contabilidad financiera del usuario. Tiene uno o más
-  contratos de servicio, uno por tipo (electricidad o gas), también tiene una o más
-  direcciones de servicio asociadas.
+  contratos de servicio, uno por tipo de servicio (electricidad o gas), también
+  tiene una o más direcciones de servicio asociadas.
 \item Contrato de servicio: representa los servicios que el cliente adquiere
-  de PG\&E, como la electricidad o el gas, puede tener uno o mas puntos
+  de PG\&E, como la electricidad o el gas, puede tener uno o más puntos
   de servicio asociados.
 \end{itemize}
 
@@ -58,11 +57,12 @@ la parte geográfica del modelo de información, esta información raramente cam
 \begin{itemize}
 \item Dirección de servicio: es una ubicación física en donde se prestan los
   servicios, en \texttt{PEAT} son el modelo que se quiere asociar al modelo
-  de edificio, puede tener uno o más puntos de servicio.
+  de edificio para obtener el consumo del edificio, puede tener uno o más puntos
+  de servicio.
 \item Punto de servicio: es una coordenada geográfica en donde se conectan los
-  servicios, puede tener uno o más medidores.
+  servicios, puede tener uno o más medidores asociados.
 \item Medidor: es un dispositivo instalado en un punto de servicio que registra el
-  consumo del servicio.
+  consumo del servicio proporcionado.
 \end{itemize}
 
 La relación entre todos estos modelos se puede ver en la Figura 3.1.
@@ -76,7 +76,8 @@ La relación entre todos estos modelos se puede ver en la Figura 3.1.
 %% Finalmente un punto de servicio puede tener uno o varios medidores, los cuales
 %% son dispositivos que registran el consumo del servicio dado (Ver Figura 3.1).
 
-\jcimage{1.0}{imagenes/PGE-facturacion.png}{Modelos principales para la facturación en PG\&E.}
+\jcimage{1.0}{imagenes/PGE-facturacion.png}{Modelos principales para la facturación
+  en PG\&E.}
 
 \subsection{Relación Edificio-Facturación}
 
@@ -84,62 +85,90 @@ Para que \texttt{PEAT} pueda cumplir sus requerimientos funcionales es necesario
 definir claramente la relación entre un edificio y su consumo energético medido
 por uno o varios medidores.
 Aunque los medidores son los que tienen la información de consumo el relacionar
-directamente un medidor con un edificio no es amigable para el usuario.
+directamente un medidor con un edificio no es amigable para el usuario, porque
+aunque el usuario generalmente conoce el numero de medidores que tiene no conoce
+los identificadores para cada uno de estos.
+
 Por lo que para facilitar la creación del perfil de un edificio se pide al usuario
 que haga la correspondencia entre las direcciones de servicio asociadas a su cuenta
 y el perfil de edificio que se esta creando.
-El usuario al dar esta correspondencia permite al sistema obtener los puntos
-de servicio y sus medidores asociados al edificio y así obtener su consumo
-energético para el edificio.
+El usuario al dar esta correspondencia permite al sistema obtener de forma
+automatizada los puntos de servicio y sus medidores asociados al edificio y así
+obtener su consumo energético real.
 
 \section{Casos de uso}
 
 \subsection{Diagrama general}
 
 En la Figura 3.2 se muestra el diagrama general de casos de uso del sistema
-\texttt{PEAT}. Se tienen once casos de uso en total siendo ocho casos para
+\texttt{PEAT}. Se tienen diez casos de uso en total siendo siete casos para
 \texttt{PEAT} y tres casos para la biblioteca \texttt{Bezel}.
-Los casos de uso se agrupan en los cuatro módulos principales mencionados
-anteriormente:
+
+Los casos de uso se agrupan en los cuatro componentes principales de la
+siguiente manera:
 
 \begin{itemize}
 \item Perfil sencillo del edificio (\textit{Simple Building Profile}): Tiene
   solo el caso de uso \textit{Crear perfil del edificio} pero este caso de uso
   es uno de los mas complejos en cuestión de interacción con el usuario y su
-  importancia para obtener las características iniciales del edificio.
+  importancia para obtener las características básicas del edificio.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}): Contiene
   los casos de uso \textit{Administrar perfil del edificio} y
   \textit{Obtener información del edificio} los cuales se encargan de la
-  administración y obtención de información del edificio.
+  administración y obtención de información sobre el edificio.
 \item Plan de ahorro de energía (\textit{Energy Savings Plan}): Contiene los
-  casos de uso \textit{Ver historial de consumo} y \textit{Ver plan de ahorro}
+  casos de uso \textit{Ver historial de consumo} y \textit{Administrar plan de
+    ahorro}
   que se enfocan a la visualización del consumo eléctrico del usuario y las
   posibles recomendaciones para disminuir su consumo.
 \item Recomendaciones (\textit{Recommendations}): Contiene los casos de uso
-  \textit{Ver lista de recomendaciones} y \textit{Ver recomendación}.
+  \textit{Administrar recomendaciones} y \textit{Ver recomendación}.
 \end{itemize}
 
-\jcimageinline{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de casos de uso de \texttt{PEAT}.}
+\jcimageinline{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de
+  casos de uso de \texttt{PEAT}.}
 
 \subsection{Crear perfil del edificio}
 
+Para crear el perfil inicial de un edificio es necesario obtener la siguiente
+información:
+
+\begin{itemize}
+\item La industria que mejor describe el negocio del usuario.
+\item El tamaño del edificio (área).
+\item El tipo de edificio.
+\item La(s) dirección(es) de servicio asociada(s) al edificio.
+\end{itemize}
+
+En este caso de uso es donde se obtiene la relación entre el edificio y su consumo
+a partir de las direcciones de servicio que el usuario asocie a este.
+
+Todas estas características básicas son requeridas para que el sistema pueda generar
+la información y recomendaciones útiles para el usuario.
+
 \begin{usecase}
   \addtitle{Caso de Uso:}{Crear perfil del edificio.}
-  \addfield{Descripción:}{Un cliente PyME entra al sistema  para crear un perfil
+  \addfield{Descripción:}{Un usuario PyME entra al sistema  para crear un perfil
     inicial de un edificio, respondiendo ciertas preguntas básicas sobre el
     edificio.}
-  \addfield{Actor:}{Cliente PyME}
+  \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
-    asignado por el sistema de PG\&E.
-  \item Los datos de intervalo y de facturación del cliente esta en el sistema.
+  \item El usuario a sido autentificado por medio de un token de autenticación
+    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item Los datos de intervalo y de facturación del usuario están en el sistema.
   }
   \addscenario{Flujo normal:}{
-  \item El sistema checa si el cliente tiene mas de una cuenta.
-  \item El sistema despliega el numero de cuenta.
-  \item El usuario puede definir un alias a la cuenta.
-  \item El sistema despliega las direcciones de servicio asociadas a la cuenta.
-  \item El cliente debe ingresar la siguiente información sobre el edificio:
+  \item El sistema checa si el usuario tiene mas de una cuenta.
+    \begin{enumerate}
+    \item Si hay mas de una cuenta el sistema despliega una lista
+      de cuentas, y el usuario debe elegir una de estas cuentas.
+    \end{enumerate}
+  \item El sistema despliega información sobre la cuenta: numero de cuenta y
+    direcciones de servicio asociadas.
+  \item El usuario debe seleccionar las direcciones de servicio que apliquen
+    al edificio.
+  \item El usuario debe indicar la industria que mejor describe su negocio
+  \item El usuario debe ingresar la siguiente información sobre el edificio:
     \begin{enumerate}
     \item Tipo.
     \item Rango de tamaño.
@@ -149,7 +178,7 @@ anteriormente:
   }
   \addfield{Postcondiciones:}{
     Se genera un identificador único para el perfil del edificio generado, el cual
-    esta asociado a los datos de facturación de la cuenta del cliente PyME.
+    esta asociado a los datos de facturación de la cuenta del usuario PyME.
   }
 \end{usecase}
 
@@ -179,7 +208,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
   mas información sobre el edificio. Este componente tiene el nombre
   de Componente de Ingreso Progresivo (\textit{Progressive Profile Widget} PPW).
   Esta ruta es documentada en el caso de uso \textit{Obtener información
-  del edificio}
+    del edificio}
 \end{itemize}
 
 \begin{usecase}
@@ -187,7 +216,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
   \addfield{Descripción:}{En una sola pantalla se proporciona acceso
     al usuario de todas las preguntas y respuestas asociadas a las
     características básicas, detalladas y opcionales de un edificio.}
-  \addfield{Actor:}{Cliente PyME}
+  \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
   \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
     asignado por el sistema de PG\&E.
@@ -227,16 +256,9 @@ detalladas y opcionales son definidas por medio de dos rutas:
 \end{usecase}
 
 \section{Interfase de usuario}
-Dentro de los requerimientos del proyecto PEAT se tenia la implementación de una
+
+Dentro de los requerimientos de \texttt{PEAT} se tenia la implementación de una
 interfaz de usuario que fuera lo suficientemente eficaz y sencilla, para así obtener
 la mayor cantidad de información del usuario.
 
 \subsection{Crear perfil del edificio}
-
-Los datos de facturación del consumo energético, electricidad o gas, de la cuenta
-de un usuario no son suficientes para poder obtener de forma automática datos
-importantes como el numero de edificios y sus características básicas.
-Los métodos existentes no son fiables y por lo tanto es necesario que el usuario
-responda a una seria de preguntas para definir las características básicas
-de sus edificios.
-
