@@ -108,10 +108,9 @@ anteriormente:
   es uno de los mas complejos en cuestión de interacción con el usuario y su
   importancia para obtener las características iniciales del edificio.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}): Contiene
-  los casos de uso \textit{Ver perfil del edificio},
-  \textit{Actualizar perfil del edificio} y \textit{Obtener información del edificio}
-  los cuales se encargan de la administración y obtención de información del
-  edificio.
+  los casos de uso \textit{Administrar perfil del edificio} y
+  \textit{Obtener información del edificio} los cuales se encargan de la
+  administración y obtención de información del edificio.
 \item Plan de ahorro de energía (\textit{Energy Savings Plan}): Contiene los
   casos de uso \textit{Ver historial de consumo} y \textit{Ver plan de ahorro}
   que se enfocan a la visualización del consumo eléctrico del usuario y las
@@ -151,6 +150,66 @@ anteriormente:
   \addfield{Postcondiciones:}{
     Se genera un identificador único para el perfil del edificio generado, el cual
     esta asociado a los datos de facturación de la cuenta del cliente PyME.
+  }
+\end{usecase}
+
+\subsection{Administrar perfil del edificio}
+
+Para el sistema \texttt{PEAT} se tiene las siguientes características:
+\begin{itemize}
+\item Básicas: son características básicas de un edificio: tipo, tamaño y
+  antigüedad.
+\item Detalladas: son las características mas significativas y fáciles de
+  responder, ejemplos son: horas de operación, numero de empleados, numero
+  de pisos, etcétera.
+\item Opcionales: son características más avanzadas/técnicas sobre el equipo
+  y estructura de un edificio.
+\end{itemize}
+
+Las características básicas son definidas al crear el perfil inicial de un
+edificio como se documenta en el caso de uso anterior. Las características
+detalladas y opcionales son definidas por medio de dos rutas:
+
+\begin{itemize}
+\item Por medio del perfil detallado del edificio, en la que se despliega
+  las preguntas y respuestas sobre las características del edificio.
+  Esta ruta es documentada en este caso de uso.
+\item Un componente que es embebido en varias partes del sistema
+  que hace una sola pregunta al usuario para ir obteniendo progresivamente
+  mas información sobre el edificio. Este componente tiene el nombre
+  de Componente de Ingreso Progresivo (\textit{Progressive Profile Widget} PPW).
+  Esta ruta es documentada en el caso de uso \textit{Obtener información
+  del edificio}
+\end{itemize}
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Administrar perfil del edificio.}
+  \addfield{Descripción:}{Un cliente PyME tiene un edificio del
+    cual quiere ver sus características básicas y detalladas
+    ingresadas al sistema.
+  }
+  \addfield{Actor:}{Cliente PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
+    asignado por el sistema de PG\&E.
+  \item El usuario a creado previamente el perfil básico del edificio.
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema checa si la cuenta tiene mas de un edificio asociado.
+    \begin{itemize}
+    \item Si hay mas de un edificio asociado a la cuenta el usuario
+      tiene que seleccionar el edificio correspondiente.
+    \end{itemize}
+  \item El sistema despliega una lista de preguntas divida en secciones.
+    Las secciones completadas están marcadas con una marca de completado.
+    \begin{itemize}
+    \item Las secciones que se despliegan dependen del tipo de edificio, ejemplos
+      son: construcción, iluminación, calefacción y refrigeración.
+    \end{itemize}
+  }
+  \addfield{Postcondiciones:}{
+    Un perfil del edificio mas detallado si el usuario dio respuesta a una pregunta
+    sin contestar sobre su edificio.
   }
 \end{usecase}
 
