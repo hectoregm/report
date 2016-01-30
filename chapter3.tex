@@ -1,7 +1,7 @@
 \chapter{Diseño e implementación del sistema PEAT}
 
-Para lograr el objetivo del sistema \texttt{PEAT} se dividió en cuatro
-módulos principales con las siguientes características generales:
+Para lograr los objetivos del sistema \texttt{PEAT} se dividió en cuatro
+módulos principales:
 
 \begin{itemize}
 \item Perfil sencillo del edificio (\textit{Simple Building Profile}): este modulo
@@ -9,23 +9,23 @@ módulos principales con las siguientes características generales:
   un numero limitado de preguntas básicas para lograr definir las características
   básicas del edificio.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}):
-  este modulo se encarga del manejo de las características, básicas y detalladas,
-  de un edificio.
-\item Plan de ahorro de energía (\textit{Energy Savings Plan}): este modulo se
-  presenta el consumo de energía de usuario, también maneja las recomendaciones
-  que el usuario se ha comprometido a poner en acción.
-\item Recomendaciones (\textit{Recommendations}): este modulo se genera una lista
-  de medidas de ahorro de energía considerando la información básica y detallada
-  ingresada al sistema hasta el momento. Aparte debe permitir al usuario obtener
-  información detallada sobre las recomendaciones presentadas.
+  este modulo se encarga del manejo de las características básicas, detalladas y
+  opcionales de un edificio.
+\item Plan de ahorro de energía (\textit{Energy Savings Plan}): este modulo
+  presenta el consumo de energía del edificio al usuario, también presenta las
+  recomendaciones que el usuario se ha comprometido a poner en acción.
+\item Recomendaciones (\textit{Recommendations}): este modulo genera una lista
+  de medidas de ahorro de energía considerando la información ingresada al sistema
+  hasta el momento. Aparte debe permitir al usuario obtener información detallada
+  sobre las recomendaciones dadas.
 \end{itemize}
 
 Como se puede ver el modelo de edificio es el principal modelo dentro de
 \texttt{PEAT}, por lo que lograr obtener una correcta correspondencia entre
 el consumo energético y un edificio es de vital importancia para dar la
-información mas correcta sobre el consumo del edificio pero también para
-permitir al sistema dar las mejores recomendaciones según las características
-del edificio.
+información mas correcta sobre edificio. Al tenerse una correcta asignación
+sobre el consumo del edificio el sistema puede dar las mejores recomendaciones
+según las características del edificio.
 
 \section{Modelo de información}
 
@@ -184,10 +184,9 @@ detalladas y opcionales son definidas por medio de dos rutas:
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Administrar perfil del edificio.}
-  \addfield{Descripción:}{Un cliente PyME tiene un edificio del
-    cual quiere ver sus características básicas y detalladas
-    ingresadas al sistema.
-  }
+  \addfield{Descripción:}{En una sola pantalla se proporciona acceso
+    al usuario de todas las preguntas y respuestas asociadas a las
+    características básicas, detalladas y opcionales de un edificio.}
   \addfield{Actor:}{Cliente PyME}
   \additemizedfield{Precondiciones:}{
   \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
@@ -200,12 +199,26 @@ detalladas y opcionales son definidas por medio de dos rutas:
     \item Si hay mas de un edificio asociado a la cuenta el usuario
       tiene que seleccionar el edificio correspondiente.
     \end{itemize}
-  \item El sistema despliega una lista de preguntas divida en secciones.
+  \item El sistema despliega una lista de preguntas y respuestas divida en secciones.
     Las secciones completadas están marcadas con una marca de completado.
     \begin{itemize}
-    \item Las secciones que se despliegan dependen del tipo de edificio, ejemplos
-      son: construcción, iluminación, calefacción y refrigeración.
+    \item Las secciones que se despliegan dependen del tipo de edificio,
+      por ejemplo: construcción, iluminación, calefacción y refrigeración.
     \end{itemize}
+  \item El usuario selecciona una sección, esta se expande para mostrar todas
+    las preguntas de la sección.
+  \item El usuario responde una o varias preguntas.
+    \begin{enumerate}
+    \item Las preguntas son ordenadas dentro de cada sección según un orden
+      predefinido. Las secciones también tienen un orden predefinido.
+    \item Según vaya respondiendo preguntas el usuario se va actualizando
+      un indicador de completes del perfil.
+    \end{enumerate}
+  \item El usuario selecciona seguir con la siguiente sección o da click al
+    encabezado de otra sección.
+  \item El sistema persiste la información en cuanto el usuario selecciona
+    una respuesta. Al obtener nueva información el sistema debe recalcular
+    las recomendaciones asociadas al edificio.
   }
   \addfield{Postcondiciones:}{
     Un perfil del edificio mas detallado si el usuario dio respuesta a una pregunta
