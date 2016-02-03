@@ -161,24 +161,33 @@ la información y recomendaciones útiles para el usuario.
   \item El sistema checa si el usuario tiene mas de una cuenta.
     \begin{enumerate}
     \item Si hay mas de una cuenta el sistema despliega una lista
-      de cuentas, y el usuario debe elegir una de estas cuentas.
+      de cuentas, y el sistema requiere que el usuario elija una cuenta.
     \end{enumerate}
   \item El sistema despliega información sobre la cuenta: numero de cuenta y
     direcciones de servicio asociadas.
-  \item El usuario debe seleccionar las direcciones de servicio que apliquen
+    \begin{enumerate}
+    \item Si la cuenta tiene mas de una dirección de servicio
+      el sistema requiere que el usuario elija por lo menos una dirección
+      de servicio.
+    \end{enumerate}
+  \item El usuario selecciona las direcciones de servicio que apliquen
     al edificio.
-  \item El usuario debe indicar la industria que mejor describe su negocio
+  \item El usuario puede proporcionar un apodo para el edificio.
+  \item El usuario debe indicar la industria que mejor describe su negocio.
   \item El usuario debe ingresar la siguiente información sobre el edificio:
     \begin{enumerate}
     \item Tipo.
     \item Rango de tamaño.
     \item Antigüedad.
     \end{enumerate}
-  \item El usuario puede ingresar los datos o cancelar.
+  \item El usuario puede enviar los datos ingresados o cancelar.
+  \item El usuario puede añadir otro edificio o si ya tiene al menos un
+    perfil de edificio asociado puede proceder al plan de ahorro.
   }
   \addfield{Postcondiciones:}{
     Se genera un identificador único para el perfil del edificio generado, el cual
-    esta asociado a los datos de facturación de la cuenta del usuario PyME.
+    esta asociado a los datos de facturación de la cuenta seleccionada por el
+    usuario PyME.
   }
 \end{usecase}
 
