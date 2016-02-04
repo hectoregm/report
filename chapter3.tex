@@ -198,8 +198,8 @@ medio del perfil detallado del edificio.
 
 Para el sistema \texttt{PEAT} se tiene las siguientes características:
 \begin{itemize}
-\item Básicas: son características básicas de un edificio: tipo, tamaño y
-  antigüedad.
+\item Básicas: son las características básicas de un edificio: tipo, tamaño y
+  antigüedad, son vitales para el funcionamiento del sistema.
 \item Detalladas: son las características mas significativas y fáciles de
   responder, ejemplos son: horas de operación, numero de empleados, numero
   de pisos, etcétera.
@@ -216,7 +216,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
   las preguntas y respuestas sobre las características del edificio.
   Esta ruta es documentada en este caso de uso.
 \item Un componente que es embebido en varias partes del sistema
-  que hace una sola pregunta al usuario para ir obteniendo progresivamente
+  que realiza una sola pregunta al usuario para ir obteniendo progresivamente
   mas información sobre el edificio. Este componente tiene el nombre
   de Componente de Ingreso Progresivo (\textit{Progressive Profile Widget} PPW).
   Esta ruta es documentada en el caso de uso \textit{Obtener información
@@ -225,14 +225,19 @@ detalladas y opcionales son definidas por medio de dos rutas:
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Administrar perfil del edificio.}
-  \addfield{Descripción:}{En una sola pantalla se proporciona acceso
-    al usuario de todas las preguntas y respuestas asociadas a las
-    características básicas, detalladas y opcionales de un edificio.}
+  \addfield{Descripción:}{
+    El usuario tiene acceso al perfil completo del edificio, es decir
+    a todas las preguntas y respuestas asociadas a las características
+    básicas, detalladas y opcionales de un edificio.}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token SSO (Single Sign On)
-    asignado por el sistema de PG\&E.
+  \item El usuario a sido autentificado por medio de un token de autenticación
+    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
   \item El usuario a creado previamente el perfil básico del edificio.
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+  \item Todas las acciones realizadas por el usuario deben ser procesadas
+    en menos de un segundo.
   }
   \addscenario{Flujo normal:}{
   \item El sistema checa si la cuenta tiene mas de un edificio asociado.
@@ -245,6 +250,8 @@ detalladas y opcionales son definidas por medio de dos rutas:
     \begin{itemize}
     \item Las secciones que se despliegan dependen del tipo de edificio,
       por ejemplo: construcción, iluminación, calefacción y refrigeración.
+    \item El usuario puede ver y actualizar sus respuestas a todas las
+      preguntas en una sola pantalla.
     \end{itemize}
   \item El usuario selecciona una sección, esta se expande para mostrar todas
     las preguntas de la sección.
@@ -252,18 +259,21 @@ detalladas y opcionales son definidas por medio de dos rutas:
     \begin{enumerate}
     \item Las preguntas son ordenadas dentro de cada sección según un orden
       predefinido. Las secciones también tienen un orden predefinido.
-    \item Según vaya respondiendo preguntas el usuario se va actualizando
-      un indicador de completes del perfil.
+    \item Según vaya respondiendo el usuario se va actualizando un indicador
+      del progreso de llenado del perfil. Cada pregunta/respuesta tiene el
+      mismo valor para calcular el progreso de llenado.
     \end{enumerate}
-  \item El usuario selecciona seguir con la siguiente sección o da click al
-    encabezado de otra sección.
-  \item El sistema persiste la información en cuanto el usuario selecciona
+  \item El usuario puede elegir continuar con la siguiente sección o dar click
+    en el encabezado de otra sección.
+  \item El sistema salva la información en cuanto el usuario selecciona
     una respuesta. Al obtener nueva información el sistema debe recalcular
     las recomendaciones asociadas al edificio.
   }
-  \addfield{Postcondiciones:}{
-    Un perfil del edificio mas detallado si el usuario dio respuesta a una pregunta
-    sin contestar sobre su edificio.
+  \additemizedfield{Postcondiciones:}{
+  \item Un perfil del edificio mas detallado si el usuario dio respuesta a una
+    pregunta sin contestar sobre su edificio.
+  \item Si el usuario dio nueva información se recalculan las recomendaciones
+    asociadas al edificio.
   }
 \end{usecase}
 
