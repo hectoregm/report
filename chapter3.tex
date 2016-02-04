@@ -67,15 +67,6 @@ la parte geográfica del modelo de información, esta información raramente cam
 
 La relación entre todos estos modelos se puede ver en la Figura 3.1.
 
-%% Ahora dentro de la facturación de PG\&E un usuario puede tener una o varias
-%% cuentas, a su vez cada cuenta tiene una o mas contratos de servicio asociados
-%% esto es porque cada contrato representa los servicios que el usuario
-%% requiere ya sea electricidad o gas.
-%% Además cada cuenta tiene una o varias direcciones de servicio en donde se tiene
-%% uno o varios puntos de servicio, donde se realiza la conexión eléctrica o de gas.
-%% Finalmente un punto de servicio puede tener uno o varios medidores, los cuales
-%% son dispositivos que registran el consumo del servicio dado (Ver Figura 3.1).
-
 \jcimage{1.0}{imagenes/PGE-facturacion.png}{Modelos principales para la facturación
   en PG\&E.}
 
@@ -130,8 +121,8 @@ siguiente manera:
 
 \subsection{Crear perfil del edificio}
 
-Para crear el perfil inicial de un edificio es necesario obtener la siguiente
-información:
+Para crear el perfil inicial de un edificio es necesario obtener las siguientes
+características:
 
 \begin{itemize}
 \item La industria que mejor describe el negocio del usuario.
@@ -140,11 +131,16 @@ información:
 \item La(s) dirección(es) de servicio asociada(s) al edificio.
 \end{itemize}
 
-En este caso de uso es donde se obtiene la relación entre el edificio y su consumo
-a partir de las direcciones de servicio que el usuario asocie a este.
+Todas estas características se consideran básicas, es decir vitales para el
+funcionamiento del sistema por lo todas son requeridas para construir el perfil
+del edificio.
 
-Todas estas características básicas son requeridas para que el sistema pueda generar
-la información y recomendaciones útiles para el usuario.
+En este caso de uso también se obtiene la relación entre el edificio y su consumo
+a partir de las direcciones de servicio que el usuario asocie al perfil.
+
+El caso de uso esta diseñado de forma que el proceso sea realizado solamente
+una vez por edificio. Las características básicas se mantienen accesibles por
+medio del perfil detallado del edificio.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Crear perfil del edificio.}
@@ -156,6 +152,10 @@ la información y recomendaciones útiles para el usuario.
   \item El usuario a sido autentificado por medio de un token de autenticación
     (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
   \item Los datos de intervalo y de facturación del usuario están en el sistema.
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+  \item El usuario debe ser capaz de completar el perfil del edificio en 20 segundos
+    o menos.
   }
   \addscenario{Flujo normal:}{
   \item El sistema checa si el usuario tiene mas de una cuenta.
@@ -190,6 +190,9 @@ la información y recomendaciones útiles para el usuario.
     usuario PyME.
   }
 \end{usecase}
+
+% FIXME: Insertar diagrama del modelo de información inducido por la creación
+% de un perfil
 
 \subsection{Administrar perfil del edificio}
 
