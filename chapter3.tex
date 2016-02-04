@@ -277,6 +277,60 @@ detalladas y opcionales son definidas por medio de dos rutas:
   }
 \end{usecase}
 
+\subsection{Obtener información del edificio}
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Obtener información del edificio.}
+  \addfield{Descripción:}{El sistema va obteniendo información
+    progresivamente del usuario haciendo uso de un componente que
+    realiza una pregunta al usuario en varias partes del sistema.
+    Se tiene componente que es embebido en varias partes del sistema
+    que realiza una sola pregunta al usuario para ir obteniendo progresivamente
+    mas información sobre el edificio. Este componente tiene el nombre
+    de Componente de Ingreso Progresivo de Información (\textit{Progressive
+      Profile Widget} PPW).}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario a sido autentificado por medio de un token de autenticación
+    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario a creado previamente el perfil básico del edificio.
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+    \item Foo
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema despliega el componente PPW en la parte izquierda en las
+    pantallas de plan de ahorro y de recomendaciones.
+  \item Dentro del PPW, se presenta al usuario una pregunta a responder
+    \begin{enumerate}
+    \item Dependiendo de la pregunta, el usuario puede seleccionar una
+      respuesta de una lista desplegable, seleccionar casillas,
+      responder Si o No con un botón radial o ingresar un valor
+      en un campo.
+    \item Cada tipo de edificio tiene una lista predefinida ordenada de
+      preguntas a ser desplegadas en el componente.
+    \item Algunas preguntas tienen imágenes asociadas para facilitar
+      al usuario su respuesta.
+    \end{enumerate}
+  \item El usuario puede o bien responder la pregunta, saltar la pregunta o
+    no hacer nada en el PPW.
+    \begin{enumerate}
+    \item Si el usuario responde:
+      \begin{enumerate}
+      \item La respuesta provoca un refinamiento del perfil del edificio y
+        el nuevo calculo de las recomendaciones propuestas. Además la
+        respuesta puede ser vista en cualquier momento en el perfil detallado
+        del edificio.
+      \item El sistema despliega la siguiente pregunta.
+      \end{enumerate}
+    \item Si el usuario elige saltar la pregunta entonces el sistema
+      despliega la siguiente pregunta sin necesitar de una respuesta por el usuario.
+    \end{enumerate}
+  }
+  \addfield{Postcondiciones:}{
+  }
+\end{usecase}
+
 \section{Interfase de usuario}
 
 Dentro de los requerimientos de \texttt{PEAT} se tenia la implementación de una
