@@ -1,0 +1,19 @@
+\begin{usecase}
+  \addtitle{Caso de Uso:}{}
+  \addfield{Descripción:}{}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+  }
+  \addscenario{Flujo normal:}{
+  \item Paso 1.
+    \begin{enumerate}
+    \item Paso 1.1.
+    \end{enumerate}
+  \item Paso 2
+  }
+  \addfield{Postcondiciones:}{
+  }
+\end{usecase}
