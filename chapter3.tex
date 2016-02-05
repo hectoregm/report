@@ -107,13 +107,13 @@ siguiente manera:
   los casos de uso \textit{Administrar perfil del edificio} y
   \textit{Obtener información del edificio} los cuales se encargan de la
   administración y obtención de información sobre el edificio.
+\item Recomendaciones (\textit{Recommendations}): Contiene los casos de uso
+  \textit{Administrar recomendaciones} y \textit{Ver recomendación}.
 \item Plan de ahorro de energía (\textit{Energy Savings Plan}): Contiene los
   casos de uso \textit{Ver historial de consumo} y \textit{Administrar plan de
     ahorro}
   que se enfocan a la visualización del consumo eléctrico del usuario y las
   posibles recomendaciones para disminuir su consumo.
-\item Recomendaciones (\textit{Recommendations}): Contiene los casos de uso
-  \textit{Administrar recomendaciones} y \textit{Ver recomendación}.
 \end{itemize}
 
 \jcimageinline{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de
@@ -352,6 +352,44 @@ obteniendo progresivamente mas información sobre el edificio.
     pregunta desplegada sobre su edificio.
   \item Si el usuario dio nueva información se recalculan las recomendaciones
     asociadas al edificio.
+  }
+\end{usecase}
+
+\subsection{Administrar recomendaciones}
+
+En los casos de uso anteriores se obtiene del usuario el perfil del edificio
+y por lo menos sus características básicas. Haciendo uso de esta información
+el sistema \texttt{PEAT} genera recomendaciones sobre como disminuir el consumo
+de energía a través de cambios de comportamiento y/o modernización de equipo.
+
+Las recomendaciones se muestran en tres partes del sistema:
+\begin{enumerate}
+\item En el plan de ahorro.
+\item En las recomendaciones.
+\item En el perfil detallado del edificio.
+\end{enumerate}
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Administrar recomendaciones.}
+  \addfield{Descripción:}{El sistema despliega una lista de todas las
+    recomendaciones que se ajustan al perfil del edificio del usuario.}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario a sido autentificado por medio de un token de autenticación
+    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario a creado previamente el perfil básico del edificio.
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+  \item
+  }
+  \addscenario{Flujo normal:}{
+  \item Paso 1.
+    \begin{enumerate}
+    \item Paso 1.1.
+    \end{enumerate}
+  \item Paso 2
+  }
+  \addfield{Postcondiciones:}{
   }
 \end{usecase}
 
