@@ -279,16 +279,25 @@ detalladas y opcionales son definidas por medio de dos rutas:
 
 \subsection{Obtener información del edificio}
 
+Uno de los requerimientos mas importante para \texttt{PEAT} es el incentivar y
+obtener mas información sobre las características de los edificios del usuario.
+Esto es porque entre mas información se obtiene de estos se pueden generar
+mejores planes de ahorro y recomendaciones para el usuario.
+
+La forma en como se aborda esta necesidad es por medio de la implementación
+de un componente que esta presente en las dos partes principales del sistema:
+el plan de ahorro y la lista de recomendaciones. Este componente tiene el
+nombre de Componente de Ingreso Progresivo de Información (\textit{Progressive
+  Profile Widget} PPW). Este componente realiza una sola pregunta al usuario
+obteniendo progresivamente mas información sobre el edificio.
+
 \begin{usecase}
   \addtitle{Caso de Uso:}{Obtener información del edificio.}
   \addfield{Descripción:}{El sistema va obteniendo información
     progresivamente del usuario haciendo uso de un componente que
     realiza una pregunta al usuario en varias partes del sistema.
-    Se tiene componente que es embebido en varias partes del sistema
-    que realiza una sola pregunta al usuario para ir obteniendo progresivamente
-    mas información sobre el edificio. Este componente tiene el nombre
-    de Componente de Ingreso Progresivo de Información (\textit{Progressive
-      Profile Widget} PPW).}
+    Este componente tiene el nombre de Componente de Ingreso Progresivo de
+    Información (\textit{Progressive Profile Widget} PPW).}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
   \item El usuario a sido autentificado por medio de un token de autenticación
@@ -296,7 +305,8 @@ detalladas y opcionales son definidas por medio de dos rutas:
   \item El usuario a creado previamente el perfil básico del edificio.
   }
   \additemizedfield{Requerimientos no funcionales:}{
-    \item Foo
+  \item Las actualizaciones a la pagina deben hacerse en forma
+    asíncrona y sin necesitar una recarga completa de la pagina.
   }
   \addscenario{Flujo normal:}{
   \item El sistema despliega el componente PPW en la parte izquierda en las
@@ -318,16 +328,30 @@ detalladas y opcionales son definidas por medio de dos rutas:
     \item Si el usuario responde:
       \begin{enumerate}
       \item La respuesta provoca un refinamiento del perfil del edificio y
-        el nuevo calculo de las recomendaciones propuestas. Además la
-        respuesta puede ser vista en cualquier momento en el perfil detallado
-        del edificio.
+        el nuevo calculo de las recomendaciones propuestas.
+        \begin{enumerate}[i.]
+        \item El perfil del edificio es actualizado, las recomendaciones
+          son recalculadas.
+        \item El sistema despliega un indicador de progreso mientras
+          se recalculan las recomendaciones.
+        \item Al finalizar el refinamiento el orden de las preguntas
+          o los valores del plan de ahorro deben ser actualizados, esto
+          debe hacerse sin necesitar una recarga completa de la pagina.
+        \end{enumerate}
       \item El sistema despliega la siguiente pregunta.
+      \item El sistema persiste la respuesta dada.
       \end{enumerate}
     \item Si el usuario elige saltar la pregunta entonces el sistema
       despliega la siguiente pregunta sin necesitar de una respuesta por el usuario.
     \end{enumerate}
+  \item Desde el PPW, el usuario puede dar click a ''Building Profile''\ para ver
+    el perfil detallado del edificio.
   }
-  \addfield{Postcondiciones:}{
+  \additemizedfield{Postcondiciones:}{
+  \item Un perfil del edificio mas detallado si el usuario dio respuesta a la
+    pregunta desplegada sobre su edificio.
+  \item Si el usuario dio nueva información se recalculan las recomendaciones
+    asociadas al edificio.
   }
 \end{usecase}
 
