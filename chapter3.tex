@@ -383,13 +383,42 @@ Las recomendaciones se muestran en tres partes del sistema:
   \item
   }
   \addscenario{Flujo normal:}{
-  \item Paso 1.
-    \begin{enumerate}
-    \item Paso 1.1.
-    \end{enumerate}
-  \item Paso 2
+  \item El sistema despliega las recomendaciones, ya sea en el plan
+    de ahorro, la lista de recomendaciones o en el perfil detallado del edificio.
+  \item El usuario puede tomar las siguientes acciones:
+    \begin{itemize}
+    \item Añadir al plan (de ahorro).
+      \begin{enumerate}
+      \item Cuando el usuario da click a ''Añadir al plan'', una ventana modal
+        se abre y pregunta: ''¿ Cuando piensa completar esta acción ?''.
+      \item El sistema proporciona lista predefinida de rangos de tiempo:
+        una semana, un mes, tres meses, etcétera.
+      \item El usuario elige el rango de tiempo adecuado y da click
+        a ''Add to plan''
+      \item El sistema añade la recomendación al plan de ahorro del edificio.
+      \end{enumerate}
+    \item No aplica.
+      \begin{enumerate}
+      \item El sistema mueve la recomendación al final de la lista de
+        recomendaciones.
+      \item En cualquier momento, el usuario puede cambiar el estado de la
+        recomendación, es decir añadir la recomendación al plan de ahorro
+        o indicar que no es aplicable al edificio.
+      \end{enumerate}
+    \item Ya completado.
+      \begin{enumerate}
+      \item El sistema mueve la recomendación al final de la lista de
+        recomendaciones.
+      \item En cualquier momento, el usuario puede cambiar el estado de la
+        recomendación, es decir añadir la recomendación al plan de ahorro
+        o indicar que no es aplicable al edificio.
+      \end{enumerate}
+    \end{itemize}
+
+  \item El sistema refina y reordena la lista de recomendaciones después de que
+    el usuario realiza cualquiera de las acciones anteriores.
   }
-  \addfield{Postcondiciones:}{
+  \Addfield{Postcondiciones:}{
   }
 \end{usecase}
 
