@@ -380,7 +380,8 @@ Las recomendaciones se muestran en tres partes del sistema:
   \item El usuario a creado previamente el perfil básico del edificio.
   }
   \additemizedfield{Requerimientos no funcionales:}{
-  \item
+  \item Cualquier acción en una recomendación debe hacerse en forma
+    asíncrona y sin necesitar una recarga completa de la pagina.
   }
   \addscenario{Flujo normal:}{
   \item El sistema despliega las recomendaciones, ya sea en el plan
@@ -414,11 +415,20 @@ Las recomendaciones se muestran en tres partes del sistema:
         o indicar que no es aplicable al edificio.
       \end{enumerate}
     \end{itemize}
-
   \item El sistema refina y reordena la lista de recomendaciones después de que
     el usuario realiza cualquiera de las acciones anteriores.
   }
-  \Addfield{Postcondiciones:}{
+  \addscenario{Flujo alternativo:}{
+  \item El usuario contesta alguna pregunta en el PPW o en el perfil detallado del
+    edificio.
+  \item El sistema refina y reordena la lista de recomendaciones después de que
+    el usuario realiza cualquiera de las acciones anteriores.
+  }
+  \additemizedfield{Postcondiciones:}{
+  \item Si el usuario añadió una recomendación a su plan de ahorro entonces
+    se tiene un plan de ahorro actualizado.
+  \item Si el usuario realizo cualquier acción en una recomendación entonces
+    la lista de recomendaciones esta actualizada y reordenada.
   }
 \end{usecase}
 
