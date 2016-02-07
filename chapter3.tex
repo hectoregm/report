@@ -545,16 +545,40 @@ El plan de ahorro esta diseñado para ser la pagina principal del sistema
       \end{itemize}
     \end{enumerate}
   \item El usuario a agregado una o mas recomendaciones a su plan de ahorro.
-    \begin{enumerate}
+    \begin{itemize}
     \item La mejor recomendación es desplegada debajo del componente PPW
     \item El sistema despliega una lista de las recomendaciones que el usuario
       a agregado a su plan.
       \begin{itemize}
-      \item
+      \item El sistema debe indicar que la lista de recomendaciones es el plan
+        de ahorro.
+      \item El usuario puede agregar mas recomendaciones desde la lista de
+        recomendaciones, cuando se añade una recomendación esta solamente es
+        visible en el plan de ahorro ya no debe de aparecer en la lista de
+        recomendaciones
+      \item El usuario puede remover recomendaciones de su plan seleccionando
+        ''Remover del plan'' en un menú desplegable al lado del nombre de la
+        acción.
       \end{itemize}
-    \end{enumerate}
+    \item El usuario puede ordenar la lista por nombre, categoría, costo, ahorro
+      o reembolso.
+    \item El usuario puede obtener mas información al dar click en el nombre
+      de la recomendación.
+    \item El usuario actualiza el estado de una recomendación a ''Completada''
+      o ''Remover''.
+      \begin{itemize}
+      \item Las recomendaciones dentro del plan de ahorro solo pueden tener
+        dos posibles estados: ''Completada'' y ''Remover'', el estado base
+        de una recomendación agregada al plan es de ''Añadida''.
+      \item Las recomendaciones con estado de ''Completada'' permanecen
+        en el plan de ahorro con la selección ''Completada'' desplegada
+        al lado del nombre de la acción.
+      \end{itemize}
+    \end{itemize}
   }
   \addfield{Postcondiciones:}{
+    Si el usuario realizo cualquier acción en una recomendación entonces el plan
+    de ahorro es actualizado y reordenado.
   }
 \end{usecase}
 
