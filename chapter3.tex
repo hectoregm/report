@@ -304,8 +304,8 @@ obteniendo progresivamente mas información sobre el edificio.
     (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
   \item El usuario a creado previamente el perfil básico del edificio.
   }
-  \additemizedfield{Requerimientos no funcionales:}{
-  \item Las actualizaciones a la pagina deben hacerse en forma
+  \addfield{Requerimientos no funcionales:}{
+    Las actualizaciones a la pagina deben hacerse en forma
     asíncrona y sin necesitar una recarga completa de la pagina.
   }
   \addscenario{Flujo normal:}{
@@ -450,7 +450,9 @@ detallada sobre la recomendación que el usuario quiere implementar.
     (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
   \item El usuario a creado previamente el perfil básico del edificio.
   }
-  \additemizedfield{Requerimientos no funcionales:}{
+  \addfield{Requerimientos no funcionales:}{
+    Cualquier acción en una recomendación debe hacerse en forma
+    asíncrona y sin necesitar una recarga completa de la pagina.
   }
   \addscenario{Flujo normal:}{
   \item El usuario ve una recomendación que capta su atención y da un
@@ -465,6 +467,44 @@ detallada sobre la recomendación que el usuario quiere implementar.
   \addfield{Postcondiciones:}{
     Si el usuario realizo cualquier acción en una recomendación entonces
     la lista de recomendaciones es actualizada y reordenada.
+  }
+\end{usecase}
+
+\subsection{Ver historial de consumo}
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Ver historial de consumo}
+  \addfield{Descripción:}{Se muestra el consumo energético del edificio
+    mediante un conjunto de gráficas con múltiples vistas para diferentes
+    rangos de tiempo, categorías rangos de tiempo y categorías.}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario a sido autentificado por medio de un token de autenticación
+    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario a creado previamente el perfil básico del edificio.
+  }
+  \addfield{Requerimientos no funcionales:}{
+    Las actualizaciones a la pagina deben hacerse en forma asíncrona y sin necesitar
+    una recarga completa de la pagina.
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema despliega inicialmente una gráfica del gasto anual de
+    electricidad y gas del edificio.
+  \item El sistema muestra un menú con las siguientes opciones de visualización:
+    \begin{itemize}
+    \item Gasto: Medido en dolares con gráficas anuales, mensuales y diarias.
+    \item Electricidad: Medido en kilowatt-hora con gráficas anuales, mensuales y
+      diarias.
+    \item Gas: Medido en termia, con gráficas anuales, mensuales y diarias
+    \item Emisiones de carbón: Medido en toneladas, con gráficas anuales, mensuales
+      y diarias.
+    \item Análisis: Gráfica que indica el consumo estimado según la categoría.
+      Las categorías son por ejemplo: refrigeración, iluminación, calefacción,
+      etcétera.
+    \end{itemize}
+  }
+  \addfield{Postcondiciones:}{
+    El sistema se mantiene en el mismo estado.
   }
 \end{usecase}
 
