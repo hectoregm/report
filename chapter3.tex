@@ -508,6 +508,56 @@ detallada sobre la recomendación que el usuario quiere implementar.
   }
 \end{usecase}
 
+\subsection{Administrar plan de ahorro}
+
+El plan de ahorro esta diseñado para ser la pagina principal del sistema
+\texttt{PEAT} cuando el usuario ya creado por lo menos un perfil de edificio.
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Administrar plan de ahorro}
+  \addfield{Descripción:}{El sistema debe permitir la administración
+    del plan de ahorro del edificio que consiste en un conjunto de recomendaciones
+    que el usuario sea a comprometido a realizar o que ya ha completado
+    para reducir su gasto energético.}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario a sido autentificado por medio de un token de autenticación
+    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario a creado previamente el perfil básico del edificio.
+  }
+  \addfield{Requerimientos no funcionales:}{
+    Las actualizaciones a la pagina deben hacerse en forma asíncrona y sin necesitar
+    una recarga completa de la pagina.
+  }
+  \addscenario{Flujo normal:}{
+  \item El usuario no ha agregado ninguna recomendación a su plan
+    \begin{enumerate}
+    \item Las tres mejores recomendaciones son desplegadas dentro del marco
+      del plan de ahorro
+    \item El sistema elige estas recomendaciones por medio de la siguiente lógica:
+      \begin{itemize}
+      \item Son ordenadas según su periodo de recuperación (definido por el ahorro
+        anual en dólares / costo en dólares por adelantado).
+      \item Recomendaciones con costo inicial cero (por ejemplo, acciones basadas
+        en comportamiento) se consideran que tienen un reembolso de dos años.
+      \item Las recomendaciones que han sido marcadas como completadas o que no aplican
+        no son parte de la selección para el plan de ahorro.
+      \end{itemize}
+    \end{enumerate}
+  \item El usuario a agregado una o mas recomendaciones a su plan de ahorro.
+    \begin{enumerate}
+    \item La mejor recomendación es desplegada debajo del componente PPW
+    \item El sistema despliega una lista de las recomendaciones que el usuario
+      a agregado a su plan.
+      \begin{itemize}
+      \item
+      \end{itemize}
+    \end{enumerate}
+  }
+  \addfield{Postcondiciones:}{
+  }
+\end{usecase}
+
 \section{Interfase de usuario}
 
 Dentro de los requerimientos de \texttt{PEAT} se tenia la implementación de una
