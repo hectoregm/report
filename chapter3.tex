@@ -584,11 +584,42 @@ El plan de ahorro esta diseñado para ser la pagina principal del sistema
 
 \section{Interfase de usuario}
 
-Dados los requerimientos funcionales y no funcionales
+Dados los requerimientos funcionales y no funcionales presentados en los
+casos de uso se tiene que la interfaz de usuario debe tener las siguientes
+características:
 
-Dentro de los requerimientos de \texttt{PEAT} se tenia la implementación de una
-interfaz de usuario que fuera lo suficientemente eficaz y sencilla, para así obtener
-la mayor cantidad de información del usuario.
+\begin{itemize}
+\item La interfaz debe permitir realizar la mayoría de sus
+  acciones de forma asincrónica, sin necesidad de una recarga completa de
+  la pagina.
+\item La interfaz debe ser simple y enfocada a la información que el
+  usuario necesita
+\item Toda interacción debe completarse en menos de un segundo.
+\end{itemize}
+
+El flujo de interacción inicia cuando un usuario ingresa por el portal de
+PG\&E (Ver Figura 3.3 1). Es usuario es redirigido al sistema \texttt{PEAT},
+si este no tiene ningún perfil de edificio entonces el usuario es dirigido
+a la pagina para la creación de un perfil de edificio. Después de crear
+un perfil o dado que ya tenia un perfil creado anteriormente el usuario
+es dirigido a su plan de ahorro.
+
+La pagina de plan de ahorro es la pagina principal del sistema, desde la cual
+se tienen acceso a las demás paginas del sistema. Dentro de la pagina del
+plan de ahorro se desarrollan la mayor parte de las interacciones del usuario
+puesto que se muestran todas las gráficas sobre el gasto de energia del usuario
+y se da el manejo de las recomendaciones dentro de su plan de ahorro.
+
+De la pagina de ahorro el usuario se puede dirigir al perfil detallado de su
+edificio donde se tiene igual una gran cantidad de interacciones para
+permitir que sea muy agil la captura de información.
+
+La pagina de recomendaciones se tienen la lista de recomendaciones que el
+sistema tiene para el perfil del edificio del usuario.
+
+Finalmente se tiene la pagina del detalle de una recomendación en la cual
+el usuario obtiene mas información sobre los beneficios económicos, detalles
+de implementación, etcétera.
 
 \jcimage{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
 la navegación en el sistema \texttt{PEAT}.}
