@@ -607,12 +607,12 @@ es dirigido a su plan de ahorro.
 La pagina de plan de ahorro es la pagina principal del sistema, desde la cual
 se tienen acceso a las demás paginas del sistema. Dentro de la pagina del
 plan de ahorro se desarrollan la mayor parte de las interacciones del usuario
-puesto que se muestran todas las gráficas sobre el gasto de energia del usuario
+puesto que se muestran todas las gráficas sobre el gasto de energía del usuario
 y se da el manejo de las recomendaciones dentro de su plan de ahorro.
 
 De la pagina de ahorro el usuario se puede dirigir al perfil detallado de su
 edificio donde se tiene igual una gran cantidad de interacciones para
-permitir que sea muy agil la captura de información.
+permitir que sea muy ágil la captura de información.
 
 La pagina de recomendaciones se tienen la lista de recomendaciones que el
 sistema tiene para el perfil del edificio del usuario.
@@ -621,7 +621,43 @@ Finalmente se tiene la pagina del detalle de una recomendación en la cual
 el usuario obtiene mas información sobre los beneficios económicos, detalles
 de implementación, etcétera.
 
-\jcimage{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
+\jcimageinline{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
 la navegación en el sistema \texttt{PEAT}.}
 
 \subsection{Crear perfil del edificio}
+
+La pagina de \textquote{Crear perfil de edificio} es la pagina inicial
+que el usuario visualiza cuando no tiene ningún perfil de edificio asociado,
+esta pagina también es usada cuando el usuario agrega mas edificios a su
+cuenta.
+
+En la primera versión de esta pagina se tenia una sola forma que
+captaba toda la información requerida según el caso de uso
+\textit{Crear perfil del edificio}, pero se vio con pruebas con
+usuario que esto representaba una gran carga al usuario requerir
+tanta informacion de un solo tajo.
+
+Asi en el boceto de la pagina (Ver Figura 3.4) se tiene en una sola pagina
+tanto el 
+
+\jcimageinline{1.0}{imagenes/SBP-Wireframe.png}{Boceto inicial para crear
+  un perfil de edificio.}
+
+El sistema inicialmente pide al usuario seleccionar el tipo de industria
+que mejor describe su negocio, las opciones son: Comercial, Industrial,
+Agricultura, Habitacional, Otro (Ver Figura 3.4).
+
+\jcimageinline{1.0}{imagenes/SBP-Modal1.png}{Se pide al usuario
+  el seleccionar el tipo de industria de su negocio.}
+
+Después el sistema pide al usuario la información sobre cuenta y la dirección
+de servicio, el alias del edificio, el tipo de edificio y su área (Ver Figura 3.5).
+
+\jcimageinline{1.0}{imagenes/SBP-Modal2.png}{Se pide al usuario
+  el seleccionar el tipo de industria de su negocio.}
+
+Al ingresar esta información el usuario es redirigido al plan de ahorro del
+perfil de edificio creado. (Ver Figura 3.6)
+
+\jcimageinline{1.0}{imagenes/EP.png}{El usuario es redirigido al plan
+  de ahorro del perfil recientemente creado.}
