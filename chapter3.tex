@@ -631,27 +631,27 @@ que el usuario visualiza cuando no tiene ningún perfil de edificio asociado,
 esta pagina también es usada cuando el usuario agrega mas edificios a su
 cuenta.
 
-En la primera versión de esta pagina se tenia una sola forma que
-captaba toda la información requerida según el caso de uso
-\textit{Crear perfil del edificio}, pero se vio con pruebas con
-usuario que esto representaba una gran carga al usuario requerir
-tanta informacion de un solo tajo.
-
-Asi en el boceto de la pagina (Ver Figura 3.4) se tiene en una sola pagina
-tanto el 
+En la primera versión de esta pagina se tenia una sola forma que obtiene toda
+la información requerida según el caso de uso \textit{Crear perfil del edificio},
+pero se vio con pruebas con usuarios que esto representaba mucho trabajo al usuario
+(Ver Figura 3.4).
 
 \jcimageinline{1.0}{imagenes/SBP-Wireframe.png}{Boceto inicial para crear
   un perfil de edificio.}
 
-El sistema inicialmente pide al usuario seleccionar el tipo de industria
+Por lo que se tomo la decisión de disminuir la información requerida y dividir
+el ingreso de información en dos partes.
+
+Entonces el sistema inicialmente pide al usuario seleccionar el tipo de industria
 que mejor describe su negocio, las opciones son: Comercial, Industrial,
-Agricultura, Habitacional, Otro (Ver Figura 3.4).
+Agricultura, Habitacional, Otro (Ver Figura 3.5).
 
 \jcimageinline{1.0}{imagenes/SBP-Modal1.png}{Se pide al usuario
   el seleccionar el tipo de industria de su negocio.}
 
-Después el sistema pide al usuario la información sobre cuenta y la dirección
-de servicio, el alias del edificio, el tipo de edificio y su área (Ver Figura 3.5).
+Después el sistema pide al usuario seleccionar su cuenta y dirección
+de servicio, ingresar el alias del edificio, el tipo de edificio y su área
+(Ver Figura 3.6).
 
 \jcimageinline{1.0}{imagenes/SBP-Modal2.png}{Se pide al usuario
   el seleccionar el tipo de industria de su negocio.}
@@ -661,3 +661,6 @@ perfil de edificio creado. (Ver Figura 3.6)
 
 \jcimageinline{1.0}{imagenes/EP.png}{El usuario es redirigido al plan
   de ahorro del perfil recientemente creado.}
+
+\subsection{Perfil detallado del edificio}
+
