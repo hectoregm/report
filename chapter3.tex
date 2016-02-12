@@ -672,41 +672,57 @@ la navegación en el sistema \texttt{PEAT}.}
 
 \subsection{Crear perfil del edificio}
 
-La pagina de \textquote{Crear perfil de edificio} es la pagina inicial
+La pagina de \textquote{Crear perfil del edificio} es la pagina inicial
 que el usuario visualiza cuando no tiene ningún perfil de edificio asociado,
 esta pagina también es usada cuando el usuario agrega mas edificios a su
 cuenta.
 
-En la primera versión de esta pagina se tenia una sola forma que obtiene toda
-la información requerida según el caso de uso \textit{Crear perfil del edificio},
-pero se vio con pruebas con usuarios que esto representaba mucho trabajo al usuario
-(Ver Figura 3.4).
+Esta pagina tuvo varias varias implementaciones por retroalimentacion de
+pruebas con usuarios, en las primeras versiones se tenia que la pagina
+requeria que el usuario contestara toda la informacion requerida como se
+documenta en el caso de de uso \textit{Crear perfil del edificio}, esto
+representaba mucho trabajo al usuario (Ver Figura 3.4).
 
 \jcimageinline{1.0}{imagenes/SBP-Wireframe.png}{Boceto inicial para crear
   un perfil de edificio.}
 
-Por lo que se tomo la decisión de disminuir la información requerida y dividir
-el ingreso de información en dos partes.
+Para facilitar al usuario el ingreso de información se decidió implementar
+las siguientes mejoras:
 
-Entonces el sistema inicialmente pide al usuario seleccionar el tipo de industria
-que mejor describe su negocio, las opciones son: Comercial, Industrial,
+\begin{enumerate}
+\item Se redujo el numero de opciones para el tipo de industria, inicialmente
+  esta lista era numerosa lo que implicaba mas trabajo al usuario, se redujo
+  a cinco opciones que son visibles inmediatamente.
+\item Se dividió el ingreso de información en dos partes.
+\end{enumerate}
+
+En la versión final el sistema inicialmente pide al usuario seleccionar el tipo
+de industria que mejor describe su negocio, las opciones son: Comercial, Industrial,
 Agricultura, Habitacional, Otro (Ver Figura 3.5).
 
-\jcimageinline{1.0}{imagenes/SBP-Modal1.png}{Se pide al usuario
+\jcimageinline{0.75}{imagenes/SBP-Modal1.png}{Se pide al usuario
   el seleccionar el tipo de industria de su negocio.}
 
 Después el sistema pide al usuario seleccionar su cuenta y dirección
 de servicio, ingresar el alias del edificio, el tipo de edificio y su área
 (Ver Figura 3.6).
 
-\jcimageinline{1.0}{imagenes/SBP-Modal2.png}{Se pide al usuario
-  el seleccionar el tipo de industria de su negocio.}
+\jcimageinline{0.75}{imagenes/SBP-Modal2.png}{Se pide al usuario ingresar
+  las características básicas de su edificio.}
 
-Al ingresar esta información el usuario es redirigido al plan de ahorro del
-perfil de edificio creado. (Ver Figura 3.6)
+Al ingresar esta información el usuario es redirigido a la pagina
+\textquote{Plan de ahorro} del perfil creado (Ver Figura 3.6).
 
-\jcimageinline{1.0}{imagenes/EP.png}{El usuario es redirigido al plan
+\jcimageinline{0.75}{imagenes/EP.png}{El usuario es redirigido al plan
   de ahorro del perfil recientemente creado.}
 
-\subsection{Perfil detallado del edificio}
+\subsection{Plan de ahorro}
+
+La pagina \textquote{Plan de ahorro} es la pagina principal del sistema
+\texttt{PEAT} dado que implementa la funcionalidad principal del sistema
+que es la capacidad para interactuar con la facturación de sus gastos de energía
+por medio de gráficas comparativas y plan de ahorro y las medidas que se ha
+comprometido a realizar para reducir su gasto, es decir esta parte implementa
+la funcionalidad indicada en el caso de uso.
+
 
