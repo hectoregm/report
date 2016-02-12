@@ -668,7 +668,7 @@ sistema \texttt{PEAT}:
 \end{enumerate}
 
 \jcimageinline{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
-la navegación en el sistema \texttt{PEAT}.}
+  la navegación en el sistema \texttt{PEAT}.}
 
 \subsection{Crear perfil del edificio}
 
@@ -683,7 +683,7 @@ requeria que el usuario contestara toda la informacion requerida como se
 documenta en el caso de de uso \textit{Crear perfil del edificio}, esto
 representaba mucho trabajo al usuario (Ver Figura 3.4).
 
-\jcimageinline{1.0}{imagenes/SBP-Wireframe.png}{Boceto inicial para crear
+\jcimageinline{0.75}{imagenes/SBP-Wireframe.png}{Boceto inicial para crear
   un perfil de edificio.}
 
 Para facilitar al usuario el ingreso de información se decidió implementar
@@ -711,18 +711,24 @@ de servicio, ingresar el alias del edificio, el tipo de edificio y su área
   las características básicas de su edificio.}
 
 Al ingresar esta información el usuario es redirigido a la pagina
-\textquote{Plan de ahorro} del perfil creado (Ver Figura 3.6).
-
-\jcimageinline{0.75}{imagenes/EP.png}{El usuario es redirigido al plan
-  de ahorro del perfil recientemente creado.}
+\textquote{Plan de ahorro} del perfil creado.
 
 \subsection{Plan de ahorro}
 
 La pagina \textquote{Plan de ahorro} es la pagina principal del sistema
 \texttt{PEAT} dado que implementa la funcionalidad principal del sistema
-que es la capacidad para interactuar con la facturación de sus gastos de energía
-por medio de gráficas comparativas y plan de ahorro y las medidas que se ha
-comprometido a realizar para reducir su gasto, es decir esta parte implementa
-la funcionalidad indicada en el caso de uso.
+que es la capacidad para interactuar con la informacion sobre los gatos de
+energía y el plan de ahorro para el edificio del usuario.
 
-
+La pagina esta dividida en las siguientes partes:
+\begin{itemize}
+\item Barra de vistas de información: En esta barra el usuario puede seleccionar
+  que tipo de información se despliega en las gráficas. Se tienen cuatro tipos
+  de vista: gasto (\textit{Spending}), electricidad (\textit{Electricity}), gas
+  (\textit{Gas}), emisiones de carbono (\textit{Carbon Emissions}) y análisis
+  (\textit{Energy Use}).
+  \jcimage{0.5}{imagenes/Barra-Vistas.png}{El usuario es redirigido al plan
+  de ahorro del perfil recientemente creado.}
+\item Sección de gráficas: Esta sección se encuentra en la parte inferior de la
+  barra de vistas
+\end{itemize}
