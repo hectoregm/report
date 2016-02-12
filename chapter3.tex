@@ -597,6 +597,62 @@ características:
 \item Toda interacción debe completarse en menos de un segundo.
 \end{itemize}
 
+Para cumplir estos requerimientos era necesario una cantidad considerable
+de código Javascript en la parte del \textit{frontend}, para realizar peticiones
+al servidor de forma asíncronas por medio de AJAX, y realizar las actualizaciones
+a la vista después de recibir la respuesta del servidor.
+Se eligió usar la biblioteca \texttt{Backbone}, esta biblioteca permite dar
+estructura a sistemas web puesto que permite definir la arquitectura MVC,
+es decir permite tener modelos, vistas y controladores en la parte del
+\texttt{frontend}.
+
+\subsection{Navegación y flujo de interacción}
+
+La experiencia de usuario esta compuesta por la navegación por ocho paginas
+de las cuales tres son en paginas de PG\&E y las restantes cinco son gestionadas
+por el sistema \texttt{PEAT}:
+
+\begin{enumerate}
+\item Un usuario entra al portal de PG\&E, la pagina de ingreso al sistema
+  MyEnergy de PG\&E en donde los usuarios PyME hacen la administración de su
+  perfil y cuentas con PG\&E. En el dashboard de MyEnergy se tiene una liga
+  que invita al usuario a encontrar formas de ahorrar, esta liga dirige
+  al usuario al sistema \texttt{PEAT} (Ver Figura 3.3 1).
+\item El usuario en su primer ingreso al sistema \texttt{PEAT} o que no tiene
+  ningún perfil de edificio creado es dirigido a la pagina \textquote{Crear perfil
+    de edificio}, aquí el usuario solo contesta las preguntas básicas sobre su
+  edificio. El usuario vuelve a esta pagina si quiere agregar mas edificios
+  a su cuenta (Ver Figura 3.3 2). Al crear un perfil se redirige al usuario
+  a su plan de ahorro.
+\item El plan de ahorro es la pagina principal en el sistema \texttt{PEAT},
+  es también donde los usuarios ingresan al sistema después de dar ingresar
+  por medio de su dashboard en \textit{MyEnergy} y que ya cuentan por lo menos
+  con un perfil de edificio. El plan de ahorro presenta dos funcionalidades
+  al usuario:
+  \begin{itemize}
+  \item Parte superior: se proporciona al usuario capacidad para interactuar
+    con la facturación de sus gastos de energía por medio de gráficas comparativas
+  \item Parte inferior: se proporciona al usuario su plan de ahorro y las
+    medidas que se ha comprometido a realizar para reducir su gasto.
+  \end{itemize}
+  El usuario puede navegar al perfil detallado del edificio o a la lista
+  de recomendaciones.
+\item En la pagina de recomendaciones se tiene dos componentes:
+  \begin{itemize}
+  \item El componente PPW que incita la usuario a dar mas información
+    sobre su edificio.
+  \item Una lista de recomendaciones para reducir sus costos de energía
+    basados en el perfil de su edificio.
+  \end{itemize}
+  El usuario puede navegar al detalle de una recomendación o al perfil
+  de su edificio.
+\item La pagina de detalle del edificio es donde el usuario puede responder
+  o actualizar las respuestas a las preguntas sobre su edificio.
+\item La pagina de detalle de recomendación es la pagina que muestra los
+  pormenores sobre las medidas para lograr reducir su gasto y el impacto que
+  se puede esperar después de su implementación.
+\end{enumerate}
+
 El flujo de interacción inicia cuando un usuario ingresa por el portal de
 PG\&E (Ver Figura 3.3 1). Es usuario es redirigido al sistema \texttt{PEAT},
 si este no tiene ningún perfil de edificio entonces el usuario es dirigido
