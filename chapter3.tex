@@ -717,18 +717,45 @@ Al ingresar esta información el usuario es redirigido a la pagina
 
 La pagina \textquote{Plan de ahorro} es la pagina principal del sistema
 \texttt{PEAT} dado que implementa la funcionalidad principal del sistema
-que es la capacidad para interactuar con la informacion sobre los gatos de
-energía y el plan de ahorro para el edificio del usuario.
+que es la capacidad para interactuar con los datos sobre los gastos de
+energía y la administración el plan de ahorro del edificio.
 
-La pagina esta dividida en las siguientes partes:
+La pagina esta dividida en dos partes principales, en la parte superior
+se da el manejo de las gráficas para visualizar los gastos y en la parte
+inferior se tiene la administración del plan de ahorro.
+
+\subsubsection{Visualización}
+
+La parte superior esta subdividida en las siguientes partes:
 \begin{itemize}
-\item Barra de vistas de información: En esta barra el usuario puede seleccionar
-  que tipo de información se despliega en las gráficas. Se tienen cuatro tipos
+\item Menú de vistas: En esta barra el usuario puede seleccionar
+  que tipo de información que se despliega en las gráficas. Se tienen cuatro tipos
   de vista: gasto (\textit{Spending}), electricidad (\textit{Electricity}), gas
   (\textit{Gas}), emisiones de carbono (\textit{Carbon Emissions}) y análisis
-  (\textit{Energy Use}).
-  \jcimage{0.5}{imagenes/Barra-Vistas.png}{El usuario es redirigido al plan
-  de ahorro del perfil recientemente creado.}
-\item Sección de gráficas: Esta sección se encuentra en la parte inferior de la
-  barra de vistas
+  (\textit{Energy Use}). También en este menú en la parte derecha se
+  tiene un estimado del ahorro que se puede obtener en el edificio
+  si se implementan las recomendaciones.
+  \jcimage{1.0}{imagenes/Barra-Vistas-Ahorro.png}{Menú de vistas.}
+\item Menú de rango de tiempo: Esta sección se encuentra enseguida del menú de
+  vistas, aquí el usuario puede seleccionar entre los rangos de tiempo ya sea anual
+  (\textit{Annually}), mensual o diario de la vista anterior, en ciertas vistas
+  además se opciones extra la parte derecha para agregar información del clima y
+  comparativas con periodos anteriores.
+  \jcimage{1.0}{imagenes/Barra-Rango.png}{Menú de rango de tiempo.}
+\item Área de visualización: En esta sección se despliega los datos de consumo
+  del edificio mostrando los datos y rango de tiempo que el usuario ha seleccionado
+  en los dos menús anteriores.
+  \jcimage{1.0}{imagenes/Grafica.png}{Visualización del gasto de electricidad con
+    comparativa del año anterior y el clima.}
 \end{itemize}
+
+Para la implementación de las gráficas se hizo el uso del marco de trabajo
+\texttt{Ext JS}, este marco de trabajo esta diseñado para la implementación
+de aplicaciones de tipo \textit{SPA} por medio del lenguaje de programación
+Javascript. \texttt{Ext JS} implementa un gran numero de controles de interface
+como paneles, sliders, etc, pero para fines del sistema \texttt{PEAT} solo
+hizo uso del modulo de gráficos pues permite representar visualmente los datos
+con una amplia gama de tipos de gráficos - incluyendo lineas, barras y gráficas
+circulares. El modulo de graficacion hace uso de SVG, VML y Canvas para
+dibujar las gráficas de esta forma las variaciones del navegador son manejados
+automáticamente de tal forma que las gráficas siempre se muestran correctamente.
