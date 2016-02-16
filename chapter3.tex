@@ -798,4 +798,40 @@ Para cada rango de tiempo se hace uso de un tipo diferente de gráfica:
 \end{itemize}
 
 Aunque las figuras solo muestran el caso del gasto en electricidad las
-visualizaciones son identicas para el gasto en gas.
+visualizaciones son idénticas para el gasto en gas.
+
+\subsubsection{Administración}
+
+La parte inferior esta subdividida en las siguientes partes:
+\begin{itemize}
+\item Componente PPW: En esta región se despliega una pregunta
+  sobre el edificio del usuario, sus características se
+  verán con detalle en la sección \textit{Foo}.
+\item Lista de recomendaciones: Esta sección se despliega la lista de recomendaciones
+  que forman el plan de ahorro del edificio. Esta lista de recomendaciones junto con
+  el componente PPW son los widgets principales del sistema \texttt{PEAT}.
+  Las características de este componente se verán a detalle en la sección
+  \textit{Bar}.
+  \jcimage{1.0}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
+    recomendaciones.}
+\end{itemize}
+
+\subsection{Recomendaciones}
+
+La pagina \textquote{Recomendaciones} es la pagina en la que se muestran
+las recomendaciones que aplican al edificio del usuario.
+
+En la parte lateral se tiene el componente PPW, y en el parte principal
+se tiene el widget que maneja la lista de recomendaciones.
+
+La lista de recomendaciones consta de las siguientes partes:
+\begin{itemize}
+\item Encabezado: Se tiene las características principales por las cuales
+  el usuario puede ordenar la lista: nombre, categoría, costo, ahorro y recuperación
+  de la inversión.
+  \jcimage{1.0}{imagenes/Recomendaciones-Encabezado.png}{Encabezado de la lista
+    de recomendaciones.}
+\item Renglón: Se despliega por cada recomendación sus características principales
+  además se tiene un botón que permite al usuario cambiar el estatus de la
+  recomendaciones.
+\end{itemize}
