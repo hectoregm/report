@@ -771,3 +771,31 @@ mas de un segundo, que va contrario a los requerimiento de PG\&E.
 Así se decidió hacer uso solamente del modulo de graficación de Ext JS y
 hacer la implementación de los controles necesarios para la interfaz desde cero
 haciendo uso de \texttt{Backbone}.
+
+Para cada rango de tiempo se hace uso de un tipo diferente de gráfica:
+\begin{itemize}
+\item Anual: Se hace una comparativa entre el gasto del edificio en los últimos doce
+  meses, el promedio de gasto de un edificio de características similares y
+  el gasto de un edificio eficiente en consumo energético. Para hacer estas
+  comparaciones se utiliza gráficas de barras.
+  \jcimage{1.0}{imagenes/Vista-Anual.png}{Visualización anual del gasto de
+    electricidad.}
+\item Mensual: Se muestra una gráfica con el gasto del edificio en los últimos 12
+  meses, permite comparar con el gasto del año anterior.
+  \jcimage{0.9}{imagenes/Vista-Mensual.png}{Visualización mensual del gasto de
+    electricidad.}
+\item Diario: Se muestra una gráfica similar a la vista mensual pero en este caso
+  se visualizan los últimos treinta días de gasto, además permite comparar
+  con el gasto en el mismo periodo del año pasado.
+  \jcimage{0.9}{imagenes/Vista-Diaria.png}{Visualización diaria del gasto de
+    electricidad.}
+\item Análisis: Se muestra un análisis del gasto del edificio en categorías
+  por medio de una gráfica circular o de sectores, este análisis es realizado
+  usando aprendizaje de maquina por lo que esto es solo una estimación del consumo
+  de cada categoría.
+  \jcimage{0.9}{imagenes/Vista-Analisis.png}{Visualización del análisis del gasto de
+    electricidad.}
+\end{itemize}
+
+Aunque las figuras solo muestran el caso del gasto en electricidad las
+visualizaciones son identicas para el gasto en gas.
