@@ -601,10 +601,13 @@ Para cumplir estos requerimientos era necesario una cantidad considerable
 de código Javascript en la parte del \textit{frontend}, para realizar peticiones
 al servidor de forma asíncronas por medio de AJAX, y realizar las actualizaciones
 a la vista después de recibir la respuesta del servidor.
-Se eligió usar la biblioteca \texttt{Backbone}, esta biblioteca permite dar
-estructura a sistemas web puesto que permite definir la arquitectura MVC,
-es decir permite tener modelos, vistas y controladores en la parte del
-\texttt{frontend}.
+
+Para implementar los componentes como la lista de recomendaciones y el componente
+PPW, además de las llamadas AJAX para realizar actualizaciones en la pagina era
+una cantidad considerable de código Javascript que debía ser implementado, para
+dar estructura a este código del \texttt{frontend} se eligió usar la biblioteca
+\textit{Backbone} puesto que permite definir una arquitectura MVC, es decir
+permite definir modelos, vistas y controladores en la parte del \texttt{frontend}.
 
 \subsection{Descripción general y navegación}
 
@@ -734,28 +737,37 @@ La parte superior esta subdividida en las siguientes partes:
   (\textit{Gas}), emisiones de carbono (\textit{Carbon Emissions}) y análisis
   (\textit{Energy Use}). También en este menú en la parte derecha se
   tiene un estimado del ahorro que se puede obtener en el edificio
-  si se implementan las recomendaciones.
+  si se implementan las recomendaciones (Ver Figura 3.7).
   \jcimage{1.0}{imagenes/Barra-Vistas-Ahorro.png}{Menú de vistas.}
 \item Menú de rango de tiempo: Esta sección se encuentra enseguida del menú de
   vistas, aquí el usuario puede seleccionar entre los rangos de tiempo ya sea anual
   (\textit{Annually}), mensual o diario de la vista anterior, en ciertas vistas
   además se opciones extra la parte derecha para agregar información del clima y
-  comparativas con periodos anteriores.
+  comparativas con periodos anteriores (Ver Figura 3.8).
   \jcimage{1.0}{imagenes/Barra-Rango.png}{Menú de rango de tiempo.}
 \item Área de visualización: En esta sección se despliega los datos de consumo
   del edificio mostrando los datos y rango de tiempo que el usuario ha seleccionado
-  en los dos menús anteriores.
+  en los dos menús anteriores (Ver Figura 3.9).
   \jcimage{1.0}{imagenes/Grafica.png}{Visualización del gasto de electricidad con
     comparativa del año anterior y el clima.}
 \end{itemize}
 
-Para la implementación de las gráficas se hizo el uso del marco de trabajo
-\texttt{Ext JS}, este marco de trabajo esta diseñado para la implementación
+Para la implementación de las gráficas se utilizo el marco de trabajo
+Ext JS, este marco de trabajo esta diseñado para la implementación
 de aplicaciones de tipo \textit{SPA} por medio del lenguaje de programación
-Javascript. \texttt{Ext JS} implementa un gran numero de controles de interface
-como paneles, sliders, etc, pero para fines del sistema \texttt{PEAT} solo
-hizo uso del modulo de gráficos pues permite representar visualmente los datos
-con una amplia gama de tipos de gráficos - incluyendo lineas, barras y gráficas
-circulares. El modulo de graficacion hace uso de SVG, VML y Canvas para
-dibujar las gráficas de esta forma las variaciones del navegador son manejados
-automáticamente de tal forma que las gráficas siempre se muestran correctamente.
+Javascript. Ext JS implementa un gran numero de controles como
+como paneles, barras de herramientas, deslizadores, etcétera.
+
+Ext JS es una elección natural para el sistema \texttt{PEAT} tiene un gran
+paquete de graficación el cual permite la representar visualmente los datos con una
+amplia gama de tipos de graficas: lineas, barras, circulares. Además el equipo
+de \textit{frontend} estaba ampliamente familiarizado en la implementación y
+personalización de visualizaciones con este marco de trabajo.
+
+Dado la capacidad de Ext JS para interfaces se tenia inicialmente
+que todo la funcionalidad de la interfaz se haría con este marco de trabajo pero
+la desventaja es que requiere de un tiempo de inicialización demasiado grande,
+mas de un segundo, que va contrario a los requerimiento de PG\&E.
+Así se decidió hacer uso solamente del modulo de graficación de Ext JS y
+hacer la implementación de los controles necesarios para la interfaz desde cero
+haciendo uso de \texttt{Backbone}.
