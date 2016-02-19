@@ -843,7 +843,9 @@ La lista de recomendaciones consta de las siguientes partes:
   \item Tiempo para recuperar la inversión, es decir cuanto tiempo el ahorro
     obtenido por implementar la recomendación es igual o superior al costo
     de su implementación.
-  \item Botón de añadir al plan, este botón permite al usuario definir el
+  \item Breve descripción de las medidas necesarias para implementar la
+    recomendación.
+  \item Control añadir al plan, este botón/menú permite al usuario definir el
     estado de la recomendación, es decir si la recomendación se debe
     añadir al plan de ahorro, es una recomendación que ya fue implementada o
     que no aplica al edificio.
@@ -851,3 +853,47 @@ La lista de recomendaciones consta de las siguientes partes:
   \jcimage{1.0}{imagenes/Recomendaciones-Renglon.png}{Las secciones de una
     recomendación.}
 \end{itemize}
+
+\subsubsection{Botón de añadir al plan}
+
+Una recomendación tiene los siguientes estados:
+\begin{itemize}
+\item Por implementar: En este estado la recomendación no es parte
+  del plan de ahorro del edificio. Este es el estado inicial de toda
+  recomendación.
+\item Añadido: En este estado la recomendación ha sido elegida
+  por el usuario para su implementación.
+\item No aplica: En este estado se indica que la recomendación
+  no es aplicable al edificio.
+\item Completada: En este estado se indica que la recomendación
+  ya ha sido implementada en el edificio.
+  \jcimage{1.0}{imagenes/Recomendaciones-Renglon.png}{Las secciones de una
+    recomendación.}
+\end{itemize}
+
+Mediante la interacción con el control de añadir al plan es que un usuario
+modifica el estado de una recomendación. El control es una combinación
+de botón, para la acción principal de añadir una recomendación, y una lista
+despegable de acciones secundarias como remover o indicar que ya ha sido
+completada una recomendación.
+
+Para realizar la transición del estado 'Por implementar' al estado 'Añadido' el
+usuario solo tiene que presionar el control en su parte izquierda.
+\jcimage{0.5}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
+  de añadir al plan.}
+\jcimage{0.5}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
+  a sido añadida al plan.}
+
+Para realizar las otras transiciones el usuario debe presionar la parte derecha
+del control en la parte que se tiene un triangulo indicando un menú despegable.
+Dado un estado inicial se despliegan las opciones para indicar que la
+recomendación ya ha sido completada o que no es aplicable.
+
+\jcimage{0.5}{imagenes/Boton-Plan-Menu-Inicial.png}{Las acciones de
+  completar o indicar no aplicable en el menu despegable.}.
+
+Cuando la recomendación esta en el estado 'Añadido' en el menú despegable
+se despliegan las acciones de completar, remover o indicar que no es aplicable
+la recomendación.
+\jcimage{0.5}{imagenes/Boton-Plan-Menu-Anadido.png}{Las acciones de
+  completar o indicar no aplicable en el menu despegable.}.
