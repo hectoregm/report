@@ -13,18 +13,19 @@ componentes principales:
   opcionales de un edificio.
 \item Recomendaciones (\textit{Recommendations}): este componente genera una lista
   de medidas de ahorro de energía considerando la información ingresada al sistema
-  hasta el momento. Aparte debe permitir al usuario obtener información detallada
-  sobre las recomendaciones dadas y finalmente debe permitir indicar que el usuario
-  se compromete a llevar acabo una recomendación.
+  hasta el momento. Además debe permitir al usuario obtener información detallada
+  sobre las recomendaciones dadas y permitir que el usuario se comprometa a
+  llevar acabo una recomendación.
 \item Plan de ahorro de energía (\textit{Energy Savings Plan}): este componente
   presenta el consumo de energía del edificio al usuario, también presenta las
-  recomendaciones que el usuario se ha comprometido a poner en acción.
+  recomendaciones que el usuario se ha comprometido a poner en acción y el
+  ahorro que representa llevar acabo estas medidas.
 \end{itemize}
 
-Como se puede ver el modelo de edificio es el principal modelo dentro de
-\texttt{PEAT}, por lo que obtener una correcta correspondencia entre un
-edificio y su consumo energético es de vital importancia para dar la
-información y recomendaciones mas útiles y fidedignas al usuario.
+El  modelo de edificio es el principal modelo dentro de \texttt{PEAT}, por lo que
+obtener una correcta correspondencia entre un edificio y su consumo energético
+es de vital importancia para dar la información y recomendaciones mas útiles y
+fidedignas al usuario.
 
 \section{Modelo de información}
 
@@ -1047,6 +1048,9 @@ Los componentes que se implementaron son los siguientes:
   ahorro esperado según su plan de ahorro.
 \end{itemize}
 
+% TODO: Mencionar que estos componentes además tienen que coordinarse
+% al haber un cambio de estado, por medio de un canal de comunicación.
+
 \subsubsection{Componente de ingreso progresivo}
 
 Este componente es usado en las paginas \textquote{Plan de ahorro} y
@@ -1072,3 +1076,4 @@ El componente tiene las siguientes partes:
 Este componente es usado en las paginas \textquote{Plan de ahorro},
 \textquote{Recomendaciones} y \textquote{Detalle recomendación}.
 
+\section{Biblioteca Bezel}
