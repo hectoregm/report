@@ -585,7 +585,7 @@ El plan de ahorro esta diseñado para ser la pagina principal del sistema
   }
 \end{usecase}
 
-\section{Interfase de usuario}
+\section{Interfaz de usuario}
 
 Dados los requerimientos funcionales y no funcionales presentados en los
 casos de uso se tiene que la interfaz de usuario debe tener las siguientes
@@ -605,24 +605,24 @@ de código Javascript en la parte del \textit{frontend}, para realizar peticione
 al servidor de forma asíncronas por medio de AJAX, y realizar las actualizaciones
 a la vista después de recibir la respuesta del servidor.
 
-Para implementar los componentes como la lista de recomendaciones y el componente
-PPW, además de las llamadas AJAX para realizar actualizaciones en la pagina era
-una cantidad considerable de código Javascript que debía ser implementado, para
-dar estructura a este código del \texttt{frontend} se eligió usar la biblioteca
-\textit{Backbone} puesto que permite definir una arquitectura MVC, es decir
-permite definir modelos, vistas y controladores en la parte del \texttt{frontend}.
+Para permitir el reuso de código para la implementación de funcionalidad como
+el componente PPW era necesario escribir una cantidad de código Javascript
+considerable, para dar estructura a estos componentes del \textit{frontend} se eligió
+usar la biblioteca \textit{Backbone} puesto que permite definir una
+arquitectura MVC, es decir permite definir modelos, vistas y controladores en
+la parte del \textit{frontend}.
 
 \subsection{Descripción general y navegación}
 
 La interfaz de usuario en el sistema \texttt{PEAT} esta compuesta por ocho paginas
-de las cuales tres son paginas de PG\&E y las restantes son gestionadas por el
-sistema \texttt{PEAT}:
+de las cuales tres son paginas de PG\&E y las restantes son gestionadas por
+\texttt{PEAT}:
 
 \begin{enumerate}
 \item Un usuario entra al portal de PG\&E, luego a la pagina de ingreso del
   sistema \textit{MyEnergy} de PG\&E, en este sistema es donde los usuarios PyME
   hacen la administración de su perfil y cuentas con PG\&E. En el tablero de
-  \textit{MyEnergy} se tiene una liga que invita al usuario a saber sobre
+  \textit{MyEnergy} se tiene una liga que invita al usuario a conocer sobre
   medidas para ahorrar, esta liga dirige al usuario al sistema \texttt{PEAT}
   (Ver Figura 3.3 1).
 \item En el primer ingreso del usuario al sistema este es redirigido a la pagina
