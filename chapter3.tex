@@ -673,7 +673,7 @@ sistema \texttt{PEAT}:
 \jcimageinline{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
   la navegación en el sistema \texttt{PEAT}.}
 
-\subsection{Disposición general}
+\subsection{Diseño de página}
 
 \subsubsection{Encabezado}
 
@@ -706,6 +706,7 @@ que tiene las siguientes secciones:
 
 \jcimageinline{1.0}{imagenes/Disposicion-Encabezado.png}{Encabezado principal
   del sistema \texttt{PEAT}.}
+
 
 \subsection{Crear perfil del edificio}
 
@@ -1022,5 +1023,37 @@ Cada seccion esta dividida en las siguientes secciones:
 \jcimage{1.0}{imagenes/Perfil-Preguntas.png}{Las preguntas de las secciones
   Edificio y HVAC.}
 
-\subsection{Componente añadir al plan}
-\subsection{Componente de ingreso progresivo}
+\subsection{Componentes reusables}
+
+En el sistema \texttt{PEAT} se tiene funcionalidad que se requiere en
+varias de las paginas del sistema, un ejemplo concreto seria la necesidad
+de mostrar una pregunta sin contestar al usuario sobre su edificio.
+Se decidió entonces implementar varios componentes que implementar la
+funcionalidad que es requerida en varias partes del sistema, permitiendo
+el reuso de código y diseño y acelerando notablemente la implementación
+del sistema.
+
+Los componentes que se implementaron son los siguientes:
+\begin{itemize}
+\item Componente de ingreso progresivo: este componente implementa
+  la funcionalidad de mostrar al usuario una pregunta sobre una
+  característica de su edificio.
+\item Componente lista de de recomendaciones
+\item Componente añadir al plan: este componente permite
+  modificar el estado de una recomendación, es decir si esta es parte del
+  plan de ahorro, no es aplicable o ya se completo.
+\item Componente potencial de ahorro: este componente permite
+  al usuario saber el potencial de ahorro del edificio y su
+  ahorro esperado según su plan de ahorro.
+\end{itemize}
+
+\subsubsection{Componente de ingreso progresivo}
+
+Este componente es usado en las paginas \textquote{Plan de ahorro} y
+\textquote{Recomendaciones}.
+
+\subsubsection{Componente añadir al plan}
+
+Este componente es usado en las paginas \textquote{Plan de ahorro},
+\textquote{Recomendaciones} y \textquote{Detalle recomendación}.
+
