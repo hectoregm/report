@@ -681,7 +681,7 @@ La descripción general de la paginas es el siguiente:
 
 \subsubsection{Encabezado}
 
-Todas las paginas del sistema \texttt{PEAT} comparte el mismo encabezado
+Todas las paginas del sistema \texttt{PEAT} comparten el mismo encabezado
 el cual tiene las siguientes secciones (Ver Figura 3.4):
 
 \begin{enumerate}[a)]
@@ -714,17 +714,16 @@ el cual tiene las siguientes secciones (Ver Figura 3.4):
 \subsection{Crear perfil del edificio}
 
 La pagina de \textquote{Crear perfil del edificio} es la pagina inicial
-que el usuario visualiza cuando no tiene ningún perfil de edificio asociado,
-esta pagina también es usada cuando el usuario agrega mas edificios a su
-cuenta.
+cuando el usuario no tiene ningún perfil de edificio asociado, esta pagina
+también es usada cuando el usuario agrega mas edificios a su cuenta.
 
-Esta pagina tuvo varias varias implementaciones por retroalimentación de
-pruebas con usuarios, en las primeras versiones la pagina requería que el
-usuario contestara toda la información requerida como se
-documenta en el caso de de uso \textit{Crear perfil del edificio}, esto
-representaba mucho trabajo al usuario (Ver Figura 3.4).
+Esta pagina tuvo varias iteraciones por la retroalimentación obtenida por las
+pruebas con usuarios, en las primeras iteraciones la pagina requería que el
+usuario contestara toda la información requerida según el caso de de uso
+\textit{Crear perfil del edificio}, esto representaba mucho trabajo al usuario
+(Ver Figura 3.5).
 
-\jcimageinline{0.75}{imagenes/SBP-Wireframe.png}{Boceto inicial para crear
+\jcimageinline{0.75}{imagenes/SBP-Wireframe.png}{Versión inicial para crear
   un perfil de edificio.}
 
 Para facilitar al usuario el ingreso de información se decidió implementar
@@ -738,15 +737,15 @@ las siguientes mejoras:
 \end{enumerate}
 
 En la versión final el sistema inicialmente pide al usuario seleccionar el tipo
-de industria que mejor describe su negocio, las opciones son: Comercial, Industrial,
-Agricultura, Habitacional, Otro (Ver Figura 3.5).
+de industria que mejor describe su negocio, las opciones son: comercial, industrial,
+agricultura, agrícola, otro (Ver Figura 3.6).
 
 \jcimageinline{0.75}{imagenes/SBP-Modal1.png}{Se pide al usuario
   el seleccionar el tipo de industria de su negocio.}
 
 Después el sistema pide al usuario seleccionar su cuenta y dirección
-de servicio, ingresar el alias del edificio, el tipo de edificio y su área
-(Ver Figura 3.6).
+de servicio, el alias del edificio, el tipo de edificio y su área
+(Ver Figura 3.7).
 
 \jcimageinline{0.75}{imagenes/SBP-Modal2.png}{Se pide al usuario ingresar
   las características básicas de su edificio.}
