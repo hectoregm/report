@@ -758,58 +758,63 @@ Al ingresar esta información el usuario es redirigido a la pagina
 La pagina \textquote{Plan de ahorro} es la pagina principal del sistema
 \texttt{PEAT} dado que implementa la funcionalidad principal del sistema
 que es la capacidad para interactuar con los datos sobre los gastos de
-energía y la administración el plan de ahorro del edificio.
+energía y la administración del plan de ahorro del edificio.
 
-La pagina esta dividida en dos partes principales, en la parte superior
-se da el manejo de las gráficas para visualizar los gastos y en la parte
-inferior se tiene la administración del plan de ahorro.
+La pagina esta dividida en dos secciones principales, en la sección superior
+se da el manejo de las gráficas para visualizar los gastos de energía y en la
+sección inferior se tiene la administración del plan de ahorro.
 
 \subsubsection{Visualización}
 
-La parte superior esta subdividida en las siguientes partes:
+La sección superior esta subdividida en las siguientes partes:
 \begin{itemize}
-\item Menú de vistas: En esta barra el usuario puede seleccionar
-  que tipo de información que se despliega en las gráficas. Se tienen cuatro tipos
+\item Menú de vistas: En este menú el usuario puede seleccionar
+  que tipo de datos se despliega en las gráficas. Se tienen cuatro tipos
   de vista: gasto (\textit{Spending}), electricidad (\textit{Electricity}), gas
   (\textit{Gas}), emisiones de carbono (\textit{Carbon Emissions}) y análisis
   (\textit{Energy Use}). También en este menú en la parte derecha se
   tiene un estimado del ahorro que se puede obtener en el edificio
-  si se implementan las recomendaciones (Ver Figura 3.7).
+  si se implementan las recomendaciones (Ver Figura 3.8).
   \jcimage{1.0}{imagenes/Barra-Vistas-Ahorro.png}{Menú de vistas.}
 \item Menú de rango de tiempo: Esta sección se encuentra enseguida del menú de
-  vistas, aquí el usuario puede seleccionar entre los rangos de tiempo ya sea anual
-  (\textit{Annually}), mensual o diario de la vista anterior, en ciertas vistas
-  además se opciones extra la parte derecha para agregar información del clima y
-  comparativas con periodos anteriores (Ver Figura 3.8).
+  vistas, aquí el usuario puede seleccionar entre los rangos de tiempo anual
+  (\textit{Annually}), mensual (\textit{Monthly}) o diario (\textit{Daily}) de la
+  vista seleccionada, en ciertas vistas se tienen opciones extra en la parte
+  derecha como por ejemplo agregar datos de clima o de periodos anteriores
+  a la vista actual (Ver Figura 3.9).
   \jcimage{1.0}{imagenes/Barra-Rango.png}{Menú de rango de tiempo.}
 \item Área de visualización: En esta sección se despliega los datos de consumo
   del edificio mostrando los datos y rango de tiempo que el usuario ha seleccionado
-  en los dos menús anteriores (Ver Figura 3.9).
+  en los dos menús anteriores (Ver Figura 3.10).
   \jcimage{1.0}{imagenes/Grafica.png}{Visualización del gasto de electricidad con
-    comparativa del año anterior y el clima.}
+    comparativa del año anterior y con datos del clima.}
 \end{itemize}
 
 Para la implementación de las gráficas se utilizo el marco de trabajo
-Ext JS, este marco de trabajo esta diseñado para la implementación
-de aplicaciones de tipo \textit{SPA} por medio del lenguaje de programación
-Javascript. Ext JS implementa un gran numero de controles como
-como paneles, barras de herramientas, deslizadores, etcétera.
+Ext JS, este marco de trabajo esta diseñado para implementar aplicaciones
+de tipo \textit{SPA} por medio del lenguaje de programación Javascript.
+Ext JS implementa un gran numero de controles de interfaz como como paneles,
+barras de herramientas, deslizadores, etcétera.
 
-Ext JS es una elección natural para el sistema \texttt{PEAT} tiene un gran
-paquete de graficación el cual permite la representar visualmente los datos con una
-amplia gama de tipos de graficas: lineas, barras, circulares. Además el equipo
-de \textit{frontend} estaba ampliamente familiarizado en la implementación y
-personalización de visualizaciones con este marco de trabajo.
+Ext JS es una elección natural para el sistema \texttt{PEAT} dado que tiene un
+excelente paquete de graficación el cual permite presentar visualmente una gran
+cantidad de datos por medio de una amplia gama de gráficas: lineas, barras,
+circulares, etcétera. Otro punto a favor de Ext JS es que el equipo de programadores
+del \textit{frontend} estaba ampliamente familiarizado con este marco de trabajo.
 
-Dado la capacidad de Ext JS para interfaces se tenia inicialmente
-que todo la funcionalidad de la interfaz se haría con este marco de trabajo pero
-la desventaja es que requiere de un tiempo de inicialización demasiado grande,
-mas de un segundo, que va contrario a los requerimiento de PG\&E.
-Así se decidió hacer uso solamente del modulo de graficación de Ext JS y
+Dada la capacidad de Ext JS para implementar interfaces se tenia el plan inicial
+de implementar toda la interfaz con este marco de trabajo pero Ext JS tiene una
+gran desventaja en que requiere de un tiempo de inicialización de sus componentes
+demasiado grande, mas de un segundo, que va contrario a los requerimientos del
+cliente.
+Entonces se decidió hacer uso solamente del modulo de graficación de Ext JS y
 hacer la implementación de los controles necesarios para la interfaz desde cero
 haciendo uso de \texttt{Backbone}.
 
-Para cada rango de tiempo se hace uso de un tipo diferente de gráfica:
+% TODO: Escribir un poco de backbone y su papel en la interfaz
+
+Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización diferente:
+
 \begin{itemize}
 \item Anual: Se hace una comparativa entre el gasto del edificio en los últimos doce
   meses, el promedio de gasto de un edificio de características similares y
