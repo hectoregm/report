@@ -592,11 +592,11 @@ casos de uso se tiene que la interfaz de usuario debe tener las siguientes
 características:
 
 \begin{itemize}
+\item La interfaz debe ser simple y enfocada a la información que el
+  usuario necesita
 \item La interfaz debe permitir realizar la mayoría de sus
   acciones de forma asincrónica, sin necesidad de una recarga completa de
   la pagina.
-\item La interfaz debe ser simple y enfocada a la información que el
-  usuario necesita
 \item Toda interacción debe completarse en menos de un segundo.
 \end{itemize}
 
@@ -616,7 +616,13 @@ la parte del \textit{frontend}.
 
 La interfaz de usuario en el sistema \texttt{PEAT} esta compuesta por ocho paginas
 de las cuales tres son paginas de PG\&E y las restantes son gestionadas por
-\texttt{PEAT}:
+\texttt{PEAT}.
+
+Toda las paginas del sistema muestran un menú de navegación que permite al
+usuario navegar directamente a las paginas \textquote{Plan de ahorro},
+\textquote{Recomendaciones} y \textquote{Perfil detallado del edificio}.
+
+La descripción general de la paginas es el siguiente:
 
 \begin{enumerate}
 \item Un usuario entra al portal de PG\&E, luego a la pagina de ingreso del
@@ -625,54 +631,49 @@ de las cuales tres son paginas de PG\&E y las restantes son gestionadas por
   \textit{MyEnergy} se tiene una liga que invita al usuario a conocer sobre
   medidas para ahorrar, esta liga dirige al usuario al sistema \texttt{PEAT}
   (Ver Figura 3.3 1).
-\item En el primer ingreso del usuario al sistema este es redirigido a la pagina
-  \textquote{Crear perfil del edificio}, aquí el usuario solo contesta las preguntas
-  básicas sobre su edificio. El usuario regresa a esta pagina cuando requiere
-  agregar mas edificios a su cuenta (Ver Figura 3.3 2). Al finalizar la creación
-  del perfil se redirige al usuario al plan de ahorro.
+\item En el primer ingreso al sistema se dirige al usuario la pagina
+  \textquote{Crear perfil del edificio} (Ver Figura 3.3 2), aquí el usuario
+  solo contesta las preguntas básicas sobre su edificio
+  (Ver caso de uso \textit{Crear perfil del edificio}).
+  El usuario regresa a esta pagina cuando requiere agregar mas edificios a su cuenta.
+  Al finalizar la creación del perfil se redirige al usuario a la pagina
+  \textquote{Plan de ahorro}.
 \item La pagina \textquote{Plan de ahorro} es la pagina principal del sistema
-  \texttt{PEAT}, es donde los usuarios que ya cuentan por lo menos con un perfil
-  de edificio son redirigidos al ingresar por medio de su tablero en
+  \texttt{PEAT}, es decir es la pagina inicial cuando el usuario cuenta por lo
+  menos con un un perfil de edificio al ingresar por medio de su tablero en
   \textit{MyEnergy} (Ver Figura 3.3 3).
-  El plan de ahorro presenta dos funcionalidades al usuario:
+  El plan de ahorro presenta la siguiente funcionalidad al usuario:
   \begin{itemize}
   \item Parte superior: se proporciona al usuario capacidad para interactuar
-    con la facturación de sus gastos de energía por medio de gráficas comparativas,
-    es decir esta parte implementa la funcionalidad indicada en el caso de uso
-    \textit{Ver historial de consumo}.
-  \item Parte inferior: se proporciona al usuario su plan de ahorro y las
-    medidas que se ha comprometido a realizar para reducir su gasto, es decir
-    esta parte implementa la funcionalidad indicada en el caso de uso
-    \textit{Administrar plan de ahorro}
+    con la facturación de sus gastos de energía por medio de gráficas comparativas
+    (Ver caso de uso \textit{Ver historial de consumo}).
+  \item Parte inferior: se muestra al usuario su plan de ahorro, es decir
+    las recomendaciones que se ha comprometido a realizar para reducir su gasto
+    (Ver caso de uso \textit{Administrar plan de ahorro}).
   \end{itemize}
-  El usuario puede navegar a las paginas \textquote{Perfil detallado},
-  \textquote{Recomendaciones} y \textquote{Detalle recomendación}.
+  El usuario puede navegar a la pagina \textquote{Detalle de recomendación}
+  de una recomendación mostrada en su plan de ahorro.
 \item En la pagina \textquote{Recomendaciones} se tiene dos componentes
   (Ver Figura 3.3 4):
   \begin{itemize}
-  \item El componente PPW que incita la usuario a dar mas información
-    sobre su edificio.
+  \item El componente de ingreso progresivo que incita la usuario a
+    dar mas información sobre su edificio (Ver caso de uso \textit{Obtener
+      información del edificio}).
   \item Una lista de recomendaciones para reducir sus costos de energía
-    basados en el perfil de su edificio, es decir esta parte
-    implementa la funcionalidad indicada en el caso de uso
-    \textit{Administrar recomendaciones}.
+    basados en el perfil de su edificio (Ver caso de uso \textit{Administrar
+      recomendaciones}).
   \end{itemize}
-  El usuario puede navegar a las paginas \textquote{Perfil detallado del edificio},
-  \textquote{Plan de ahorro} y \textquote{Detalle recomendación}.
-\item La pagina \textquote{Perfil detallado del edificio} es donde el usuario
-  puede responder o actualizar las respuestas a las preguntas sobre su edificio,
-  es decir esta pagina implementa la funcionalidad indicada en el caso de uso
-  \textit{Administrar perfil del edificio} (Ver Figura 3.3 5).
-  El usuario puede navegar a las paginas \textquote{Plan de ahorro} y
-  \textquote{Recomendaciones}.
-\item La pagina \textquote{Detalle recomendación} muestra los pormenores sobre
-  las medidas que se necesitan implementar para lograr reducir el consumo de energía,
-  es decir esta pagina implementa la funcionalidad indicada en el caso de uso
-  \textit{Ver recomendación} (Ver Figura 3.3 6).
-  El usuario puede navegar a las paginas \textquote{Plan de ahorro} y
-  \textquote{Recomendaciones}.
+  El usuario puede navegar a la pagina \textquote{Detalle de recomendación}
+  de las recomendaciones mostradas en la lista de recomendaciones.
+\item La pagina \textquote{Perfil detallado del edificio} (Ver Figura 3.3 5) es
+  donde el usuario puede responder o actualizar las respuestas a las preguntas
+  sobre su edificio (Ver caso de uso \textit{Administrar perfil del edificio}).
+\item La pagina \textquote{Detalle recomendación} (Ver Figura 3.3 6) muestra los
+  pormenores sobre las medidas que se necesitan realizar para lograr reducir
+  el consumo en el edificio (Ver caso de uso \textit{Ver recomendación}).
 \end{enumerate}
 
+% FIXME: Remover pagina proxy del esquema de navegación.
 \jcimageinline{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
   la navegación en el sistema \texttt{PEAT}.}
 
@@ -681,14 +682,13 @@ de las cuales tres son paginas de PG\&E y las restantes son gestionadas por
 \subsubsection{Encabezado}
 
 Todas las paginas del sistema \texttt{PEAT} comparte el mismo encabezado
-que tiene las siguientes secciones:
+el cual tiene las siguientes secciones (Ver Figura 3.4):
 
 \begin{enumerate}[a)]
-\item Control de selección de edificios: Este control muestra un menú
-  desplegable el cual muestra al usuario cada uno de los edificios
-  asociados a su cuenta.
-\item Nombre del sistema. Aunque el nombre interno del sistema es \texttt{PEAT}
-  para el usuario el nombre es \textquote{Chequeo de energía del negocio}
+\item Componente de selección de edificios: este control muestra un menú
+  desplegable con todos los edificios asociados al usuario.
+\item Nombre del sistema: aunque el nombre interno del sistema es \texttt{PEAT}
+  para el usuario el nombre del sistema es \textquote{Chequeo de energía del negocio}
   (\textit{Business Energy Checkup}).
 \item Menú de navegación del sistema.
   \begin{itemize}
@@ -697,12 +697,12 @@ que tiene las siguientes secciones:
   \item Formas de ahorrar (\textit{Ways to Save}): dirige al usuario a la pagina
     \textquote{Recomendaciones}.
   \item Perfil de negocio (\textit{Business Profile}): dirige al usuario a la pagina
-    \textquote{Administrar perfil del edificio}.
+    \textquote{Perfil detallado del edificio}.
   \item Tomar un recorrido (\textit{Take a tour}): se muestra al usuario
     las diferentes paginas y secciones del sistema.
   \end{itemize}
 \item Titulo de la pagina actual.
-\item Control de potencial de ahorro: este control muestra en todo momento
+\item Componente de potencial de ahorro: este control muestra en todo momento
   el potencial de ahorro del edificio y el ahorro que se obtiene por el plan
   de ahorro del edificio.
 \end{enumerate}
@@ -719,8 +719,8 @@ esta pagina también es usada cuando el usuario agrega mas edificios a su
 cuenta.
 
 Esta pagina tuvo varias varias implementaciones por retroalimentación de
-pruebas con usuarios, en las primeras versiones se tenia que la pagina
-requeria que el usuario contestara toda la informacion requerida como se
+pruebas con usuarios, en las primeras versiones la pagina requería que el
+usuario contestara toda la información requerida como se
 documenta en el caso de de uso \textit{Crear perfil del edificio}, esto
 representaba mucho trabajo al usuario (Ver Figura 3.4).
 
@@ -1045,7 +1045,7 @@ Los componentes que se implementaron son los siguientes:
 \item Componente añadir al plan: este componente permite
   modificar el estado de una recomendación, es decir si esta es parte del
   plan de ahorro, no es aplicable o ya se completo.
-\item Componente potencial de ahorro: este componente permite
+\item Componente del potencial de ahorro: este componente permite
   al usuario saber el potencial de ahorro del edificio y su
   ahorro esperado según su plan de ahorro.
 \end{itemize}
