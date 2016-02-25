@@ -850,7 +850,7 @@ La sección inferior consta de las siguientes partes (Ver Figura 3.15):
 \item Componente de ingreso progresivo: en este componente se despliega una pregunta
   sobre el edificio del usuario, las características de este componente
   se verán en detalle en la sección 3.3.8 sobre componentes reusables.
-\item Componente lista de de recomendaciones: en este componente se despliega la
+\item Componente lista de recomendaciones: en este componente se despliega la
   lista de recomendaciones que forman el plan de ahorro del edificio,
   las características de este componente se verán a detalle en la sección 3.3.8
   sobre componente reusables.
@@ -861,17 +861,22 @@ La sección inferior consta de las siguientes partes (Ver Figura 3.15):
 
 \subsection{Recomendaciones}
 
-La pagina \textquote{Recomendaciones} es la pagina en la que se muestran
-las recomendaciones que aplican al edificio del usuario.
+La pagina \textquote{Recomendaciones} muestra al usuario una lista de
+recomendaciones, es decir medidas que se pueden realizar en el edificio
+para lograr ahorrar energía. En esta lista se tienen todas las recomendaciones
+aplicables pero que no están en el plan de ahorro del edificio.
 
-En la parte lateral se tiene el componente PPW, y en el parte principal
-se tiene el widget que maneja la lista de recomendaciones.
+La pagina tiene dos secciones: la parte lateral contiene el componente de
+ingreso progresivo y en la sección principal se tiene el componente lista
+de recomendaciones.
 
-La lista de recomendaciones consta de las siguientes partes:
+El componente lista de recomendaciones consta de las siguientes partes:
+
 \begin{itemize}
 \item Encabezado: Se tiene las características principales por las cuales
   el usuario puede ordenar la lista: nombre, categoría, costo, ahorro y recuperación
-  de la inversión.
+  de la inversión. La lista puede ser ordenada en base a cualquiera de estas
+  características.
   \jcimage{1.0}{imagenes/Recomendaciones-Encabezado.png}{Encabezado de la lista
     de recomendaciones.}
 \item Renglón: Se despliega por cada recomendación sus características principales
@@ -969,7 +974,7 @@ La pagina esta dividida en las siguientes partes:
   completada la recomendación.
   En la barra lateral se despliega el resultado de un calculo estimado
   de costos y ahorro al realizar la recomendación, estos datos son
-  actualizados de forma asincrona cuando el usuario contesta o cambia
+  actualizados de forma asíncrona cuando el usuario contesta o cambia
   la respuesta a alguna de las preguntas presentadas en el contenido
   principal.
   \jcimage{1.0}{imagenes/Recomendacion-Descripcion.png}{Las acciones de
