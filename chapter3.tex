@@ -220,8 +220,8 @@ detalladas y opcionales son definidas por medio de dos rutas:
   Esta ruta es documentada en este caso de uso.
 \item Un componente que es embebido en varias partes del sistema
   que realiza una sola pregunta al usuario para ir obteniendo progresivamente
-  mas información sobre el edificio. Este componente tiene el nombre
-  de Componente de Ingreso Progresivo (\textit{Progressive Profile Widget} PPW).
+  mas información sobre el edificio. Este componente llamado componente
+  de ingreso progresivo (\textit{Progressive Profile Widget} PPW).
   Esta ruta es documentada en el caso de uso \textit{Obtener información
     del edificio}
 \end{itemize}
@@ -289,18 +289,18 @@ mejores planes de ahorro y recomendaciones para el usuario.
 
 La forma en como se aborda esta necesidad es por medio de la implementación
 de un componente que esta presente en las dos partes principales del sistema:
-el plan de ahorro y la lista de recomendaciones. Este componente tiene el
-nombre de Componente de Ingreso Progresivo de Información (\textit{Progressive
-  Profile Widget} PPW). Este componente realiza una sola pregunta al usuario
-obteniendo progresivamente mas información sobre el edificio.
+el plan de ahorro y la lista de recomendaciones. Este componente llamado
+componente de ingreso progresivo (\textit{Progressive Profile Widget} PPW).
+Este componente realiza una sola pregunta al usuario obteniendo progresivamente
+mas información sobre el edificio.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Obtener información del edificio.}
   \addfield{Descripción:}{El sistema va obteniendo información
     progresivamente del usuario haciendo uso de un componente que
     realiza una pregunta al usuario en varias partes del sistema.
-    Este componente tiene el nombre de Componente de Ingreso Progresivo de
-    Información (\textit{Progressive Profile Widget} PPW).}
+    Este componente se llama componente de ingreso progresivo (\textit{Progressive
+      Profile Widget} PPW).}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
   \item El usuario a sido autentificado por medio de un token de autenticación
@@ -606,11 +606,11 @@ al servidor de forma asíncronas por medio de AJAX, y realizar las actualizacion
 a la vista después de recibir la respuesta del servidor.
 
 Para permitir el reuso de código para la implementación de funcionalidad como
-el componente PPW era necesario escribir una cantidad de código Javascript
-considerable, para dar estructura a estos componentes del \textit{frontend} se eligió
-usar la biblioteca \textit{Backbone} puesto que permite definir una
-arquitectura MVC, es decir permite definir modelos, vistas y controladores en
-la parte del \textit{frontend}.
+el componente de ingreso progreso era necesario escribir una cantidad de código
+Javascript considerable, para dar estructura a estos componentes del
+\textit{frontend} se eligió usar la biblioteca \textit{Backbone} puesto que permite
+definir una arquitectura MVC, es decir permite definir modelos, vistas y
+controladores en la parte del \textit{frontend}.
 
 \subsection{Descripción general y navegación}
 
@@ -766,7 +766,7 @@ sección inferior se tiene la administración del plan de ahorro.
 
 \subsubsection{Visualización}
 
-La sección superior esta subdividida en las siguientes partes:
+La sección superior consta de las siguientes partes:
 \begin{itemize}
 \item Menú de vistas: En este menú el usuario puede seleccionar
   que tipo de datos se despliega en las gráficas. Se tienen cuatro tipos
@@ -786,8 +786,7 @@ La sección superior esta subdividida en las siguientes partes:
 \item Área de visualización: En esta sección se despliega los datos de consumo
   del edificio mostrando los datos y rango de tiempo que el usuario ha seleccionado
   en los dos menús anteriores (Ver Figura 3.10).
-  \jcimage{1.0}{imagenes/Grafica.png}{Visualización del gasto de electricidad con
-    comparativa del año anterior y con datos del clima.}
+  \jcimage{1.0}{imagenes/Grafica.png}{Visualización del gasto de electricidad.}
 \end{itemize}
 
 Para la implementación de las gráficas se utilizo el marco de trabajo
@@ -811,30 +810,32 @@ Entonces se decidió hacer uso solamente del modulo de graficación de Ext JS y
 hacer la implementación de los controles necesarios para la interfaz desde cero
 haciendo uso de \texttt{Backbone}.
 
-% TODO: Escribir un poco de backbone y su papel en la interfaz
+% TODO: Escribir un poco de Backbone y su papel en la interfaz
 
 Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización diferente:
 
 \begin{itemize}
-\item Anual: Se hace una comparativa entre el gasto del edificio en los últimos doce
+\item Anual: se hace una comparativa entre el gasto del edificio en los últimos doce
   meses, el promedio de gasto de un edificio de características similares y
-  el gasto de un edificio eficiente en consumo energético. Para hacer estas
-  comparaciones se utiliza gráficas de barras.
+  el gasto de un edificio eficiente en su consumo energético. Para hacer estas
+  comparaciones se utiliza gráficas de barras (Ver Figura 3.11).
   \jcimage{1.0}{imagenes/Vista-Anual.png}{Visualización anual del gasto de
     electricidad.}
-\item Mensual: Se muestra una gráfica con el gasto del edificio en los últimos 12
-  meses, permite comparar con el gasto del año anterior.
+\item Mensual: se muestra una gráfica de lineas del gasto del edificio
+  en los últimos 12 meses, además permite comparar con el gasto del año anterior.
+  Se puede agregar los datos sobre el clima durante el periodo que se esta
+  visualizando (Ver Figura 3.12).
   \jcimage{0.9}{imagenes/Vista-Mensual.png}{Visualización mensual del gasto de
     electricidad.}
 \item Diario: Se muestra una gráfica similar a la vista mensual pero en este caso
-  se visualizan los últimos treinta días de gasto, además permite comparar
-  con el gasto en el mismo periodo del año pasado.
+  se visualizan los últimos treinta días de gasto (Ver Figura 3.13)
   \jcimage{0.9}{imagenes/Vista-Diaria.png}{Visualización diaria del gasto de
-    electricidad.}
+    electricidad, con la comparativa al gasto del año pasado y datos del
+    clima.}
 \item Análisis: Se muestra un análisis del gasto del edificio en categorías
-  por medio de una gráfica circular o de sectores, este análisis es realizado
-  usando aprendizaje de maquina por lo que esto es solo una estimación del consumo
-  de cada categoría.
+  por medio de una gráfica circular, este análisis es realizado usando
+  aprendizaje de maquina por lo que este análisis es solo una estimación
+  (ver Figura 3.14).
   \jcimage{0.9}{imagenes/Vista-Analisis.png}{Visualización del análisis del gasto de
     electricidad.}
 \end{itemize}
@@ -844,18 +845,18 @@ visualizaciones son idénticas para el gasto en gas.
 
 \subsubsection{Administración}
 
-La parte inferior esta subdividida en las siguientes partes:
+La sección inferior consta de las siguientes partes (Ver Figura 3.15):
 \begin{itemize}
-\item Componente PPW: En esta región se despliega una pregunta
-  sobre el edificio del usuario, sus características se
-  verán con detalle en la sección \textit{Foo}.
-\item Lista de recomendaciones: Esta sección se despliega la lista de recomendaciones
-  que forman el plan de ahorro del edificio. Esta lista de recomendaciones junto con
-  el componente PPW son los widgets principales del sistema \texttt{PEAT}.
-  Las características de este componente se verán a detalle en la sección
-  \textit{Bar}.
-  \jcimage{1.0}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
-    recomendaciones.}
+\item Componente de ingreso progresivo: en este componente se despliega una pregunta
+  sobre el edificio del usuario, las características de este componente
+  se verán en detalle en la sección 3.3.8 sobre componentes reusables.
+\item Componente lista de de recomendaciones: en este componente se despliega la
+  lista de recomendaciones que forman el plan de ahorro del edificio,
+  las características de este componente se verán a detalle en la sección 3.3.8
+  sobre componente reusables.
+%  TODO: Reemplazar esta imagen por una de toda la sección inferior:
+\jcimage{0.9}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
+  recomendaciones.}
 \end{itemize}
 
 \subsection{Recomendaciones}
