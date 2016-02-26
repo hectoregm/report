@@ -884,7 +884,7 @@ El componente lista de recomendaciones consta de las siguientes secciones:
     de recomendaciones.}
 \item Renglón: por cada recomendación en la lista se despliegan las
   características principales definidas en el encabezado, además se tiene un botón
-  que permite al usuario cambiar el estatus de la recomendación.
+  que permite al usuario cambiar el estado de la recomendación.
   Para cada recomendación se tiene las siguientes secciones (Ver Figura 3.17):
   \begin{enumerate}[a)]
   \item Imagen representativa de la recomendación.
@@ -898,7 +898,7 @@ El componente lista de recomendaciones consta de las siguientes secciones:
   \item Breve descripción de las medidas necesarias para implementar la
     recomendación.
   \item Componente añadir al plan, este componente permite al usuario definir el
-    estatus de la recomendación, es decir si la recomendación es parte
+    estado de la recomendación, es decir si la recomendación es parte
     del plan de ahorro, ya fue implementada o no aplica al edificio.
   \end{enumerate}
   \jcimage{1.0}{imagenes/Recomendaciones-Renglon.png}{Las secciones de una
@@ -907,33 +907,35 @@ El componente lista de recomendaciones consta de las siguientes secciones:
 
 \subsubsection{Componente añadir al plan}
 
-Una recomendación tiene los siguientes estados:
+El componente añadir al plan permite al usuario cambiar el estado
+de una recomendación, los estados posibles son:
+
 \begin{itemize}
-\item Por implementar: En este estado la recomendación no es parte
+\item Por implementar: en este estado la recomendación no es parte
   del plan de ahorro del edificio. Este es el estado inicial de toda
   recomendación.
-\item Añadido: En este estado la recomendación ha sido elegida
-  por el usuario para su implementación.
-\item No aplica: En este estado se indica que la recomendación
-  no es aplicable al edificio.
-\item Completada: En este estado se indica que la recomendación
-  ya ha sido implementada en el edificio.
-  \jcimage{1.0}{imagenes/Recomendaciones-Renglon.png}{Las secciones de una
-    recomendación.}
+\item Añadido: este estado indica que el usuario a elegido implementar la
+  recomendación y por lo tanto es parte del plan de ahorro del edificio.
+\item No aplica: este estado indica que la recomendación no es aplicable al edificio.
+\item Completada: este estado indica que la recomendación ya fue implementada
+  con éxito en el edificio, la recomendación se considera parte del
+  plan de ahorro.
 \end{itemize}
 
-Mediante la interacción con el control de añadir al plan es que un usuario
-modifica el estado de una recomendación. El control es una combinación
-de botón, para la acción principal de añadir una recomendación, y una lista
-despegable de acciones secundarias como remover o indicar que ya ha sido
-completada una recomendación.
+Mediante la interacción con este componente el usuario modifica el estado
+de una recomendación. El componente tiene el comportamiento de un botón y
+de un menú despegable, para la acción principal de añadir una recomendación
+al plan de ahorro se da al presionar el componente como un botón. Mientras
+que las demás acciones secundarias como remover del plan a la recomendación
+son realizadas por medio del menú despegable.
 
-Para realizar la transición del estado 'Por implementar' al estado 'Añadido' el
-usuario solo tiene que presionar el control en su parte izquierda.
-\jcimage{0.5}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
-  de añadir al plan.}
-\jcimage{0.5}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
-  a sido añadida al plan.}
+Para realizar la transición del estado \textquote{Por implementar} al estado
+\textquote{Añadido} el usuario solo tiene que presionar el control en su parte
+izquierda (Ver Figura \ref{fig:boton-inicial} y \ref{fig:boton-final}).
+\njcimage{0.4}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
+  de añadir al plan.}{boton-inicial}
+\njcimage{0.4}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
+  a sido añadida al plan.}{boton-final}
 
 El sistema despliega una ventana modal preguntando al usuario que tan
 rápido estima que podrá implementar las medidas de la recomendación
