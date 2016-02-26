@@ -849,60 +849,63 @@ La sección inferior consta de las siguientes partes (Ver Figura 3.15):
 \begin{itemize}
 \item Componente de ingreso progresivo: en este componente se despliega una pregunta
   sobre el edificio del usuario, las características de este componente
-  se verán en detalle en la sección 3.3.8 sobre componentes reusables.
+  se verán en detalle en la sección \ref{subsec:recomendaciones}.
 \item Componente lista de recomendaciones: en este componente se despliega la
   lista de recomendaciones que forman el plan de ahorro del edificio,
-  las características de este componente se verán a detalle en la sección 3.3.8
-  sobre componente reusables.
+  las características de este componente se verán a detalle en la sección
+  \ref{subsec:componentes}.
 %  TODO: Reemplazar esta imagen por una de toda la sección inferior:
 \jcimage{0.9}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
   recomendaciones.}
 \end{itemize}
 
 \subsection{Recomendaciones}
+\label{subsec:recomendaciones}
 
 La pagina \textquote{Recomendaciones} muestra al usuario una lista de
 recomendaciones, es decir medidas que se pueden realizar en el edificio
-para lograr ahorrar energía. En esta lista se tienen todas las recomendaciones
-aplicables pero que no están en el plan de ahorro del edificio.
+para lograr disminuir el consumo energético del edificio. En esta lista se
+tienen todas las recomendaciones aplicables que no están ya en el plan
+de ahorro del edificio.
 
-La pagina tiene dos secciones: la parte lateral contiene el componente de
+La pagina tiene dos secciones: la sección lateral contiene el componente de
 ingreso progresivo y en la sección principal se tiene el componente lista
 de recomendaciones.
 
-El componente lista de recomendaciones consta de las siguientes partes:
+\subsubsection{Componente lista de recomendaciones}
+
+El componente lista de recomendaciones consta de las siguientes secciones:
 
 \begin{itemize}
-\item Encabezado: Se tiene las características principales por las cuales
+\item Encabezado: se muestran las características principales por las cuales
   el usuario puede ordenar la lista: nombre, categoría, costo, ahorro y recuperación
-  de la inversión. La lista puede ser ordenada en base a cualquiera de estas
-  características.
+  de la inversión (Ver Figura 3.16).
   \jcimage{1.0}{imagenes/Recomendaciones-Encabezado.png}{Encabezado de la lista
     de recomendaciones.}
-\item Renglón: Se despliega por cada recomendación sus características principales
-  además se tiene un botón que permite al usuario cambiar el estatus de la
-  recomendaciones. Para cada recomendación se tiene las siguientes secciones:
+\item Renglón: por cada recomendación en la lista se despliegan las
+  características principales definidas en el encabezado, además se tiene un botón
+  que permite al usuario cambiar el estatus de la recomendación.
+  Para cada recomendación se tiene las siguientes secciones (Ver Figura 3.17):
   \begin{enumerate}[a)]
   \item Imagen representativa de la recomendación.
   \item Descripción de una linea de la recomendación.
   \item Categoría de la recomendación.
   \item Costo de implementar la recomendación.
-  \item Ahorro que trae la recomendación medida por año.
+  \item Ahorro que trae la recomendación en un año.
   \item Tiempo para recuperar la inversión, es decir cuanto tiempo el ahorro
     obtenido por implementar la recomendación es igual o superior al costo
     de su implementación.
   \item Breve descripción de las medidas necesarias para implementar la
     recomendación.
-  \item Control añadir al plan, este botón/menú permite al usuario definir el
-    estado de la recomendación, es decir si la recomendación se debe
-    añadir al plan de ahorro, es una recomendación que ya fue implementada o
-    que no aplica al edificio.
+  \item Componente añadir al plan, este componente permite al usuario definir el
+    estatus de la recomendación, es decir si la recomendación es parte
+    del plan de ahorro, ya fue implementada o no aplica al edificio.
   \end{enumerate}
   \jcimage{1.0}{imagenes/Recomendaciones-Renglon.png}{Las secciones de una
     recomendación.}
 \end{itemize}
 
-\subsubsection{Botón de añadir al plan}
+\subsubsection{Componente añadir al plan}
 
 Una recomendación tiene los siguientes estados:
 \begin{itemize}
@@ -1037,6 +1040,7 @@ Cada seccion esta dividida en las siguientes secciones:
   Edificio y HVAC.}
 
 \subsection{Componentes reusables}
+\label{subsec:componentes}
 
 En el sistema \texttt{PEAT} se tiene funcionalidad que se requiere en
 varias de las paginas del sistema, un ejemplo concreto seria la necesidad
