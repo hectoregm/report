@@ -854,9 +854,9 @@ La sección inferior consta de las siguientes partes (Ver Figura 3.15):
   lista de recomendaciones que forman el plan de ahorro del edificio,
   las características de este componente se verán a detalle en la sección
   \ref{subsec:componentes}.
-%  TODO: Reemplazar esta imagen por una de toda la sección inferior:
-\jcimage{0.9}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
-  recomendaciones.}
+  %  TODO: Reemplazar esta imagen por una de toda la sección inferior:
+  \jcimage{0.9}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
+    recomendaciones.}
 \end{itemize}
 
 \subsection{Recomendaciones}
@@ -916,48 +916,51 @@ de una recomendación, los estados posibles son:
   recomendación.
 \item Añadido: este estado indica que el usuario a elegido implementar la
   recomendación y por lo tanto es parte del plan de ahorro del edificio.
-\item No aplica: este estado indica que la recomendación no es aplicable al edificio.
+\item No aplicable: este estado indica que la recomendación no es aplicable al
+  edificio.
 \item Completada: este estado indica que la recomendación ya fue implementada
   con éxito en el edificio, la recomendación se considera parte del
   plan de ahorro.
 \end{itemize}
 
 Mediante la interacción con este componente el usuario modifica el estado
-de una recomendación. El componente tiene el comportamiento de un botón y
-de un menú despegable, para la acción principal de añadir una recomendación
-al plan de ahorro se da al presionar el componente como un botón. Mientras
-que las demás acciones secundarias como remover del plan a la recomendación
+de una recomendación. Este componente tiene el comportamiento de un botón y
+de un menú despegable teniendo que presionar el componente realiza la
+acción de agregar la recomendación al plan de ahorro, mientras mientras que
+las demás acciones secundarias como remover del plan a la recomendación
 son realizadas por medio del menú despegable.
 
 Para realizar la transición del estado \textquote{Por implementar} al estado
 \textquote{Añadido} el usuario solo tiene que presionar el control en su parte
-izquierda (Ver Figura \ref{fig:boton-inicial} y \ref{fig:boton-final}).
-\njcimage{0.4}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
+izquierda (Ver Figuras \ref{fig:boton-inicial} y \ref{fig:boton-final}).
+\rjcimage{0.4}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
   de añadir al plan.}{boton-inicial}
-\njcimage{0.4}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
+\rjcimage{0.4}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
   a sido añadida al plan.}{boton-final}
 
-El sistema despliega una ventana modal preguntando al usuario que tan
-rápido estima que podrá implementar las medidas de la recomendación
-que esta agregando
-\jcimage{0.5}{imagenes/Recomendaciones-Estimacion.png}{Al agregar una
+El sistema despliega una ventana modal preguntando al usuario una estimación
+del tiempo en que se podrá implementar las medidas propuestas por la
+recomendación que se esta agregando al plan de ahorro (Ver Figura \ref{fig:estimacion-recomendacion}).
+\rjcimage{0.5}{imagenes/Recomendaciones-Estimacion.png}{Al agregar una
   recomendación al plan el sistema pregunta el tiempo estimado para completar
-  la recomendación.}
+  la recomendación.}{estimacion-recomendacion}
 
+Para realizar otras acciones sobre la recomendación el usuario presiona la parte
+derecha del componente en la parte que se tiene un triangulo que indica la
+presencia de un menú despegable.
+Estando la recomendación es un estado inicial \textquote{Por implementar} las
+acciones en el menu despegable son para indicar que se ha completado la recomendación
+(estado \textquote{Completada}) o que no es aplicable
+(estado \textquote{No aplicable}) (Ver Figura \ref{fig:menu-anadir-inicial}).
 
-Para realizar las otras transiciones el usuario debe presionar la parte derecha
-del control en la parte que se tiene un triangulo indicando un menú despegable.
-Dado un estado inicial se despliegan las opciones para indicar que la
-recomendación ya ha sido completada o que no es aplicable.
+\rjcimage{0.5}{imagenes/Boton-Plan-Menu-Inicial.png}{Las acciones de
+  completar o indicar no aplicable en el menu despegable.}{menu-anadir-inicial}
 
-\jcimage{0.5}{imagenes/Boton-Plan-Menu-Inicial.png}{Las acciones de
-  completar o indicar no aplicable en el menu despegable.}.
-
-Cuando la recomendación esta en el estado 'Añadido' en el menú despegable
-se despliegan las acciones de completar, remover o indicar que no es aplicable
-la recomendación.
-\jcimage{0.5}{imagenes/Boton-Plan-Menu-Anadido.png}{Las acciones de
-  completar o indicar no aplicable en el menu despegable.}.
+Cuando la recomendación esta en el estado \textquote{Añadido} las
+acciones en el menú despegable son las acciones de completar, remover o indicar
+que no es aplicable la recomendación (Ver Figura \ref{fig:menu-anadir-anadido}).
+\rjcimage{0.5}{imagenes/Boton-Plan-Menu-Anadido.png}{Las acciones de
+  completar o indicar no aplicable en el menu despegable.}{menu-anadir-anadido}
 
 \subsection{Detalle recomendación}
 
