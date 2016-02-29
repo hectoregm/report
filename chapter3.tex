@@ -668,7 +668,7 @@ La descripción general de la paginas es el siguiente:
 \item La pagina \textquote{Perfil detallado del edificio} (Ver Figura 3.3 5) es
   donde el usuario puede responder o actualizar las respuestas a las preguntas
   sobre su edificio (Ver caso de uso \textit{Administrar perfil del edificio}).
-\item La pagina \textquote{Detalle recomendación} (Ver Figura 3.3 6) muestra los
+\item La pagina \textquote{Detalle de recomendación} (Ver Figura 3.3 6) muestra los
   pormenores sobre las medidas que se necesitan realizar para lograr reducir
   el consumo en el edificio (Ver caso de uso \textit{Ver recomendación}).
 \end{enumerate}
@@ -954,69 +954,70 @@ acciones en el menu despegable son para indicar que se ha completado la recomend
 (estado \textquote{No aplicable}) (Ver Figura \ref{fig:menu-anadir-inicial}).
 
 \rjcimage{0.5}{imagenes/Boton-Plan-Menu-Inicial.png}{Las acciones de
-  completar o indicar no aplicable en el menu despegable.}{menu-anadir-inicial}
+  completar o indicar no aplicable en el menú despegable.}{menu-anadir-inicial}
 
 Cuando la recomendación esta en el estado \textquote{Añadido} las
 acciones en el menú despegable son las acciones de completar, remover o indicar
 que no es aplicable la recomendación (Ver Figura \ref{fig:menu-anadir-anadido}).
 \rjcimage{0.5}{imagenes/Boton-Plan-Menu-Anadido.png}{Las acciones de
-  completar o indicar no aplicable en el menu despegable.}{menu-anadir-anadido}
+  completar, remover o indicar no aplicable en el menú despegable.}{menu-anadir-anadido}
 
-\subsection{Detalle recomendación}
+\subsection{Detalle de recomendación}
 
-La pagina \textquote{Detalle recomendación} es donde se describe la
-recomendación y las medidas que se tienen que implementar para lograr
-reducir el consumo de energía del edificio.
+La pagina \textquote{Detalle de recomendación} es donde se tiene una descripción
+detallada sobre la recomendación y las medidas que se tienen que implementar para
+lograr reducir el consumo energético del edificio.
 
-La pagina esta dividida en las siguientes partes:
+La pagina esta dividida en las siguientes secciones:
 \begin{itemize}
-\item Encabezado: Se muestra una descripción breve de la recomendación y a su
-  derecha se tiene el control 'añadir al plan'.
-  \jcimage{1.0}{imagenes/Recomendacion-Titulo.png}{Encabezado de la recomendación
-    para la instalación de un sistema de paneles solares.}
-\item Descripción detallada: En el contenido principal se describe con detalle
-  la información sobre las medidas necesarias para reducir el consumo de energía.
+\item Encabezado: se muestra una descripción breve de la recomendación y a su
+  derecha se tiene el componente añadir al plan (Ver Figura
+  \ref{fig:recomendacion-encabezado}).
+  \rjcimage{1.0}{imagenes/Recomendacion-Titulo.png}{Encabezado de la recomendación
+    para la instalación de un sistema de paneles solares.}{recomendacion-encabezado}
+\item Descripción: se describe con detalle la información sobre las medidas
+  necesarias para reducir el consumo energético del edificio.
   Dentro de la descripción se pueden tener una o varias preguntas al usuario
-  de tal forma que se obtiene la información necesaria para dar al usuario
-  una mejor estimación sobre los costos y ahorro que pueden esperar si es
-  completada la recomendación.
-  En la barra lateral se despliega el resultado de un calculo estimado
-  de costos y ahorro al realizar la recomendación, estos datos son
+  de tal forma que se obtiene mas datos que permiten dar al usuario una mejor
+  estimación sobre los costos y ahorro esperados al completar la recomendación.
+  En la sección lateral se despliega el resultado del calculo estimado
+  de costos y ahorro al completar la recomendación, estos datos son
   actualizados de forma asíncrona cuando el usuario contesta o cambia
   la respuesta a alguna de las preguntas presentadas en el contenido
-  principal.
-  \jcimage{1.0}{imagenes/Recomendacion-Descripcion.png}{Las acciones de
-    completar o indicar no aplicable en el menu despegable.}
+  principal (Ver Figura \ref{fig:recomendacion-descripcion}).
+  \rjcimage{1.0}{imagenes/Recomendacion-Descripcion.png}{Descripción detallada
+    de la recomendación, con la estimación de costo y ahorro en la sección lateral.}{recomendacion-descripcion}
 \end{itemize}
 
 \subsection{Perfil detallado del edificio}
 
 La pagina \textquote{Perfil detallado del edificio} es donde el usuario
-puede responder o actualizar la información sobre su edificio al contestar
-o actualizar las respuestas a las preguntas sobre su edificio.
+ingresa o actualiza las características de su edificio por medio de un
+conjunto de preguntas y respuestas divididas en categorías.
 
 La pagina esta dividida en varias secciones, una sección por categoría:
 \begin{itemize}
 \item Edificio (\textit{Building})
 \item Iluminación (\textit{Lightning})
 \item Calefacción, ventilación y aire acondicionado (\textit{Heating, Ventilation and Air Conditioning} HVAC)
-\item Refrigeracion (\textit{Refrigeration})
+\item Refrigeración (\textit{Refrigeration})
 \item Cocina (\textit{Cooking})
-\item Calefaccion de agua (\textit{Water-Heating})
+\item Calefacción de agua (\textit{Water-Heating})
 \item Miscelánea (\textit{Misc})
 \end{itemize}
 
 Varias categorías como cocina y refrigeración solo son mostradas
-para ciertos tipos de edificios
+para ciertos tipos de edificios (Ver Figura \ref{fig:perfil-categorias})
 
-\jcimage{1.0}{imagenes/Perfil-Secciones.png}{Las preguntas sobre
-  el edificio se organizan en categorías.}
+\rjcimage{1.0}{imagenes/Perfil-Secciones.png}{Las preguntas y respuestas sobre
+  el edificio se organizan en categorías.}{perfil-categorias}
 
-El usuario selecciona una categoria dando un click al titulo de una categoria,
-entonces esta categoria se abre para presentar las preguntas y respuestas
+El usuario selecciona una categoría dando un click al titulo de una categoría,
+entonces esa sección se abre para presentar las preguntas y respuestas
 asociadas a esta.
 
-Cada seccion esta dividida en las siguientes secciones:
+Cada sección esta dividida en las siguientes partes (Ver Figura
+\ref{fig:perfil-seccion}):
 \begin{enumerate}
 \item Encabezado de la sección: cada encabezado tiene un icono característico,
   el nombre de la categoría y en la parte derecha un marcador para indicar
@@ -1024,8 +1025,8 @@ Cada seccion esta dividida en las siguientes secciones:
 \item Preguntas y respuestas: las preguntas son breves y se refieren a una
   característica particular del edificio. La mayoría de las preguntas
   tiene respuestas definidas, teniendo solo un reducido numero de preguntas
-  espera un valor numérico del usuario. Las respuestas se
-  presentan en las siguiente maneras:
+  donde se espera el ingreso de un valor numérico. Las respuestas se
+  presentan de las siguientes formas:
   \begin{enumerate}[a)]
   \item Menú desplegable: para preguntas que tienen mas de tres respuestas
     posibles excluyentes.
@@ -1035,38 +1036,30 @@ Cada seccion esta dividida en las siguientes secciones:
     en que se necesita un valor numérico exacto.
   \item Botón de opción (con texto o imagen): para preguntas que tiene un
     numero limitado de respuesta posibles. Se hace uso de imágenes para las
-    diferentes respuestas para facilitar al usuario el contestar las preguntas
-    mas técnicas.
+    preguntas mas técnicas para facilitar al usuario el contestar la pregunta.
   \end{enumerate}
-\item Botón para progresar a la siguiente categoría.
+\item Botón siguiente: para progresar a la siguiente categoría.
 \end{enumerate}
 
-\jcimage{1.0}{imagenes/Perfil-Preguntas.png}{Las preguntas de las secciones
-  Edificio y HVAC.}
+\rjcimage{1.0}{imagenes/Perfil-Preguntas.png}{Las preguntas de las secciones
+  Edificio y HVAC.}{perfil-seccion}
 
 \subsection{Componentes reusables}
 \label{subsec:componentes}
 
-En el sistema \texttt{PEAT} se tiene funcionalidad que se requiere en
-varias de las paginas del sistema, un ejemplo concreto seria la necesidad
-de mostrar una pregunta sin contestar al usuario sobre su edificio.
-Se decidió entonces implementar varios componentes que implementar la
-funcionalidad que es requerida en varias partes del sistema, permitiendo
-el reuso de código y diseño y acelerando notablemente la implementación
-del sistema.
+En \texttt{PEAT} se tiene funcionalidad que se necesaria en varias paginas del
+sistema, un ejemplo seria la necesidad de mostrar una pregunta sin contestar del
+perfil del edificio.
+Para permitir un mejor reuso de código y diseño se decidió implementar esta
+funcionalidad en componentes independientes reusables que facilitaran su uso
+en las diferentes paginas del sistema.
 
 Los componentes que se implementaron son los siguientes:
 \begin{itemize}
-\item Componente de ingreso progresivo: este componente implementa
-  la funcionalidad de mostrar al usuario una pregunta sobre una
-  característica de su edificio.
-\item Componente lista de de recomendaciones
-\item Componente añadir al plan: este componente permite
-  modificar el estado de una recomendación, es decir si esta es parte del
-  plan de ahorro, no es aplicable o ya se completo.
-\item Componente del potencial de ahorro: este componente permite
-  al usuario saber el potencial de ahorro del edificio y su
-  ahorro esperado según su plan de ahorro.
+\item Componente de ingreso progresivo.
+\item Componente del potencial de ahorro.
+\item Componente lista de recomendaciones.
+\item Componente añadir al plan.
 \end{itemize}
 
 % TODO: Mencionar que estos componentes además tienen que coordinarse
@@ -1074,10 +1067,12 @@ Los componentes que se implementaron son los siguientes:
 
 \subsubsection{Componente de ingreso progresivo}
 
-Este componente es usado en las paginas \textquote{Plan de ahorro} y
-\textquote{Recomendaciones}.
+Este componente muestra al usuario una pregunta y sus respuestas sobre el
+perfil del edificio para motivar al usuario el proporcionar mas información
+sobre su edificio. Este componente es usado en las paginas \textquote{Plan de ahorro}
+y \textquote{Recomendaciones}.
 
-El componente tiene las siguientes partes:
+El componente tiene las siguientes partes (Ver Figura \ref{fig:ingreso-progresivo}):
 \begin{enumerate}[a)]
 \item Pregunta y respuesta: se despliega una sola pregunta y
   las respuestas se presentan según los tipos de respuesta expuestos
@@ -1090,11 +1085,25 @@ El componente tiene las siguientes partes:
 \item Link al perfil detallado: permite al usuario navegar al perfil
   detallado de su edificio.
 \end{enumerate}
-\jcimage{0.5}{imagenes/PPW.png}{Componente de ingreso progresivo.}
+\rjcimage{0.5}{imagenes/PPW.png}{Componente de ingreso progresivo.}{ingreso-progresivo}
+
+\subsubsection{Componente del potencial de ahorro}
+
+Este componente permite al usuario saber el potencial de ahorro del edificio y su
+ahorro esperado dado su plan de ahorro.
+
+\subsubsection{Componente lista de recomendaciones}
+
+Este componente lista las recomendaciones que se pueden realizar en un edificio para
+reducir sus gastos energéticos, la descripción detallada de este componente esta en
+la sección \ref{subsec:recomendaciones}.
 
 \subsubsection{Componente añadir al plan}
 
-Este componente es usado en las paginas \textquote{Plan de ahorro},
-\textquote{Recomendaciones} y \textquote{Detalle recomendación}.
+Este componente permite modificar el estado de una recomendación,
+la descripción detallada de este componente esta en la sección
+\ref{subsec:recomendaciones}. Este componente es usado en las paginas
+\textquote{Plan de ahorro}, \textquote{Recomendaciones} y
+\textquote{Detalle recomendación}.
 
 \section{Biblioteca Bezel}
