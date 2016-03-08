@@ -1113,20 +1113,28 @@ por el servidor C3 se implemento una biblioteca con el nombre de \texttt{Bezel}.
 
 El servidor C3 cabe recordar esta implementado en dos lenguajes de programación, la
 mayoría esta implementado con Javascript mientras que el núcleo y funciones criticas
-del servidor están implementadas en Java. El servidor C3 puede mandar tanto XML como
-JSON como respuesta a peticiones realizadas al servidor, pero la representación en
-JSON es la mas usada dado que el sistema de tipos usando por el sistema esta definido
-en Javascript.
+del servidor están implementadas en Java.
+
+El servidor C3 puede mandar tanto XML como JSON como respuesta a peticiones
+realizadas al servidor, pero la representación en JSON es la mas usada dado que el
+sistema de tipos usando por el sistema esta definido en Javascript.
 
 El objetivo de Bezel no es solamente el de proporcionar acceso al servicio web
 proporcionado por el servidor C3 si no además el permitir reconstruir dentro
 del lenguaje de programación Ruby la estructura de tipos definida por el servidor C3.
 Esta reconstrucción debía realizarse de forma automáticamente en la mayor medida
-posible, para evitar desfases entre la definición de los tipos en los dos sistemas.
+posible para evitar desfases entre la definición de los tipos en los dos sistemas y
+para agilizar el desarrollo del sistema \texttt{PEAT}.
 
 Dado que el API del servidor C3 es de tipo REST y al uso de las capacidades de
 metaprogramación de Ruby fue posible automatizar la definición de los tipos del
 servidor C3.
+
+Entonces se decidió crear un lenguaje de dominio especifico para implementar
+modelos basados en los tipos obtenidos del servidor C3, haciendo uso de que el API
+del servidor C3 es de tipo REST y las capacidades de metaprogramación de Ruby
+fue posible construir de forma automática los tipos y sus acciones básicas
+de crear, leer, actualizar y borrar (\textit{CRUD}) de los tipos del servidor C3.
 
 \texttt{Bezel} tiene dos modos principales de uso:
 \begin{itemize}
@@ -1136,12 +1144,33 @@ servidor C3.
   implementación automatizada de tipos provenientes del API del servidor C3.
 \end{itemize}
 
-El objetivo de la implementación de un DSL interno es para permitir la creación
-de modelos en Ruby de forma eficiente, haciendo uso de que el API del servidor C3
-es de tipo REST y las capacidades de metaprogramación de Ruby fue posible
-construir de forma automática los tipos y sus acciones básicas de crear, leer,
-actualizar y borrar (\textit{CRUD}) de los tipos del servidor C3.
+\subsection{API servidor C3}
 
-\subsection{Estructura}
+El API implementado por el servidor C3 es de tipo REST es decir cada tipo
+o representacion tiene una unica direccion URL asociada. Los URLs tienen
+la siguiente forma:
 
+\begin{verbatim}
+POST /api/<version>/<tenant>/<module>;<tag>/<type>?action=<action-name>
+\end{verbatim}
+
+\begin{itemize}
+\item \textit{version}: indica la versión del API a la cual se esta
+  accediendo, el sistema \texttt{PEAT} hace uso de la versión 1.0.
+\item \textit{tenant}: indica el producto o cliente, dado que hay
+  cierta funcionalidad especifica a un producto o cliente. Para
+  \texttt{PEAT} se tiene \textquote{peat} y \textquote{c3}.
+\item \textit{module}: indica el modulo al que se esta accediendo del API
+  en general se hace uso del modulo \textquote{peat}.
+\item \textit{tag}: indica el tipo de ambiente, es decir si el api
+  es para ambiente de pruebas, control de calidad, producción, etcétera.
+  \textquote{peatprod} y \textquote{peatqa} son algunas de las tags
+  que se usaron para \texttt{PEAT}.
+\item \textit{type}: indica el tipo al que se quiere manipular, \textquote{Building},
+  \textquote{Location} y \textquote{BuildingEnergyConservationOption} son algunos
+  de los tipos que se usaron para \texttt{PEAT}.
+\item \textit{action-name}: indica la accion que se quiere realizar sobre
+  el tipo indicado anteriormente. \textquote{fetch}, \textquote{:upsert} y
+  \textquote{:remove} son unas de las acciones que se pueden realizar.
+\end{itemize}
 
