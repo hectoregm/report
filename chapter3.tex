@@ -1111,18 +1111,36 @@ la descripción detallada de este componente esta en la sección
 Para realizar la integración entre el sistema \texttt{PEAT} y el API proporcionado
 por el servidor C3 se implemento una biblioteca con el nombre de \texttt{Bezel}.
 
+El servidor C3 cabe recordar esta implementado en dos lenguajes de programación, la
+mayoría esta implementado con Javascript mientras que el núcleo y funciones criticas
+del servidor están implementadas en Java. El servidor C3 puede mandar tanto XML como
+JSON como respuesta a peticiones realizadas al servidor, pero la representación en
+JSON es la mas usada dado que el sistema de tipos usando por el sistema esta definido
+en Javascript.
+
+El objetivo de Bezel no es solamente el de proporcionar acceso al servicio web
+proporcionado por el servidor C3 si no además el permitir reconstruir dentro
+del lenguaje de programación Ruby la estructura de tipos definida por el servidor C3.
+Esta reconstrucción debía realizarse de forma automáticamente en la mayor medida
+posible, para evitar desfases entre la definición de los tipos en los dos sistemas.
+
+Dado que el API del servidor C3 es de tipo REST y al uso de las capacidades de
+metaprogramación de Ruby fue posible automatizar la definición de los tipos del
+servidor C3.
+
 \texttt{Bezel} tiene dos modos principales de uso:
 \begin{itemize}
 \item Como un cliente REST con ciertas adecuaciones para una mejor
-  integración con el API de \textit{C3 Server}.
-\item Como un DSL para el lenguaje de programación Ruby para la implementación rápida
-  de modelos provenientes del API de \textit{C3 Server}.
+  integración con el API del servidor C3.
+\item Como un lenguaje de dominio especifico interno para Ruby para la
+  implementación automatizada de tipos provenientes del API del servidor C3.
 \end{itemize}
 
-El objetivo de la implementación de un DSL es para permitir la creación de modelos
-en Ruby de forma eficiente, haciendo uso de la arquitectura REST y la
-metaprogramación para construir de forma automática las acciones básicas de crear,
-leer, actualizar y borrar (\textit{CRUD}) para los modelos obtenidos del API.
+El objetivo de la implementación de un DSL interno es para permitir la creación
+de modelos en Ruby de forma eficiente, haciendo uso de que el API del servidor C3
+es de tipo REST y las capacidades de metaprogramación de Ruby fue posible
+construir de forma automática los tipos y sus acciones básicas de crear, leer,
+actualizar y borrar (\textit{CRUD}) de los tipos del servidor C3.
 
 \subsection{Estructura}
 
