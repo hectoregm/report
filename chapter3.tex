@@ -1147,7 +1147,7 @@ de crear, leer, actualizar y borrar (\textit{CRUD}) de los tipos del servidor C3
 \subsection{API servidor C3}
 
 El API implementado por el servidor C3 es de tipo REST es decir cada tipo
-o representacion tiene una unica direccion URL asociada. Los URLs tienen
+o representación tiene una única dirección URL asociada. El API tienen
 la siguiente forma:
 
 \begin{verbatim}
@@ -1169,8 +1169,21 @@ POST /api/<version>/<tenant>/<module>;<tag>/<type>?action=<action-name>
 \item \textit{type}: indica el tipo al que se quiere manipular, \textquote{Building},
   \textquote{Location} y \textquote{BuildingEnergyConservationOption} son algunos
   de los tipos que se usaron para \texttt{PEAT}.
-\item \textit{action-name}: indica la accion que se quiere realizar sobre
-  el tipo indicado anteriormente. \textquote{fetch}, \textquote{:upsert} y
-  \textquote{:remove} son unas de las acciones que se pueden realizar.
+\item \textit{action-name}: indica la acción que se quiere realizar sobre
+  el tipo indicado anteriormente. \textquote{fetch}, \textquote{upsert} y
+  \textquote{remove} son unas de las acciones que se pueden realizar.
 \end{itemize}
 
+El API del servidor no es totalmente REST principalmente porque se hace
+uso del mismo verbo POST para todas las acciones, haciendo uso del
+\textquote{action-name} para ejecutar la accion correspondiente. Para
+la implementación de \texttt{Bezel} solamente espera que el API tenga
+direcciones únicas para cada tipo definido.
+
+Muchas acciones toman parámetros los cuales son almacenados dentro del cuerpo
+de la petición POST, por lo que el único parámetro que se manda por medio
+de la URL es el nombre la acción.
+
+\subsection{Arquitectura General}
+
+La biblioteca \texttt{Bezel}
