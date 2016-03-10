@@ -1176,7 +1176,7 @@ POST /api/<version>/<tenant>/<module>;<tag>/<type>?action=<action-name>
 
 El API del servidor no es totalmente REST principalmente porque se hace
 uso del mismo verbo POST para todas las acciones, haciendo uso del
-\textquote{action-name} para ejecutar la accion correspondiente. Para
+\textquote{action-name} para ejecutar la acción correspondiente. Para
 la implementación de \texttt{Bezel} solamente espera que el API tenga
 direcciones únicas para cada tipo definido.
 
@@ -1186,4 +1186,60 @@ de la URL es el nombre la acción.
 
 \subsection{Arquitectura General}
 
-La biblioteca \texttt{Bezel}
+La biblioteca \texttt{Bezel} esta conformada por un conjunto de clases y
+módulos siendo las clases principales \texttt{Bezel::Client} y \texttt{Bezel::Base}.
+
+En el lenguaje de programación Ruby se tiene el concepto de módulos (\texttt{module}), cuyo uso es para agrupar métodos, clases y constantes. Los módulos tienen los
+siguientes beneficios:
+
+\begin{itemize}
+\item Permiten definir un espacio de nombres, para así prevenir conflictos de nombres.
+\item Implementa la facultad de hacer un \textit{mixin}
+\end{itemize}
+
+% FIXME: dar ejemplos de ambos beneficios.
+
+Así tenemos que el modulo \texttt{Bezel} que contiene a todas las clases y módulos
+de la biblioteca, también el modulo contiene métodos para facilitar la configuración
+y creación de clientes tipo \texttt{Bezel::Client}.
+
+Asi se tiene que las clases y módulos que conforman la biblioteca son:
+\begin{itemize}
+\item \texttt{Bezel}: El modulo principal que contiene a los demás submódulos y
+  clases de la biblioteca.
+\item \texttt{Bezel::Config}: modulo que define los métodos y valores validos
+  para configurar el cliente.
+\item \texttt{Bezel::Client}: clase que define un cliente para usar el servicio
+  web del servidor C3.
+\item \texttt{Bezel::Target}: clase que representa un tipo dado un contexto
+  especifico (tenant, tag, module).
+\item \texttt{Bezel::Action}: clase que representa un acción sobre
+  un tipo, representado por un \texttt{Bezel::Target}.
+\item \texttt{Bezel::Base}: clase abstracta que permite definir una clase de Ruby
+  en base a un tipo del servidor C3.
+\item \texttt{Bezel::Connections}: modulo que define las acciones básicas y de
+  búsqueda sobre un tipo.
+\item \texttt{Bezel::Cache}: clase que define un API para realizar operaciones
+  de lectura/escritura sobre un cache.
+\item \texttt{Bezel::CacheBase}: clase que redefine las acciones básicas y
+  de búsqueda sobre un tipo haciendo uso de un cache \texttt{Bezel::Cache}.
+\end{itemize}
+
+% FIXME: Poner diagrama general de clases aqui.
+
+\subsubsection{Dependencias}
+
+En la implementación de \texttt{Bezel} se hace uso de las siguiente bibliotecas
+de apoyo:
+
+\begin{itemize}
+\item moneta: proporciona un API uniforme para realizar
+  operaciones de lectura y escritura en un repositorio de cache.
+\item faraday: proporciona un API uniforme para realizar
+  peticiones HTTP.
+\item hashie: proporciona un conjunto de metodos que extienden la funcionalidad
+  de la clase \texttt{Hash} en Ruby.
+\item activemodel: proporciona interfaces para modelos que deben operar sobre
+  Rails.
+\end{itemize}
+
