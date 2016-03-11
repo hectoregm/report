@@ -1172,27 +1172,27 @@ es tipo RESTful y las capacidades de metaprogramación de Ruby.
 
 \subsection{Servicio web C3}
 
-El API implementado por el servidor C3 es de tipo REST es decir cada tipo
-o representación tiene una única dirección URL asociada. El API tienen
-la siguiente forma:
+El servicio web C3 es de tipo RESTful es decir cada recurso o tipo tiene una única
+dirección URL asociada. Las direcciones URL tienen la siguiente forma:
 
-\begin{verbatim}
-POST /api/<version>/<tenant>/<module>;<tag>/<type>?action=<action-name>
-\end{verbatim}
+\vspace{2.5mm}
+\texttt{POST} /api/$<$\textit{version}$>$/$<$\textit{tenant}$>$/$<$\textit{module}$>$;$<$\textit{tag}$>$/$<$\textit{type}$>$?action=$<$\textit{action-name}$>$
 
 \begin{itemize}
-\item \textit{version}: indica la versión del API a la cual se esta
-  accediendo, el sistema \texttt{PEAT} hace uso de la versión 1.0.
-\item \textit{tenant}: indica el producto o cliente, dado que hay
-  cierta funcionalidad especifica a un producto o cliente. Para
-  \texttt{PEAT} se tiene \textquote{peat} y \textquote{c3}.
-\item \textit{module}: indica el modulo al que se esta accediendo del API
-  en general se hace uso del modulo \textquote{peat}.
-\item \textit{tag}: indica el tipo de ambiente, es decir si el api
-  es para ambiente de pruebas, control de calidad, producción, etcétera.
-  \textquote{peatprod} y \textquote{peatqa} son algunas de las tags
+\item \textit{version}: indica la versión del servicio a la cual se esta accediendo,
+  el sistema \texttt{PEAT} hace uso de la versión 1.0.
+\item \textit{tenant}: indica el producto o cliente, esto es porque cada
+  producto y/o cliente cierta funcionalidad especifica. Para \texttt{PEAT} se tiene
+  \textquote{peat} y \textquote{c3}.
+\item \textit{module}: indica el modulo al que se esta accediendo, un conjunto
+  de tipos se definen en un modulo en particular, para el sistema \texttt{PEAT} el
+  modulo mas usado es el modulo \textquote{peat} pero también se hace uso
+  de los módulos \textquote{billing} y \textquote{structure}.
+\item \textit{tag}: indica el tipo de ambiente, es decir si el servicio web es para
+  ambiente de pruebas, control de calidad, producción, etcétera.
+  \textquote{peatprod} y \textquote{peatqa} son algunas de las \textit{tags}
   que se usaron para \texttt{PEAT}.
-\item \textit{type}: indica el tipo al que se quiere manipular, \textquote{Building},
+\item \textit{type}: indica el tipo al que se quiere acceder, \textquote{Building},
   \textquote{Location} y \textquote{BuildingEnergyConservationOption} son algunos
   de los tipos que se usaron para \texttt{PEAT}.
 \item \textit{action-name}: indica la acción que se quiere realizar sobre
@@ -1200,15 +1200,15 @@ POST /api/<version>/<tenant>/<module>;<tag>/<type>?action=<action-name>
   \textquote{remove} son unas de las acciones que se pueden realizar.
 \end{itemize}
 
-El API del servidor no es totalmente REST principalmente porque se hace
-uso del mismo verbo POST para todas las acciones, haciendo uso del
-\textquote{action-name} para ejecutar la acción correspondiente. Para
-la implementación de \texttt{Bezel} solamente espera que el API tenga
-direcciones únicas para cada tipo definido.
+Como se comento anteriormente el servicio web C3 no es totalmente de tipo RESTful
+principalmente porque se hace uso del mismo método HTTP POST para todas las acciones,
+haciendo uso del \textquote{action-name} para ejecutar la acción correspondiente.
+Para la implementación de \texttt{Bezel} solamente se espera que el servicio web
+tenga direcciones únicas para cada tipo definido.
 
-Muchas acciones toman parámetros los cuales son almacenados dentro del cuerpo
+Muchas acciones aceptan parámetros los cuales son almacenados dentro del cuerpo
 de la petición POST, por lo que el único parámetro que se manda por medio
-de la URL es el nombre la acción.
+de la URL es el nombre la acción a realizar.
 
 \subsection{Arquitectura General}
 
