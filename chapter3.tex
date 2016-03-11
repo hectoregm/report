@@ -1108,8 +1108,43 @@ la descripción detallada de este componente esta en la sección
 
 \section{Biblioteca Bezel}
 
-Para realizar la integración entre el sistema \texttt{PEAT} y el API proporcionado
-por el servidor C3 se implemento una biblioteca con el nombre de \texttt{Bezel}.
+Para realizar la integración entre el sistema \texttt{PEAT} y el servicio web C3,
+el API proporcionado por el servidor C3, se implemento una biblioteca con el nombre
+de \texttt{Bezel}.
+
+\texttt{PEAT} hace uso del marco de trabajo Rails que a su vez hace
+uso del patron de arquitectura MVC. En Rails los modelos hacen uso de la
+biblioteca \texttt{ActiveRecord} la cual permite implementar modelos basados
+en tablas de bases de datos relacionales. En \texttt{PEAT} los datos
+son proporcionados no directamente por una base de datos relacional sino por
+el servicio web C3 proporcionado por el servidor C3.
+
+Dentro del marco de trabajo Rails tambien se tiene la biblioteca
+\texttt{ActiveResource} la cual implementa el caso de uso en que los datos son
+proporcionados por un servicio web tipo RESTful. En un primer acercamiento se trato
+de realizar la integracion de \texttt{PEAT} con el servicio web C3 haciendo uso de
+esta biblioteca pero se tenian las siguientes dificultades:
+
+\begin{itemize}
+\item Presupone que el servicio web hace uso de todos los metodos HTTP (GET, POST,
+  UPDATE, DELETE) para definir las acciones básicas sobre un recurso.
+\item No permite la definición de asociaciones entre recursos.
+\end{itemize}
+
+Aunque el servicio web C3 es de tipo RESTful este no hace uso de los metodos
+HTTP para realizar acciones sobre los recursos del servicio, en el servicio web
+C3 todas las acciones que se quieren realizar se realizan usando el metodo HTTP
+POST y se manda la accion a realizar como un parametro.
+
+La otra dificultad es que teniamos un gran numero de asociaciones entre los
+recursos defnidios por el servicio web C3 pero la biblioteca \texttt{ActiveResource}
+no proporcionaba ninguna ayuda para definir estas asociaciones.
+
+Pero la biblioteca \texttt{ActiveResource} sirvio como inspiracion para implementar
+\texttt{Bezel} la cual no solamente proporcionaria acceso al servicio web C3 si no
+que ademas permitiria reconstruir la estructura de tipos definida por el servidor C3
+para el lenguaje de programacion Ruby, implementado la definicion de asociaciones
+entre los tipos del servicio web.
 
 El servidor C3 cabe recordar esta implementado en dos lenguajes de programación, la
 mayoría esta implementado con Javascript mientras que el núcleo y funciones criticas
@@ -1119,22 +1154,15 @@ El servidor C3 puede mandar tanto XML como JSON como respuesta a peticiones
 realizadas al servidor, pero la representación en JSON es la mas usada dado que el
 sistema de tipos usando por el sistema esta definido en Javascript.
 
-El objetivo de Bezel no es solamente el de proporcionar acceso al servicio web
-proporcionado por el servidor C3 si no además el permitir reconstruir dentro
-del lenguaje de programación Ruby la estructura de tipos definida por el servidor C3.
-Esta reconstrucción debía realizarse de forma automáticamente en la mayor medida
-posible para evitar desfases entre la definición de los tipos en los dos sistemas y
-para agilizar el desarrollo del sistema \texttt{PEAT}.
+\texttt{Bezel} permite la reconstruccion automatica de los tipos definidos por el
+servidior C3 en Javascript a modelos compatibles con el marco de trabajo Rails
+y el lenguaje de programacion Ruby. Esta reconstruccion automatica permite
+evitar desfases entre la definicion de los tipos entre los dos sismteas y
+agiliza el desarrolo del sistema \texttt{PEAt}.
 
-Dado que el API del servidor C3 es de tipo REST y al uso de las capacidades de
-metaprogramación de Ruby fue posible automatizar la definición de los tipos del
-servidor C3.
-
-Entonces se decidió crear un lenguaje de dominio especifico para implementar
-modelos basados en los tipos obtenidos del servidor C3, haciendo uso de que el API
-del servidor C3 es de tipo REST y las capacidades de metaprogramación de Ruby
-fue posible construir de forma automática los tipos y sus acciones básicas
-de crear, leer, actualizar y borrar (\textit{CRUD}) de los tipos del servidor C3.
+Entonces \texttt{Bezel} define un lenguaje de dominio especifico para implementar
+modelos basados en los tipos del servicio web C3, aprovechando que el servicio web
+es tipo RESTful y las capacidades de metaprogramacion de Ruby.
 
 \texttt{Bezel} tiene dos modos principales de uso:
 \begin{itemize}
