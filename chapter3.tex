@@ -1212,24 +1212,34 @@ de la URL es el nombre la acción a realizar.
 
 \subsection{Arquitectura General}
 
-La biblioteca \texttt{Bezel} esta conformada por un conjunto de clases y
-módulos siendo las clases principales \texttt{Bezel::Client} y \texttt{Bezel::Base}.
+La biblioteca \texttt{Bezel} esta conformada por un cinco clases y cinco módulos
+siendo las clases principales \texttt{Bezel::Client} y \texttt{Bezel::Base}.
 
-En el lenguaje de programación Ruby se tiene el concepto de módulos (\texttt{module}), cuyo uso es para agrupar métodos, clases y constantes. Los módulos tienen los
-siguientes beneficios:
+En el lenguaje de programación Ruby se tiene el concepto de módulo (\texttt{module}),
+el cual no es mas que una agrupación de objetos bajo un único nombre. Los objetos
+pueden ser constantes, métodos, clases y otros módulos.
 
-\begin{itemize}
-\item Permiten definir un espacio de nombres, para así prevenir conflictos de nombres.
-\item Implementa la facultad de hacer un \textit{mixin}
-\end{itemize}
+Los módulos tienen dos usos: se pueden utilizar un modulo como una manera conveniente
+de agrupar objetos o se puede incorporar los objetos del modulo a una clase haciendo
+uso de \texttt{include} o \texttt{extend}.
 
-% FIXME: dar ejemplos de ambos beneficios.
+\lstinputlisting[language=Ruby]{code/module-namespace.rb}
+
+En el ejemplo anterior muestra el uso de los módulos como un espacio de nombre,
+en la linea 2 se define la constante \texttt{PI} y en las lineas 3 y 7 se definen
+los métodos \texttt{sin} y \texttt{cos}, estos objetos son referenciados fuera del
+modulo por medio del nombre del modulo como ocurre en la linea 12 en la cual se
+hace referencia tanto a la constante y al método del modulo \texttt{Trig}.
+
+\lstinputlisting[language=Ruby]{code/module-include.rb}
+
+% FIXME: Explicar el código anterior
 
 Así tenemos que el modulo \texttt{Bezel} que contiene a todas las clases y módulos
 de la biblioteca, también el modulo contiene métodos para facilitar la configuración
 y creación de clientes tipo \texttt{Bezel::Client}.
 
-Así se tiene que las clases y módulos que conforman la biblioteca son:
+Así se tiene que las clases y módulos que conforman la biblioteca son (Ver Figura \ref{fig:diagrama-clase}):
 \begin{itemize}
 \item \texttt{Bezel}: El modulo principal que contiene a los demás submódulos y
   clases de la biblioteca.
@@ -1251,7 +1261,8 @@ Así se tiene que las clases y módulos que conforman la biblioteca son:
   de búsqueda sobre un tipo haciendo uso de un cache \texttt{Bezel::Cache}.
 \end{itemize}
 
-% FIXME: Poner diagrama general de clases aqui.
+\rjcimage{1.0}{imagenes/Diagrama-Clase-Bezel.png}{Diagrama de clase de la biblioteca
+  Bezel}{diagrama-clase}
 
 \subsubsection{Dependencias}
 
