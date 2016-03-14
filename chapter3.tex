@@ -1225,7 +1225,7 @@ uso de \texttt{include} o \texttt{extend}.
 
 \lstinputlisting[language=Ruby]{code/module-namespace.rb}
 
-En el ejemplo anterior muestra el uso de los módulos como un espacio de nombre,
+El ejemplo anterior muestra el uso de los módulos como un espacio de nombre,
 en la linea 2 se define la constante \texttt{PI} y en las lineas 3 y 7 se definen
 los métodos \texttt{sin} y \texttt{cos}, estos objetos son referenciados fuera del
 modulo por medio del nombre del modulo como ocurre en la linea 12 en la cual se
@@ -1233,26 +1233,38 @@ hace referencia tanto a la constante y al método del modulo \texttt{Trig}.
 
 \lstinputlisting[language=Ruby]{code/module-include.rb}
 
-% FIXME: Explicar el código anterior
+En este ejemplo se muestra el uso de los módulos para incorporar métodos de clase
+o de instancia. En las lineas 1-11 se define el modulo \texttt{Boolean} el cual
+define dos métodos \texttt{boolean?} y \texttt{to\_bool}, mientras en las lineas
+13-17 se define el modulo \texttt{RandomString} que define un método \texttt{random}.
+En las lineas 19-22 no se esta definiendo una nueva clase \texttt{String} si no
+que Ruby permite modificar cualquier clase en tiempo de ejecución aunque esta
+sea parte de la biblioteca estándar, así en la linea 20 se hace uso de la
+declaración \texttt{include} la cual agregar los métodos del modulo dado
+como métodos de instancia como se puede observar en las lineas 24-25.
+Ahora en la linea 21 se hace uso de la declaración \texttt{extend} para agregar
+los métodos del modulo dado como métodos de clase como se puede observar en
+la linea 26.
 
-Así tenemos que el modulo \texttt{Bezel} que contiene a todas las clases y módulos
-de la biblioteca, también el modulo contiene métodos para facilitar la configuración
-y creación de clientes tipo \texttt{Bezel::Client}.
+Por lo anterior se tiene que el uso de módulos es una parte importante para
+organizar y compartir funcionalidad en el lenguaje de programación Ruby.
+Para la biblioteca \texttt{Bezel} tenemos el modulo \texttt{Bezel} que contiene
+a todas las clases y módulos de la biblioteca.
 
 Así se tiene que las clases y módulos que conforman la biblioteca son (Ver Figura \ref{fig:diagrama-clase}):
 \begin{itemize}
-\item \texttt{Bezel}: El modulo principal que contiene a los demás submódulos y
+\item \texttt{Bezel}: modulo principal que contiene a los demás submódulos y
   clases de la biblioteca.
 \item \texttt{Bezel::Config}: modulo que define los métodos y valores validos
-  para configurar el cliente.
+  para configurar el cliente con el servicio web C3.
 \item \texttt{Bezel::Client}: clase que define un cliente para usar el servicio
-  web del servidor C3.
+  web C3.
 \item \texttt{Bezel::Target}: clase que representa un tipo dado un contexto
-  especifico (tenant, tag, module).
-\item \texttt{Bezel::Action}: clase que representa un acción sobre
-  un tipo, representado por un \texttt{Bezel::Target}.
+  especifico (\textit{tenant}, \textit{tag}, \textit{module}).
+\item \texttt{Bezel::Action}: clase que representa una acción sobre
+  un tipo representado por un \texttt{Bezel::Target}.
 \item \texttt{Bezel::Base}: clase abstracta que permite definir una clase de Ruby
-  en base a un tipo del servidor C3.
+  en base a un tipo del servido web C3.
 \item \texttt{Bezel::Connections}: modulo que define las acciones básicas y de
   búsqueda sobre un tipo.
 \item \texttt{Bezel::Cache}: clase que define un API para realizar operaciones
@@ -1279,4 +1291,27 @@ de apoyo:
 \item activemodel: proporciona interfaces para modelos que deben operar sobre
   Rails.
 \end{itemize}
+
+\subsection{\texttt{Bezel}}
+
+El modulo \texttt{Bezel} no solo sirve como el espacio de nombres para la biblioteca
+si que además implementa varios métodos auxiliares para facilitar la configuración
+y creación de clientes para acceder al servicio web C3.
+
+\lstinputlisting[language=Ruby]{code/base.rb}
+
+En el código anterior se tiene la implementación abreviada de \texttt{Bezel},
+en la linea 2 por medio de la declaración \texttt{extend} se añaden
+varios métodos para configurar el cliente. En las lineas 4-34 se definen los
+metodos auxiliares mas importantes:
+
+\begin{itemize}
+\item \texttt{new} (lineas 5-7): regresa una nueva instancia \texttt{Bezel::Client}.
+\item \texttt{invoke} (lineas 9-11): realiza una petición al servicio web C3
+  por medio del cliente asociado al modulo \texttt{Bezel}.
+\item \texttt{client} (lineas 13-15): se inicializa una instancia \texttt{Bezel::Client} la
+  cual se reutiliza en subsecuentes llamadas al método.
+\item \texttt{context}:
+\end{itemize}
+
 
