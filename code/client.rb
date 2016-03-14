@@ -6,28 +6,27 @@ module Bezel
 
     def conn
       @conn ||= Faraday.new(url: @base_uri) do |faraday|
-        faraday.request :json
-        # ...
-        faraday.adapter  @adapter
+        # Configuracion cliente HTTP
       end
     end
 
     def invoke(mod, typ, action_name, params={})
-      action = Bezel::Action.new(Target.new(@tenant, @tag, mod, typ), action_name, params)
+      target = Target.new(@tenant, @tag, mod, typ)
+      action = Bezel::Action.new(target, action_name, params)
 
-      target = action.target
       endpoint = "/api/#{@api_version}/#{target.tenant}/#{target.module};#{target.tag}/#{target.type}?action=#{action_name}"
+      body = JSON.generate(params)
 
       # ...
 
       opts = {
-              :headers => {
-                      "content-type" => "application/json",
-                      "user-agent" => "ruby-bezel",
-                      "Accept-Encoding" => "gzip",
-                      "Accept" => "application/json"
-              },
-              :body => body,
+        :headers => {
+          "content-type" => "application/json",
+          "user-agent" => "ruby-bezel",
+          "Accept-Encoding" => "gzip",
+          "Accept" => "application/json"
+        },
+        :body => body,
       }
 
       addCredentials(opts)
@@ -35,8 +34,8 @@ module Bezel
       # ...
 
       begin
-        r = conn.post(endpoint, opts[:body], opts[:headers]) do |req|
-          req.options[:timeout] = Bezel.timeout.to_i
+        r = conn.post(endpoint, opts) do |req|
+          req.options[:timeout] = Bezel.timeout
           req.options[:open_timeout] = 10
         end
       rescue Faraday::Error::TimeoutError => timeout_error
@@ -44,7 +43,7 @@ module Bezel
         raise Bezel::TimeoutError.new(action)
       end
       
-      # Error handling
+      # Manejo de errores
 
       action
     end

@@ -1318,9 +1318,12 @@ métodos auxiliares mas importantes:
   al finalizar el bloque por medio de una declaración \texttt{ensure}.
 \end{itemize}
 
+\subsubsection{\texttt{Bezel::Config}}
+
 \lstinputlisting[language=Ruby]{code/config.rb}
 
 En el modulo \texttt{Config} se definen dos constantes:
+
 \begin{itemize}
 \item \texttt{VALID\_OPTIONS\_KEYS} (lineas 4-13): un arreglo de símbolos que indica
   que atributos son validos.
@@ -1347,9 +1350,46 @@ en la linea 35 para inicializar los atributos definidos por \texttt{Config}, el
 metodo \texttt{send} invoca el metodo identificado con el simbolo o cadena dada,
 pasando los argumentos posteriores como argumento a la invocacion del metodo dado.
 
+Las constantes y metodos auxiliares definidos en \texttt{Config} son usados no solo
+en \texttt{Bezel} si no tambien en \texttt{Client} puesto que se necesitaba
+tener una configuracion global de la biblioteca pero permitiendo hacer cambios
+en la configuracion de cada instancia del cliente.
+
 \subsection{\texttt{Bezel::Client}}
 
+La clase \texttt{Client} representa un cliente que permite realizar peticiones al 
+servicio web C3, por medio del modulo \texttt{Config} se permite configurar
+cada cliente instanciado.
+
 \lstinputlisting[language=Ruby]{code/client.rb}
+
+En la linea 3 se tiene la declaracion \texttt{include} que añade las constantes
+y atributos para configurar al cliente. En las lineas 7-13 se define el metodo
+\texttt{conn} que inicializa una conexion HTTP segun la configuacion definida
+para el cliente y pidiendo que las respuestas mandadas por el servidor
+sean de tipo JSON. 
+
+En las lineas 13-49 se tiene la implementacion del metodo \texttt{invoke}, en 
+la linea 14 se define un \textit{target} de tipo \texttt{Bezel::Target} usando 
+tanto el contexto del cliente, es decir el \textit{tenant} y \textit{tag} mas 
+la informacion del \textit{module} y \textit{type} dados en los argumentos.
+En la linea 15 se define una accion de tipo \texttt{Bezel::Action} que representa
+una accion sobre un tipo con sus parametros.
+
+En la linea 17 se define la URL a la cual se hara la peticion al servicio web C3,
+haciendo uso de la informacion de los objetos previos, se convierte los parametros
+de la accion al formato JSON para ser mandados en el cuerpo de la peticion POST
+al servicio web.
+
+% FIXME: explicar linea 32 de addCredentials
+
+En las lineas 22 a 30 se definen los encabezados y cuerpo de la peticion POST al
+servicio web. Finalmente en la linea 37 se realiza la peticion POST por medio
+de la conexion creada por el metodo \texttt{conn} y con los parametros definidos
+anteriormente.
+
+Posteriormente el resultado de la peticion es almacenado en el objeto \texttt{action}
+y este objeto es regresado como resultado de la invocacion del metodo.
 
 \subsection{\texttt{Bezel::Base}}
 
