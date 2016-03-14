@@ -48,7 +48,7 @@ del modelo de información, la cual cambia bastante:
 \item Usuario: representa al empresario. Tiene una o más cuentas.
 \item Cuenta: representa la contabilidad financiera del usuario. Tiene uno o más
   contratos de servicio, uno por tipo de servicio (electricidad o gas), también
-  tiene una o más direcciones de servicio asociadas.
+S  tiene una o más direcciones de servicio asociadas.
 \item Contrato de servicio: representa los servicios que el cliente adquiere
   de PG\&E, como la electricidad o el gas, puede tener uno o más puntos
   de servicio asociados.
@@ -1294,24 +1294,69 @@ de apoyo:
 
 \subsection{\texttt{Bezel}}
 
-El modulo \texttt{Bezel} no solo sirve como el espacio de nombres para la biblioteca
-si que además implementa varios métodos auxiliares para facilitar la configuración
-y creación de clientes para acceder al servicio web C3.
+El modulo \texttt{Bezel} no solo sirve como el espacio de nombres principal para la
+biblioteca si no que además implementa varios métodos auxiliares para facilitar la
+configuración y creación de clientes para acceder al servicio web C3.
 
-\lstinputlisting[language=Ruby]{code/base.rb}
+\lstinputlisting[language=Ruby]{code/bezel.rb}
 
 En el código anterior se tiene la implementación abreviada de \texttt{Bezel},
 en la linea 2 por medio de la declaración \texttt{extend} se añaden
-varios métodos para configurar el cliente. En las lineas 4-34 se definen los
-metodos auxiliares mas importantes:
+varios métodos para configurar el cliente. En las lineas 4-30 se definen los
+métodos auxiliares mas importantes:
 
 \begin{itemize}
 \item \texttt{new} (lineas 5-7): regresa una nueva instancia \texttt{Bezel::Client}.
 \item \texttt{invoke} (lineas 9-11): realiza una petición al servicio web C3
   por medio del cliente asociado al modulo \texttt{Bezel}.
-\item \texttt{client} (lineas 13-15): se inicializa una instancia \texttt{Bezel::Client} la
-  cual se reutiliza en subsecuentes llamadas al método.
-\item \texttt{context}:
+\item \texttt{client} (lineas 13-15): usando una variable de clase se inicializa o
+  reusa una instancia \texttt{Bezel::Client}. Este método permite reutilizar un
+  mismo cliente y conexión al servidor C3 evitando el costo de establecer un
+  nuevo cliente y en establecer una conexión HTTP con el servidor.
+\item \texttt{context} (lineas 17-29): permite cambiar el contexto de las
+  peticiones que se realizan dentro de un bloque regresando al contexto original
+  al finalizar el bloque por medio de una declaración \texttt{ensure}.
 \end{itemize}
+
+\lstinputlisting[language=Ruby]{code/config.rb}
+
+En el modulo \texttt{Config} se definen dos constantes:
+\begin{itemize}
+\item \texttt{VALID\_OPTIONS\_KEYS} (lineas 4-13): un arreglo de símbolos que indica
+  que atributos son validos.
+\item \texttt{DEFAULT\_VALUES} (lineas 15-24): un hash donde se indican los valores
+  por default de los atributos validos.
+\end{itemize}
+
+Haciendo uso del metodo \texttt{attr\_accessor} en la linea 26 se definen por cada
+simbolo en \texttt{VALID\_OPTIONS\_KEYS} una atributo de instancia con sus
+correspondientes métodos de acceso y escritura. El metodo \texttt{attr\_accessor} es
+un ejemplo del uso de metaprogramacion en Ruby, dado que en base al simbolo dado
+genera un atributo y sus metodos de acceso.
+
+En la linea 30 se tiene el metodo \texttt{extended} el cual es un callback que es
+llamado cuando un modulo es extendido, es decir es utilizado en una declaracion
+\texttt{extend}. Para el modulo \texttt{Config} se tiene que cuando el modulo
+es extendido, como es en el caso de \texttt{Config} dentro del modulo \texttt{Bezel}
+llama el metodo \texttt{reset} para inicializar todos los attributos definidos en
+el modulo con sus valores por default. El metodo \texttt{extended} es solo uno
+de varios metodos callback que proporciona Ruby para la metaprogramacion.
+
+Otro metodo muy importante para la metaprogramacion es \texttt{send} el cual es usado
+en la linea 35 para inicializar los atributos definidos por \texttt{Config}, el
+metodo \texttt{send} invoca el metodo identificado con el simbolo o cadena dada,
+pasando los argumentos posteriores como argumento a la invocacion del metodo dado.
+
+\subsection{\texttt{Bezel::Client}}
+
+\lstinputlisting[language=Ruby]{code/client.rb}
+
+\subsection{\texttt{Bezel::Base}}
+
+\lstinputlisting[language=Ruby]{code/base-extend-include.rb}
+
+\lstinputlisting[language=Ruby]{code/base-class-methods.rb}
+
+\lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
 
 

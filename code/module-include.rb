@@ -24,13 +24,3 @@ end
 puts "no".to_bool     # false
 puts "false".boolean? # true
 puts String.random    # cadena aleatoria de tamaño 8
-
-
-module Foo
-  @@client = "Hola"
-  
-  def self.client
-    @@client
-  end
-end
-puts Foo.client
