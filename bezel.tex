@@ -196,8 +196,8 @@ configuración y creación de clientes para acceder al servicio web C3.
 \lstinputlisting[language=Ruby]{code/bezel.rb}
 
 En el código anterior se tiene la implementación abreviada de \texttt{Bezel},
-en la linea 2 por medio de la declaración \texttt{extend} se añaden
-varios métodos para configurar el cliente. En las lineas 4-30 se definen los
+en la linea 2 por medio de \texttt{extend} se añaden varios métodos de clase
+para configurar la biblioteca. En las lineas 4-20 se definen los
 métodos auxiliares mas importantes:
 
 \begin{itemize}
@@ -207,13 +207,19 @@ métodos auxiliares mas importantes:
 \item \texttt{client} (lineas 13-15): usando una variable de clase se inicializa o
   reusa una instancia \texttt{Bezel::Client}. Este método permite reutilizar un
   mismo cliente y conexión al servidor C3 evitando el costo de establecer un
-  nuevo cliente y en establecer una conexión HTTP con el servidor.
-\item \texttt{context} (lineas 17-29): permite cambiar el contexto de las
-  peticiones que se realizan dentro de un bloque regresando al contexto original
-  al finalizar el bloque por medio de una declaración \texttt{ensure}.
+  nuevo cliente y en establecer una conexión HTTP con el servidor C3.
+\item \texttt{context} (lineas 17-19): permite cambiar el contexto de las
+  peticiones que se realizan dentro de un bloque, se regresa al contexto original
+  al finalizar de ejecutar el código dentro del bloque.
 \end{itemize}
 
 \subsubsection{\texttt{Bezel::Config}}
+
+El módulo \texttt{Bezel::Config} define los atributos que permiten configurar
+el comportamiento de la biblioteca y de los clientes que se obtienen por medio
+de ella. Este módulo se usa en \texttt{Bezel} para definir una configuración global
+de la biblioteca como en \texttt{Bezel::Client} para tener también una configuración
+local por cliente.
 
 \lstinputlisting[language=Ruby]{code/config.rb}
 
@@ -222,33 +228,32 @@ En el módulo \texttt{Config} se definen dos constantes:
 \begin{itemize}
 \item \texttt{VALID\_OPTIONS\_KEYS} (lineas 4-13): un arreglo de símbolos que indica
   que atributos son validos.
-\item \texttt{DEFAULT\_VALUES} (lineas 15-24): un hash donde se indican los valores
-  por default de los atributos validos.
+\item \texttt{DEFAULT\_VALUES} (lineas 15-24): una tabla hash donde se indican los
+  valores por defecto de los atributos validos.
 \end{itemize}
 
-Haciendo uso del metodo \texttt{attr\_accessor} en la linea 26 se definen por cada
-simbolo en \texttt{VALID\_OPTIONS\_KEYS} una atributo de instancia con sus
-correspondientes métodos de acceso y escritura. El metodo \texttt{attr\_accessor} es
-un ejemplo del uso de metaprogramacion en Ruby, dado que en base al simbolo dado
-genera un atributo y sus metodos de acceso.
+Haciendo uso del método \texttt{attr\_accessor} en la linea 26 se definen por cada
+símbolo en \texttt{VALID\_OPTIONS\_KEYS} una atributo de instancia con sus
+correspondientes métodos de acceso y escritura. El método \texttt{attr\_accessor} es
+un ejemplo del uso de metaprogramación en Ruby, dado que en base al símbolo dado se
+genera un atributo y sus métodos de acceso.
 
-En la linea 30 se tiene el metodo \texttt{extended} el cual es un callback que es
-llamado cuando un módulo es extendido, es decir es utilizado en una declaracion
-\texttt{extend}. Para el módulo \texttt{Config} se tiene que cuando el módulo
-es extendido, como es en el caso de \texttt{Config} dentro del módulo \texttt{Bezel}
-llama el metodo \texttt{reset} para inicializar todos los attributos definidos en
-el módulo con sus valores por default. El metodo \texttt{extended} es solo uno
-de varios metodos callback que proporciona Ruby para la metaprogramacion.
+% FIXME: Buscar traducción para callback
 
-Otro metodo muy importante para la metaprogramacion es \texttt{send} el cual es usado
+En la linea 30 se tiene el método \texttt{extended} el cual es un callback que es
+llamado cuando un módulo es extendido, es decir es utilizado como parámetro al
+método \texttt{extend}. Para el módulo \texttt{Config} se tiene que cuando el módulo
+es extendido, como es en el caso de \texttt{Config} dentro del módulo \texttt{Bezel},
+se llama al método \texttt{reset} para inicializar todos los atributos definidos en
+el módulo con sus valores por defecto. El método \texttt{extended} es solo uno
+de varios métodos callback que proporciona Ruby para la metaprogramación.
+
+Otro método muy importante para la metaprogramación es \texttt{send} el cual es usado
 en la linea 35 para inicializar los atributos definidos por \texttt{Config}, el
-metodo \texttt{send} invoca el metodo identificado con el simbolo o cadena dada,
-pasando los argumentos posteriores como argumento a la invocacion del metodo dado.
-
-Las constantes y metodos auxiliares definidos en \texttt{Config} son usados no solo
-en \texttt{Bezel} si no tambien en \texttt{Client} puesto que se necesitaba
-tener una configuracion global de la biblioteca pero permitiendo hacer cambios
-en la configuracion de cada instancia del cliente.
+método \texttt{send} invoca el método identificado con un símbolo o cadena dada,
+pasando los argumentos posteriores como argumentos a la invocación del método.
+Haciendo uso de \texttt{send} y de las dos constantes definidas en el modulo
+se puede inicializar cada uno de los atributos.
 
 \subsection{\texttt{Bezel::Client}}
 
