@@ -263,33 +263,34 @@ cada cliente instanciado.
 
 \lstinputlisting[language=Ruby]{code/client.rb}
 
-En la linea 3 se tiene la declaracion \texttt{include} que añade las constantes
-y atributos para configurar al cliente. En las lineas 7-13 se define el metodo
-\texttt{conn} que inicializa una conexion HTTP segun la configuacion definida
+En la linea 3 se tiene un \texttt{include} que añade las constantes
+y atributos para configurar al cliente. En las lineas 7-13 se define el método
+\texttt{conn} que inicializa una conexión HTTP según la configuración definida
 para el cliente y pidiendo que las respuestas mandadas por el servidor
 sean de tipo JSON. 
 
-En las lineas 13-49 se tiene la implementacion del metodo \texttt{invoke}, en 
+En las lineas 13-49 se tiene la implementación del metodo \texttt{invoke}, en 
 la linea 14 se define un \textit{target} de tipo \texttt{Bezel::Target} usando 
 tanto el contexto del cliente, es decir el \textit{tenant} y \textit{tag} mas 
-la informacion del \textit{module} y \textit{type} dados en los argumentos.
-En la linea 15 se define una accion de tipo \texttt{Bezel::Action} que representa
-una accion sobre un tipo con sus parametros.
+la información del \textit{module} y \textit{type} dados en los argumentos.
+En la linea 15 se define una acción de tipo \texttt{Bezel::Action} que representa
+una acción sobre un tipo con sus parámetros.
 
-En la linea 17 se define la URL a la cual se hara la peticion al servicio web C3,
-haciendo uso de la informacion de los objetos previos, se convierte los parametros
-de la accion al formato JSON para ser mandados en el cuerpo de la peticion POST
+En la linea 17 se define la URL a la cual se hará la petición al servicio web C3,
+haciendo uso de la información de los objetos previos, se convierte los parámetros
+de la acción al formato JSON para ser mandados en el cuerpo de la petición POST
 al servicio web.
 
 % FIXME: explicar linea 32 de addCredentials
 
-En las lineas 22 a 30 se definen los encabezados y cuerpo de la peticion POST al
-servicio web. Finalmente en la linea 37 se realiza la peticion POST por medio
-de la conexion creada por el metodo \texttt{conn} y con los parametros definidos
+En las lineas 22 a 30 se definen los encabezados y cuerpo de la petición POST al
+servicio web. Finalmente en la linea 37 se realiza la petición POST por medio
+de la conexión creada por el método \texttt{conn} y con los para metros definidos
 anteriormente.
 
-Posteriormente el resultado de la peticion es almacenado en el objeto \texttt{action}
-y este objeto es regresado como resultado de la invocacion del metodo.
+Posteriormente el resultado de la petición es almacenado en el objeto \texttt{action}
+y este objeto es regresado como resultado de la invocación del método
+\texttt{invoke}.
 
 \subsection{\texttt{Bezel::Base}}
 
@@ -301,7 +302,7 @@ del servicio web C3.
 
 \lstinputlisting[language=Ruby]{code/base-example.rb}
 
-El codigo anterior ejemplifica el uso de \texttt{Bezel::Base} para definir el modelo
+El código anterior ejemplifica el uso de \texttt{Bezel::Base} para definir el modelo
 por medio de herencia, ais en la linea 1 se define \texttt{Recommendation}. En la linea 2
 se tiene el metodo de clase \texttt{set\_c3\_type} que permite al modelo definir a que
 tipo del sistema web C3 esta ligado en este caso esta ligado al tipo
