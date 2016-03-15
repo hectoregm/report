@@ -297,52 +297,54 @@ y este objeto es regresado como resultado de la invocación del método
 \texttt{Bezel::Base} es una clase abstracta la cual define la mayor parte de su
 funcionalidad en base al nombre de la clase que hereda de ella. Es decir no se hace
 uso directo de \texttt{Bezel::Base} si no que al heredar de esta clase abstracta
-se obtiene mucha funcionalidad para definir modelos basados en tipos provenientes
+se obtiene funcionalidad para crear modelos basados en tipos provenientes
 del servicio web C3.
 
 \lstinputlisting[language=Ruby]{code/base-example.rb}
 
 El código anterior ejemplifica el uso de \texttt{Bezel::Base} para definir el modelo
-por medio de herencia, ais en la linea 1 se define \texttt{Recommendation}. En la linea 2
-se tiene el metodo de clase \texttt{set\_c3\_type} que permite al modelo definir a que
-tipo del sistema web C3 esta ligado en este caso esta ligado al tipo
-\texttt{BuildingEnergyConservationOption}. En la linea 4 se define que el modelo
-esta relacionado con el modelo \texttt{EnergyConservationOption} en forma unica por
-medio del metodo \texttt{has\_one}. Ya definido el modelo en la linea 7 se 
-hace la busqueda de una recomendacion por medio de su identificador unico por medio
-del metodo \texttt{find}. En la linea 8 se tiene la recomendacion y se obtiene
-su costo total por medio del atributo \texttt{totalCost}. Los metodos \texttt{set\_c3\_type}
-, \texttt{has\_one} y \texttt{find} son definidos por \texttt{Bezel::Base} pero
-el metodo \texttt{totalCost} igual es definido por \texttt{Bezel::Base} pero en
-tiempo de ejecuccion por medio de la metaprogramacion.
+por medio de herencia, en la linea 1 se define \texttt{Recommendation}. En la linea 2
+se tiene el método de clase \texttt{set\_c3\_type} que permite al modelo definir
+a que tipo del sistema web C3 esta ligado,  en este caso el modelo esta ligado al
+tipo \texttt{BuildingEnergyConservationOption}. En la linea 4 se define que el modelo
+tiene una asociación con el modelo \texttt{EnergyConservationOption} en forma única
+por medio del metodo \texttt{has\_one}. Ya definido el modelo en la linea 7 se 
+hace la búsqueda de una recomendación por medio de su identificador único por medio
+del método \texttt{find}. En la linea 8 se obtiene el costo total de la recomendación
+buscada anteriormente por medio de \texttt{totalCost}. Los métodos
+\texttt{set\_c3\_type}, \texttt{has\_one} y \texttt{find} son definidos por
+\texttt{Bezel::Base} pero el metodo \texttt{totalCost} igual es definido en tiempo
+de ejecución por medio de la metaprogramación.
 
 % \lstinputlisting[language=Ruby]{code/base-extend-include.rb}
 
-\subsubsection{Metodos de clase}
+\subsubsection{Métodos de clase}
 
-Los metodos de clase que se definen en \texttt{Bezel::Base} son para
-definir metodos de configuracion del metodo y para realizar operaciones
-sobre el tipo en el servicio web C3.
-
-Los metodos principales son:
-\begin{itemize}
-  \item \texttt{config\_option}: este metodo permite la definicion
-  de nuevos atributos sobre el modelo en tiempo de ejecucion por
-  medio 
-\end{itemize}
+Los métodos de clase que se definen en \texttt{Bezel::Base} son para
+definir métodos de configuración del modelo y para realizar operaciones
+de búsqueda sobre el modelo.
 
 \lstinputlisting[language=Ruby]{code/base-class-methods.rb}
 
-\lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
+Los métodos principales son:
+\begin{itemize}
+  \item \texttt{config\_option} (lineas 6-19): este método permite la definición
+    de nuevos atributos sobre el modelo en tiempo de ejecución por medio del uso
+    de metodo \texttt{define\_method} que permite crear métodos en tiempo
+    de ejecución, con este metodo y de \texttt{attr\_writer} se definen
+    metodos de acceso para atributos de clase para los modelos
+\end{itemize}
 
-\subsubsection{\texttt{Bezel::Associations}}
+%\lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
 
-\lstinputlisting[language=Ruby]{code/associations.rb}
+%\subsubsection{\texttt{Bezel::Associations}}
 
-\subsubsection{\texttt{Bezel::Connections}}
+%\lstinputlisting[language=Ruby]{code/associations.rb}
 
-\lstinputlisting[language=Ruby]{code/connections.rb}
+%\subsubsection{\texttt{Bezel::Connections}}
 
-\subsubsection{\texttt{Bezel::CacheBase}}
+%\lstinputlisting[language=Ruby]{code/connections.rb}
 
-\lstinputlisting[language=Ruby]{code/cache_base.rb}
+%\subsubsection{\texttt{Bezel::CacheBase}}
+
+%\lstinputlisting[language=Ruby]{code/cache_base.rb}

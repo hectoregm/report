@@ -1,7 +1,5 @@
 module Bezel
   class Base
-    # ...
-    
     class << self     
       attr_reader :cache_type
       
@@ -43,7 +41,5 @@ module Bezel
         end
       end
     end
-    
-    # ...
   end
 end
