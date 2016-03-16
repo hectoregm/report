@@ -367,7 +367,48 @@ Los métodos principales son:
     mantenimiento del cache a las acciones básicas y de búsqueda del modelo.
 \end{itemize}
 
-%\lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
+\subsubsection{Métodos de instancia}
+
+Los métodos de clase que se definen en \texttt{Bezel::Base} son para
+inicializar un nuevo modelo, obtener la información sobre un atributo
+del modelo y las asociaciones con otros modelos
+
+Cabe recordar recordar que el servicio web C3 hace uso del formato JSON en sus
+respuestas a las peticiones al servicio. El formato JSON es una serializar objetos,
+arreglos, números, cadenas, booleanos, y \texttt{null}. Se basa en la sintaxis de
+JavaScript, pero es distinta de ella en el manejo de Unicode en las cadenas.
+Los objetos en JSON son colecciones de llave-valor en donde la llave siempre
+es una cadena y el valor es alguno de los tipos básicos permitidos en JSON, dado
+esta estructura una biyección entre el formato JSON y las tablas hash en Ruby
+es directa.
+
+\lstinputlisting[language=Ruby]{code/base-json.rb}
+
+En el código anterior tenemos una cadena con un objeto definido según el formato
+JSON en la linea 1. Haciendo uso de la biblioteca JSON en la linea 2 se parsea
+esta cadena y nos regresa una tabla hash la cual contiene la información definida
+en la cadena JSON original.
+
+En Bezel se tiene que los atributos de los modelos obtenidos por medio del servicio
+web C3 son almacenados en una tabla hash interna pero permitiendo el acceso a la
+información de una forma mas orientada a objetos por medio de atributos y métodos
+de acceso.
+
+\lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
+
+Los métodos principales son:
+\begin{itemize}
+\item \texttt{initialize}: este método es el constructor por defecto en Ruby
+  es invocado cuando se crea objeto nuevo. Los datos del modelo son obtenidos
+  por medio del parametro \texttt{attributes} que es una tabla hash.
+\item \texttt{load}: este método permite el cargar en un objeto ya existente
+  nuevos valores de sus atributos.
+\item \texttt{method\_missing}: este metodo es parte del API de metaprogramacion
+  de Ruby, el cual es invocado cuando se invoca un metodo que un objeto no sabe
+  manejar. El metodo recibe dos parametros \texttt{name} que es simbolo del
+  metodo invocado, y \texttt{args} que es un arreglo con todos los parametros
+  con los que se invoco al metodo.
+\end{itemize}
 
 %\subsubsection{\texttt{Bezel::Associations}}
 

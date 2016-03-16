@@ -5,20 +5,19 @@ module Bezel
 
     attr_accessor :errors
 
-    def initialize(attributes = Hashie::Mash.new, persisted = false)
+    def initialize(attributes = Hashie::Mash.new, 
+                   persisted = false)
       @persisted = persisted
       @errors = ActiveModel::Errors.new(self)
       load(attributes)
     end
     
+    def load(attributes)
+      # ...
+    end
+    
     def associations
       self.class.associations if self.class.respond_to?(:associations)
-    end
-
-    def load(attributes)
-      raise ArgumentError, "expected an attributes Hash, recieved #{attributes.class} #{attributes.inspect}" unless attributes.is_a?(Hash)
-
-      @attributes = attributes.dup
     end
 
     def method_missing(name, *args, &block)
@@ -34,14 +33,6 @@ module Bezel
     
     def id
       @attributes["id"]
-    end
-
-    def to_param
-      @attributes["id"]
-    end
-
-    def valid?
-      true
     end
 
     # ...
