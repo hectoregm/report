@@ -313,7 +313,7 @@ hace la búsqueda de una recomendación por medio de su identificador único por
 del método \texttt{find}. En la linea 8 se obtiene el costo total de la recomendación
 buscada anteriormente por medio de \texttt{totalCost}. Los métodos
 \texttt{set\_c3\_type}, \texttt{has\_one} y \texttt{find} son definidos por
-\texttt{Bezel::Base} pero el metodo \texttt{totalCost} igual es definido en tiempo
+\texttt{Bezel::Base} pero el método \texttt{totalCost} igual es definido en tiempo
 de ejecución por medio de la metaprogramación.
 
 % \lstinputlisting[language=Ruby]{code/base-extend-include.rb}
@@ -330,9 +330,41 @@ Los métodos principales son:
 \begin{itemize}
   \item \texttt{config\_option} (lineas 6-19): este método permite la definición
     de nuevos atributos sobre el modelo en tiempo de ejecución por medio del uso
-    de metodo \texttt{define\_method} que permite crear métodos en tiempo
-    de ejecución, con este metodo y de \texttt{attr\_writer} se definen
-    metodos de acceso para atributos de clase para los modelos
+    de método \texttt{define\_method} que permite crear métodos en tiempo
+    de ejecución, con este método y de \texttt{attr\_writer} se definen tanto
+    atributos de clase como de instancia. El método toma dos parámetros
+    el primero es el nombre de la configuración a crear y el segundo
+    es el valor por defecto de la configuración.
+  \item \texttt{find} (linea 21): este método permite realizar búsquedas sobre
+    el modelo por medio de un identificador, también permite realizar búsquedas
+    mas avanzadas por medio de parámetros como \texttt{filter}.
+  \item \texttt{invoke} (lineas 25-27): este método permite realizar
+    un acción sobre el modelo, como se puede ver en la linea 26 se hace uso del
+    metodo \texttt{invoke} del modulo \texttt{Bezel} haciendo
+    uso del contexto del modelo, es decir su modulo y tipo correspondiente.
+  \item \texttt{inherited} (lineas 29-34): este método es parte de API de
+    metaprogramacion de Ruby, el metodo es invocado cuando una subclase de
+    \texttt{Bezel::Base} es creada. La subclase es pasada como el parametro
+    \texttt{klass} y por medio del metodo \texttt{config\_option} se definen
+    tres configuraciones:
+    \begin{itemize}
+    \item \texttt{c3\_type} (linea 30): define el tipo asociado al modelo
+      siendo el nombre de la subclase su valor por defecto.
+    \item \texttt{c3\_module} (linea 31): define el modulo asociado al modelo
+      siendo su valor por defecto el modulo \textquote{peat}.
+    \item \texttt{c3\_include} (linea 32): define si se hace una carga adelantada
+      de información de las asociaciones del modelo. El valor por defecto es que
+      no se haga ninguna carga adelantada.
+    \end{itemize}
+    Finalmente en la linea 33 se configura que el modelo por defecto no hace uso
+    de un cache.
+    % FIXME: Hablar sobre los tipos de cache
+  \item \texttt{c3\_cached} (lineas 36 a 42): este método permite indicar
+    que el modelo hace uso de un cache y las opciones de configuración para este.
+    Para activar el cache es necesario tener una instancia de cache definida en
+    \texttt{Bezel.cache}, si esto ocurre entonces se hace un \texttt{include}
+    del modulo \texttt{Bezel::CacheBase} (linea 38) que agrega el uso y
+    mantenimiento del cache a las acciones básicas y de búsqueda del modelo.
 \end{itemize}
 
 %\lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
