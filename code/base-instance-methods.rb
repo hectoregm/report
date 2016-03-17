@@ -7,8 +7,7 @@ module Bezel
 
     def initialize(attributes = Hashie::Mash.new, 
                    persisted = false)
-      @persisted = persisted
-      @errors = ActiveModel::Errors.new(self)
+      # ...
       load(attributes)
     end
     
@@ -16,10 +15,6 @@ module Bezel
       # ...
     end
     
-    def associations
-      self.class.associations if self.class.respond_to?(:associations)
-    end
-
     def method_missing(name, *args, &block)
       if args.empty?
         original_name = name.to_s

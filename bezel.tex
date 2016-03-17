@@ -396,18 +396,39 @@ de acceso.
 
 \lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
 
+Para dar acceso a los atributos del modelo se hace uso del método
+\texttt{method\_missing}, este método es invocado cuando se invoca un
+método sobre un objeto el cual no sabe manejar. El método recibe dos parámetros
+un símbolo del método invocado y los argumentos con los que se invoco al método.
+Así usando \texttt{method\_missing} se permite el manejo dinámico de métodos
+para acceder a los atributos del modelo.
+
 Los métodos principales son:
 \begin{itemize}
-\item \texttt{initialize}: este método es el constructor por defecto en Ruby
-  es invocado cuando se crea objeto nuevo. Los datos del modelo son obtenidos
+\item \texttt{initialize} (lineas 8-12): este método es el constructor por defecto
+  en Ruby es invocado cuando se crea objeto nuevo. Los datos del modelo son obtenidos
   por medio del parametro \texttt{attributes} que es una tabla hash.
-\item \texttt{load}: este método permite el cargar en un objeto ya existente
-  nuevos valores de sus atributos.
-\item \texttt{method\_missing}: este metodo es parte del API de metaprogramacion
-  de Ruby, el cual es invocado cuando se invoca un metodo que un objeto no sabe
-  manejar. El metodo recibe dos parametros \texttt{name} que es simbolo del
-  metodo invocado, y \texttt{args} que es un arreglo con todos los parametros
-  con los que se invoco al metodo.
+\item \texttt{load} (linea 14): este método permite el cargar en un objeto ya
+  existente nuevos valores de sus atributos.
+\item \texttt{method\_missing} (lineas 18-27): como se explico se hace uso de este
+  callback para permitir el acceso de los atributos del modelo en forma dinámica sin
+  tener que definir explícitamente métodos de acceso para cada atributo del modelo.
+  En la linea 28 se trata de ver si el nombre del método es una llave en la tabla
+  hash de los atributos si es así se regresa el valor contenido en la tabla.
+  En la linea 30 se hace el mismo tipo de búsqueda pero se transforma el
+  nombre a tu estilo de capitalización medial (\textit{camelCase}).
+  Si ninguna llave corresponde se regresa \texttt{nil}.
+\item \texttt{id} (lineas 36-38): como se puede observar el método regresa
+  el valor asociado a la llave \texttt{id} en la tabla de atributos del modelo
+  este método de acceso sale sobrando dada la implementación utilizada
+  en \texttt{method\_missing} pero esta solución tiene sus costos en rendimiento
+  puesto que la invocación a llamada es mucho mas eficiente que pasar por toda
+  la búsqueda de un método inexistente hasta llegar a la invocación del método
+  \texttt{method\_missing}. En la implementación total de \texttt{method\_missing}
+  se hace uso de \texttt{define\_method} para crear un método de acceso
+  de forma dinámica para hacer mas eficiente el acceso posterior al atributo.
+  Así para varios atributos básicos como \texttt{id} se define una implementación
+  estática.
 \end{itemize}
 
 %\subsubsection{\texttt{Bezel::Associations}}
