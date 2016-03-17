@@ -431,9 +431,46 @@ Los métodos principales son:
   estática.
 \end{itemize}
 
-%\subsubsection{\texttt{Bezel::Associations}}
+\subsubsection{\texttt{Bezel::Associations}}
 
-%\lstinputlisting[language=Ruby]{code/associations.rb}
+En el modulo \texttt{Bezel::Associations} se definen métodos para definir
+asociaciones entre modelos basados en \texttt{Bezel::Base}. Este modulo
+es agregado por medio \texttt{extend} por lo que son métodos de clase
+
+\lstinputlisting[language=Ruby]{code/base-associations-example.rb}
+
+En el código anterior se tiene la definición del modelo
+\texttt{EnergyConservationOption} el cual representa una característica del perfil
+de un edificio que esta ligada a una recomendación. Para este modelo se definen
+dos asociaciones por medio del uso de los metodos \texttt{has\_one} y
+\texttt{has\_many}. Por medio de \texttt{has\_one} (linea 5) se define una relación
+uno a uno con el modelo \texttt{ProductCategory} que representa una categoría de un
+catalogo de productos. Mientras que con el metodo \texttt{has\_many} (linea 6) se
+define una relación uno a muchos con el modelo \texttt{RecommendationFAQ}.
+
+En las lineas 10 y 11 se tiene el uso de los metodos \texttt{productCategory} y
+\texttt{faqs}, los cuales regresan los modelos asociados al modelo, son creados
+dinámicamente por los metodos \texttt{has\_one} y \texttt{has\_many}
+
+\lstinputlisting[language=Ruby]{code/associations.rb}
+
+En la implementación de ambos metodos se hace uso de dos metodos auxiliares
+\texttt{get\_model\_class} y \texttt{define\_assoc\_method}.
+En las lineas 7 y 11 se hace uso de \texttt{get\_model\_class} para obtener
+la clase del modelo con la que se esta haciendo la asociación. Luego en las
+lineas 8 y 13 se hace uso del metodo \texttt{define\_assoc\_method} para
+definir dinámicamente un método de instancia que realiza la recuperación
+y búsqueda de los modelos asociados.
+
+En las lineas 18-22 se tiene la implementacion del metodo \texttt{get\_model\_class}
+donde se hace uso del metodo \texttt{constantize} que realiza la recuperacion
+de una constante a partir de una cadena dada, en este caso para recuperar de
+una cadena una clase.
+
+En las lineas 24-49 se tiene la implementacion del metodo
+\texttt{define\_assoc\_method} el cual hace uso del metodo \texttt{define\_method}
+para construir un metodo de instancia para realizar la busqueda de los objetos
+asociados al modelo.e
 
 %\subsubsection{\texttt{Bezel::Connections}}
 
