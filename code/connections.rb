@@ -23,30 +23,24 @@ module Bezel::Connections
 
     def upsert(attrs)
       # ...
-      action = invoke(:upsert, obj: result)
-      # ...
-    end
-
-    def upsert_batch(batch)
+      action = invoke(:upsert, obj: attrs)
       # ...
     end
   end
 
   def save
-    self.class.invoke(:upsert, obj: self.to_hash)
-  end
-
-  def update(attrs)
     # ...
-
-    action = self.class.invoke(:upsert, obj: updated, srcObj: old)
-
+    self.class.upsert(self.to_hash)
     # ...
   end
 
-  alias_method :update_attributes, :update
+  def update(update)
+    # ...
+    action = self.class.invoke(:upsert, obj: update, srcObj: old)
+    # ...
+  end
 
   def destroy
-    self.class.invoke(:remove, obj: self.to_hash(with_associations: false))
+    self.class.invoke(:remove, obj: self.to_hash)
   end
 end

@@ -470,11 +470,56 @@ una cadena una clase.
 En las lineas 24-49 se tiene la implementacion del metodo
 \texttt{define\_assoc\_method} el cual hace uso del metodo \texttt{define\_method}
 para construir un metodo de instancia para realizar la busqueda de los objetos
-asociados al modelo.e
+asociados al modelo.
 
-%\subsubsection{\texttt{Bezel::Connections}}
+\subsubsection{\texttt{Bezel::Connections}}
 
-%\lstinputlisting[language=Ruby]{code/connections.rb}
+En el modulo \texttt{Bezel::Connections} se definen los metodos que permiten
+realizar las acciones basicas sobre el modelo. La implementacion de este modulo
+sigue un patron bastante comun en el cual se definen metodos tanto de clase
+como de instancia en un mismo modulo.
+
+\lstinputlisting[language=Ruby]{code/connections.rb}
+
+En la linea 2 se tiene la implementacion del metodo \texttt{included} que es un
+\texttt{callback} que es invocado cuando el modulo \texttt{Connections} es
+utilizado en un \texttt{include}. En la linea 3 al incluirse el modulo en una
+clase o modulo \texttt{base} se agregan como metodos de clase los metodos
+definidos en el submodulo \texttt{ClassMethods}.
+
+Los metodos de clase mas importante son:
+\begin{itemize}
+\item \texttt{all} (lineas 7-16): este metodo realiza una busqueda dentro del modelo.
+  En la linea 8 se toma en cuenta la configuracion \texttt{c3\_include} para indicar
+  que modelos asociados se deben precargar en la busqueda. En la linea 9 se realiza
+  la peticion usando la accion \texttt{fetch} la cual permite hacer busquedas
+  en el servicio web C3. En las lineas 11 a 15 se tiene la logica necesaria para
+  manejar el resultado de la peticion del servicio web C3, cabe señalar que al
+  obtenerse un arreglo de objetos de tipo hash como resultado de la peticion
+  realizada al servicio se crea un nuevo modelo por objeto (linea 14) para regresar
+  un arreglo de modelos como espera el programador.
+\item \texttt{one} (lineas 18-22): este metodo realiza una busqueda la cual
+  regresa solamente el primer objeto que cumpla el criterio de busqueda. En la
+  peticion al servicio web se hace uso de la accion \texttt{fetch} (linea 20).
+\item \texttt{upsert} (lineas 24-28): este metodo realiza la creacion o actualizacion
+  de un modelo dado los atributos del modelo en un hash. La accion
+  \texttt{upsert} es usada para realizar la peticion al servicio web (linea 26).
+\end{itemize}
+
+Aunque el metodo de clase \texttt{upsert} permite la creacion y actualizacion
+de modelos su uso se definen dos metodos de instancia para crear y actualizar
+de forma mas ortodoxa un modelo.
+
+\begin{itemize}
+\item \texttt{save}: este método de instancia hace uso de \texttt{upsert}
+  y de la representación hash del modelo (\texttt{to\_hash}) para
+  guardar el modelo en el servicio web C3.
+\item \texttt{update}: este metodo realiza la actualizacion del modelo
+  siendo mas eficiente en tiempo de ejecuccion puesto que solo se actualizan
+  los atributos que seran cambiados.
+\item \texttt{destroy}: este metodo elimina el modelo por medio de la accion
+  \texttt{remove} (linea 44).
+\end{itemize}
 
 %\subsubsection{\texttt{Bezel::CacheBase}}
 
