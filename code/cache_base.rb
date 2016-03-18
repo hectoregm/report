@@ -71,8 +71,6 @@ module Bezel::CacheBase
     cache_delete(self.id)
   end
 
-  alias_method :update_attributes, :update
-
   def destroy
     # ...
   end

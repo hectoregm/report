@@ -162,7 +162,7 @@ Las clases y módulos que conforman la biblioteca son
   búsqueda sobre un modelo.
 \item \texttt{Bezel::Associations}: módulo que define las asociaciones entre
   modelos.
-\item \texttt{Bezel::CacheBase}: clase que redefine las acciones básicas y
+\item \texttt{Bezel::CacheBase}: modulo que redefine las acciones básicas y
   de búsqueda sobre un modelo haciendo uso de un cache \texttt{Bezel::Cache}.
 \item \texttt{Bezel::Cache}: clase que define un API para realizar operaciones
   de lectura/escritura sobre un cache.
@@ -521,6 +521,16 @@ de forma mas ortodoxa un modelo.
   \texttt{remove} (linea 44).
 \end{itemize}
 
-%\subsubsection{\texttt{Bezel::CacheBase}}
+\subsubsection{\texttt{Bezel::CacheBase}}
 
-%\lstinputlisting[language=Ruby]{code/cache_base.rb}
+El modulo \texttt{Bezel::CacheBase} mejora los metodos definidos en
+\texttt{Connections} para que las acciones basicas y/o busqueda hagan uso de un
+cache \texttt{Bezel::Cache}.
+
+El modulo sigue el mismo patron de agrupar los metodos de clase en el submodulo
+\texttt{ClassMethods} y los metodos de instancia en el modulo principal, haciendo
+uso del metodo callback \texttt{include} para agregar los métodos de clase.
+
+\lstinputlisting[language=Ruby]{code/cache_base.rb}
+
+En las lineas 9-11 se verifica si ya se tiene una instancia de la clase \texttt{Bezel::Cache}
