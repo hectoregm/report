@@ -162,7 +162,7 @@ Las clases y módulos que conforman la biblioteca son
   búsqueda sobre un modelo.
 \item \texttt{Bezel::Associations}: módulo que define las asociaciones entre
   modelos.
-\item \texttt{Bezel::CacheBase}: modulo que redefine las acciones básicas y
+\item \texttt{Bezel::CacheBase}: módulo que redefine las acciones básicas y
   de búsqueda sobre un modelo haciendo uso de un cache \texttt{Bezel::Cache}.
 \item \texttt{Bezel::Cache}: clase que define un API para realizar operaciones
   de lectura/escritura sobre un cache.
@@ -252,7 +252,7 @@ Otro método muy importante para la metaprogramación es \texttt{send} el cual e
 en la linea 35 para inicializar los atributos definidos por \texttt{Config}, el
 método \texttt{send} invoca el método identificado con un símbolo o cadena dada,
 pasando los argumentos posteriores como argumentos a la invocación del método.
-Haciendo uso de \texttt{send} y de las dos constantes definidas en el modulo
+Haciendo uso de \texttt{send} y de las dos constantes definidas en el módulo
 se puede inicializar cada uno de los atributos.
 
 \subsection{\texttt{Bezel::Client}}
@@ -269,7 +269,7 @@ y atributos para configurar al cliente. En las lineas 7-13 se define el método
 para el cliente y pidiendo que las respuestas mandadas por el servidor
 sean de tipo JSON. 
 
-En las lineas 13-49 se tiene la implementación del metodo \texttt{invoke}, en 
+En las lineas 13-49 se tiene la implementación del método \texttt{invoke}, en 
 la linea 14 se define un \textit{target} de tipo \texttt{Bezel::Target} usando 
 tanto el contexto del cliente, es decir el \textit{tenant} y \textit{tag} mas 
 la información del \textit{module} y \textit{type} dados en los argumentos.
@@ -308,7 +308,7 @@ se tiene el método de clase \texttt{set\_c3\_type} que permite al modelo defini
 a que tipo del sistema web C3 esta ligado,  en este caso el modelo esta ligado al
 tipo \texttt{BuildingEnergyConservationOption}. En la linea 4 se define que el modelo
 tiene una asociación con el modelo \texttt{EnergyConservationOption} en forma única
-por medio del metodo \texttt{has\_one}. Ya definido el modelo en la linea 7 se 
+por medio del método \texttt{has\_one}. Ya definido el modelo en la linea 7 se 
 hace la búsqueda de una recomendación por medio de su identificador único por medio
 del método \texttt{find}. En la linea 8 se obtiene el costo total de la recomendación
 buscada anteriormente por medio de \texttt{totalCost}. Los métodos
@@ -340,18 +340,18 @@ Los métodos principales son:
     mas avanzadas por medio de parámetros como \texttt{filter}.
   \item \texttt{invoke} (lineas 25-27): este método permite realizar
     un acción sobre el modelo, como se puede ver en la linea 26 se hace uso del
-    metodo \texttt{invoke} del modulo \texttt{Bezel} haciendo
-    uso del contexto del modelo, es decir su modulo y tipo correspondiente.
+    método \texttt{invoke} del módulo \texttt{Bezel} haciendo
+    uso del contexto del modelo, es decir su módulo y tipo correspondiente.
   \item \texttt{inherited} (lineas 29-34): este método es parte de API de
-    metaprogramacion de Ruby, el metodo es invocado cuando una subclase de
-    \texttt{Bezel::Base} es creada. La subclase es pasada como el parametro
-    \texttt{klass} y por medio del metodo \texttt{config\_option} se definen
+    metaprogramación de Ruby, el método es invocado cuando una subclase de
+    \texttt{Bezel::Base} es creada. La subclase es pasada como el parámetro
+    \texttt{klass} y por medio del método \texttt{config\_option} se definen
     tres configuraciones:
     \begin{itemize}
     \item \texttt{c3\_type} (linea 30): define el tipo asociado al modelo
       siendo el nombre de la subclase su valor por defecto.
-    \item \texttt{c3\_module} (linea 31): define el modulo asociado al modelo
-      siendo su valor por defecto el modulo \textquote{peat}.
+    \item \texttt{c3\_module} (linea 31): define el módulo asociado al modelo
+      siendo su valor por defecto el módulo \textquote{peat}.
     \item \texttt{c3\_include} (linea 32): define si se hace una carga adelantada
       de información de las asociaciones del modelo. El valor por defecto es que
       no se haga ninguna carga adelantada.
@@ -363,7 +363,7 @@ Los métodos principales son:
     que el modelo hace uso de un cache y las opciones de configuración para este.
     Para activar el cache es necesario tener una instancia de cache definida en
     \texttt{Bezel.cache}, si esto ocurre entonces se hace un \texttt{include}
-    del modulo \texttt{Bezel::CacheBase} (linea 38) que agrega el uso y
+    del módulo \texttt{Bezel::CacheBase} (linea 38) que agrega el uso y
     mantenimiento del cache a las acciones básicas y de búsqueda del modelo.
 \end{itemize}
 
@@ -407,7 +407,7 @@ Los métodos principales son:
 \begin{itemize}
 \item \texttt{initialize} (lineas 8-12): este método es el constructor por defecto
   en Ruby es invocado cuando se crea objeto nuevo. Los datos del modelo son obtenidos
-  por medio del parametro \texttt{attributes} que es una tabla hash.
+  por medio del parámetro \texttt{attributes} que es una tabla hash.
 \item \texttt{load} (linea 14): este método permite el cargar en un objeto ya
   existente nuevos valores de sus atributos.
 \item \texttt{method\_missing} (lineas 18-27): como se explico se hace uso de este
@@ -433,8 +433,8 @@ Los métodos principales son:
 
 \subsubsection{\texttt{Bezel::Associations}}
 
-En el modulo \texttt{Bezel::Associations} se definen métodos para definir
-asociaciones entre modelos basados en \texttt{Bezel::Base}. Este modulo
+En el módulo \texttt{Bezel::Associations} se definen métodos para definir
+asociaciones entre modelos basados en \texttt{Bezel::Base}. Este módulo
 es agregado por medio \texttt{extend} por lo que son métodos de clase
 
 \lstinputlisting[language=Ruby]{code/base-associations-example.rb}
@@ -442,95 +442,93 @@ es agregado por medio \texttt{extend} por lo que son métodos de clase
 En el código anterior se tiene la definición del modelo
 \texttt{EnergyConservationOption} el cual representa una característica del perfil
 de un edificio que esta ligada a una recomendación. Para este modelo se definen
-dos asociaciones por medio del uso de los metodos \texttt{has\_one} y
+dos asociaciones por medio del uso de los métodos \texttt{has\_one} y
 \texttt{has\_many}. Por medio de \texttt{has\_one} (linea 5) se define una relación
 uno a uno con el modelo \texttt{ProductCategory} que representa una categoría de un
 catalogo de productos. Mientras que con el metodo \texttt{has\_many} (linea 6) se
 define una relación uno a muchos con el modelo \texttt{RecommendationFAQ}.
 
-En las lineas 10 y 11 se tiene el uso de los metodos \texttt{productCategory} y
+En las lineas 10 y 11 se tiene el uso de los métodos \texttt{productCategory} y
 \texttt{faqs}, los cuales regresan los modelos asociados al modelo, son creados
-dinámicamente por los metodos \texttt{has\_one} y \texttt{has\_many}
+dinámicamente por los métodos \texttt{has\_one} y \texttt{has\_many}
 
 \lstinputlisting[language=Ruby]{code/associations.rb}
 
-En la implementación de ambos metodos se hace uso de dos metodos auxiliares
+En la implementación de ambos métodos se hace uso de dos métodos auxiliares
 \texttt{get\_model\_class} y \texttt{define\_assoc\_method}.
 En las lineas 7 y 11 se hace uso de \texttt{get\_model\_class} para obtener
 la clase del modelo con la que se esta haciendo la asociación. Luego en las
-lineas 8 y 13 se hace uso del metodo \texttt{define\_assoc\_method} para
+lineas 8 y 13 se hace uso del método \texttt{define\_assoc\_method} para
 definir dinámicamente un método de instancia que realiza la recuperación
 y búsqueda de los modelos asociados.
 
-En las lineas 18-22 se tiene la implementacion del metodo \texttt{get\_model\_class}
-donde se hace uso del metodo \texttt{constantize} que realiza la recuperacion
+En las lineas 18-22 se tiene la implementación del método \texttt{get\_model\_class}
+donde se hace uso del método \texttt{constantize} que realiza la recuperación
 de una constante a partir de una cadena dada, en este caso para recuperar de
 una cadena una clase.
 
-En las lineas 24-49 se tiene la implementacion del metodo
-\texttt{define\_assoc\_method} el cual hace uso del metodo \texttt{define\_method}
-para construir un metodo de instancia para realizar la busqueda de los objetos
+En las lineas 24-49 se tiene la implementación del método
+\texttt{define\_assoc\_method} el cual hace uso del método \texttt{define\_method}
+para construir un método de instancia para realizar la búsqueda de los objetos
 asociados al modelo.
 
 \subsubsection{\texttt{Bezel::Connections}}
 
-En el modulo \texttt{Bezel::Connections} se definen los metodos que permiten
-realizar las acciones basicas sobre el modelo. La implementacion de este modulo
-sigue un patron bastante comun en el cual se definen metodos tanto de clase
-como de instancia en un mismo modulo.
+En el módulo \texttt{Bezel::Connections} se definen los métodos que permiten
+realizar las acciones básicas sobre el modelo. La implementación de este módulo
+sigue un patrón bastante común en el cual se definen métodos tanto de clase
+como de instancia en un mismo módulo.
 
 \lstinputlisting[language=Ruby]{code/connections.rb}
 
-En la linea 2 se tiene la implementacion del metodo \texttt{included} que es un
-\texttt{callback} que es invocado cuando el modulo \texttt{Connections} es
-utilizado en un \texttt{include}. En la linea 3 al incluirse el modulo en una
-clase o modulo \texttt{base} se agregan como metodos de clase los metodos
-definidos en el submodulo \texttt{ClassMethods}.
+En la linea 2 se tiene la implementación del método \texttt{included} que es un
+\texttt{callback} que es invocado cuando el módulo \texttt{Connections} es
+utilizado en un \texttt{include}. En la linea 3 al incluirse el módulo en una
+clase o módulo \texttt{base} se agregan como métodos de clase los métodos
+definidos en el submódulo \texttt{ClassMethods}.
 
 Los metodos de clase mas importante son:
 \begin{itemize}
-\item \texttt{all} (lineas 7-16): este metodo realiza una busqueda dentro del modelo.
-  En la linea 8 se toma en cuenta la configuracion \texttt{c3\_include} para indicar
-  que modelos asociados se deben precargar en la busqueda. En la linea 9 se realiza
-  la peticion usando la accion \texttt{fetch} la cual permite hacer busquedas
-  en el servicio web C3. En las lineas 11 a 15 se tiene la logica necesaria para
-  manejar el resultado de la peticion del servicio web C3, cabe señalar que al
-  obtenerse un arreglo de objetos de tipo hash como resultado de la peticion
+\item \texttt{all} (lineas 7-16): este método realiza una búsqueda dentro del modelo.
+  En la linea 8 se toma en cuenta la configuración \texttt{c3\_include} para indicar
+  que modelos asociados se deben precargar en la búsqueda. En la linea 9 se realiza
+  la petición usando la acción \texttt{fetch} la cual permite hacer búsquedas
+  en el servicio web C3. En las lineas 11 a 15 se tiene la lógica necesaria para
+  manejar el resultado de la petición del servicio web C3, cabe señalar que al
+  obtenerse un arreglo de objetos de tipo hash como resultado de la petición
   realizada al servicio se crea un nuevo modelo por objeto (linea 14) para regresar
   un arreglo de modelos como espera el programador.
-\item \texttt{one} (lineas 18-22): este metodo realiza una busqueda la cual
-  regresa solamente el primer objeto que cumpla el criterio de busqueda. En la
-  peticion al servicio web se hace uso de la accion \texttt{fetch} (linea 20).
-\item \texttt{upsert} (lineas 24-28): este metodo realiza la creacion o actualizacion
-  de un modelo dado los atributos del modelo en un hash. La accion
-  \texttt{upsert} es usada para realizar la peticion al servicio web (linea 26).
+\item \texttt{one} (lineas 18-22): este método realiza una búsqueda la cual
+  regresa solamente el primer objeto que cumpla el criterio de búsqueda. En la
+  peticion al servicio web se hace uso de la acción \texttt{fetch} (linea 20).
+\item \texttt{upsert} (lineas 24-28): este método realiza la creación o actualización
+  de un modelo dado los atributos del modelo en un hash. La acción
+  \texttt{upsert} es usada para realizar la petición al servicio web (linea 26).
 \end{itemize}
 
-Aunque el metodo de clase \texttt{upsert} permite la creacion y actualizacion
-de modelos su uso se definen dos metodos de instancia para crear y actualizar
+Aunque el método de clase \texttt{upsert} permite la creación y actualización
+de modelos su uso se definen dos métodos de instancia para crear y actualizar
 de forma mas ortodoxa un modelo.
 
 \begin{itemize}
 \item \texttt{save}: este método de instancia hace uso de \texttt{upsert}
   y de la representación hash del modelo (\texttt{to\_hash}) para
   guardar el modelo en el servicio web C3.
-\item \texttt{update}: este metodo realiza la actualizacion del modelo
-  siendo mas eficiente en tiempo de ejecuccion puesto que solo se actualizan
-  los atributos que seran cambiados.
-\item \texttt{destroy}: este metodo elimina el modelo por medio de la accion
+\item \texttt{update}: este método realiza la actualización del modelo
+  siendo mas eficiente en tiempo de ejecución puesto que solo se actualizan
+  los atributos que serán cambiados.
+\item \texttt{destroy}: este método elimina el modelo por medio de la acción
   \texttt{remove} (linea 44).
 \end{itemize}
 
 \subsubsection{\texttt{Bezel::CacheBase}}
 
-El modulo \texttt{Bezel::CacheBase} mejora los metodos definidos en
-\texttt{Connections} para que las acciones basicas y/o busqueda hagan uso de un
+El módulo \texttt{Bezel::CacheBase} mejora los métodos definidos en
+\texttt{Connections} para que las acciones básicas y/o búsqueda hagan uso de un
 cache \texttt{Bezel::Cache}.
 
-El modulo sigue el mismo patron de agrupar los metodos de clase en el submodulo
-\texttt{ClassMethods} y los metodos de instancia en el modulo principal, haciendo
-uso del metodo callback \texttt{include} para agregar los métodos de clase.
+El módulo sigue el mismo patrón de agrupar los métodos de clase en el submódulo
+\texttt{ClassMethods} y los métodos de instancia en el módulo principal, haciendo
+uso del método \texttt{callback} \texttt{include} para agregar los métodos de clase.
 
 \lstinputlisting[language=Ruby]{code/cache_base.rb}
-
-En las lineas 9-11 se verifica si ya se tiene una instancia de la clase \texttt{Bezel::Cache}
