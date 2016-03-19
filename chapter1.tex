@@ -9,7 +9,7 @@ la producción de energía, entre otros.
 
 Para el 2010 se aprobó una nueva legislación que permitía un nuevo esquema
 de cobro a las empresas generadoras de electricidad. Este nuevo esquema
-llamado hora de consumo (\textit{time-of-use} \texttt{TOU}) define que las
+llamado hora de consumo (\textit{time-of-use}, \texttt{TOU}) define que las
 tasas de cobro varíen en función de la temporada y la hora del día en que
 se usa la energía eléctrica, en contraste con las tasas fijas tradicionales.
 
@@ -129,18 +129,17 @@ todo tipo de gráficas rápidamente y de esta forma mostrar una gran cantidad
 de información al usuario.
 
 Por lo descrito en los párrafos anteriores podemos decir que tanto en el
-\textit{frontend} como en el \textit{backend} se hacía uso del lenguaje
+\textit{frontend} como en el \textit{backend} hacían uso del lenguaje
 de programación Javascript principalmente con un núcleo de Java para las partes
-que requerían un rendimiento óptimo para manejar peticiones concurrentes,
+que requerían un rendimiento óptimo con el fin de manejar peticiones concurrentes,
 por lo que las ventajas al usarlo son:
 
 \begin{itemize}
 \item Reducir al mínimo el cambio de contexto entre lenguajes entre
   el \textit{frontend} y el \textit{backend}.
 \item Reducir sustancialmente la cantidad de código redundante al no
-  tener que reimplementar la jerarquía de objetos, que era pasada
-  por el servidor en forma serializada por JSON y deserializada por el
-  cliente.
+  tener que reimplementar la jerarquía de objetos, que era enviada
+  por el servidor en formato JSON y interpretada por el cliente.
 \item Existía una única representación de una clase por ejemplo la
   clase \textit{Building} era una clase de Javascript que se usaba
   tanto en el servidor como en el cliente.
@@ -174,7 +173,7 @@ que permitieran reusar todo el API y la jerarquía de objetos implementados
 hasta ese momento.
 
 Después de desarrollar varios prototipos con diferentes tecnologías se decidió
-usar el lenguaje de programación Ruby y el marco de trabajo Ruby on Rails (Rails)
+usar el lenguaje de programación Ruby y el marco de trabajo Ruby on Rails (Rails),
 las razones principales fueron:
 
 \begin{itemize}
@@ -183,8 +182,8 @@ las razones principales fueron:
   importancia para lograr una buena integración con la jerarquía de clases
   ya definida en el \textit{backend}.
 \item Ruby tiene una gran capacidad para implementar lenguajes de dominio
-  específico (\textit{Domain Specific Language} DSL), son lenguajes diseñados
-  para solucionar problemas de un dominio en particular, característica
+  específico (\textit{Domain Specific Language}, DSL), los cuales son lenguajes
+  diseñados para solucionar problemas de un dominio en particular, característica
   que será usada para lograr la integración con el \textit{backend}
   y la automatización del despliegue de la aplicación.
 \item Gran integración con una gran cantidad de herramientas y bibliotecas para
@@ -212,20 +211,19 @@ por su gran facilidad para implementar cualquier tipo de gráficas.
 
 El servidor de Rails recibe las peticiones de la interfaz web y
 coordina las peticiones necesarias al \textit{backend}. El trabajo
-de la realización de las peticiones a los servicios web ya existentes
-y la creación de clases y objetos en Ruby basados en la jerarquía de clases
+de la realización de las peticiones a los servicios web ya existentes para la
+creación de clases y objetos en Ruby basados en la jerarquía de clases
 definida en Javascript es realizada por la biblioteca \texttt{Bezel},
-la cual es implementada desde cero.
+la cual es implementada en su totalidad.
 
-Aunque en la parte del \textit{backend} se tiene un sistema de procesamiento
+Aunque en la parte del \textit{backend} tiene un sistema de procesamiento
 y análisis de datos, es necesario diseñar e implementar dos nuevos componentes
-en el \textit{backend}. El primero es el módulo de recomendaciones
-(\textit{Recommendations API}), el cual según las respuestas obtenidas por el
-usuario se utilizan para generar recomendaciones hechas a la medida del
-contexto de operación de cada usuario. El segundo módulo es el de
-desagregación (\textit{Disaggregation API}) que toma los datos de consumo
-del usuario y usando aprendizaje de máquina separa dicho consumo en sus
-diferentes partes.
+en éste. El primero es el módulo de recomendaciones (\textit{Recommendations API}),
+el cual según las respuestas obtenidas por el usuario se utilizan para generar
+recomendaciones hechas a la medida del contexto de operación de cada usuario.
+El segundo módulo es el de desagregación (\textit{Disaggregation API}) que toma los
+datos de consumo del usuario y usando aprendizaje de máquina separa dicho consumo
+en sus diferentes partes.
 
 Para acelerar el desarrollo del sistema se implementó el \textit{frontend}
 y el \textit{backend} en forma concurrente y dado que una parte significativa
