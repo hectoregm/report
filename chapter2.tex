@@ -40,13 +40,13 @@ convencionales.
 En Rails, la vista es responsable de la creación de la respuesta dada para
 ser mostrada en un navegador. En su forma mas simple, una
 % FIXME: Añadir fuente.
-vista ``es un trozo de código HTML que muestra un texto fijo". Frecuentemente
-se requiere mostrar contenido dinámico creado por una acción en un controlador,
-por lo que el contenido dinámico es generado por medio de plantillas, el esquema
-más común de plantillas es llamado Ruby Embebido (\textit{Embedded Ruby}, ERB),
-el cual inserta pedazos de código de Ruby dentro de una vista, similar a la forma
-como se hace en otros marcos de trabajo como PHP o JSP. También se pude hacer uso de
-Ruby Embebido para incrustar pedazos de código Javascript en el servidor,
+vista \textquote{es un trozo de código HTML que muestra un texto fijo} \cite{15_agile_hansson}.
+Frecuentemente se requiere mostrar contenido dinámico creado por una acción en un
+controlador, por lo que el contenido dinámico es generado por medio de plantillas,
+el esquema más común de plantillas es llamado Ruby Embebido (\textit{Embedded Ruby},
+ERB), el cual inserta pedazos de código de Ruby dentro de una vista, similar a la
+forma como se hace en otros marcos de trabajo como PHP o JSP. También se pude hacer
+uso de Ruby Embebido para incrustar pedazos de código Javascript en el servidor,
 que serán ejecutados en el navegador, lo cual permite crear interfases
 dinámicas haciendo uso de \textit{Asynchronous Javascript and XML} (AJAX).
 
@@ -123,7 +123,7 @@ En REST se hace uso de un conjunto finito de verbos para operar sobre otro
 conjunto de objetos. Dado que estamos usando HTTP como capa de transporte, los
 verbos corresponden a los métodos HTTP (GET, POST, PUT, PATCH, y DELETE).
 Los objetos corresponden a los recursos del sistema, los cuales son etiquetados
-usando un (\textit{Uniform Resource Locator} URL).
+usando un (\textit{Uniform Resource Locator}, URL).
 
 Un navegador solicita páginas de Rails al hacer una petición para una dirección URI
 haciendo uso de un método HTTP específico, como GET o POST. Cada método es una
@@ -131,7 +131,7 @@ petición para realizar una operación sobre el recurso.
 
 Haciendo uso de la interfaz uniforme, Rails define todo un conjunto de rutas
 para un recurso, tomando como ejemplo el concepto de edificio (\textit{Building}),
-entonces, se define el recurso y sus rutas asociadas con lo siguiente:
+entonces se define el recurso y sus rutas asociadas con lo siguiente:
 
 \begin{verbatim}
 resources :buildings
@@ -142,10 +142,15 @@ las principales operaciones sobre el recurso \textit{buildings}, esto acelera
 en gran medida el desarrollo de servicios web.
 
 \begin{table}[h!]
-  \centering
+  %\centering
   \begin{tabular}{|m{1.2cm}|m{2.5cm}|m{3cm}|m{3.5cm}|}
     \hline
-    \rowcolor{lightgray} \textbf{Método HTTP} & \textbf{Ruta} & \textbf{Controlador\#Acción} & \textbf{Usado para}\\
+    \rowcolor{lightgray}
+    \multicolumn{1}{|>{\centering\arraybackslash}m{14mm}|}{\textbf{Método HTTP}}
+    & \multicolumn{1}{>{\centering\arraybackslash}m{25mm}|}{\textbf{Ruta}}
+    & \multicolumn{1}{>{\centering\arraybackslash}m{30mm}|}{\textbf{Controlador\#Acción}}
+    & \multicolumn{1}{>{\centering\arraybackslash}m{35mm}|}{\textbf{Usado para}} \tabularnewline
+    %\rowcolor{lightgray} \textbf{Método HTTP} & \textbf{Ruta} & \textbf{Controlador\#Acción} & \textbf{Usado para}\\
     \hline\hline
     GET & /buildings & buildings\#index & Listar todos los edificios\\
     \hline
