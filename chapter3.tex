@@ -7,7 +7,7 @@ componentes principales:
 \item Perfil sencillo del edificio (\textit{Simple Building Profile}): este
   componente realiza la configuración inicial del edificio, realizando solamente
   un numero limitado de preguntas básicas para definir las características básicas
-  del edificio.
+  del mismo.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}):
   este componente se encarga del manejo de las características básicas, detalladas y
   opcionales de un edificio.
@@ -23,7 +23,7 @@ componentes principales:
 \end{itemize}
 
 El  modelo de edificio es el principal modelo dentro de \texttt{PEAT}, por lo que
-obtener una correcta correspondencia entre un edificio y su consumo energético
+obtener una correspondencia correcta entre un edificio y su consumo energético
 es de vital importancia para dar la información y recomendaciones mas útiles y
 fidedignas al usuario.
 
@@ -32,7 +32,7 @@ fidedignas al usuario.
 El objetivo principal del modelo de información de \texttt{PEAT} es definir el
 modelo de edificio y su relación con el consumo energético del usuario. Así
 tenemos el concepto de edificio el cual es una estructura independiente a la
-cual se le esta proporcionando un servicio ya sea electricidad o gas.
+cual se le esta proporcionando un servicio ya sea de electricidad o gas.
 
 \subsection{Estructura de facturación de PG\&E}
 Para obtener esta correspondencia entre edificio-consumo es necesario
@@ -42,28 +42,28 @@ que de esta estructura es que se obtiene el consumo de electricidad y gas.
 Los modelos se pueden categorizar en dos grupos: demográficos o geográficos.
 
 El usuario, la cuenta y el contrato de servicio representan el lado demográfico
-del modelo de información, la cual cambia bastante:
+del modelo de información:
 
 \begin{itemize}
-\item Usuario: representa al empresario. Tiene una o más cuentas.
+\item Usuario: representa al empresario, el cual puede tener una o más cuentas.
 \item Cuenta: representa la contabilidad financiera del usuario. Tiene uno o más
   contratos de servicio, uno por tipo de servicio (electricidad o gas), también
 S  tiene una o más direcciones de servicio asociadas.
 \item Contrato de servicio: representa los servicios que el cliente adquiere
-  de PG\&E, como la electricidad o el gas, puede tener uno o más puntos
+  de PG\&E, como la electricidad o el gas y puede tener uno o más puntos
   de servicio asociados.
 \end{itemize}
 
 La dirección de servicio, el punto de servicio y el medidor representan
-la parte geográfica del modelo de información, esta información raramente cambia:
+la parte geográfica del modelo de información:
 
 \begin{itemize}
 \item Dirección de servicio: es una ubicación física en donde se prestan los
   servicios, en \texttt{PEAT} son el modelo que se quiere asociar al modelo
-  de edificio para obtener el consumo del edificio, puede tener uno o más puntos
-  de servicio.
+  de edificio para obtener el consumo del edificio, el cual puede tener uno o más
+  puntos de servicio.
 \item Punto de servicio: es una coordenada geográfica en donde se conectan los
-  servicios, puede tener uno o más medidores asociados.
+  servicios y puede tener uno o más medidores asociados.
 \item Medidor: es un dispositivo instalado en un punto de servicio que registra el
   consumo del servicio proporcionado.
 \end{itemize}
@@ -76,19 +76,19 @@ La relación entre todos estos modelos se puede ver en la Figura 3.1.
 \subsection{Relación Edificio-Facturación}
 
 Para que \texttt{PEAT} pueda cumplir sus requerimientos funcionales es necesario
-definir claramente la relación entre un edificio y su consumo energético medido
+definir claramente la relación entre un edificio y su consumo energético calculado
 por uno o varios medidores.
-Aunque los medidores son los que tienen la información de consumo el relacionar
-directamente un medidor con un edificio no es amigable para el usuario, porque
-aunque el usuario generalmente conoce el numero de medidores que tiene no conoce
-los identificadores para cada uno de estos.
+A pesar de los medidores mantienen la información de consumo, el relacionar
+directamente un medidor con un edificio no es una tarea sencilla para un usuario,
+porque aunque el usuario generalmente conoce el numero de medidores que tiene no
+conoce los identificadores para cada uno de éstos.
 
-Por lo que para facilitar la creación del perfil de un edificio se pide al usuario
-que haga la correspondencia entre las direcciones de servicio asociadas a su cuenta
-y el perfil de edificio que se esta creando.
-El usuario al dar esta correspondencia permite al sistema obtener de forma
-automatizada los puntos de servicio y sus medidores asociados al edificio y así
-obtener su consumo energético real.
+Dado el escenario anterior para facilitar la creación del perfil de un edificio se
+solicita al usuario que haga la correspondencia entre las direcciones de servicio
+asociadas a su cuenta y el perfil de edificio que se está creando.
+El usuario al establecer esta correspondencia permite al sistema obtener de forma
+automatizada los puntos de servicio y sus medidores asociados al edificio, con el
+objetivo de obtener su consumo energético real.
 
 \section{Casos de uso}
 
