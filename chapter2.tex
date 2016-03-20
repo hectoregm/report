@@ -223,19 +223,19 @@ El proceso clásico en TDD es el siguiente \cite{12_rappin_2010}:
   implementar la nueva funcionalidad para lograr que la prueba pase
   satisfactoriamente, dentro de esta fase también se realiza cualquier
   otra optimización y/o abstracción necesaria. Esta proceso recibe el nombre de
-  refactorización, es parte vital del proceso.
+  refactorización, el cual es parte vital del proceso.
 \end{enumerate}
 
 Este proceso se repite hasta que se termina de implementar toda la funcionalidad
 del sistema. Al seguir este proceso, en teoría, se asegura que el código fuente
-siempre es lo mas simple posible y que esta completamente verificado.
+siempre se mantiene lo mas simple posible y se encuentra verificado completamente.
 
 \subsubsection{Ventajas}
 TDD va mas allá de la mera verificación al hacer uso de las pruebas para
 mejorar la estructura del código fuente, por esto es que TDD es una práctica
 de software y no solamente una herramienta de verificación.
 
-Al continuamente alinear el código fuente a las pruebas se obtiene código fuente
+Al alinear continuamente el código fuente con las pruebas se obtiene código fuente
 conformado por pequeños métodos, cada uno de los cuales tiene solamente tiene
 una sola responsabilidad. Estos métodos tienden a tener bajo acoplamiento y
 con pocos efectos laterales, lo que facilita su comprensión y mantenimiento.
@@ -245,8 +245,9 @@ TDD no es un substituto para pruebas de aceptación, es decir, pruebas que confi
 que el software funciona según los requerimientos del cliente.
 
 TDD asume que se conoce el resultado esperado que se quiere verificar,
-cuando los requerimientos no son totalmente claros, entonces TDD no es tan benéfico
-puesto que es difícil escribir las pruebas de un proceso que no se conocen en detalle.
+cuando los requerimientos no son totalmente claros, entonces TDD no resulta adecuado
+puesto que es difícil escribir las pruebas de un proceso que no se conocen en
+detalle.
 
 \subsubsection{RSpec}
 \textit{RSpec} es un marco de trabajo del proceso TDD/BDD para el lenguaje de
@@ -268,12 +269,12 @@ esta corriendo la versión 2.
 En desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
 es una practica de software surgida de el TDD, al igual que esta ultima
 involucra escribir las pruebas antes de escribir el código fuente y la
-refactorización continúa del código fuente. Así mientras que el TDD se enfoca
+refactorización contínua del código fuente. Así mientras que el TDD se enfoca
 en describir el comportamiento de unidades de código el BDD se enfoca en
 describir el comportamiento de la interacción entre varios módulos del sistema.
 
 En BDD la unidad de prueba, es conocida como las pruebas de aceptación, las cuales
-definen una serie de escenarios los cuales surgen de los casos de uso del sistema.
+definen una serie de escenarios, los cuales surgen de los casos de uso del sistema.
 Estos escenarios casi siempre se especifican en un lenguaje DSL que hace uso
 de lenguaje natural (casi siempre inglés) para definir así el comportamiento
 esperado del sistema \cite{23_chelimsky_2010}.
@@ -293,9 +294,9 @@ de aceptación con el cliente y gente relacionada con el negocio, lo cual no
 siempre es posible \cite{12_rappin_2010}.
 
 \subsubsection{Cucumber}
-\textit{Cucumber} es un marco de trabajo que permite el especificar y ejecutar
+\textit{Cucumber} es un marco de trabajo que permite especificar y ejecutar
 pruebas de aceptación siguiendo el proceso BDD. Define un lenguaje llamado
-Gherkin que permite escribir escenarios en lenguaje natural. De esta manera
+\textit{Gherkin} que permite escribir escenarios en lenguaje natural. De esta manera
 facilita que personas no técnicas, como el cliente o gente de negocio,
 puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptación
 \cite{23_chelimsky_2010}.
@@ -316,8 +317,8 @@ Característica:
     Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
 \end{lstlisting}
 
-Gherkin es un lenguaje que usa el indentado para definir la estructura, de manera
-que los saltos de línea dividen las diferentes declaraciones,
+\textit{Gherkin} es un lenguaje que usa la identación para definir su estructura,
+de manera que los saltos de línea dividen las diferentes declaraciones,
 la mayoría de las líneas empiezan con palabras clave.
 
 % FIXME: , por ejemplo (cuales usas en el ejemplo) hay que explicarlo mas.
@@ -344,9 +345,9 @@ TDD y BDD para guiar el diseño del sistema, haciendo uso de los marcos
 de trabajo \textit{RSpec} y \textit{Cucumber} para realizar la especificación
 de las pruebas unitarias y de aceptación del sistema.
 
-Cabe mencionar que el uso de pruebas de aceptación permitió a su vez que la
-transición del uso de datos estáticos al uso del API final fuera lo mas fluída
-posible, ya que se indicaba los puntos críticos en los que se tenían que realizar
+Cabe mencionar que el uso de pruebas de aceptación permite a su vez que la
+transición del uso de datos estáticos al uso del API final sea lo mas fluído
+posible, ya que se indicaba los puntos críticos en los que se tiene que realizar
 cambios para obtener nuevamente el comportamiento esperado por el cliente.
 
 \section{Ruby, metaprogramación y lenguajes DSL}
@@ -358,7 +359,7 @@ Ruby toma inspiración de otros lenguajes de programación como Lisp, Smalltalk 
 Ruby es un lenguaje orientado a objetos puro, sin embargo permite el uso de
 otros paradigmas como el funcional o imperativo, incluye capacidades para la
 metaprogramación las cuales son usadas para crear fácilmente lenguajes de
-dominio especifico (\textit{Domain Specific Language} DSL)\cite{24_matsumoto_2008}.
+dominio especifico (\textit{Domain Specific Language}, DSL)\cite{24_matsumoto_2008}.
 
 \subsection{Metaprogramación y Ruby}
 La metaprogramación consiste en escribir programas que implementan o manipulan otros
@@ -368,14 +369,14 @@ compiladores y generadores de código automatizado.
 En Ruby la metaprogramación se enfoca en código que se manipula asimismo en tiempo
 de ejecución, a este tipo de metaprogramación se le da el nombre de metaprogramación
 dinámica, para así diferenciarla de la metaprogramación asociada típicamente a
-los generadores de código y a los compiladores \cite{2_perrotta_2010}.
+los generadores de código y compiladores \cite{2_perrotta_2010}.
 
 Ruby es un lenguaje de programación muy dinámico:
 \begin{itemize}
 \item Permite crear clases y módulos en tiempo de ejecución.
 \item Permite agregar nuevos métodos a clases en tiempo de ejecución.
-\item Define varios \textit{callbacks} para eventos relacionados con clases, módulos
-  y métodos.
+\item Define varias llamadas (\textit{callbacks}) a eventos relacionados con
+  clases, módulos y métodos.
 \end{itemize}
 
 También se tiene un API de reflexión, el cual permite que un programa examine
@@ -387,12 +388,14 @@ paréntesis para la aplicación de funciones hacen de Ruby un lenguaje
 ideal para la metaprogramación \cite{24_matsumoto_2008}.
 
 \subsection{Lenguajes de dominio especifico}
+
 Lenguajes de programación como Ruby o C++ son Lenguajes de Propósito General
 (\textit{General Purpose Language}, GPL), es decir, lenguajes que son diseñados
 para ser usados para implementar software en una gran variedad de dominios.
+
 En contrapuesto se tienen los Lenguajes de Dominio Específico
 (\textit{Domain Specific Language}, DSL) los cuales están diseñados para resolver
-problemas en un dominio específico.
+problemas en un dominio específico \cite{25_shriram_2003}.
 
 \subsubsection{DSL internos y externos}
 
@@ -401,24 +404,24 @@ Para implementar un DSL se tienen dos rutas:
 \item Definir la gramática del lenguaje haciendo uso de herramientas como
   ANTLR o Yacc, los cuales son DSL para escribir analizadores sintácticos
   de lenguajes. Posteriormente se tiene que escribir un intérprete para
-  la gramática definida. Este tipo de Lenguajes se les conoce como DSL externos.
+  la gramática definida. Este tipo de lenguajes se les conoce como DSL externos.
 \item Tomar un lenguaje GPL y modificarlo para que se asemeje al DSL que
   se necesita. A este tipo de DSL se les conoce por el nombre de DSL internos.
 \end{itemize}
 
 En el siguiente ejemplo se tiene un ejemplo de código Ruby que usa la biblioteca
-\textit{markaby} para generar HTML. En este caso se tiene un DSL para generar HTML
+\textit{Markaby} para generar HTML. En este caso se tiene un DSL para generar HTML
 haciendo uso de Ruby como lenguaje GPL base.
 \lstinputlisting[language=Ruby]{code/dsl-example.rb}
 
-El ejemplo anterior muestra un código válido en Ruby, pero tiene la forma de un lenguaje
-especifico para generar HTML. \textit{Markaby} define un DSL interno, porque hace uso
-de Ruby para implementar su DSL.
+El ejemplo anterior muestra un código válido en Ruby, pero tiene la forma de un
+lenguaje específico para generar HTML. \textit{Markaby} define un DSL interno,
+ya que hace uso de Ruby para implementar su DSL.
 
-Una gran ventaja de los DSL internos es que fácilmente se puede hacer uso del GPL
-subyacente cuando sea necesario, aunque la sintaxis del DSL interno esta limitado
+Una gran ventaja de los DSL internos es que se puede hacer uso del GPL subyacente
+fácilmente cuando sea necesario, aunque la sintaxis del DSL interno esta limitado
 por la sintaxis del lenguaje GPL. Este puede ser un gran limitante en otros lenguajes
-como en Java, en el cual es posible implementar DSL internos. Cabe mencionar que
-éstos no dejan de tener un gran parecido a Java por lo rígido de su sintaxis, mientras
-que la sintaxis de Ruby es flexible lo que permite que los DSL internos definidos
-con este se vean mas adaptados al problema en cuestión.
+como en Java, en el cual es posible implementar DSL internos \cite{25_shriram_2003}.
+Cabe mencionar que éstos no dejan de tener un gran parecido a Java por lo rígido de
+su sintaxis, mientras que la sintaxis de Ruby es flexible lo que permite que los DSL
+internos definidos con este se vean mas adaptados al problema en cuestión.
