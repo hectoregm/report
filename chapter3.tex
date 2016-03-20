@@ -95,8 +95,8 @@ objetivo de obtener su consumo energético real.
 \subsection{Diagrama general}
 
 En la Figura 3.2 se muestra el diagrama general de casos de uso del sistema
-\texttt{PEAT}. Se tienen diez casos de uso en total siendo siete casos para
-\texttt{PEAT} y tres casos para la biblioteca \texttt{Bezel}.
+\texttt{PEAT}. Se tienen diez casos de uso en total, siendo siete de éstas definidas
+para \texttt{PEAT} y tres casos para la biblioteca \texttt{Bezel}.
 
 Los casos de uso se agrupan en los cuatro componentes principales de la
 siguiente manera:
@@ -114,9 +114,8 @@ siguiente manera:
   \textit{Administrar recomendaciones} y \textit{Ver recomendación}.
 \item Plan de ahorro de energía (\textit{Energy Savings Plan}): Contiene los
   casos de uso \textit{Ver historial de consumo} y \textit{Administrar plan de
-    ahorro}
-  que se enfocan a la visualización del consumo eléctrico del usuario y las
-  posibles recomendaciones para disminuir su consumo.
+    ahorro}, que se enfocan a la visualización del consumo eléctrico del usuario
+  y las posibles recomendaciones para disminuir su consumo.
 \end{itemize}
 
 \jcimageinline{1.0}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de
@@ -134,8 +133,8 @@ características:
 \item La(s) dirección(es) de servicio asociada(s) al edificio.
 \end{itemize}
 
-Todas estas características se consideran básicas, es decir vitales para el
-funcionamiento del sistema por lo todas son requeridas para construir el perfil
+Todas estas características se consideran básicas, es decir, vitales para el
+funcionamiento del sistema por lo que todas son requeridas para construir el perfil
 del edificio.
 
 En este caso de uso también se obtiene la relación entre el edificio y su consumo
@@ -147,14 +146,15 @@ medio del perfil detallado del edificio.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Crear perfil del edificio.}
-  \addfield{Descripción:}{Un usuario PyME entra al sistema  para crear un perfil
+  \addfield{Descripción:}{Un usuario PyME ingresa al sistema  para crear un perfil
     inicial de un edificio, respondiendo ciertas preguntas básicas sobre el
     edificio.}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token de autenticación
-    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
-  \item Los datos de intervalo y de facturación del usuario están en el sistema.
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On}, SSO) asignado por el sistema de PG\&E.
+  \item Los datos de intervalo y de facturación del usuario se encuentran en el
+    sistema.
   }
   \additemizedfield{Requerimientos no funcionales:}{
   \item El usuario debe ser capaz de completar el perfil del edificio en 20 segundos
@@ -170,7 +170,7 @@ medio del perfil detallado del edificio.
     direcciones de servicio asociadas.
     \begin{enumerate}
     \item Si la cuenta tiene mas de una dirección de servicio
-      el sistema requiere que el usuario elija por lo menos una dirección
+      el sistema requiere que el usuario seleccione por lo menos una dirección
       de servicio.
     \end{enumerate}
   \item El usuario selecciona las direcciones de servicio que apliquen
@@ -189,7 +189,7 @@ medio del perfil detallado del edificio.
   }
   \addfield{Postcondiciones:}{
     Se genera un identificador único para el perfil del edificio generado, el cual
-    esta asociado a los datos de facturación de la cuenta seleccionada por el
+    está asociado a los datos de facturación de la cuenta seleccionada por el
     usuario PyME.
   }
 \end{usecase}
@@ -201,12 +201,12 @@ medio del perfil detallado del edificio.
 
 Para el sistema \texttt{PEAT} se tiene las siguientes características:
 \begin{itemize}
-\item Básicas: son las características básicas de un edificio: tipo, tamaño y
-  antigüedad, son vitales para el funcionamiento del sistema.
+\item Básicas: se refiere a las características esenciales de un edificio: tipo,
+  tamaño y antigüedad, las cuales son vitales para el funcionamiento del sistema.
 \item Detalladas: son las características mas significativas y fáciles de
-  responder, ejemplos son: horas de operación, numero de empleados, numero
+  responder. Por ejemplo: horas de operación, numero de empleados, numero
   de pisos, etcétera.
-\item Opcionales: son características más avanzadas/técnicas sobre el equipo
+\item Opcionales: son características técnicas más avanzadas sobre el equipo
   y estructura de un edificio.
 \end{itemize}
 
@@ -217,13 +217,13 @@ detalladas y opcionales son definidas por medio de dos rutas:
 \begin{itemize}
 \item Por medio del perfil detallado del edificio, en la que se despliega
   las preguntas y respuestas sobre las características del edificio.
-  Esta ruta es documentada en este caso de uso.
+  Esta ruta esta documentada en este caso de uso.
 \item Un componente que es embebido en varias partes del sistema
   que realiza una sola pregunta al usuario para ir obteniendo progresivamente
   mas información sobre el edificio. Este componente llamado componente
   de ingreso progresivo (\textit{Progressive Profile Widget} PPW).
   Esta ruta es documentada en el caso de uso \textit{Obtener información
-    del edificio}
+    del edificio}.
 \end{itemize}
 
 \begin{usecase}
@@ -234,41 +234,41 @@ detalladas y opcionales son definidas por medio de dos rutas:
     básicas, detalladas y opcionales de un edificio.}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token de autenticación
-    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
-  \item El usuario a creado previamente el perfil básico del edificio.
+  \item El usuario ha sido autentificado por medio de un element (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
   }
   \additemizedfield{Requerimientos no funcionales:}{
   \item Todas las acciones realizadas por el usuario deben ser procesadas
     en menos de un segundo.
   }
   \addscenario{Flujo normal:}{
-  \item El sistema checa si la cuenta tiene mas de un edificio asociado.
+  \item El sistema verifica si la cuenta tiene más de un edificio asociado.
     \begin{itemize}
-    \item Si hay mas de un edificio asociado a la cuenta el usuario
+    \item Si hay mas de un edificio asociado a la cuenta, el usuario
       tiene que seleccionar el edificio correspondiente.
     \end{itemize}
-  \item El sistema despliega una lista de preguntas y respuestas divida en secciones.
-    Las secciones completadas están marcadas con una marca de completado.
+  \item El sistema despliega una lista de preguntas y respuestas, dividida en
+    secciones. Las secciones completadas están marcadas con una marca de terminado.
     \begin{itemize}
-    \item Las secciones que se despliegan dependen del tipo de edificio,
-      por ejemplo: construcción, iluminación, calefacción y refrigeración.
+    \item Las secciones que se despliegan dependen del tipo de edificio.
+      Por ejemplo: construcción, iluminación, calefacción y refrigeración.
     \item El usuario puede ver y actualizar sus respuestas a todas las
       preguntas en una sola pantalla.
     \end{itemize}
   \item El usuario selecciona una sección, esta se expande para mostrar todas
-    las preguntas de la sección.
+    las preguntas de la misma.
   \item El usuario responde una o varias preguntas.
     \begin{enumerate}
     \item Las preguntas son ordenadas dentro de cada sección según un orden
-      predefinido. Las secciones también tienen un orden predefinido.
+      predefinido. %\footnote{Las secciones también tienen un orden predefinido.}
     \item Según vaya respondiendo el usuario se va actualizando un indicador
-      del progreso de llenado del perfil. Cada pregunta/respuesta tiene el
+      del progreso de llenado del perfil. Cada pregunta con su respuesta tiene el
       mismo valor para calcular el progreso de llenado.
     \end{enumerate}
-  \item El usuario puede elegir continuar con la siguiente sección o dar click
-    en el encabezado de otra sección.
-  \item El sistema salva la información en cuanto el usuario selecciona
+  \item El usuario puede elegir continuar con la siguiente sección o seleccionar
+    en el encabezado otra sección.
+  \item El sistema almacena la información en cuanto el usuario selecciona
     una respuesta. Al obtener nueva información el sistema debe recalcular
     las recomendaciones asociadas al edificio.
   }
@@ -283,15 +283,15 @@ detalladas y opcionales son definidas por medio de dos rutas:
 \subsection{Obtener información del edificio}
 
 Uno de los requerimientos mas importante para \texttt{PEAT} es el incentivar y
-obtener mas información sobre las características de los edificios del usuario.
-Esto es porque entre mas información se obtiene de estos se pueden generar
-mejores planes de ahorro y recomendaciones para el usuario.
+obtener mas información sobre las características de los edificios del usuario,
+ya que entre mas información se obtiene de éstos se podrán generar mejores planes
+de ahorro y recomendaciones para el usuario.
 
 La forma en como se aborda esta necesidad es por medio de la implementación
-de un componente que esta presente en las dos partes principales del sistema:
-el plan de ahorro y la lista de recomendaciones. Este componente llamado
-componente de ingreso progresivo (\textit{Progressive Profile Widget} PPW).
-Este componente realiza una sola pregunta al usuario obteniendo progresivamente
+de un componente que ésta presente en las dos partes principales del sistema:
+el plan de ahorro y la lista de recomendaciones. Este elemento llamado
+componente de ingreso progresivo (\textit{Progressive Profile Widget}, PPW),
+tal componente realiza una sola pregunta al usuario obteniendo progresivamente
 mas información sobre el edificio.
 
 \begin{usecase}
