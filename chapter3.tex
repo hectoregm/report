@@ -597,88 +597,88 @@ acciones concretas para reducir sus costos de energía.
 \section{Interfaz de usuario}
 
 Dados los requerimientos funcionales y no funcionales presentados en los
-casos de uso se tiene que la interfaz de usuario debe tener las siguientes
-características:
+casos de uso se encuentra que la interfaz de usuario debe tener las
+siguientes características:
 
 \begin{itemize}
 \item La interfaz debe ser simple y enfocada a la información que el
-  usuario necesita
+  usuario necesita.
 \item La interfaz debe permitir realizar la mayoría de sus
   acciones de forma asincrónica, sin necesidad de una recarga completa de
-  la pagina.
+  la página.
 \item Toda interacción debe completarse en menos de un segundo.
 \end{itemize}
 
-Para cumplir estos requerimientos era necesario una cantidad considerable
+Para cumplir estos requerimientos fue necesario una cantidad considerable
 de código Javascript en la parte del \textit{frontend}, para realizar peticiones
 al servidor de forma asíncronas por medio de AJAX, y realizar las actualizaciones
 a la vista después de recibir la respuesta del servidor.
 
 Para permitir el reuso de código para la implementación de funcionalidad como
-el componente de ingreso progreso era necesario escribir una cantidad de código
-Javascript considerable, para dar estructura a estos componentes del
-\textit{frontend} se eligió usar la biblioteca \textit{Backbone} puesto que permite
-definir una arquitectura MVC, es decir permite definir modelos, vistas y
-controladores en la parte del \textit{frontend}.
+el \textit{componente de ingreso progresivo} era necesario dar estructura a los
+componentes del \textit{frontend}, para este fin se  eligió utilizar la biblioteca
+\textit{Backbone} pues permite definir una arquitectura MVC, es decir, permite
+definir modelos, vistas y controladores en la parte del \textit{frontend}.
 
 \subsection{Descripción general y navegación}
 
-La interfaz de usuario en el sistema \texttt{PEAT} esta compuesta por ocho paginas
-de las cuales tres son paginas de PG\&E y las restantes son gestionadas por
+% FIXME: Al parecer este párrafo esta repetido.
+La interfaz de usuario en el sistema \texttt{PEAT} está compuesta por ocho páginas
+de las cuales tres son páginas de PG\&E y las restantes son gestionadas por
 \texttt{PEAT}.
 
-Toda las paginas del sistema muestran un menú de navegación que permite al
-usuario navegar directamente a las paginas \textquote{Plan de ahorro},
+Todas las páginas del sistema muestran un menú de navegación que permite al
+usuario navegar directamente a las páginas \textquote{Plan de ahorro},
 \textquote{Recomendaciones} y \textquote{Perfil detallado del edificio}.
 
-La descripción general de la paginas es el siguiente:
+La descripción general de la páginas es la siguiente:
 
 \begin{enumerate}
-\item Un usuario entra al portal de PG\&E, luego a la pagina de ingreso del
+\item Un usuario ingresa al portal de PG\&E, luego a la página de ingreso del
   sistema \textit{MyEnergy} de PG\&E, en este sistema es donde los usuarios PyME
-  hacen la administración de su perfil y cuentas con PG\&E. En el tablero de
+  realizan la administración de su perfil y cuentas con PG\&E. En el tablero de
   \textit{MyEnergy} se tiene una liga que invita al usuario a conocer sobre
   medidas para ahorrar, esta liga dirige al usuario al sistema \texttt{PEAT}
   (Ver Figura 3.3 1).
-\item En el primer ingreso al sistema se dirige al usuario la pagina
+\item En el primer ingreso al sistema se dirige al usuario a la página
   \textquote{Crear perfil del edificio} (Ver Figura 3.3 2), aquí el usuario
   solo contesta las preguntas básicas sobre su edificio
   (Ver caso de uso \textit{Crear perfil del edificio}).
-  El usuario regresa a esta pagina cuando requiere agregar mas edificios a su cuenta.
-  Al finalizar la creación del perfil se redirige al usuario a la pagina
+  El usuario regresa a esta página cuando requiere agregar mas edificios a su cuenta.
+  Al finalizar la creación del perfil se redirige al usuario a la página de
   \textquote{Plan de ahorro}.
-\item La pagina \textquote{Plan de ahorro} es la pagina principal del sistema
-  \texttt{PEAT}, es decir es la pagina inicial cuando el usuario cuenta por lo
-  menos con un un perfil de edificio al ingresar por medio de su tablero en
+\item La página de \textquote{Plan de ahorro} es la página principal del sistema
+  \texttt{PEAT}, es decir, la página inicial (cuando el usuario cuenta por lo
+  menos con un un perfil de edificio) al ingresar por medio de su tablero en
   \textit{MyEnergy} (Ver Figura 3.3 3).
   El plan de ahorro presenta la siguiente funcionalidad al usuario:
   \begin{itemize}
   \item Parte superior: se proporciona al usuario capacidad para interactuar
     con la facturación de sus gastos de energía por medio de gráficas comparativas
     (Ver caso de uso \textit{Ver historial de consumo}).
-  \item Parte inferior: se muestra al usuario su plan de ahorro, es decir
+  \item Parte inferior: se muestra al usuario su plan de ahorro, es decir,
     las recomendaciones que se ha comprometido a realizar para reducir su gasto
     (Ver caso de uso \textit{Administrar plan de ahorro}).
   \end{itemize}
-  El usuario puede navegar a la pagina \textquote{Detalle de recomendación}
-  de una recomendación mostrada en su plan de ahorro.
-\item En la pagina \textquote{Recomendaciones} se tiene dos componentes
+  El usuario puede navegar a la página de \textquote{Detalle de recomendación}
+  mostrada en su plan de ahorro.
+\item En la página de \textquote{Recomendaciones} se tienen dos componentes
   (Ver Figura 3.3 4):
   \begin{itemize}
-  \item El componente de ingreso progresivo que incita la usuario a
+  \item El componente de ingreso progresivo que invita al usuario a
     dar mas información sobre su edificio (Ver caso de uso \textit{Obtener
       información del edificio}).
   \item Una lista de recomendaciones para reducir sus costos de energía
     basados en el perfil de su edificio (Ver caso de uso \textit{Administrar
       recomendaciones}).
   \end{itemize}
-  El usuario puede navegar a la pagina \textquote{Detalle de recomendación}
+  El usuario puede navegar a la página de \textquote{Detalle de recomendación}
   de las recomendaciones mostradas en la lista de recomendaciones.
-\item La pagina \textquote{Perfil detallado del edificio} (Ver Figura 3.3 5) es
+\item La página de \textquote{Perfil detallado del edificio} (Ver Figura 3.3 5) es
   donde el usuario puede responder o actualizar las respuestas a las preguntas
   sobre su edificio (Ver caso de uso \textit{Administrar perfil del edificio}).
-\item La pagina \textquote{Detalle de recomendación} (Ver Figura 3.3 6) muestra los
-  pormenores sobre las medidas que se necesitan realizar para lograr reducir
+\item La página de \textquote{Detalle de recomendación} (Ver Figura 3.3 6) muestra
+  los pormenores sobre las medidas que se necesitan realizar para lograr reducir
   el consumo en el edificio (Ver caso de uso \textit{Ver recomendación}).
 \end{enumerate}
 
