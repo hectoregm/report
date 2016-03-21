@@ -296,7 +296,7 @@ mas información sobre el edificio.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Obtener información del edificio.}
-  \addfield{Descripción:}{El sistema qobtiene información
+  \addfield{Descripción:}{El sistema obtiene información
     progresivamente del usuario haciendo uso de un componente que
     realiza una pregunta al usuario en varias partes del sistema.
     Este es conocido como componente de ingreso progresivo (\textit{Progressive
@@ -439,7 +439,7 @@ Las recomendaciones se muestran en tres partes del sistema:
 \subsection{Ver recomendación}
 
 En el plan de ahorro, la lista de recomendaciones o en el perfil detallado
-del edificio solo se despliega el titulo y descripción breve de cada
+del edificio solo se despliega el título y una breve descripción de cada
 recomendación. Entonces es necesario proporcionar al usuario mas información
 detallada sobre la recomendación que el usuario quiere implementar.
 
@@ -450,26 +450,27 @@ detallada sobre la recomendación que el usuario quiere implementar.
     implementarla.}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token de autenticación
-    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
-  \item El usuario a creado previamente el perfil básico del edificio.
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
   }
   \addfield{Requerimientos no funcionales:}{
     Cualquier acción en una recomendación debe hacerse en forma
-    asíncrona y sin necesitar una recarga completa de la pagina.
+    asíncrona y sin necesitar una recarga completa de la página.
   }
   \addscenario{Flujo normal:}{
-  \item El usuario ve una recomendación que capta su atención y da un
-    click en el titulo de la recomendación.
-  \item El sistema despliega información adicional sobre la recomendación, por
-    ejemplo cuanto ahorro daría realizar la recomendación, que se necesita
+  \item El usuario ve una recomendación que capta su atención y selecciona el título
+    de la recomendación.
+  \item El sistema despliega información adicional sobre la recomendación. Por
+    ejemplo, (1) cuanto ahorraría al realizar tal recomendación, (2) qué se necesita
     hacer para obtener este ahorro, etcétera.
   \item El usuario puede realizar las acciones definidas en el caso
-    de uso anterior es decir, añadir la recomendación al plan de ahorro
-    indicar que no aplica o indicar que ya ha sido completada la recomendación.
+    de uso anterior, es decir, añadir la recomendación al plan de ahorro,
+    indicar que no aplica dicha recomendación o bien la recomendación ha sido
+    completada.
   }
   \addfield{Postcondiciones:}{
-    Si el usuario realizo cualquier acción en una recomendación entonces
+    Si el usuario realizó cualquier acción en una recomendación, entonces
     la lista de recomendaciones es actualizada y reordenada.
   }
 \end{usecase}
