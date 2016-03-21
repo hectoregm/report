@@ -296,7 +296,7 @@ mas información sobre el edificio.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Obtener información del edificio.}
-  \addfield{Descripción:}{El sistema obtiene información
+  \addfield{Descripción:}{El sistema qobtiene información
     progresivamente del usuario haciendo uso de un componente que
     realiza una pregunta al usuario en varias partes del sistema.
     Este es conocido como componente de ingreso progresivo (\textit{Progressive
@@ -347,8 +347,8 @@ mas información sobre el edificio.
     \item Si el usuario elige saltar la pregunta entonces el sistema
       despliega la siguiente pregunta sin necesitar de una respuesta por el usuario.
     \end{enumerate}
-  \item Desde el PPW, el usuario puede dar click a ''Building Profile''\ para ver
-    el perfil detallado del edificio.
+  \item Desde el PPW, el usuario puede seleccionar \textquote{Building Profile} para
+    ver el perfil detallado del edificio.
   }
   \additemizedfield{Postcondiciones:}{
   \item Un perfil del edificio más detallado si el usuario dio respuesta a la
@@ -361,7 +361,7 @@ mas información sobre el edificio.
 \subsection{Administrar recomendaciones}
 
 En los casos de uso anteriores se obtiene del usuario el perfil del edificio
-y por lo menos sus características básicas. Haciendo uso de esta información
+, al menos sus características básicas. Haciendo uso de esta información
 el sistema \texttt{PEAT} genera recomendaciones sobre como disminuir el consumo
 de energía a través de cambios de comportamiento y/o modernización de equipo.
 
@@ -378,27 +378,28 @@ Las recomendaciones se muestran en tres partes del sistema:
     recomendaciones que se ajustan al perfil del edificio.}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token de autenticación
-    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
-  \item El usuario a creado previamente el perfil básico del edificio.
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
   }
   \additemizedfield{Requerimientos no funcionales:}{
-  \item Cualquier acción en una recomendación debe hacerse en forma
-    asíncrona y sin necesitar una recarga completa de la pagina.
+  \item Cualquier acción en una recomendación debe hacerse de forma
+    asíncrona y sin necesitar de recargar la página completa.
   }
   \addscenario{Flujo normal:}{
-  \item El sistema despliega las recomendaciones, ya sea en el plan
-    de ahorro, la lista de recomendaciones o en el perfil detallado del edificio.
+  \item El sistema despliega las recomendaciones, en el plan de ahorro,
+    la lista de recomendaciones o en el perfil detallado del edificio.
   \item El usuario puede tomar las siguientes acciones:
     \begin{itemize}
     \item Añadir al plan (de ahorro).
       \begin{enumerate}
-      \item Cuando el usuario da click a ''Añadir al plan'', una ventana modal
-        se abre y pregunta: ''¿ Cuando piensa completar esta acción ?''.
+      \item Cuando el usuario selecciona \textquote{Añadir al plan}, una ventana
+        modal se abre y pregunta:
+        \textquote{¿ Cuando piensa completar esta acción ?}.
       \item El sistema proporciona lista predefinida de rangos de tiempo:
         una semana, un mes, tres meses, etcétera.
-      \item El usuario elige el rango de tiempo adecuado y da click
-        a ''Add to plan''
+      \item El usuario elige el rango de tiempo adecuado y selecciona la opción
+        \textquote{Añadir al plan}.
       \item El sistema añade la recomendación al plan de ahorro del edificio.
       \end{enumerate}
     \item No aplica.
@@ -406,15 +407,15 @@ Las recomendaciones se muestran en tres partes del sistema:
       \item El sistema mueve la recomendación al final de la lista de
         recomendaciones.
       \item En cualquier momento, el usuario puede cambiar el estado de la
-        recomendación, es decir añadir la recomendación al plan de ahorro
+        recomendación, es decir, añadir la recomendación al plan de ahorro
         o indicar que no es aplicable al edificio.
       \end{enumerate}
-    \item Ya completado.
+    \item Ya terminado.
       \begin{enumerate}
       \item El sistema mueve la recomendación al final de la lista de
         recomendaciones.
       \item En cualquier momento, el usuario puede cambiar el estado de la
-        recomendación, es decir añadir la recomendación al plan de ahorro
+        recomendación, es decir, añadir la recomendación al plan de ahorro
         o indicar que no es aplicable al edificio.
       \end{enumerate}
     \end{itemize}
@@ -428,9 +429,9 @@ Las recomendaciones se muestran en tres partes del sistema:
     el usuario realiza cualquiera de las acciones anteriores.
   }
   \additemizedfield{Postcondiciones:}{
-  \item Si el usuario añadió una recomendación a su plan de ahorro entonces
+  \item Si el usuario añadió una recomendación a su plan de ahorro, entonces
     se tiene un plan de ahorro actualizado.
-  \item Si el usuario realizo cualquier acción en una recomendación entonces
+  \item Si el usuario realizó cualquier acción en una recomendación, entonces
     la lista de recomendaciones es actualizada y reordenada.
   }
 \end{usecase}
