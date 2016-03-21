@@ -519,34 +519,36 @@ detallada sobre la recomendación que el usuario quiere implementar.
 
 \subsection{Administrar plan de ahorro}
 
-El plan de ahorro esta diseñado para ser la pagina principal del sistema
-\texttt{PEAT} cuando el usuario ya creado por lo menos un perfil de edificio.
+El plan de ahorro es un conjunto de recomendaciones que el usuario se ha comprometido
+a llevar a cabo en su edificio. La administración de esta lista es de vital
+importancia para el sistema \texttt{PEAT} puesto que permite al usuario tomar
+acciones concretas para reducir sus costos de energía.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Administrar plan de ahorro}
   \addfield{Descripción:}{El sistema debe permitir la administración
-    del plan de ahorro del edificio que consiste en un conjunto de recomendaciones
-    que el usuario sea a comprometido a realizar o que ya ha completado
-    para reducir su gasto energético.}
+    del plan de ahorro del edificio, el cual consiste en un conjunto de
+    recomendaciones que el usuario sea ha comprometido a realizar o bien que ya ha
+    terminado para reducir su gasto energético.}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token de autenticación
-    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
-  \item El usuario a creado previamente el perfil básico del edificio.
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
   }
   \addfield{Requerimientos no funcionales:}{
-    Las actualizaciones a la pagina deben hacerse en forma asíncrona y sin necesitar
-    una recarga completa de la pagina.
+    Las actualizaciones a la página deben hacerse en forma asíncrona y sin necesitar
+    una recarga completa de la página.
   }
   \addscenario{Flujo normal:}{
   \item El usuario no ha agregado ninguna recomendación a su plan
     \begin{enumerate}
     \item Las tres mejores recomendaciones son desplegadas dentro del marco
-      del plan de ahorro
+      del plan de ahorro.
     \item El sistema elige estas recomendaciones por medio de la siguiente lógica:
       \begin{itemize}
       \item Son ordenadas según su periodo de recuperación (definido por el ahorro
-        anual en dólares / costo en dólares por adelantado).
+        anual en dólares / costo en dólares, por adelantado).
       \item Recomendaciones con costo inicial cero (por ejemplo, acciones basadas
         en comportamiento) se consideran que tienen un reembolso de dos años.
       \item Las recomendaciones que han sido marcadas como completadas o que no aplican
@@ -555,38 +557,39 @@ El plan de ahorro esta diseñado para ser la pagina principal del sistema
     \end{enumerate}
   \item El usuario a agregado una o mas recomendaciones a su plan de ahorro.
     \begin{itemize}
-    \item La mejor recomendación es desplegada debajo del componente PPW
+    \item La mejor recomendación es desplegada debajo del componente PPW.
     \item El sistema despliega una lista de las recomendaciones que el usuario
       a agregado a su plan.
       \begin{itemize}
       \item El sistema debe indicar que la lista de recomendaciones es el plan
         de ahorro.
       \item El usuario puede agregar mas recomendaciones desde la lista de
-        recomendaciones, cuando se añade una recomendación esta solamente es
+        recomendaciones, cuando se añade una de estas solamente es
         visible en el plan de ahorro ya no debe de aparecer en la lista de
         recomendaciones
       \item El usuario puede remover recomendaciones de su plan seleccionando
-        ''Remover del plan'' en un menú desplegable al lado del nombre de la
+        \textquote{Remover del plan} en un menú desplegable al lado del nombre de la
         acción.
       \end{itemize}
     \item El usuario puede ordenar la lista por nombre, categoría, costo, ahorro
       o reembolso.
-    \item El usuario puede obtener mas información al dar click en el nombre
+    \item El usuario puede obtener mas información al seleccionar el nombre
       de la recomendación.
-    \item El usuario actualiza el estado de una recomendación a ''Completada''
-      o ''Remover''.
+    \item El usuario actualiza el estado de una recomendación a
+      \textquote{Completada} o \textquote{Remover}.
       \begin{itemize}
       \item Las recomendaciones dentro del plan de ahorro solo pueden tener
-        dos posibles estados: ''Completada'' y ''Remover'', el estado base
-        de una recomendación agregada al plan es de ''Añadida''.
-      \item Las recomendaciones con estado de ''Completada'' permanecen
-        en el plan de ahorro con la selección ''Completada'' desplegada
+        dos posibles estados: \textqupte{Completada} y \textquote{Remover},
+        el estado base de una recomendación agregada al plan es de
+        \textquote{Añadida}.
+      \item Las recomendaciones con estado de \textquote{Completada} permanecen
+        en el plan de ahorro con la selección \textquote{Completada} desplegada
         al lado del nombre de la acción.
       \end{itemize}
     \end{itemize}
   }
   \addfield{Postcondiciones:}{
-    Si el usuario realizo cualquier acción en una recomendación entonces el plan
+    Si el usuario realizó cualquier acción en una recomendación entonces el plan
     de ahorro es actualizado y reordenado.
   }
 \end{usecase}
