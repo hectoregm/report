@@ -234,7 +234,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
     básicas, detalladas y opcionales de un edificio.}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario ha sido autentificado por medio de un element (\textit{token})
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
     de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
   \item El usuario debió haber creado previamente el perfil básico del edificio.
   }
@@ -284,7 +284,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
 
 Uno de los requerimientos mas importante para \texttt{PEAT} es el incentivar y
 obtener mas información sobre las características de los edificios del usuario,
-ya que entre mas información se obtiene de éstos se podrán generar mejores planes
+ya que entre mas información se obtenga de éstos se podrán generar mejores planes
 de ahorro y recomendaciones para el usuario.
 
 La forma en como se aborda esta necesidad es por medio de la implementación
@@ -296,53 +296,53 @@ mas información sobre el edificio.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Obtener información del edificio.}
-  \addfield{Descripción:}{El sistema va obteniendo información
+  \addfield{Descripción:}{El sistema obtiene información
     progresivamente del usuario haciendo uso de un componente que
     realiza una pregunta al usuario en varias partes del sistema.
-    Este componente se llama componente de ingreso progresivo (\textit{Progressive
-      Profile Widget} PPW).}
+    Este es conocido como componente de ingreso progresivo (\textit{Progressive
+      Profile Widget}, PPW).}
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token de autenticación
-    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
-  \item El usuario a creado previamente el perfil básico del edificio.
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
   }
   \addfield{Requerimientos no funcionales:}{
-    Las actualizaciones a la pagina deben hacerse en forma
-    asíncrona y sin necesitar una recarga completa de la pagina.
+    Las actualizaciones a la página deben hacerse en forma
+    asíncrona y sin recargar la página completa.
   }
   \addscenario{Flujo normal:}{
   \item El sistema despliega el componente PPW en la parte izquierda en las
     pantallas de plan de ahorro y de recomendaciones.
-  \item Dentro del PPW, se presenta al usuario una pregunta a responder
+  \item Dentro del PPW, se presenta al usuario una pregunta a responder:
     \begin{enumerate}
     \item Dependiendo de la pregunta, el usuario puede seleccionar una
       respuesta de una lista desplegable, seleccionar casillas,
-      responder Si o No con un botón radial o ingresar un valor
+      responder si o no con un botón radial o ingresar un valor
       en un campo.
     \item Cada tipo de edificio tiene una lista predefinida ordenada de
       preguntas a ser desplegadas en el componente.
     \item Algunas preguntas tienen imágenes asociadas para facilitar
       al usuario su respuesta.
     \end{enumerate}
-  \item El usuario puede o bien responder la pregunta, saltar la pregunta o
+  \item El usuario puede responder la pregunta o saltar la pregunta o
     no hacer nada en el PPW.
     \begin{enumerate}
     \item Si el usuario responde:
       \begin{enumerate}
       \item La respuesta provoca un refinamiento del perfil del edificio y
-        el nuevo calculo de las recomendaciones propuestas.
+        el nuevo cálculo de las recomendaciones propuestas.
         \begin{enumerate}[i.]
         \item El perfil del edificio es actualizado, las recomendaciones
           son recalculadas.
         \item El sistema despliega un indicador de progreso mientras
           se recalculan las recomendaciones.
         \item Al finalizar el refinamiento el orden de las preguntas
-          o los valores del plan de ahorro deben ser actualizados, esto
-          debe hacerse sin necesitar una recarga completa de la pagina.
+          o los valores del plan de ahorro deberán ser actualizados, sin recargar
+          la página completa.
         \end{enumerate}
       \item El sistema despliega la siguiente pregunta.
-      \item El sistema persiste la respuesta dada.
+      \item El sistema almacena la respuesta dada.
       \end{enumerate}
     \item Si el usuario elige saltar la pregunta entonces el sistema
       despliega la siguiente pregunta sin necesitar de una respuesta por el usuario.
@@ -351,7 +351,7 @@ mas información sobre el edificio.
     el perfil detallado del edificio.
   }
   \additemizedfield{Postcondiciones:}{
-  \item Un perfil del edificio mas detallado si el usuario dio respuesta a la
+  \item Un perfil del edificio más detallado si el usuario dio respuesta a la
     pregunta desplegada sobre su edificio.
   \item Si el usuario dio nueva información se recalculan las recomendaciones
     asociadas al edificio.
