@@ -48,7 +48,7 @@ del modelo de información:
 \item Usuario: representa al empresario, el cual puede tener una o más cuentas.
 \item Cuenta: representa la contabilidad financiera del usuario. Tiene uno o más
   contratos de servicio, uno por tipo de servicio (electricidad o gas), también
-S  tiene una o más direcciones de servicio asociadas.
+  S  tiene una o más direcciones de servicio asociadas.
 \item Contrato de servicio: representa los servicios que el cliente adquiere
   de PG\&E, como la electricidad o el gas y puede tener uno o más puntos
   de servicio asociados.
@@ -477,35 +477,39 @@ detallada sobre la recomendación que el usuario quiere implementar.
 
 \subsection{Ver historial de consumo}
 
+% FIXME: Add general description about energy charts.
+
 \begin{usecase}
   \addtitle{Caso de Uso:}{Ver historial de consumo}
   \addfield{Descripción:}{Se muestra el consumo energético del edificio
     mediante un conjunto de gráficas con múltiples vistas para diferentes
-    rangos de tiempo, categorías rangos de tiempo y categorías.}
+    rangos de tiempo y categorías de gasto (gas, electricidad y emisiones de carbón).
+  }
   \addfield{Actor:}{Usuario PyME}
   \additemizedfield{Precondiciones:}{
-  \item El usuario a sido autentificado por medio de un token de autenticación
-    (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
-  \item El usuario a creado previamente el perfil básico del edificio.
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
   }
   \addfield{Requerimientos no funcionales:}{
-    Las actualizaciones a la pagina deben hacerse en forma asíncrona y sin necesitar
-    una recarga completa de la pagina.
+    Las actualizaciones a la página deben hacerse en forma asíncrona y sin necesitar
+    una recarga completa de la página.
   }
   \addscenario{Flujo normal:}{
   \item El sistema despliega inicialmente una gráfica del gasto anual de
     electricidad y gas del edificio.
   \item El sistema muestra un menú con las siguientes opciones de visualización:
     \begin{itemize}
-    \item Gasto: Medido en dolares con gráficas anuales, mensuales y diarias.
-    \item Electricidad: Medido en kilowatt-hora con gráficas anuales, mensuales y
-      diarias.
-    \item Gas: Medido en termia, con gráficas anuales, mensuales y diarias
-    \item Emisiones de carbón: Medido en toneladas, con gráficas anuales, mensuales
+    \item Gasto: el cual es calculado en dolares con gráficas anuales, mensuales
       y diarias.
-    \item Análisis: Gráfica que indica el consumo estimado según la categoría.
-      Las categorías son por ejemplo: refrigeración, iluminación, calefacción,
-      etcétera.
+    \item Electricidad: se refiere al cálculo en kilowatt-hora con gráficas anuales,
+      mensuales y diarias.
+    \item Gas: el cual es medido en termia, con gráficas anuales, mensuales y
+      diarias
+    \item Emisiones de carbón: medido en toneladas, con gráficas anuales, mensuales
+      y diarias.
+    \item Análisis: gráfica que indica el consumo estimado según la categoría.
+      Las categorías son: refrigeración, iluminación, calefacción, etcétera.
     \end{itemize}
   }
   \addfield{Postcondiciones:}{
