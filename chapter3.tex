@@ -616,7 +616,7 @@ a la vista después de recibir la respuesta del servidor.
 
 Para permitir el reuso de código para la implementación de funcionalidad como
 el \textit{componente de ingreso progresivo} era necesario dar estructura a los
-componentes del \textit{frontend}, para este fin se  eligió utilizar la biblioteca
+componentes del \textit{frontend}, para este fin se eligió utilizar la biblioteca
 \textit{Backbone} pues permite definir una arquitectura MVC, es decir, permite
 definir modelos, vistas y controladores en la parte del \textit{frontend}.
 
@@ -686,31 +686,28 @@ La descripción general de la páginas es la siguiente:
 \jcimageinline{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
   la navegación en el sistema \texttt{PEAT}.}
 
-\subsection{Diseño de página}
+\subsection{Encabezado general}
 
-\subsubsection{Encabezado}
-
-Todas las paginas del sistema \texttt{PEAT} comparten el mismo encabezado
+Todas las páginas del sistema \texttt{PEAT} comparten el mismo encabezado
 el cual tiene las siguientes secciones (Ver Figura 3.4):
 
 \begin{enumerate}[a)]
 \item Componente de selección de edificios: este control muestra un menú
   desplegable con todos los edificios asociados al usuario.
-\item Nombre del sistema: aunque el nombre interno del sistema es \texttt{PEAT}
-  para el usuario el nombre del sistema es \textquote{Chequeo de energía del negocio}
-  (\textit{Business Energy Checkup}).
+\item Nombre del sistema: el nombre es \textquote{Chequeo de energía del negocio}
+  (\textit{Business Energy Checkup}), el nombre interno del sistema es \texttt{PEAT}.
 \item Menú de navegación del sistema.
   \begin{itemize}
-  \item Plan de ahorro (\textit{Energy Plan}): dirige al usuario a la pagina
+  \item Plan de ahorro (\textit{Energy Plan}): dirige al usuario a la página de
     \textquote{Plan de ahorro}.
-  \item Formas de ahorrar (\textit{Ways to Save}): dirige al usuario a la pagina
+  \item Formas de ahorrar (\textit{Ways to Save}): dirige al usuario a la página de
     \textquote{Recomendaciones}.
-  \item Perfil de negocio (\textit{Business Profile}): dirige al usuario a la pagina
-    \textquote{Perfil detallado del edificio}.
+  \item Perfil de negocio (\textit{Business Profile}): dirige al usuario a la página
+    de \textquote{Perfil detallado del edificio}.
   \item Tomar un recorrido (\textit{Take a tour}): se muestra al usuario
-    las diferentes paginas y secciones del sistema.
+    las diferentes páginas y secciones del sistema.
   \end{itemize}
-\item Titulo de la pagina actual.
+\item Título de la página actual.
 \item Componente de potencial de ahorro: este control muestra en todo momento
   el potencial de ahorro del edificio y el ahorro que se obtiene por el plan
   de ahorro del edificio.
@@ -722,17 +719,17 @@ el cual tiene las siguientes secciones (Ver Figura 3.4):
 
 \subsection{Crear perfil del edificio}
 
-La pagina de \textquote{Crear perfil del edificio} es la pagina inicial
-cuando el usuario no tiene ningún perfil de edificio asociado, esta pagina
-también es usada cuando el usuario agrega mas edificios a su cuenta.
+La página para \textquote{Crear perfil del edificio} es la página inicial del
+sistema cuando el usuario no tiene ningún perfil del edificio asociado, esta página
+también es usada cuando el usuario agrega más edificios a su cuenta.
 
-Esta pagina tuvo varias iteraciones por la retroalimentación obtenida por las
-pruebas con usuarios, en las primeras iteraciones la pagina requería que el
-usuario contestara toda la información requerida según el caso de de uso
-\textit{Crear perfil del edificio}, esto representaba mucho trabajo al usuario
+Esta página tuvo varias iteraciones por la retroalimentación obtenida por las
+pruebas con los usuarios, en las primeras iteraciones la página requería que el
+usuario contestara toda la información requerida según el caso de uso
+\textit{Crear perfil del edificio}, lo caul representaba mucho trabajo al usuario
 (Ver Figura 3.5).
 
-\jcimageinline{0.75}{imagenes/SBP-Wireframe.png}{Versión inicial para crear
+\jcimagefull{1.0}{imagenes/SBP-Wireframe.png}{Versión inicial para crear
   un perfil de edificio.}
 
 Para facilitar al usuario el ingreso de información se decidió implementar
@@ -759,7 +756,7 @@ de servicio, el alias del edificio, el tipo de edificio y su área
 \jcimageinline{0.75}{imagenes/SBP-Modal2.png}{Se pide al usuario ingresar
   las características básicas de su edificio.}
 
-Al ingresar esta información el usuario es redirigido a la pagina
+Al ingresar esta información el usuario es redirigido a la página de
 \textquote{Plan de ahorro} del perfil creado.
 
 \subsection{Plan de ahorro}
