@@ -1,7 +1,7 @@
 \section{Biblioteca Bezel}
 
 Para realizar la integración entre el sistema \texttt{PEAT} y el servicio web C3,
-el API proporcionado por el servidor C3, se implemento una biblioteca con el nombre
+el API proporcionado por el servidor C3, se implementó una biblioteca con el nombre
 de \texttt{Bezel}.
 
 \texttt{PEAT} hace uso del marco de trabajo Rails que a su vez hace
@@ -36,11 +36,11 @@ Dada las dificultades descritas hacer uso de \texttt{ActiveResource} no era una
 solución viable pero sirvió como inspiración para implementar la biblioteca
 \texttt{Bezel} para proporcionar acceso al servicio web C3.
 
-El servidor C3 cabe recordar esta implementado en dos lenguajes de programación, la
-gran mayoría implementado con Javascript mientras que el núcleo y funciones criticas
-están implementadas en Java. El servidor C3 puede mandar tanto XML como JSON como
-respuesta a peticiones realizadas al servidor, pero la representación en JSON es la
-mas usada dado que el sistema de tipos usando por el sistema esta definido en
+El servidor C3 cabe recordar está implementado en dos lenguajes de programación, la
+gran mayoría implementado con Javascript, mientras que el núcleo y funciones criticas
+están implementadas en Java. El servidor C3 puede enviar tanto XML como JSON como
+respuesta a peticiones realizadas al servidor, la representación en JSON es la
+más utilizada dado que el sistema de tipos que se usa en el sistema esta definido en
 Javascript.
 
 \texttt{Bezel} permite la reconstrucción automática de los tipos definidos por el
@@ -54,40 +54,40 @@ es tipo RESTful y las capacidades de metaprogramación de Ruby.
 
 \texttt{Bezel} tiene dos modos principales de uso:
 \begin{itemize}
-\item Como un cliente REST con ciertas adecuaciones para una mejor
-  integración con el API del servidor C3.
+\item Como un cliente REST (con ciertas adecuaciones) para mejorar la
+  integración de éste con el API del servidor C3.
 \item Como un lenguaje de dominio especifico interno para Ruby para la
-  implementación automatizada de tipos y sus asociaciones del servicio web C3.
+  definir modelos y sus asociaciones asociados al servicio web C3.
 \end{itemize}
 
 \subsection{Servicio web C3}
 
-El servicio web C3 es de tipo RESTful es decir cada recurso o tipo tiene una única
+El servicio web C3 es de tipo RESTful, es decir, cada recurso o tipo tiene una única
 dirección URL asociada. Las direcciones URL tienen la siguiente forma:
 
 \vspace{2.5mm}
 \texttt{POST} /api/$<$\textit{version}$>$/$<$\textit{tenant}$>$/$<$\textit{module}$>$;$<$\textit{tag}$>$/$<$\textit{type}$>$?action=$<$\textit{action-name}$>$
 
 \begin{itemize}
-\item \textit{version}: indica la versión del servicio a la cual se esta accediendo,
+\item \textit{version}: indica la versión del servicio a la cual se está accediendo,
   el sistema \texttt{PEAT} hace uso de la versión 1.0.
 \item \textit{tenant}: indica el producto o cliente, esto es porque cada
-  producto y/o cliente cierta funcionalidad especifica. Para \texttt{PEAT} se tiene
-  \textquote{peat} y \textquote{c3}.
-\item \textit{module}: indica el módulo al que se esta accediendo, un conjunto
+  producto y/o cliente requiere cierta funcionalidad específica. Para \texttt{PEAT}
+  se tiene \textquote{peat} y \textquote{c3}.
+\item \textit{module}: indica el módulo al que se accede, un conjunto
   de tipos se definen en un módulo en particular, para el sistema \texttt{PEAT} el
   módulo mas usado es el módulo \textquote{peat} pero también se hace uso
   de los módulos \textquote{billing} y \textquote{structure}.
-\item \textit{tag}: indica el tipo de ambiente, es decir si el servicio web es para
-  ambiente de pruebas, control de calidad, producción, etcétera.
-  \textquote{peatprod} y \textquote{peatqa} son algunas de las \textit{tags}
-  que se usaron para \texttt{PEAT}.
+\item \textit{tag}: indica el tipo de ambiente, es decir si el servicio web C3 es
+  para ambiente de pruebas, control de calidad, producción, etcétera.
+  \textit{peatprod} y \textit{peatqa} son algunas de las etiquetas que se usaron
+  para en la implementación de \texttt{PEAT}.
 \item \textit{type}: indica el tipo al que se quiere acceder, \textquote{Building},
   \textquote{Location} y \textquote{BuildingEnergyConservationOption} son algunos
-  de los tipos que se usaron para \texttt{PEAT}.
+  de los tipos utilizados en \texttt{PEAT}.
 \item \textit{action-name}: indica la acción que se quiere realizar sobre
-  el tipo indicado anteriormente. \textquote{fetch}, \textquote{upsert} y
-  \textquote{remove} son unas de las acciones que se pueden realizar.
+  el tipo indicado anteriormente. Por ejemplo \textquote{fetch}, \textquote{upsert} y
+  \textquote{remove} son algunas de las acciones que se pueden realizar.
 \end{itemize}
 
 Como se comento anteriormente el servicio web C3 no es totalmente de tipo RESTful
@@ -96,8 +96,8 @@ haciendo uso del \textquote{action-name} para ejecutar la acción correspondient
 Para la implementación de \texttt{Bezel} solamente se espera que el servicio web
 tenga direcciones únicas para cada tipo definido.
 
-Muchas acciones aceptan parámetros los cuales son almacenados dentro del cuerpo
-de la petición POST, por lo que el único parámetro que se manda por medio
+Muchas acciones reciben ciertos parámetros los cuales son almacenados dentro del
+cuerpo de la petición POST, por lo que el único parámetro que se manda por medio
 de la URL es el nombre la acción a realizar.
 
 \subsection{Arquitectura General}
