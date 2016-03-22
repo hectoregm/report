@@ -1056,19 +1056,18 @@ Cada sección está dividida en las siguientes partes (Ver Figura
 \subsection{Componentes reusables}
 \label{subsec:componentes}
 
-En \texttt{PEAT} se tiene funcionalidad que se necesaria en varias paginas del
-sistema, un ejemplo seria la necesidad de mostrar una pregunta sin contestar del
-perfil del edificio.
-Para permitir un mejor reuso de código y diseño se decidió implementar esta
-funcionalidad en componentes independientes reusables que facilitaran su uso
-en las diferentes paginas del sistema.
+En \texttt{PEAT} se tiene varios componentes como el componente de ingreso
+progresivo o el componente para añadir al plan de ahorro cuya presencia es necesaria
+por la funcionalidad que proporcionan. Para permitir el reuso de código y diseño se
+decidió implementar estos componentes por medio de la biblioteca
+\texttt{Backbone} para facilitar su uso en diferentes páginas del sistema.
 
 Los componentes que se implementaron son los siguientes:
 \begin{itemize}
 \item Componente de ingreso progresivo.
 \item Componente del potencial de ahorro.
-\item Componente lista de recomendaciones.
-\item Componente añadir al plan.
+\item Componente para lista de recomendaciones.
+\item Componente para añadir al plan de ahorro.
 \end{itemize}
 
 % TODO: Mencionar que estos componentes además tienen que coordinarse
@@ -1076,41 +1075,40 @@ Los componentes que se implementaron son los siguientes:
 
 \subsubsection{Componente de ingreso progresivo}
 
-Este componente muestra al usuario una pregunta y sus respuestas sobre el
-perfil del edificio para motivar al usuario el proporcionar mas información
-sobre su edificio. Este componente es usado en las paginas \textquote{Plan de ahorro}
-y \textquote{Recomendaciones}.
+Este componente muestra al usuario una pregunta y sus posibles respuestas sobre el
+perfil del edificio. Este componente es usado en las páginas de
+\textquote{Plan de ahorro} y de \textquote{Recomendaciones}.
 
 El componente tiene las siguientes partes (Ver Figura \ref{fig:ingreso-progresivo}):
 \begin{enumerate}[a)]
 \item Pregunta y respuesta: se despliega una sola pregunta y
   las respuestas se presentan según los tipos de respuesta expuestos
   en el perfil del edifico.
-\item Botón saltarse (\textit{Skip}): permite al usuario saltarse
-  la pregunta mostrada y pasar a la siguiente pregunta sin contestar del perfil
+\item Botón saltar (\textit{Skip}): permite al usuario omitir dicha pregunta
+  mostrada y pasar a la siguiente pregunta sin contestar del perfil
   de su edificio.
-\item Botón siguiente (\textit{Next}): permite al usuario el mandar
-  su respuesta de la pregunta mostrada.
-\item Link al perfil detallado: permite al usuario navegar al perfil
+\item Botón siguiente (\textit{Next}): permite al usuario enviar la respuesta
+  seleccionada de la pregunta mostrada.
+\item Liga al perfil detallado: permite al usuario navegar al perfil
   detallado de su edificio.
 \end{enumerate}
 \rjcimage{0.5}{imagenes/PPW.png}{Componente de ingreso progresivo.}{ingreso-progresivo}
 
 \subsubsection{Componente del potencial de ahorro}
 
-Este componente permite al usuario saber el potencial de ahorro del edificio y su
-ahorro esperado dado su plan de ahorro.
+Este componente permite al usuario conocer el potencial de ahorro del edificio y su
+ahorro esperado establecido en su plan de ahorro.
 
 \subsubsection{Componente lista de recomendaciones}
 
 Este componente lista las recomendaciones que se pueden realizar en un edificio para
-reducir sus gastos energéticos, la descripción detallada de este componente esta en
-la sección \ref{subsec:recomendaciones}.
+reducir sus gastos energéticos, la descripción detallada de este componente se
+encuentra en la Sección \ref{subsec:recomendaciones}.
 
-\subsubsection{Componente añadir al plan}
+\subsubsection{Componente para añadir al plan de ahorro}
 
 Este componente permite modificar el estado de una recomendación,
-la descripción detallada de este componente esta en la sección
-\ref{subsec:recomendaciones}. Este componente es usado en las paginas
+la descripción detallada de éste se encuentra en la Sección
+\ref{subsec:recomendaciones}. Este componente es usado en las páginas de
 \textquote{Plan de ahorro}, \textquote{Recomendaciones} y
 \textquote{Detalle recomendación}.
