@@ -868,24 +868,24 @@ La sección inferior consta de las siguientes partes (Ver Figura 3.15):
 \subsection{Recomendaciones}
 \label{subsec:recomendaciones}
 
-La pagina \textquote{Recomendaciones} muestra al usuario una lista de
-recomendaciones, es decir medidas que se pueden realizar en el edificio
+La página de \textquote{Recomendaciones} muestra al usuario una lista de
+sugerencias acerca de las medidas que se pueden realizar en el edificio
 para lograr disminuir el consumo energético del edificio. En esta lista se
 tienen todas las recomendaciones aplicables que no están ya en el plan
 de ahorro del edificio.
 
-La pagina tiene dos secciones: la sección lateral contiene el componente de
+La página tiene dos secciones: la sección lateral contiene el componente de
 ingreso progresivo y en la sección principal se tiene el componente lista
 de recomendaciones.
 
 \subsubsection{Componente lista de recomendaciones}
 
-El componente lista de recomendaciones consta de las siguientes secciones:
+El componente de lista de recomendaciones consta de las siguientes secciones:
 
 \begin{itemize}
 \item Encabezado: se muestran las características principales por las cuales
-  el usuario puede ordenar la lista: nombre, categoría, costo, ahorro y recuperación
-  de la inversión (Ver Figura 3.16).
+  el usuario puede ordenar la lista ya sea por nombre, categoría, costo, ahorro
+  y recuperación de la inversión (Ver Figura 3.16).
   \jcimage{1.0}{imagenes/Recomendaciones-Encabezado.png}{Encabezado de la lista
     de recomendaciones.}
 \item Renglón: por cada recomendación en la lista se despliegan las
@@ -894,17 +894,17 @@ El componente lista de recomendaciones consta de las siguientes secciones:
   Para cada recomendación se tiene las siguientes secciones (Ver Figura 3.17):
   \begin{enumerate}[a)]
   \item Imagen representativa de la recomendación.
-  \item Descripción de una linea de la recomendación.
+  \item Descripción de una línea de la recomendación.
   \item Categoría de la recomendación.
   \item Costo de implementar la recomendación.
   \item Ahorro que trae la recomendación en un año.
-  \item Tiempo para recuperar la inversión, es decir cuanto tiempo el ahorro
-    obtenido por implementar la recomendación es igual o superior al costo
+  \item Tiempo para recuperar la inversión, es decir, cuanto tiempo el ahorro
+    obtenido al implantar la recomendación es igual o superior al costo
     de su implementación.
   \item Breve descripción de las medidas necesarias para implementar la
     recomendación.
   \item Componente añadir al plan, este componente permite al usuario definir el
-    estado de la recomendación, es decir si la recomendación es parte
+    estado de la recomendación, es decir, si la recomendación es parte
     del plan de ahorro, ya fue implementada o no aplica al edificio.
   \end{enumerate}
   \jcimage{1.0}{imagenes/Recomendaciones-Renglon.png}{Las secciones de una
@@ -913,38 +913,40 @@ El componente lista de recomendaciones consta de las siguientes secciones:
 
 \subsubsection{Componente añadir al plan}
 
-El componente añadir al plan permite al usuario cambiar el estado
+El componente \textquote{Añadir al plan} permite al usuario cambiar el estado
 de una recomendación, los estados posibles son:
 
 \begin{itemize}
 \item Por implementar: en este estado la recomendación no es parte
-  del plan de ahorro del edificio. Este es el estado inicial de toda
-  recomendación.
-\item Añadido: este estado indica que el usuario a elegido implementar la
+  del plan de ahorro del edificio, este hace referencia al estado inicial de
+  toda recomendación.
+\item Añadido: este estado indica que el usuario ha elegido implementar la
   recomendación y por lo tanto es parte del plan de ahorro del edificio.
 \item No aplicable: este estado indica que la recomendación no es aplicable al
   edificio.
-\item Completada: este estado indica que la recomendación ya fue implementada
-  con éxito en el edificio, la recomendación se considera parte del
-  plan de ahorro.
+\item Completada: se refiere a la recomendación terminada la cual ya fue implementada
+  con éxito en el edificio, ésta se considera parte del plan de ahorro.
 \end{itemize}
 
 Mediante la interacción con este componente el usuario modifica el estado
-de una recomendación. Este componente tiene el comportamiento de un botón y
-de un menú despegable teniendo que presionar el componente realiza la
-acción de agregar la recomendación al plan de ahorro, mientras mientras que
-las demás acciones secundarias como remover del plan a la recomendación
-son realizadas por medio del menú despegable.
+de una recomendación. Este componente tiene dos formas de interacción:
+\begin{itemize}
+\item Presionando su parte izquierda: se realiza la acción de agregar la
+  recomendación al plan de ahorro.
+\item Presionando su parte derecha: se despliega un menú de acciones
+  secundarias que dependen del estado actual de la recomendación.
+\end{itemize}
 
-Para realizar la transición del estado \textquote{Por implementar} al estado
-\textquote{Añadido} el usuario solo tiene que presionar el control en su parte
-izquierda (Ver Figuras \ref{fig:boton-inicial} y \ref{fig:boton-final}).
+Como se indico anteriormente para realizar la transición del estado
+\textquote{Por implementar} al estado \textquote{Añadido} el usuario solo tiene
+que presionar el control en su parte izquierda (Ver Figuras \ref{fig:boton-inicial}
+y \ref{fig:boton-final}).
 \rjcimage{0.4}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
   de añadir al plan.}{boton-inicial}
 \rjcimage{0.4}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
   a sido añadida al plan.}{boton-final}
 
-El sistema despliega una ventana modal preguntando al usuario una estimación
+El sistema despliega una ventana preguntando al usuario una estimación
 del tiempo en que se podrá implementar las medidas propuestas por la
 recomendación que se esta agregando al plan de ahorro (Ver Figura \ref{fig:estimacion-recomendacion}).
 \rjcimage{0.5}{imagenes/Recomendaciones-Estimacion.png}{Al agregar una
@@ -952,7 +954,7 @@ recomendación que se esta agregando al plan de ahorro (Ver Figura \ref{fig:esti
   la recomendación.}{estimacion-recomendacion}
 
 Para realizar otras acciones sobre la recomendación el usuario presiona la parte
-derecha del componente en la parte que se tiene un triangulo que indica la
+derecha del componente en la parte donde se encuentra un triángulo que indica la
 presencia de un menú despegable.
 Estando la recomendación es un estado inicial \textquote{Por implementar} las
 acciones en el menu despegable son para indicar que se ha completado la recomendación
@@ -962,9 +964,9 @@ acciones en el menu despegable son para indicar que se ha completado la recomend
 \rjcimage{0.5}{imagenes/Boton-Plan-Menu-Inicial.png}{Las acciones de
   completar o indicar no aplicable en el menú despegable.}{menu-anadir-inicial}
 
-Cuando la recomendación esta en el estado \textquote{Añadido} las
-acciones en el menú despegable son las acciones de completar, remover o indicar
-que no es aplicable la recomendación (Ver Figura \ref{fig:menu-anadir-anadido}).
+Cuando la recomendación se encuentra en el estado de \textquote{Añadido} las
+acciones en el menú despegable son las relacionadas con completar, remover o indicar
+que no es aplicable a la recomendación (Ver Figura \ref{fig:menu-anadir-anadido}).
 \rjcimage{0.5}{imagenes/Boton-Plan-Menu-Anadido.png}{Las acciones de
   completar, remover o indicar no aplicable en el menú despegable.}{menu-anadir-anadido}
 
