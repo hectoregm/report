@@ -999,19 +999,20 @@ La página está dividida en las siguientes secciones:
 
 \subsection{Perfil detallado del edificio}
 
-La pagina \textquote{Perfil detallado del edificio} es donde el usuario
-ingresa o actualiza las características de su edificio por medio de un
+La página de \textquote{Perfil detallado del edificio} permite al usuario el ingreso
+o actualización de las características de su edificio por medio de un
 conjunto de preguntas y respuestas divididas en categorías.
 
-La pagina esta dividida en varias secciones, una sección por categoría:
+La página se encuentra dividida en varias secciones\footnote{Una sección por
+  categoría}:
 \begin{itemize}
-\item Edificio (\textit{Building})
-\item Iluminación (\textit{Lightning})
-\item Calefacción, ventilación y aire acondicionado (\textit{Heating, Ventilation and Air Conditioning} HVAC)
-\item Refrigeración (\textit{Refrigeration})
-\item Cocina (\textit{Cooking})
-\item Calefacción de agua (\textit{Water-Heating})
-\item Miscelánea (\textit{Misc})
+\item Edificio (\textit{Building}).
+\item Iluminación (\textit{Lightning}).
+\item Calefacción, ventilación y aire acondicionado (\textit{Heating, Ventilation and Air Conditioning} HVAC).
+\item Refrigeración (\textit{Refrigeration}).
+\item Cocina (\textit{Cooking}).
+\item Calefacción de agua (\textit{Water-Heating}).
+\item Miscelánea (\textit{Misc}).
 \end{itemize}
 
 Varias categorías como cocina y refrigeración solo son mostradas
@@ -1020,21 +1021,21 @@ para ciertos tipos de edificios (Ver Figura \ref{fig:perfil-categorias})
 \rjcimage{1.0}{imagenes/Perfil-Secciones.png}{Las preguntas y respuestas sobre
   el edificio se organizan en categorías.}{perfil-categorias}
 
-El usuario selecciona una categoría dando un click al titulo de una categoría,
-entonces esa sección se abre para presentar las preguntas y respuestas
-asociadas a esta.
+El usuario selecciona una categoría seleccionando el título de una categoría,
+para que esa sección presente las preguntas y respuestas asociadas a ésta.
 
-Cada sección esta dividida en las siguientes partes (Ver Figura
+Cada sección está dividida en las siguientes partes (Ver Figura
 \ref{fig:perfil-seccion}):
 \begin{enumerate}
-\item Encabezado de la sección: cada encabezado tiene un icono característico,
-  el nombre de la categoría y en la parte derecha un marcador para indicar
-  si todas las preguntas de la sección han sido respondidas por el usuario.
+\item Encabezado de la sección: cada encabezado tiene un ícono característico,
+  el nombre de la categoría y en la parte derecha un marcador indica
+  si todas las preguntas de la sección han sido respondidas por el usuario
+  (Ver Figura \ref{fig:perfil-seccion} 1).
 \item Preguntas y respuestas: las preguntas son breves y se refieren a una
   característica particular del edificio. La mayoría de las preguntas
-  tiene respuestas definidas, teniendo solo un reducido numero de preguntas
-  donde se espera el ingreso de un valor numérico. Las respuestas se
-  presentan de las siguientes formas:
+  tiene respuestas definidas\footnote{Se cuenta solo con un reducido numero de
+    preguntas donde se espera el ingreso de un valor numérico}. Las respuestas se
+  presentan de las siguientes formas (Ver Figura \ref{fig:perfil-seccion} 2):
   \begin{enumerate}[a)]
   \item Menú desplegable: para preguntas que tienen mas de tres respuestas
     posibles excluyentes.
@@ -1046,10 +1047,10 @@ Cada sección esta dividida en las siguientes partes (Ver Figura
     numero limitado de respuesta posibles. Se hace uso de imágenes para las
     preguntas mas técnicas para facilitar al usuario el contestar la pregunta.
   \end{enumerate}
-\item Botón siguiente: para progresar a la siguiente categoría.
+\item Botón siguiente: para progresar a la siguiente categoría (Ver Figura \ref{fig:perfil-seccion} 3).
 \end{enumerate}
 
-\rjcimage{1.0}{imagenes/Perfil-Preguntas.png}{Las preguntas de las secciones
+\rjcimage{0.85}{imagenes/Perfil-Preguntas.png}{Las preguntas de las secciones
   Edificio y HVAC.}{perfil-seccion}
 
 \subsection{Componentes reusables}
