@@ -761,12 +761,12 @@ Al ingresar esta información el usuario es redirigido a la página de
 
 \subsection{Plan de ahorro}
 
-La pagina \textquote{Plan de ahorro} es la pagina principal del sistema
+La página de \textquote{Plan de ahorro} es la página principal del sistema
 \texttt{PEAT} dado que implementa la funcionalidad principal del sistema
-que es la capacidad para interactuar con los datos sobre los gastos de
+pues tiene la capacidad para interactuar con los datos sobre los gastos de
 energía y la administración del plan de ahorro del edificio.
 
-La pagina esta dividida en dos secciones principales, en la sección superior
+La página está dividida en dos secciones principales, en la sección superior
 se da el manejo de las gráficas para visualizar los gastos de energía y en la
 sección inferior se tiene la administración del plan de ahorro.
 
@@ -795,24 +795,24 @@ La sección superior consta de las siguientes partes:
   \jcimage{1.0}{imagenes/Grafica.png}{Visualización del gasto de electricidad.}
 \end{itemize}
 
-Para la implementación de las gráficas se utilizo el marco de trabajo
-Ext JS, este marco de trabajo esta diseñado para implementar aplicaciones
+Para la implementación de las gráficas se utilizó el marco de trabajo
+Ext JS, este marco de trabajo está diseñado para implementar aplicaciones
 de tipo \textit{SPA} por medio del lenguaje de programación Javascript.
-Ext JS implementa un gran numero de controles de interfaz como como paneles,
-barras de herramientas, deslizadores, etcétera.
+Ext JS implementa un gran numero de controles de interfaz como paneles,
+barras de herramientas, pestañas, etcétera.
 
 Ext JS es una elección natural para el sistema \texttt{PEAT} dado que tiene un
 excelente paquete de graficación el cual permite presentar visualmente una gran
-cantidad de datos por medio de una amplia gama de gráficas: lineas, barras,
+cantidad de datos por medio de una amplia gama de gráficas: líneas, barras,
 circulares, etcétera. Otro punto a favor de Ext JS es que el equipo de programadores
 del \textit{frontend} estaba ampliamente familiarizado con este marco de trabajo.
 
-Dada la capacidad de Ext JS para implementar interfaces se tenia el plan inicial
-de implementar toda la interfaz con este marco de trabajo pero Ext JS tiene una
-gran desventaja en que requiere de un tiempo de inicialización de sus componentes
-demasiado grande, mas de un segundo, que va contrario a los requerimientos del
-cliente.
-Entonces se decidió hacer uso solamente del modulo de graficación de Ext JS y
+Dada la capacidad de Ext JS para crear interfaces se tenía el plan inicial
+de implementar toda la interfaz con este marco de trabajo sin embargo Ext JS tiene
+una gran desventaja ya que requiere de tiempo para inicializar sus componentes
+demasiado grande, (mas de un segundo), lo cual se contrapone a los requerimientos
+del cliente.
+Así se decidió hacer uso solamente del módulo de graficación de Ext JS y
 hacer la implementación de los controles necesarios para la interfaz desde cero
 haciendo uso de \texttt{Backbone}.
 
@@ -827,9 +827,9 @@ Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización dife
   comparaciones se utiliza gráficas de barras (Ver Figura 3.11).
   \jcimage{1.0}{imagenes/Vista-Anual.png}{Visualización anual del gasto de
     electricidad.}
-\item Mensual: se muestra una gráfica de lineas del gasto del edificio
+\item Mensual: se muestra una gráfica de líneas del gasto del edificio
   en los últimos 12 meses, además permite comparar con el gasto del año anterior.
-  Se puede agregar los datos sobre el clima durante el periodo que se esta
+  Se pueden agregar los datos sobre el clima durante el período que se está
   visualizando (Ver Figura 3.12).
   \jcimage{0.9}{imagenes/Vista-Mensual.png}{Visualización mensual del gasto de
     electricidad.}
@@ -840,7 +840,7 @@ Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización dife
     clima.}
 \item Análisis: Se muestra un análisis del gasto del edificio en categorías
   por medio de una gráfica circular, este análisis es realizado usando
-  aprendizaje de maquina por lo que este análisis es solo una estimación
+  aprendizaje de máquina por lo que este análisis es solo una estimación
   (ver Figura 3.14).
   \jcimage{0.9}{imagenes/Vista-Analisis.png}{Visualización del análisis del gasto de
     electricidad.}
@@ -853,14 +853,14 @@ visualizaciones son idénticas para el gasto en gas.
 
 La sección inferior consta de las siguientes partes (Ver Figura 3.15):
 \begin{itemize}
-\item Componente de ingreso progresivo: en este componente se despliega una pregunta
+\item Componente de ingreso progresivo: en este se despliega una pregunta
   sobre el edificio del usuario, las características de este componente
   se verán en detalle en la sección \ref{subsec:recomendaciones}.
 \item Componente lista de recomendaciones: en este componente se despliega la
   lista de recomendaciones que forman el plan de ahorro del edificio,
   las características de este componente se verán a detalle en la sección
   \ref{subsec:componentes}.
-  %  TODO: Reemplazar esta imagen por una de toda la sección inferior:
+  %  FIXME: Reemplazar esta imagen por una de toda la sección inferior:
   \jcimage{0.9}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
     recomendaciones.}
 \end{itemize}
