@@ -878,7 +878,7 @@ La página tiene dos secciones: la sección lateral contiene el componente de
 ingreso progresivo y en la sección principal se tiene el componente lista
 de recomendaciones.
 
-\subsubsection{Componente lista de recomendaciones}
+\subsubsection{Componente de lista de recomendaciones}
 
 El componente de lista de recomendaciones consta de las siguientes secciones:
 
@@ -911,7 +911,7 @@ El componente de lista de recomendaciones consta de las siguientes secciones:
     recomendación.}
 \end{itemize}
 
-\subsubsection{Componente añadir al plan}
+\subsubsection{Componente añadir al plan de ahorro}
 
 El componente \textquote{Añadir al plan} permite al usuario cambiar el estado
 de una recomendación, los estados posibles son:
@@ -919,7 +919,7 @@ de una recomendación, los estados posibles son:
 \begin{itemize}
 \item Por implementar: en este estado la recomendación no es parte
   del plan de ahorro del edificio, este hace referencia al estado inicial de
-  toda recomendación.
+  las recomendaciones.
 \item Añadido: este estado indica que el usuario ha elegido implementar la
   recomendación y por lo tanto es parte del plan de ahorro del edificio.
 \item No aplicable: este estado indica que la recomendación no es aplicable al
@@ -1056,11 +1056,12 @@ Cada sección está dividida en las siguientes partes (Ver Figura
 \subsection{Componentes reusables}
 \label{subsec:componentes}
 
-En \texttt{PEAT} se tiene varios componentes como el componente de ingreso
+En \texttt{PEAT} se tienen varios componentes como el componente de ingreso
 progresivo o el componente para añadir al plan de ahorro cuya presencia es necesaria
-por la funcionalidad que proporcionan. Para permitir el reuso de código y diseño se
-decidió implementar estos componentes por medio de la biblioteca
-\texttt{Backbone} para facilitar su uso en diferentes páginas del sistema.
+en varias de las páginas del sistema por la funcionalidad que proporcionan.
+Para permitir el reuso de código y diseño de estos componentes se decidió hacer uso
+de la biblioteca \texttt{Backbone}, dado que permite dar estructura (definiendo
+modelos, vistas y controladores) al implementar la funcionalidad requerida.
 
 Los componentes que se implementaron son los siguientes:
 \begin{itemize}
@@ -1070,7 +1071,7 @@ Los componentes que se implementaron son los siguientes:
 \item Componente para añadir al plan de ahorro.
 \end{itemize}
 
-% TODO: Mencionar que estos componentes además tienen que coordinarse
+% FIXME: Mencionar que estos componentes además tienen que coordinarse
 % al haber un cambio de estado, por medio de un canal de comunicación.
 
 \subsubsection{Componente de ingreso progresivo}
