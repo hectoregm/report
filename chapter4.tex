@@ -40,9 +40,12 @@ Los principales beneficios de esta practica son:
   al usuario.
 \end{itemize}
 
-En el despliegue continuo se tiene el concepto de \textit{deployment pipeline}
-el cual es un conjunto de validaciones por las que el sistema debe pasar para
-llegar a producción. El propósito de un \textit{deployment pipeline} es:
+En el despliegue continuo se tiene al proceso de despliegue (\textit{deployment
+  pipeline}) como concepto central, el cual en esencia es la implementación
+automatizada de los procesos de construcción, prueba y despliegue de un
+sistema \cite{28_humble_farley_2011}.
+
+El propósito de este proceso es:
 \begin{itemize}
 \item Visibilidad: todas las etapas del sistema de despliegue son visibles
   para todos los miembros del equipo.
@@ -65,7 +68,7 @@ Para PG\&E era necesario que se tuvieran los siguientes ambientes:
 \item \textit{peattest}: este ambiente es para un grupo de usuarios seleccionados
   por PG\&E para obtener retroalimentación sobre el sistema.
 \item \textit{peatqa}: este ambiente es para un equipo de PG\&E para realizar
-  control de calidad.
+  control de calidad y de rendimiento.
 \item \textit{peatprod}: este ambiente es el ambiente final de produccion.
 \end{itemize}
 
