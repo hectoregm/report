@@ -9,4 +9,15 @@ de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en s
 diferentes contextos, desarrollo, producción y pruebas, es de vital importancia
 para el desarrollo de software en tiempo y en forma.
 
-\section{Pruebas de integración}
+\section{Despliegue continuo}
+
+El despliegue continuo es una practica de software en la cual los integrantes
+de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
+realizando un despliegue al ambiente de producción al menos una vez al día
+\cite{26_martin_fowler_ci}. Esta practica busca reducir de forma significativa los
+problemas de integración, los cuales se incrementan en sistemas de gran tamaño
+que tienen varios módulos que interactúan entre si.
+
+Cada integración es verificada por medio de un constructor automatizado, el cual
+hace uso de las pruebas del sistema\footnote{Pruebas de unidad, funcional e
+  integración} para detectar errores de integración lo más rápido posible.
