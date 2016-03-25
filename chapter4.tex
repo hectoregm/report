@@ -53,9 +53,33 @@ llegar a producción. El propósito de un \textit{deployment pipeline} es:
   desplegar y liberar cualquier versión del sistema en cualquier ambiente.
 \end{itemize}
 
-Para el sistema \texttt{PEAT} 
+Los riesgos de lograr un despliegue a producción en \texttt{PEAT} eran mas grandes
+de lo habitual no solamente por la cantidad de requerimientos y la complejidad
+del sistema si no que además PG\&E requería la implementación de varios ambientes
+previos a desplegar el sistema en producción. Así para \texttt{PEAT} el implementar
+el despliegue continuo fue de vital importancia para cumplir con los necesidad
+del cliente.
 
-El despliegue continuo es una practica de software en la cual los integrantes
+Para PG\&E era necesario que se tuvieran los siguientes ambientes:
+\begin{itemize}
+\item \textit{peattest}: este ambiente es para un grupo de usuarios seleccionados
+  por PG\&E para obtener retroalimentación sobre el sistema.
+\item \textit{peatqa}: este ambiente es para un equipo de PG\&E para realizar
+  control de calidad.
+\item \textit{peatprod}: este ambiente es el ambiente final de produccion.
+\end{itemize}
+
+Para uso interno en C3 Energy se tenia además el ambiente \textit{peatstage}
+el cual era usado para realizar pruebas de rendimiento y de control de calidad.
+
+En total se tenían cuatro ambientes, los cuales tenían que tener la misma
+configuración al ambiente de producción. Dados estos requerimientos la implementación
+de despliegue continuo para el sistema \texttt{PEAT} fue una decisión
+casi natural para permitir manejar el despliegue del sistema para cualquier
+combinación de versión-ambiente requerido.
+
+
+La integración continua es una practica de software en la cual los integrantes
 de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
 realizando un despliegue al ambiente de producción al menos una vez al día
 \cite{26_martin_fowler_ci}. Esta practica busca reducir de forma significativa los
