@@ -11,6 +11,35 @@ para el desarrollo de software en tiempo y en forma.
 
 \section{Despliegue continuo}
 
+El despliegue continuo (\textit{Continuous Delivery}, CD) es una practica de software
+en la cual se implementa software de tal forma de que éste pueda ser desplegado a
+producción en cualquier momento\cite{27_martin_fowler_cd}. Su objetivo es crear,
+probar y liberar software más rápido y con mayor frecuencia.
+
+Se considera que un sistema implementa CD de forma correcta cuando
+\cite{27_martin_fowler_cd}:
+\begin{itemize}
+\item El sistema puede ser desplegado a producción en cualquier momento del
+  ciclo de desarrollo.
+\item Se tiene una rápida retroalimentación sobre la capacidad del sistema
+  para ser desplegado en producción al realizarse cambios en el sistema.
+\item Se puede desplegar en forma fácil cualquier versión del software para
+  cualquier entorno.
+\end{itemize}
+
+Los principales beneficios de esta practica son:
+\begin{itemize}
+\item Reducción del riesgo de despliegue: dado que se realizan despliegues
+  a producción de forma recurrente los cambios contenidos en cada despliegue
+  son menores por lo que hay menores posibilidades de errores y si un error
+  se presenta en mas fácil de arreglar.
+\item Retroalimentación del usuario: uno de los mayores riesgos en la ingeniería
+  del software es el desarrollar un sistema que no es útil para el cliente o usuario.
+  Por lo que obtener retroalimentación sobre el desarrollo del sistema lo mas
+  rápido posible y de forma frecuente permite descubrir que tan valioso es el sistema
+  al usuario.
+\end{itemize}
+
 El despliegue continuo es una practica de software en la cual los integrantes
 de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
 realizando un despliegue al ambiente de producción al menos una vez al día
