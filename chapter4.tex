@@ -48,6 +48,8 @@ previos al despliegue del sistema en el ambiente de producción, entonces
 el implementar el proceso de despliegue continuo para \texttt{PEAT} fue de vital
 importancia para cumplir con las necesidades del cliente.
 
+\vspace{2.5mm}
+
 Para PG\&E era necesario que se tuvieran los siguientes ambientes:
 \begin{itemize}
 \item \textit{peattest}: este ambiente es para un grupo de usuarios seleccionados
@@ -75,6 +77,8 @@ En el despliegue continuo se tiene al proceso de despliegue (\textit{deployment
 automatizada de los procesos de configuración, construcción, prueba y despliegue de
 un sistema \cite{28_humble_farley_2011}.
 
+\vspace{2.5mm}
+
 Este proceso otorgar las siguientes ventajas:
 \begin{itemize}
 \item Visibilidad: todas las etapas del sistema de despliegue son visibles
@@ -86,7 +90,29 @@ Este proceso otorgar las siguientes ventajas:
   desplegar y liberar cualquier versión del sistema en cualquier ambiente.
 \end{itemize}
 
-El proceso de despliegue se conforma de varias de etapas.
+El proceso de despliegue se conforma de una serie de etapas de validación por las
+que el sistema debe pasar para llegar al ambiente de producción. Para el sistema
+\texttt{PEAT} las etapas de validación son las siguientes (Ver Figura
+\ref{fig:pipeline}):
+\begin{itemize}
+\item Control de versiones: El equipo de desarrollo ingresa los cambios
+  realizados al sistema por medio del control de versiones Git, esto inicia
+  el proceso de despliegue.
+\item Pruebas de unidad: Al detectarse un cambio en el repositorio se corren
+  pruebas las pruebas de unidad del sistema. Se usa la biblioteca \texttt{RSpec}
+  para implementar las pruebas de unidad para el código en Ruby, mientras que se
+  usa la biblioteca \texttt{Jasmine} para las pruebas de unidad para el código en
+  Javascript. El equipo de desarrollo recibe retroalimentación del resultado de
+  las pruebas de las pruebas, si el resultado es positivo se pasa a la siguiente
+  etapa. En la primera secuencia en la Figura \ref{fig:pipeline} se tiene el caso
+  cuando las pruebas de unidad son negativas y se detiene el proceso de despliegue.
+\item Pruebas de aceptación:
+\end{itemize}
+
+\rjcimage{1.0}{imagenes/Deployment-Pipeline.png}{Proceso de despliegue para
+  \texttt{PEAT}.}{pipeline}
+
+
 
 %% La integración continua es una practica de software en la cual los integrantes
 %% de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
