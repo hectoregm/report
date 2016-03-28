@@ -103,16 +103,43 @@ que el sistema debe pasar para llegar al ambiente de producción. Para el sistem
   para implementar las pruebas de unidad para el código en Ruby, mientras que se
   usa la biblioteca \texttt{Jasmine} para las pruebas de unidad para el código en
   Javascript. El equipo de desarrollo recibe retroalimentación del resultado de
-  las pruebas de las pruebas, si el resultado es positivo se pasa a la siguiente
-  etapa. En la primera secuencia en la Figura \ref{fig:pipeline} se tiene el caso
+  las pruebas, si el resultado es positivo se pasa a la siguiente etapa.
+  En la primera secuencia en la Figura \ref{fig:pipeline} se tiene el caso
   cuando las pruebas de unidad son negativas y se detiene el proceso de despliegue.
-\item Pruebas de aceptación:
+\item Pruebas de aceptación: Se hace uso de la biblioteca \texttt{Cucumber}
+  para implementar las pruebas de aceptación, de la misma forma que las pruebas
+  de unidad si se tiene un resultado positivo se continua a la siguiente etapa en
+  caso contrario se detiene el proceso de despliegue.
+\item Ambientes de prueba: Se hace el despliegue del sistema en los ambientes de
+  prueba, es decir, a los ambientes \textit{peatstage}, \textit{peattest} y
+  \textit{peatqa}. En esta etapa se realizan pruebas de rendimiento y de prueba
+  de calidad de forma manual.
+\item Producción: se hace un despliegue a producción cuando la versión en los
+  sistemas de prueba han sido revisados de forma satisfactoria.
 \end{itemize}
 
 \rjcimage{1.0}{imagenes/Deployment-Pipeline.png}{Proceso de despliegue para
   \texttt{PEAT}.}{pipeline}
 
+Las primeras etapas del proceso se desarrollan en forma completamente automatizada
+hasta llegar a la etapa de despliegue a los ambientes de pruebas, en esta etapa
+al principio se realizaban pruebas de calidad y rendimiento de forma manual, estas
+actividades se fueron automatizando conforme fue pasando el tiempo haciendo uso de
+herramientas como \texttt{SauceLabs} y \texttt{CloudTest}. La ejecución para
+el despliegue al ambiente de producción se realiza de forma manual.
 
+\subsubsection{Herramientas}
+
+Para lograr la automatización del proceso de despliegue se hace uso de una conjunto
+de herramientas las cuales son:
+
+\begin{itemize}
+\item \texttt{Jenkins}: es un servidor de despliegue continuo, que permite
+  definir las etapas de un proceso de despliegue y las acciones que se realizan
+  según el resultado de la etapa.
+\item \texttt{Capistrano}: es una herramienta para correr programas para el
+  despliegue de sistemas.
+\end{itemize}
 
 %% La integración continua es una practica de software en la cual los integrantes
 %% de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
