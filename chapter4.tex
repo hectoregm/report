@@ -11,41 +11,71 @@ para el desarrollo de software en tiempo y en forma.
 
 \section{Despliegue continuo}
 
-El despliegue continuo (\textit{Continuous Delivery}, CD) es una practica de software
+El despliegue continuo (\textit{Continuous Delivery}, CD) es una práctica de software
 en la cual se implementa software de tal forma de que éste pueda ser desplegado a
 producción en cualquier momento\cite{27_martin_fowler_cd}. Su objetivo es crear,
 probar y liberar software más rápido y con mayor frecuencia.
 
-Se considera que un sistema implementa CD de forma correcta cuando
+\vspace{2.5mm}
+
+Se considera que un sistema implementa el despliegue continuo cuando
 \cite{27_martin_fowler_cd}:
 \begin{itemize}
 \item El sistema puede ser desplegado a producción en cualquier momento del
   ciclo de desarrollo.
 \item Se tiene una rápida retroalimentación sobre la capacidad del sistema
   para ser desplegado en producción al realizarse cambios en el sistema.
-\item Se puede desplegar en forma fácil cualquier versión del software para
+\item Se puede desplegar de forma sencilla cualquier versión del software para
   cualquier entorno.
 \end{itemize}
 
-Los principales beneficios de esta practica son:
+Los principales beneficios de esta práctica son:
 \begin{itemize}
 \item Reducción del riesgo de despliegue: dado que se realizan despliegues
   a producción de forma recurrente los cambios contenidos en cada despliegue
   son menores por lo que hay menores posibilidades de errores y si un error
-  se presenta en mas fácil de arreglar.
+  se presenta en mas fácil de localizar y arreglar.
 \item Retroalimentación del usuario: uno de los mayores riesgos en la ingeniería
   del software es el desarrollar un sistema que no es útil para el cliente o usuario.
-  Por lo que obtener retroalimentación sobre el desarrollo del sistema lo mas
-  rápido posible y de forma frecuente permite descubrir que tan valioso es el sistema
-  al usuario.
+  Por lo tanto obtener retroalimentación sobre el desarrollo del sistema de forma
+  rápida y frecuente permite evaluar que tan útil es el sistema para el usuario.
 \end{itemize}
+
+En \texttt{PEAT} los riesgos de lograr un despliegue a producción exitoso
+eran mas grande de lo habitual dada la complejidad del sistema y la cantidad
+de requerimientos. Además PG\&E requería la implementación de varios ambientes
+previos al despliegue del sistema en el ambiente de producción, entonces
+el implementar el proceso de despliegue continuo para \texttt{PEAT} fue de vital
+importancia para cumplir con las necesidades del cliente.
+
+Para PG\&E era necesario que se tuvieran los siguientes ambientes:
+\begin{itemize}
+\item \textit{peattest}: este ambiente es para un grupo de usuarios seleccionados
+  por PG\&E para obtener retroalimentación sobre el sistema.
+\item \textit{peatqa}: este ambiente es para un equipo de PG\&E para realizar
+  control de calidad y de rendimiento.
+\item \textit{peatprod}: este ambiente es el ambiente final de producción.
+\end{itemize}
+
+Para uso interno en C3 Energy se tenia además el ambiente \textit{peatstage}
+el cual era usado para realizar pruebas de rendimiento y de control de calidad.
+
+En total se tenían cuatro ambientes, los cuales tenían que tener que ser lo mas
+parecidos a la configuración final del ambiente de producción para que las pruebas
+de calidad y de rendimiento generaran información que fuera lo mas cercano al
+comportamiento del sistema en el ambiente de producción. Dados estos requerimientos
+la implementación del proceso de despliegue continuo para el sistema \texttt{PEAT}
+fue una decisión casi natural para permitir manejar el despliegue del sistema para
+cualquier combinación de versión-ambiente requerido.
+
+\subsection{Proceso de despliegue}
 
 En el despliegue continuo se tiene al proceso de despliegue (\textit{deployment
   pipeline}) como concepto central, el cual en esencia es la implementación
-automatizada de los procesos de construcción, prueba y despliegue de un
-sistema \cite{28_humble_farley_2011}.
+automatizada de los procesos de configuración, construcción, prueba y despliegue de
+un sistema \cite{28_humble_farley_2011}.
 
-El propósito de este proceso es:
+Este proceso otorgar las siguientes ventajas:
 \begin{itemize}
 \item Visibilidad: todas las etapas del sistema de despliegue son visibles
   para todos los miembros del equipo.
@@ -56,39 +86,15 @@ El propósito de este proceso es:
   desplegar y liberar cualquier versión del sistema en cualquier ambiente.
 \end{itemize}
 
-Los riesgos de lograr un despliegue a producción en \texttt{PEAT} eran mas grandes
-de lo habitual no solamente por la cantidad de requerimientos y la complejidad
-del sistema si no que además PG\&E requería la implementación de varios ambientes
-previos a desplegar el sistema en producción. Así para \texttt{PEAT} el implementar
-el despliegue continuo fue de vital importancia para cumplir con los necesidad
-del cliente.
+El proceso de despliegue se conforma de varias de etapas.
 
-Para PG\&E era necesario que se tuvieran los siguientes ambientes:
-\begin{itemize}
-\item \textit{peattest}: este ambiente es para un grupo de usuarios seleccionados
-  por PG\&E para obtener retroalimentación sobre el sistema.
-\item \textit{peatqa}: este ambiente es para un equipo de PG\&E para realizar
-  control de calidad y de rendimiento.
-\item \textit{peatprod}: este ambiente es el ambiente final de produccion.
-\end{itemize}
+%% La integración continua es una practica de software en la cual los integrantes
+%% de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
+%% realizando un despliegue al ambiente de producción al menos una vez al día
+%% \cite{26_martin_fowler_ci}. Esta practica busca reducir de forma significativa los
+%% problemas de integración, los cuales se incrementan en sistemas de gran tamaño
+%% que tienen varios módulos que interactúan entre si.
 
-Para uso interno en C3 Energy se tenia además el ambiente \textit{peatstage}
-el cual era usado para realizar pruebas de rendimiento y de control de calidad.
-
-En total se tenían cuatro ambientes, los cuales tenían que tener la misma
-configuración al ambiente de producción. Dados estos requerimientos la implementación
-de despliegue continuo para el sistema \texttt{PEAT} fue una decisión
-casi natural para permitir manejar el despliegue del sistema para cualquier
-combinación de versión-ambiente requerido.
-
-
-La integración continua es una practica de software en la cual los integrantes
-de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
-realizando un despliegue al ambiente de producción al menos una vez al día
-\cite{26_martin_fowler_ci}. Esta practica busca reducir de forma significativa los
-problemas de integración, los cuales se incrementan en sistemas de gran tamaño
-que tienen varios módulos que interactúan entre si.
-
-Cada integración es verificada por medio de un constructor automatizado, el cual
-hace uso de las pruebas del sistema\footnote{Pruebas de unidad, funcional e
-  integración} para detectar errores de integración lo más rápido posible.
+%% Cada integración es verificada por medio de un constructor automatizado, el cual
+%% hace uso de las pruebas del sistema\footnote{Pruebas de unidad, funcional e
+%%   integración} para detectar errores de integración lo más rápido posible.
