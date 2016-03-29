@@ -164,13 +164,12 @@ El uso de \texttt{EC2} presentaba las siguientes ventajas:
   que el sistema pueda escalar rápidamente según las necesidades de computo.
 \end{itemize}
 
-%% La integración continua es una practica de software en la cual los integrantes
-%% de un proyecto integran su trabajo (código, diseño, etcétera) de forma frecuente
-%% realizando un despliegue al ambiente de producción al menos una vez al día
-%% \cite{26_martin_fowler_ci}. Esta practica busca reducir de forma significativa los
-%% problemas de integración, los cuales se incrementan en sistemas de gran tamaño
-%% que tienen varios módulos que interactúan entre si.
+\subsubsection{Capistrano}
 
-%% Cada integración es verificada por medio de un constructor automatizado, el cual
-%% hace uso de las pruebas del sistema\footnote{Pruebas de unidad, funcional e
-%%   integración} para detectar errores de integración lo más rápido posible.
+Para configurar los servidores para \texttt{PEAT} se uso \textit{Capistrano} que
+es una herramienta para ejecutar tareas en múltiples servidores remotos por medio
+de SSH. Esta herramienta define un DSL basado en Ruby para la definición de tareas.
+
+\textit{Capistrano} contiene tareas predefinidas para el despliegue de sistemas
+basados en el marco de trabajo Rails, pero para el sistema \texttt{PEAT} se
+necesito definir mas tareas para realizar un despliegue exitoso.
