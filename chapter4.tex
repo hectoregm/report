@@ -1,4 +1,4 @@
-\chapter{Despliegue a producción}
+\chapter{Despliegue a producción y optimizaciones}
 
 La etapa para desplegar una aplicación es una etapa de creciente importancia ya
 que por un lado hace algunos años las aplicaciones web se desarrollaban bajo el
@@ -130,8 +130,8 @@ el despliegue al ambiente de producción se realiza de forma manual.
 
 \subsubsection{Herramientas}
 
-Para lograr la automatización del proceso de despliegue se hace uso de una conjunto
-de herramientas las cuales son:
+Para lograr la automatización del proceso de despliegue se hace de un gran numero
+de herramientas, las mas importantes son:
 
 \begin{itemize}
 \item \texttt{Jenkins}: es un servidor de despliegue continuo, que permite
@@ -139,6 +139,29 @@ de herramientas las cuales son:
   según el resultado de la etapa.
 \item \texttt{Capistrano}: es una herramienta para correr programas para el
   despliegue de sistemas.
+\item \texttt{CloudTest}: es una herramienta para la realización de pruebas de
+  carga y rendimiento para aplicaciones móviles y web.
+\item \texttt{SauceLabs}: es una herramienta que permite ejecutar las pruebas de un
+  sistema en mas de 500 combinaciones de navegadores, sistema operativos
+  y dispositivos.
+\item \texttt{AWS}: \textit{Amazon Web Services} (AWS), es un conjunto de servicios
+  de computo en la nube que permite la implementación de sistemas escalables.
+\end{itemize}
+
+\subsection{Configuración y despliegue automatizado de ambientes}
+
+Para el despliegue de los ambientes requeridos para \texttt{PEAT} se hizo uso de
+\textit{Amazon Web Services} (AWS) en particular del servicio
+\textit{Amazon Elastic Compute Cloud} (EC2) que permite la renta de servidores
+para correr aplicaciones.
+
+El uso de \texttt{EC2} presentaba las siguientes ventajas:
+\begin{itemize}
+\item Una comunicación mas rápida y segura con \texttt{backend}, es decir, el
+  servidor C3 dado que este corre bajo la servicio \texttt{EC2}.
+\item El servicio \texttt{EC2} permite la configuración absoluta de los servidores
+  permitiendo automatizar la creación y configuración de éstos permitiendo
+  que el sistema pueda escalar rápidamente según las necesidades de computo.
 \end{itemize}
 
 %% La integración continua es una practica de software en la cual los integrantes
