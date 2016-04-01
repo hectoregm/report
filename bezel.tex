@@ -275,13 +275,13 @@ sean de tipo JSON.
 En las líneas 13-49 se tiene la implementación del método \texttt{invoke}, en
 la línea 14 se define un \textit{target} de tipo \texttt{Bezel::Target} usando
 tanto el contexto del cliente, es decir el \textit{tenant} y \textit{tag} mas
-la información del \textit{module} y \textit{type} dados en los argumentos.
+la información del \textit{module} y \textit{type} proporcionados en los argumentos.
 En la línea 15 se define una acción de tipo \texttt{Bezel::Action} que representa
 una acción sobre un tipo con sus parámetros.
 
 En la línea 17 se define la URL a la cual se hará la petición al servicio web C3,
 haciendo uso de la información de los objetos previos, se convierte los parámetros
-de la acción al formato JSON para ser mandados en el cuerpo de la petición POST
+de la acción al formato JSON para ser enviados en el cuerpo de la petición POST
 al servicio web.
 
 % FIXME: explicar línea 32 de addCredentials
