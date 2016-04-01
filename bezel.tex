@@ -104,45 +104,45 @@ Muchas acciones reciben ciertos parámetros los cuales son almacenados dentro de
 cuerpo de la petición POST, por lo que el único parámetro que se envía por medio
 de la URL es el nombre la acción a realizar.
 
-\subsection{Arquitectura General}
+\subsection{Arquitectura general}
 
-La biblioteca \texttt{Bezel} esta conformada por un cinco clases y cinco módulos
+La biblioteca \texttt{Bezel} está conformada por cinco clases y cinco módulos,
 siendo las clases principales \texttt{Bezel::Client} y \texttt{Bezel::Base}.
 
 En el lenguaje de programación Ruby se tiene el concepto de módulo (\texttt{module}),
-el cual no es mas que una agrupación de objetos bajo un único nombre. Los objetos
+el cual es mas que una agrupación de objetos bajo un único nombre. Los objetos
 pueden ser constantes, métodos, clases y otros módulos.
 
-Los módulos tienen dos usos: se pueden utilizar un módulo como una manera conveniente
-de agrupar objetos o se puede incorporar los objetos del módulo a una clase haciendo
-uso de \texttt{include} o \texttt{extend}.
+Los módulos tienen dos tipos de usos (1) se pueden utilizar un módulo como una
+manera conveniente de agrupar objetos o (2) se pueden incorporar los objetos del
+módulo a una clase haciendo uso de \texttt{include} o \texttt{extend}.
 
 \lstinputlisting[language=Ruby]{code/module-namespace.rb}
 
-El ejemplo anterior muestra el uso de los módulos como un espacio de nombre,
-en la linea 2 se define la constante \texttt{PI} y en las lineas 3 y 7 se definen
+El ejemplo anterior muestra el uso de los módulos como un espacio de nombres,
+en la línea 2 se define la constante \texttt{PI} y en las lineas 3 y 7 se definen
 los métodos \texttt{sin} y \texttt{cos}, estos métodos son usados fuera del
-módulo por medio del nombre del módulo como ocurre en la linea 12, en esta
+módulo por medio del nombre del módulo como ocurre en la línea 12, en esta
 linea se hace referencia tanto a la constante \texttt{PI} como al método
 \texttt{sin}.
 
 \lstinputlisting[language=Ruby]{code/module-include.rb}
 
 Ahora en este ejemplo se muestra el uso de los módulos para incorporar métodos
-de clase o de instancia. En las lineas 1-11 se define el módulo \texttt{Boolean}
+de clase o de instancia. En las líneas 1-11 se define el módulo \texttt{Boolean}
 el cual define dos métodos \texttt{boolean?} y \texttt{to\_bool}, mientras que
-en las lineas 13-17 se define el módulo \texttt{RandomString} que define un método
-\texttt{random}. En las lineas 19-22 no se esta definiendo una nueva clase
-\texttt{String} si no que Ruby permite modificar cualquier clase en tiempo de
-ejecución aunque esta clase sea parte de la biblioteca estándar, así en la linea 20
-se hace uso de \texttt{include} para agregar los métodos del módulo dado como
-parámetro como métodos de instancia, el uso de estos métodos se como se ver en las
-lineas 24-25. Finalmente en la linea 21 se hace uso de la declaración \texttt{extend}
-para agregar los métodos del módulo dado como métodos de clase como se puede
-ver en la linea 26.
+en las líneas 13-17 se define el módulo \texttt{RandomString} el cual a su vez
+define un método \texttt{random}. En las líneas 19-22 se permite modificar cualquier
+clase en tiempo de ejecución aunque esta clase sea parte de la biblioteca estándar,
+así en la línea 20 se hace uso de \texttt{include} para agregar los métodos del
+módulo dado como parámetro como métodos de instancia, el uso de estos métodos se
+se puede ver en las líneas 24-25. Finalmente en la línea 21 se hace uso de la
+declaración \texttt{extend} para agregar los métodos del módulo dado como métodos
+de clase como se puede ver en la línea 26.
 
 Por lo anterior se tiene que el uso de módulos es una parte importante para
 organizar y compartir funcionalidad en el lenguaje de programación Ruby.
+
 Para la biblioteca \texttt{Bezel} tenemos el módulo \texttt{Bezel} que contiene
 a todas las clases y módulos de la biblioteca. Además se tienen cinco submódulos
 que permiten organizar de forma coherente la funcionalidad de la biblioteca.
@@ -157,11 +157,11 @@ Las clases y módulos que conforman la biblioteca son
 \item \texttt{Bezel::Client}: clase que define un cliente para usar el servicio
   web C3.
 \item \texttt{Bezel::Target}: clase que representa un tipo dado un contexto
-  especifico (\textit{tenant}, \textit{tag}, \textit{module}).
+  específico (\textit{tenant}, \textit{tag}, \textit{module}).
 \item \texttt{Bezel::Action}: clase que representa una acción sobre
   un tipo representado por un \texttt{Bezel::Target}.
 \item \texttt{Bezel::Base}: clase abstracta que permite definir un modelo en Ruby
-  en base a un tipo del servido web C3.
+  con base en un tipo del servicio web C3.
 \item \texttt{Bezel::Connections}: módulo que define las acciones básicas y de
   búsqueda sobre un modelo.
 \item \texttt{Bezel::Associations}: módulo que define las asociaciones entre
