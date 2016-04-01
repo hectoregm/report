@@ -308,22 +308,22 @@ del servicio web C3.
 El código anterior ejemplifica el uso de \texttt{Bezel::Base} para definir el modelo
 por medio de herencia, en la línea 1 se define \texttt{Recommendation}. En la línea 2
 se tiene el método de clase \texttt{set\_c3\_type} que permite al modelo definir
-a que tipo del sistema web C3 esta ligado,  en este caso el modelo esta ligado al
-tipo \texttt{BuildingEnergyConservationOption}. En la línea 4 se define que el modelo
-tiene una asociación con el modelo \texttt{EnergyConservationOption} en forma única
-por medio del método \texttt{has\_one}. Ya definido el modelo en la línea 7 se
-hace la búsqueda de una recomendación por medio de su identificador único por medio
-del método \texttt{find}. En la línea 8 se obtiene el costo total de la recomendación
-buscada anteriormente por medio de \texttt{totalCost}. Los métodos
-\texttt{set\_c3\_type}, \texttt{has\_one} y \texttt{find} son definidos por
-\texttt{Bezel::Base} pero el método \texttt{totalCost} igual es definido en tiempo
-de ejecución por medio de la metaprogramación.
+a que tipo del sistema web C3 está ligado, en este caso el modelo esta acotado al
+tipo de nombre \texttt{BuildingEnergyConservationOption}. En la línea 4 se define
+que el modelo tiene una asociación con el modelo \texttt{EnergyConservationOption}
+en forma única por medio del método \texttt{has\_one}.
 
-% \lstinputlisting[language=Ruby]{code/base-extend-include.rb}
+Ya definido el modelo en la línea 7 se hace la búsqueda de una recomendación por
+medio de su identificador único por medio del método \texttt{find}. En la línea 8 se
+obtiene el costo total de la recomendación buscada anteriormente por medio de
+\texttt{totalCost}. Los métodos \texttt{set\_c3\_type}, \texttt{has\_one} y
+\texttt{find} son definidos por \texttt{Bezel::Base} pero el método
+\texttt{totalCost} es definido en tiempo de ejecución por medio de la
+metaprogramación.
 
 \subsubsection{Métodos de clase}
 
-Los métodos de clase que se definen en \texttt{Bezel::Base} son para
+Los métodos de clase que se definen en \texttt{Bezel::Base} son necesarios para
 definir métodos de configuración del modelo y para realizar operaciones
 de búsqueda sobre el modelo.
 
@@ -340,11 +340,11 @@ Los métodos principales son:
   es el valor por defecto de la configuración.
 \item \texttt{find} (línea 21): este método permite realizar búsquedas sobre
   el modelo por medio de un identificador, también permite realizar búsquedas
-  mas avanzadas por medio de parámetros como \texttt{filter}.
+  más avanzadas por medio de parámetros como \texttt{filter}.
 \item \texttt{invoke} (líneas 25-27): este método permite realizar
   un acción sobre el modelo, como se puede ver en la línea 26 se hace uso del
   método \texttt{invoke} del módulo \texttt{Bezel} haciendo
-  uso del contexto del modelo, es decir su módulo y tipo correspondiente.
+  uso del contexto del modelo, es decir, su módulo y tipo correspondiente.
 \item \texttt{inherited} (líneas 29-34): este método es parte de API de
   metaprogramación de Ruby, el método es invocado cuando una subclase de
   \texttt{Bezel::Base} es creada. La subclase es pasada como el parámetro
@@ -361,9 +361,8 @@ Los métodos principales son:
   \end{itemize}
   Finalmente en la línea 33 se configura que el modelo por defecto no hace uso
   de un cache.
-  % FIXME: Hablar sobre los tipos de cache
 \item \texttt{c3\_cached} (líneas 36 a 42): este método permite indicar
-  que el modelo hace uso de un cache y las opciones de configuración para este.
+  que el modelo hace uso de un cache y las opciones de configuración para éste.
   Para activar el cache es necesario tener una instancia de cache definida en
   \texttt{Bezel.cache}, si esto ocurre entonces se hace un \texttt{include}
   del módulo \texttt{Bezel::CacheBase} (línea 38) que agrega el uso y
@@ -376,14 +375,16 @@ Los métodos de clase que se definen en \texttt{Bezel::Base} son para
 inicializar un nuevo modelo, obtener la información sobre un atributo
 del modelo y las asociaciones con otros modelos
 
-Cabe recordar recordar que el servicio web C3 hace uso del formato JSON en sus
-respuestas a las peticiones al servicio. El formato JSON es una serializar objetos,
-arreglos, números, cadenas, booleanos, y \texttt{null}. Se basa en la sintaxis de
-JavaScript, pero es distinta de ella en el manejo de Unicode en las cadenas.
-Los objetos en JSON son colecciones de llave-valor en donde la llave siempre
-es una cadena y el valor es alguno de los tipos básicos permitidos en JSON, dado
-esta estructura una biyección entre el formato JSON y las tablas hash en Ruby
-es directa.
+Cabe recordar que el servicio web C3 hace uso del formato JSON en sus
+respuestas a las peticiones al servicio. El formato JSON realiza una serialización
+de objetos, arreglos, números, cadenas, booleanos, y \texttt{null} con base en la
+sintaxis de Javascript\footnot{La principal divergencia es en el manejo de la
+codificación de las cadenas.}.
+
+En JSON los objetos son colecciones de llave-valor en donde la llave siempre
+es una cadena y el valor es alguno de los tipos básicos permitidos en JSON, esta
+estructura permite una biyección directa entre el formato JSON y tablas \textit{hash}
+en Ruby.
 
 \lstinputlisting[language=Ruby]{code/base-json.rb}
 
