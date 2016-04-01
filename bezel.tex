@@ -390,18 +390,37 @@ en Ruby.
 
 En el código anterior tenemos una cadena con un objeto definido según el formato
 JSON en la línea 1. Haciendo uso de la biblioteca JSON en la línea 2 se parsea
-esta cadena y nos regresa una tabla hash la cual contiene la información definida
-en la cadena JSON original.
+esta cadena y nos regresa una tabla \textit{hash} la cual contiene la información
+definida en la cadena JSON original.
 
 En Bezel se tiene que los atributos de los modelos obtenidos por medio del servicio
-web C3 son almacenados en una tabla hash interna pero permitiendo el acceso a la
-información de una forma mas orientada a objetos por medio de atributos y métodos
-de acceso.
+web C3 son almacenados en una tabla \textit{hash} interna, permitiendo el acceso
+a la información de una forma más orientada a objetos por medio de atributos
+y métodos de acceso.
 
 \lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
 
+En la mayoría de los lenguajes de programación orientado a objetos se lanza
+una excepción cuando se llama un método que no esta implementado por la clase
+del objeto o en la jerarquía de clases del objeto. En el caso de Ruby se lanza
+la excepción \texttt{NoMethodError} para indicar que no se encontró la
+implementación del método invocado sobre un objeto, sin embargo Ruby permite al
+programador manejar esta excepción por medio del método \texttt{method\_missing}
+permitiendo que un objeto pueda responder a una conjunto de metodos en forma
+dinámica.
+El método \texttt{method\_missing} es un método \texttt{callback} que recibe
+como argumentos el nombre del método sin implementar en el objeto y los
+argumentos originales con los que se llamo el método sin implementar.
+
+Implementando el método \texttt{method\_missing} se permite
+que los modelos definidos usando \texttt{Bezel::Base} puedan responder
+de forma dinámicamente a mensajes para acceder a los atributos del modelo.
+
+
+
 Para dar acceso a los atributos del modelo se hace uso del método
-\texttt{method\_missing}, este método es invocado cuando se invoca un
+\texttt{method\_missing}, este método es llamado como ultimo paso cuando no se
+encontro el metodo cuando se ejecuta un
 método sobre un objeto el cual no sabe manejar. El método recibe dos parámetros
 un símbolo del método invocado y los argumentos con los que se invoco al método.
 Así usando \texttt{method\_missing} se permite el manejo dinámico de métodos
