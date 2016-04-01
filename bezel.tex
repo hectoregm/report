@@ -78,29 +78,30 @@ dirección URL asociada. Las direcciones URL tienen la siguiente forma:
   producto y/o cliente tiene cierta funcionalidad específica. Para \texttt{PEAT}
   se tiene \textquote{peat} y \textquote{c3}.
 \item \textit{module}: indica el módulo al que se está accediendo, un conjunto de
-  tipos se definen en un módulo en pearticular. Para el sistema \texttt{PEAT} el
+  tipos se definen en un módulo en particular. Para el sistema \texttt{PEAT} el
   módulo más usado es el módulo \textquote{peat}, haciendo uso de los módulos
   \textquote{billing} y \textquote{structure}.
-\item \textit{tag}: indica el tipo de ambiente, es decir si el servicio web C3 es
+\item \textit{tag}: indica el tipo de ambiente, es decir, si el servicio web C3 es
   para ambiente de pruebas, control de calidad, producción, etcétera.
-  \textit{peatprod} y \textit{peatqa} son algunas de las etiquetas que se usaron
-  para en la implementación de \texttt{PEAT}.
-\item \textit{type}: indica el tipo al que se quiere acceder, \textquote{Building},
-  \textquote{Location} y \textquote{BuildingEnergyConservationOption} son algunos
-  de los tipos utilizados en \texttt{PEAT}.
+  \textit{peatprod} y \textit{peatqa} son algunas de las etiquetas que se usan
+  en \texttt{PEAT}.
+\item \textit{type}: se refiere al tipo al que se quiere acceder, por ejemplo
+  \textquote{Building}, \textquote{Location} y
+  \textquote{BuildingEnergyConservationOption} son algunos de los tipos utilizados
+  en \texttt{PEAT}.
 \item \textit{action-name}: indica la acción que se quiere realizar sobre
-  el tipo indicado anteriormente. Por ejemplo \textquote{fetch}, \textquote{upsert} y
-  \textquote{remove} son algunas de las acciones que se pueden realizar.
+  el tipo indicado anteriormente. En este caso \textquote{fetch}, \textquote{upsert}
+  y \textquote{remove} son algunas de las acciones que se pueden realizar.
 \end{itemize}
 
-Como se comento anteriormente el servicio web C3 no es totalmente de tipo RESTful
-principalmente porque se hace uso del mismo método HTTP POST para todas las acciones,
-haciendo uso del \textquote{action-name} para ejecutar la acción correspondiente.
+Como se comentó anteriormente el servicio web C3 no es totalmente de tipo RESTful,
+principalmente porque utiliza del mismo método HTTP POST para todas las acciones,
+indicando por medio del \textquote{action-name} la acción a realizar.
 Para la implementación de \texttt{Bezel} solamente se espera que el servicio web
 tenga direcciones únicas para cada tipo definido.
 
 Muchas acciones reciben ciertos parámetros los cuales son almacenados dentro del
-cuerpo de la petición POST, por lo que el único parámetro que se manda por medio
+cuerpo de la petición POST, por lo que el único parámetro que se envía por medio
 de la URL es el nombre la acción a realizar.
 
 \subsection{Arquitectura General}
