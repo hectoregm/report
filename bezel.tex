@@ -1,21 +1,23 @@
 \section{Biblioteca Bezel}
 
-Para realizar la integración entre el sistema \texttt{PEAT} y el servicio web C3,
-el API proporcionado por el servidor C3, se implementó una biblioteca con el nombre
-de \texttt{Bezel}.
+Para lograr la integración entre el sistema \texttt{PEAT} y el servicio web C3,
+el API proporcionado por el servidor C3, ha sido impementado una biblioteca
+con el nombre de \textbf{\texttt{Bezel}}.
 
-\texttt{PEAT} hace uso del marco de trabajo Rails que a su vez hace
+\texttt{PEAT} hace uso del marco de trabajo Rails, el cual a su vez hace
 uso del patrón de arquitectura MVC. En Rails los modelos por lo general hacen uso
 de la biblioteca \texttt{ActiveRecord} la cual permite implementar modelos basados
 en tablas de bases de datos relacionales. En \texttt{PEAT} los datos
-son proporcionados no directamente por una base de datos relacional sino por
-el servicio web C3 proporcionado por el servidor C3.
+son proporcionados indirectamente por una base de datos relacional en su lar son
+proporcionados por el servicio web C3 proporcionado por el servidor C3.
 
 Dentro del marco de trabajo Rails también se tiene la biblioteca
 \texttt{ActiveResource} la cual implementa el caso de uso en que los datos son
-proporcionados por un servicio web tipo RESTful. En un primer acercamiento se trato
-de realizar la integración de \texttt{PEAT} con el servicio web C3 haciendo uso de
-esta biblioteca pero se tenían las siguientes dificultades:
+provistos por un servicio web tipo RESTful.
+
+En una primera versión se trató de realizar la integración de \texttt{PEAT} con el
+servicio web C3 haciendo uso de esta biblioteca, sin embargo se tenían las siguientes
+dificultades:
 
 \begin{itemize}
 \item Presupone que el servicio web hace uso de todos los métodos HTTP (GET, POST,
@@ -23,41 +25,42 @@ esta biblioteca pero se tenían las siguientes dificultades:
 \item No permite la definición de asociaciones entre recursos.
 \end{itemize}
 
-Aunque el servicio web C3 es de tipo RESTful este no hace uso de los métodos
-HTTP para realizar acciones sobre los recursos del servicio, en el servicio web
-C3 todas las acciones que se quieren realizar se realizan usando el método HTTP
-POST y se manda la acción a realizar como un parámetro dentro de la petición HTTP.
+Aunque el servicio web C3 es de tipo RESTful, éste no hace uso de los métodos
+HTTP para realizar acciones sobre los recursos del servicio. El servicio web
+C3 realiza todas sus acciones usando el método HTTP POST.
 
-La otra dificultad es que teníamos un gran numero de asociaciones entre los
-recursos definidos por el servicio web C3 pero la biblioteca \texttt{ActiveResource}
-no proporcionaba ninguna ayuda para implementar estas asociaciones.
+Otra dificultad era que la biblioteca \texttt{ActiveResource} no da ninguna facilidad
+para definir asociaciones entre los modelos lo que implicaba el tener que implementar
+una gran cantidad de código dado el gran numero de asociaciones presentes entre los
+tipos definidos por el servicio web C3.
 
-Dada las dificultades descritas hacer uso de \texttt{ActiveResource} no era una
-solución viable pero sirvió como inspiración para implementar la biblioteca
-\texttt{Bezel} para proporcionar acceso al servicio web C3.
+Dada las dificultades descritas en los párrafos anteriores el hacer uso de
+\texttt{ActiveResource} no era una solución viable, sin embargo sirvió como una
+primera aproximación para implementar la biblioteca \texttt{Bezel} y así
+proporcionar acceso al servicio web C3.
 
-El servidor C3 cabe recordar está implementado en dos lenguajes de programación, la
-gran mayoría implementado con Javascript, mientras que el núcleo y funciones criticas
-están implementadas en Java. El servidor C3 puede enviar tanto XML como JSON como
-respuesta a peticiones realizadas al servidor, la representación en JSON es la
-más utilizada dado que el sistema de tipos que se usa en el sistema esta definido en
-Javascript.
+Cabe recordar que el servidor C3 está implementado en dos lenguajes de programación,
+la gran mayoría implementado con Javascript, mientras que el núcleo y funciones
+criticas están implementadas en Java. El servidor C3 puede enviar tanto XML como
+JSON como respuesta a las peticiones realizadas al servidor\footnote{La representación en JSON
+  es la más utilizada dado que el sistema de tipos que se usa en el sistema esta
+  definido en Javascript.}.
 
 \texttt{Bezel} permite la reconstrucción automática de los tipos definidos por el
 servidor C3 en Javascript a modelos compatibles con el marco de trabajo Rails
 y el lenguaje de programación Ruby. Esta reconstrucción automática permite
 evitar desfases entre la definición de los tipos entre los dos sistemas y
-agilizo el desarrollo del sistema \texttt{PEAT}. Esta reconstrucción automática
+agiliza el desarrollo del sistema \texttt{PEAT}. Esta reconstrucción automática
 se hace por medio de un lenguaje de dominio especifico que permite implementar
 modelos basados en tipos del servicio web C3 aprovechando que este servicio
 es tipo RESTful y las capacidades de metaprogramación de Ruby.
 
 \texttt{Bezel} tiene dos modos principales de uso:
 \begin{itemize}
-\item Como un cliente REST (con ciertas adecuaciones) para mejorar la
-  integración de éste con el API del servidor C3.
-\item Como un lenguaje de dominio especifico interno para Ruby para la
-  definir modelos y sus asociaciones asociados al servicio web C3.
+\item Como un cliente REST con ciertas adecuaciones para una mejor integración
+  con el API del servidor C3.
+\item Como un lenguaje de dominio especifico interno para Ruby para lograr
+  la implementación automatizada de tipos y sus asociaciones del servicio web C3.
 \end{itemize}
 
 \subsection{Servicio web C3}
@@ -71,13 +74,13 @@ dirección URL asociada. Las direcciones URL tienen la siguiente forma:
 \begin{itemize}
 \item \textit{version}: indica la versión del servicio a la cual se está accediendo,
   el sistema \texttt{PEAT} hace uso de la versión 1.0.
-\item \textit{tenant}: indica el producto o cliente, esto es porque cada
-  producto y/o cliente requiere cierta funcionalidad específica. Para \texttt{PEAT}
+\item \textit{tenant}: se refiera al producto o cliente, esto es porque cada
+  producto y/o cliente tiene cierta funcionalidad específica. Para \texttt{PEAT}
   se tiene \textquote{peat} y \textquote{c3}.
-\item \textit{module}: indica el módulo al que se accede, un conjunto
-  de tipos se definen en un módulo en particular, para el sistema \texttt{PEAT} el
-  módulo mas usado es el módulo \textquote{peat} pero también se hace uso
-  de los módulos \textquote{billing} y \textquote{structure}.
+\item \textit{module}: indica el módulo al que se está accediendo, un conjunto de
+  tipos se definen en un módulo en pearticular. Para el sistema \texttt{PEAT} el
+  módulo más usado es el módulo \textquote{peat}, haciendo uso de los módulos
+  \textquote{billing} y \textquote{structure}.
 \item \textit{tag}: indica el tipo de ambiente, es decir si el servicio web C3 es
   para ambiente de pruebas, control de calidad, producción, etcétera.
   \textit{peatprod} y \textit{peatqa} son algunas de las etiquetas que se usaron
@@ -257,7 +260,7 @@ se puede inicializar cada uno de los atributos.
 
 \subsection{\texttt{Bezel::Client}}
 
-La clase \texttt{Client} representa un cliente que permite realizar peticiones al 
+La clase \texttt{Client} representa un cliente que permite realizar peticiones al
 servicio web C3, por medio del módulo \texttt{Config} se permite configurar
 cada cliente instanciado.
 
@@ -267,11 +270,11 @@ En la linea 3 se tiene un \texttt{include} que añade las constantes
 y atributos para configurar al cliente. En las lineas 7-13 se define el método
 \texttt{conn} que inicializa una conexión HTTP según la configuración definida
 para el cliente y pidiendo que las respuestas mandadas por el servidor
-sean de tipo JSON. 
+sean de tipo JSON.
 
-En las lineas 13-49 se tiene la implementación del método \texttt{invoke}, en 
-la linea 14 se define un \textit{target} de tipo \texttt{Bezel::Target} usando 
-tanto el contexto del cliente, es decir el \textit{tenant} y \textit{tag} mas 
+En las lineas 13-49 se tiene la implementación del método \texttt{invoke}, en
+la linea 14 se define un \textit{target} de tipo \texttt{Bezel::Target} usando
+tanto el contexto del cliente, es decir el \textit{tenant} y \textit{tag} mas
 la información del \textit{module} y \textit{type} dados en los argumentos.
 En la linea 15 se define una acción de tipo \texttt{Bezel::Action} que representa
 una acción sobre un tipo con sus parámetros.
@@ -308,7 +311,7 @@ se tiene el método de clase \texttt{set\_c3\_type} que permite al modelo defini
 a que tipo del sistema web C3 esta ligado,  en este caso el modelo esta ligado al
 tipo \texttt{BuildingEnergyConservationOption}. En la linea 4 se define que el modelo
 tiene una asociación con el modelo \texttt{EnergyConservationOption} en forma única
-por medio del método \texttt{has\_one}. Ya definido el modelo en la linea 7 se 
+por medio del método \texttt{has\_one}. Ya definido el modelo en la linea 7 se
 hace la búsqueda de una recomendación por medio de su identificador único por medio
 del método \texttt{find}. En la linea 8 se obtiene el costo total de la recomendación
 buscada anteriormente por medio de \texttt{totalCost}. Los métodos
@@ -328,43 +331,43 @@ de búsqueda sobre el modelo.
 
 Los métodos principales son:
 \begin{itemize}
-  \item \texttt{config\_option} (lineas 6-19): este método permite la definición
-    de nuevos atributos sobre el modelo en tiempo de ejecución por medio del uso
-    de método \texttt{define\_method} que permite crear métodos en tiempo
-    de ejecución, con este método y de \texttt{attr\_writer} se definen tanto
-    atributos de clase como de instancia. El método toma dos parámetros
-    el primero es el nombre de la configuración a crear y el segundo
-    es el valor por defecto de la configuración.
-  \item \texttt{find} (linea 21): este método permite realizar búsquedas sobre
-    el modelo por medio de un identificador, también permite realizar búsquedas
-    mas avanzadas por medio de parámetros como \texttt{filter}.
-  \item \texttt{invoke} (lineas 25-27): este método permite realizar
-    un acción sobre el modelo, como se puede ver en la linea 26 se hace uso del
-    método \texttt{invoke} del módulo \texttt{Bezel} haciendo
-    uso del contexto del modelo, es decir su módulo y tipo correspondiente.
-  \item \texttt{inherited} (lineas 29-34): este método es parte de API de
-    metaprogramación de Ruby, el método es invocado cuando una subclase de
-    \texttt{Bezel::Base} es creada. La subclase es pasada como el parámetro
-    \texttt{klass} y por medio del método \texttt{config\_option} se definen
-    tres configuraciones:
-    \begin{itemize}
-    \item \texttt{c3\_type} (linea 30): define el tipo asociado al modelo
-      siendo el nombre de la subclase su valor por defecto.
-    \item \texttt{c3\_module} (linea 31): define el módulo asociado al modelo
-      siendo su valor por defecto el módulo \textquote{peat}.
-    \item \texttt{c3\_include} (linea 32): define si se hace una carga adelantada
-      de información de las asociaciones del modelo. El valor por defecto es que
-      no se haga ninguna carga adelantada.
-    \end{itemize}
-    Finalmente en la linea 33 se configura que el modelo por defecto no hace uso
-    de un cache.
-    % FIXME: Hablar sobre los tipos de cache
-  \item \texttt{c3\_cached} (lineas 36 a 42): este método permite indicar
-    que el modelo hace uso de un cache y las opciones de configuración para este.
-    Para activar el cache es necesario tener una instancia de cache definida en
-    \texttt{Bezel.cache}, si esto ocurre entonces se hace un \texttt{include}
-    del módulo \texttt{Bezel::CacheBase} (linea 38) que agrega el uso y
-    mantenimiento del cache a las acciones básicas y de búsqueda del modelo.
+\item \texttt{config\_option} (lineas 6-19): este método permite la definición
+  de nuevos atributos sobre el modelo en tiempo de ejecución por medio del uso
+  de método \texttt{define\_method} que permite crear métodos en tiempo
+  de ejecución, con este método y de \texttt{attr\_writer} se definen tanto
+  atributos de clase como de instancia. El método toma dos parámetros
+  el primero es el nombre de la configuración a crear y el segundo
+  es el valor por defecto de la configuración.
+\item \texttt{find} (linea 21): este método permite realizar búsquedas sobre
+  el modelo por medio de un identificador, también permite realizar búsquedas
+  mas avanzadas por medio de parámetros como \texttt{filter}.
+\item \texttt{invoke} (lineas 25-27): este método permite realizar
+  un acción sobre el modelo, como se puede ver en la linea 26 se hace uso del
+  método \texttt{invoke} del módulo \texttt{Bezel} haciendo
+  uso del contexto del modelo, es decir su módulo y tipo correspondiente.
+\item \texttt{inherited} (lineas 29-34): este método es parte de API de
+  metaprogramación de Ruby, el método es invocado cuando una subclase de
+  \texttt{Bezel::Base} es creada. La subclase es pasada como el parámetro
+  \texttt{klass} y por medio del método \texttt{config\_option} se definen
+  tres configuraciones:
+  \begin{itemize}
+  \item \texttt{c3\_type} (linea 30): define el tipo asociado al modelo
+    siendo el nombre de la subclase su valor por defecto.
+  \item \texttt{c3\_module} (linea 31): define el módulo asociado al modelo
+    siendo su valor por defecto el módulo \textquote{peat}.
+  \item \texttt{c3\_include} (linea 32): define si se hace una carga adelantada
+    de información de las asociaciones del modelo. El valor por defecto es que
+    no se haga ninguna carga adelantada.
+  \end{itemize}
+  Finalmente en la linea 33 se configura que el modelo por defecto no hace uso
+  de un cache.
+  % FIXME: Hablar sobre los tipos de cache
+\item \texttt{c3\_cached} (lineas 36 a 42): este método permite indicar
+  que el modelo hace uso de un cache y las opciones de configuración para este.
+  Para activar el cache es necesario tener una instancia de cache definida en
+  \texttt{Bezel.cache}, si esto ocurre entonces se hace un \texttt{include}
+  del módulo \texttt{Bezel::CacheBase} (linea 38) que agrega el uso y
+  mantenimiento del cache a las acciones básicas y de búsqueda del modelo.
 \end{itemize}
 
 \subsubsection{Métodos de instancia}
