@@ -470,23 +470,24 @@ es agregado por medio \texttt{extend} por lo que son métodos de clase
 
 En el código anterior se tiene la definición del modelo
 \texttt{EnergyConservationOption} el cual representa una característica del perfil
-de un edificio que esta ligada a una recomendación. Para este modelo se definen
+de un edificio que está ligada a una recomendación. Para este modelo se definen
 dos asociaciones por medio del uso de los métodos \texttt{has\_one} y
-\texttt{has\_many}. Por medio de \texttt{has\_one} (línea 5) se define una relación
-uno a uno con el modelo \texttt{ProductCategory} que representa una categoría de un
-catalogo de productos. Mientras que con el metodo \texttt{has\_many} (línea 6) se
-define una relación uno a muchos con el modelo \texttt{RecommendationFAQ}.
+\texttt{has\_many}. La primera por medio de \texttt{has\_one} (línea 5) se define
+una relación uno a uno con el modelo \texttt{ProductCategory} que representa una
+categoría de un catalogo de productos. Y la segunda con el metodo \texttt{has\_many}
+(línea 6) se define una relación uno a muchos con el
+modelo \texttt{RecommendationFAQ}.
 
 En las líneas 10 y 11 se tiene el uso de los métodos \texttt{productCategory} y
-\texttt{faqs}, los cuales regresan los modelos asociados al modelo, son creados
-dinámicamente por los métodos \texttt{has\_one} y \texttt{has\_many}
+\texttt{faqs}, los cuales regresan los modelos asociados al modelo, éstos son creados
+dinámicamente por los métodos \texttt{has\_one} y \texttt{has\_many}.
 
 \lstinputlisting[language=Ruby]{code/associations.rb}
 
 En la implementación de ambos métodos se hace uso de dos métodos auxiliares
 \texttt{get\_model\_class} y \texttt{define\_assoc\_method}.
 En las líneas 7 y 11 se hace uso de \texttt{get\_model\_class} para obtener
-la clase del modelo con la que se esta haciendo la asociación. Luego en las
+la clase del modelo con la que se esta haciendo la asociación. Posteriormente en las
 líneas 8 y 13 se hace uso del método \texttt{define\_assoc\_method} para
 definir dinámicamente un método de instancia que realiza la recuperación
 y búsqueda de los modelos asociados.
@@ -498,8 +499,8 @@ una cadena una clase.
 
 En las líneas 24-49 se tiene la implementación del método
 \texttt{define\_assoc\_method} el cual hace uso del método \texttt{define\_method}
-para construir un método de instancia para realizar la búsqueda de los objetos
-asociados al modelo.
+para construir un método de instancia el cual se encarga de realizar la búsqueda de
+los objetos asociados al modelo.
 
 \subsubsection{\texttt{Bezel::Connections}}
 
