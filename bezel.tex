@@ -555,11 +555,16 @@ caso de uso especifico.
 \subsubsection{\texttt{Bezel::CacheBase}}
 
 El módulo \texttt{Bezel::CacheBase} mejora los métodos definidos en
-\texttt{Connections} para que las acciones básicas y/o búsqueda hagan uso de un
-cache \texttt{Bezel::Cache}.
+\texttt{Connections} permitiendo que las acciones básicas y de búsqueda hagan uso
+de un cache (\texttt{Bezel::Cache}).
 
-El módulo sigue el mismo patrón de agrupar los métodos de clase en el submódulo
-\texttt{ClassMethods} y los métodos de instancia en el módulo principal, haciendo
-uso del método \textit{callback} \texttt{include} para agregar los métodos de clase.
+El módulo sigue el mismo patrón de agrupación de los métodos de clase en el submódulo
+\texttt{ClassMethods} así como los métodos de instancia en el módulo principal,
+haciendo uso del método \textit{callback} \texttt{included} para agregar los métodos
+de clase.
 
 \lstinputlisting[language=Ruby]{code/cache_base.rb}
+
+% FIXME: Explicar la versión aumentada de all que hace uso de cache.
+% FIXME: Agregar implementación de Bezel::Cache
+% FIXME: Párrafo para finalizar el capitulo 3
