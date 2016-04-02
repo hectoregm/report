@@ -378,7 +378,7 @@ del modelo y las asociaciones con otros modelos
 Cabe recordar que el servicio web C3 hace uso del formato JSON en sus
 respuestas a las peticiones al servicio. El formato JSON realiza una serialización
 de objetos, arreglos, números, cadenas, booleanos, y \texttt{null} con base en la
-sintaxis de Javascript\footnot{La principal divergencia es en el manejo de la
+sintaxis de Javascript\footnote{La principal divergencia es en el manejo de la
 codificación de las cadenas.}.
 
 En JSON los objetos son colecciones de llave-valor en donde la llave siempre
@@ -400,56 +400,62 @@ y métodos de acceso.
 
 \lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
 
-En la mayoría de los lenguajes de programación orientado a objetos se lanza
-una excepción cuando se llama un método que no esta implementado por la clase
-del objeto o en la jerarquía de clases del objeto. En el caso de Ruby se lanza
-la excepción \texttt{NoMethodError} para indicar que no se encontró la
+En la mayoría de los lenguajes de programación que soportan el paradigma orientado
+a objetos se lanza una excepción cuando se llama un método que no esta implementado
+por la clase del objeto o en la jerarquía de clases del objeto. En el caso de Ruby
+se lanza la excepción \texttt{NoMethodError} para indicar que no se encontró la
 implementación del método invocado sobre un objeto, sin embargo Ruby permite al
 programador manejar esta excepción por medio del método \texttt{method\_missing}
-permitiendo que un objeto pueda responder a una conjunto de metodos en forma
+permitiendo que un objeto pueda responder a una conjunto de mensajes en forma
 dinámica.
+
+\vspace{2.5mm}
+
 El método \texttt{method\_missing} es un método \texttt{callback} que recibe
-como argumentos el nombre del método sin implementar en el objeto y los
-argumentos originales con los que se llamo el método sin implementar.
+como argumentos:
+\begin{itemize}
+\item \textit{name}: el nombre del método sin implementar en el objeto
+\item \textit{*args}: un arreglo con los argumentos originales con los
+  que se llamo al método sin implementar.
+\end{itemize}
 
 Implementando el método \texttt{method\_missing} se permite
 que los modelos definidos usando \texttt{Bezel::Base} puedan responder
 de forma dinámicamente a mensajes para acceder a los atributos del modelo.
 
-
-
-Para dar acceso a los atributos del modelo se hace uso del método
-\texttt{method\_missing}, este método es llamado como ultimo paso cuando no se
-encontro el metodo cuando se ejecuta un
-método sobre un objeto el cual no sabe manejar. El método recibe dos parámetros
-un símbolo del método invocado y los argumentos con los que se invoco al método.
-Así usando \texttt{method\_missing} se permite el manejo dinámico de métodos
-para acceder a los atributos del modelo.
+\vspace{2.5mm}
 
 Los métodos principales son:
 \begin{itemize}
 \item \texttt{initialize} (líneas 8-12): este método es el constructor por defecto
   en Ruby es invocado cuando se crea objeto nuevo. Los datos del modelo son obtenidos
-  por medio del parámetro \texttt{attributes} que es una tabla hash.
+  por medio del parámetro \texttt{attributes} que es una tabla \textit{hash}
+\end{itemize}
+
+\begin{itemize}
 \item \texttt{load} (línea 14): este método permite el cargar en un objeto ya
   existente nuevos valores de sus atributos.
-\item \texttt{method\_missing} (líneas 18-27): como se explico se hace uso de este
-  \textit{callback} para permitir el acceso de los atributos del modelo en forma dinámica sin
-  tener que definir explícitamente métodos de acceso para cada atributo del modelo.
+\item \texttt{method\_missing} (líneas 18-27): como se explicó anteriormente se hace
+  uso de este \textit{callback} para permitir el acceso de los atributos del modelo
+  en forma dinámica sin tener que definir explícitamente métodos de acceso para cada
+  atributo del modelo.
   En la línea 28 se trata de ver si el nombre del método es una llave en la tabla
-  hash de los atributos si es así se regresa el valor contenido en la tabla.
+  \textit{hash} de los atributos, si es así se regresa el valor contenido en la
+  tabla.
   En la línea 30 se hace el mismo tipo de búsqueda pero se transforma el
-  nombre a tu estilo de capitalización medial (\textit{camelCase}).
+  nombre al estilo de tipografía \textit{lowerCamelCase}.
   Si ninguna llave corresponde se regresa \texttt{nil}.
-\item \texttt{id} (líneas 36-38): como se puede observar el método regresa
+\item \texttt{id} (líneas 29-31): como se puede observar el método regresa
   el valor asociado a la llave \texttt{id} en la tabla de atributos del modelo
-  este método de acceso sale sobrando dada la implementación utilizada
+  este método de acceso no es necesario dada la implementación utilizada
   en \texttt{method\_missing} pero esta solución tiene sus costos en rendimiento
   puesto que la invocación a llamada es mucho mas eficiente que pasar por toda
   la búsqueda de un método inexistente hasta llegar a la invocación del método
-  \texttt{method\_missing}. En la implementación total de \texttt{method\_missing}
-  se hace uso de \texttt{define\_method} para crear un método de acceso
-  de forma dinámica para hacer mas eficiente el acceso posterior al atributo.
+  \texttt{method\_missing}.
+
+  En la implementación total de \texttt{method\_missing} se hace uso de
+  \texttt{define\_method} para crear un método de acceso de forma dinámica para
+  hacer mas eficiente el acceso posterior al atributo.
   Así para varios atributos básicos como \texttt{id} se define una implementación
   estática.
 \end{itemize}
