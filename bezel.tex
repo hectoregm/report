@@ -1,7 +1,7 @@
 \section{Biblioteca Bezel}
 
 Para lograr la integración entre el sistema \texttt{PEAT} y el servicio web C3,
-el API proporcionado por el servidor C3, ha sido impementado una biblioteca
+el API proporcionado por el servidor C3, se ha implementado una biblioteca
 con el nombre de \textbf{\texttt{Bezel}}.
 
 \texttt{PEAT} hace uso del marco de trabajo Rails, el cual a su vez hace
@@ -564,6 +564,10 @@ haciendo uso del método \textit{callback} \texttt{included} para agregar los m�
 de clase.
 
 \lstinputlisting[language=Ruby]{code/cache_base.rb}
+
+En las líneas 9-11 se inicializa el cache con una instancia de \texttt{Bezel::Cache}
+si es necesario.
+En las lineas 13-27 se agregan métodos auxiliares de clase para operaciones de lectura, escritura y borrado de modelos en el cache.
 
 % FIXME: Explicar la versión aumentada de all que hace uso de cache.
 % FIXME: Agregar implementación de Bezel::Cache

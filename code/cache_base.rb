@@ -7,7 +7,7 @@ module Bezel::CacheBase
     attr_reader :memo
 
     if Bezel.cache && !Bezel.cache.class == Bezel::Cache
-      Bezel.cache = Bezel::Cache.new()
+      Bezel.cache = Bezel::Cache.new
     end
 
     def prime
