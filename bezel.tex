@@ -379,7 +379,7 @@ Cabe recordar que el servicio web C3 hace uso del formato JSON en sus
 respuestas a las peticiones al servicio. El formato JSON realiza una serialización
 de objetos, arreglos, números, cadenas, booleanos, y \texttt{null} con base en la
 sintaxis de Javascript\footnote{La principal divergencia es en el manejo de la
-codificación de las cadenas.}.
+  codificación de las cadenas.}.
 
 En JSON los objetos son colecciones de llave-valor en donde la llave siempre
 es una cadena y el valor es alguno de los tipos básicos permitidos en JSON, esta
@@ -587,18 +587,34 @@ por medio de \texttt{super}.
 El método auxiliar \texttt{key\_for} es usado para construir las llaves usadas para
 almacenar los modelos en el cache, la generación de la llave depende del tipo de
 cache seleccionado para el modelo.
-El valor por defecto es de tipo compartido (\textit{shared}), es decir, los
-modelos almacenados pueden ser manipulados por cualquier usuario en caso contrario
-los modelos solo pueden ser manipulados por un único usuario identificado por su
-elemento de autenticación (\textit{auth\_token}).
 
-En este capítulo se vio las diferentes decisiones de arquitectura y diseño que
+\subsection{\texttt{Bezel::Cache}}
+
+La clase \texttt{Cache} representa un cache y las operaciones para manipularlo
+directamente. Esta clase es usada principalmente por \texttt{Bezel::CacheBase}
+para almacenar las respuestas a peticiones realizadas al servicio web C3.
+
+Se tienen dos tipos de cache:
+\begin{itemize}
+\item \textit{shared}: en este cache se almacenan valores que son utilizados
+  globalmente en el sistema.
+\item \textit{local}: en este cache se almacenan valores específicos a un usuario.
+  se usa el elemento de autenticación (\textit{auth\_token}) del usuario para
+  generar las llaves para el cache local.
+\end{itemize}
+
+\lstinputlisting[language=Ruby]{code/cache.rb}
+
+
+En este capítulo se analizaron las diferentes decisiones de arquitectura y diseño que
 se tomaron para satisfacer los requerimientos del sistema \texttt{PEAT}.
 Se vio con detalle la implementación de los casos de uso del sistema poniendo énfasis
 en la implementación de la interfaz de usuario y la biblioteca \texttt{Bezel}.
+También se mostró el efecto de las pruebas con usuarios durante la implementación de
+la interfaz, donde se observo la necesidad de simplificar principalmente la creación
+del perfil de edificio.
 En la implementación de \texttt{Bezel} se mostró el uso de la metaprogramación
 para la rápida implementación de modelos basados en recursos provenientes de
 servicios web de tipo RESTful.
 
-% FIXME: Agregar implementación de Bezel::Cache
 % FIXME: Párrafo para finalizar el capitulo 3
