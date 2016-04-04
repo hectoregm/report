@@ -567,8 +567,31 @@ de clase.
 
 En las líneas 9-11 se inicializa el cache con una instancia de \texttt{Bezel::Cache}
 si es necesario.
-En las lineas 13-27 se agregan métodos auxiliares de clase para operaciones de lectura, escritura y borrado de modelos en el cache.
 
-% FIXME: Explicar la versión aumentada de all que hace uso de cache.
+En las líneas 13-27 se agregan métodos auxiliares de clase para operaciones de lectura, escritura y borrado de modelos en el cache.
+
+En las líneas 29-43 se tiene la implementación del método \texttt{all} haciendo
+uso del método \texttt{cache\_read} (línea 31) para obtener los modelos por medio
+del cache, si los modelos no se encuentren en el cache se llama a \texttt{super}
+(línea 36) que ejecuta la implementación del método \texttt{all} definido en
+\texttt{Bezel::Connections} el cual realiza una petición al servicio web C3.
+El resultado de la petición es almacenado en el cache por medio del método
+\texttt{cache\_write} (líneas 37 y 39).
+
+Los métodos \texttt{one}, \texttt{save}, \texttt{update} y \texttt{destroy} siguen
+el mismo patrón de implementación visto en el método \texttt{all}, es decir,
+se realiza alguna operación en el cache y opcionalmente se delega la ejecución
+de la petición a la implementación del método definida en \texttt{Bezel::Connections}
+por medio de \texttt{super}.
+
+El método auxiliar \texttt{key\_for} es usado para construir las llaves usadas para
+almacenar los modelos en el cache, la generación de la llave depende del tipo de
+cache seleccionado para el modelo.
+El valor por defecto es de tipo compartido (\textit{shared}), es decir, los
+modelos almacenados pueden ser manipulados por cualquier usuario en caso contrario
+los modelos solo pueden ser manipulados por un único usuario identificado por su
+elemento de autenticación (\textit{auth\_token}).
+
+
 % FIXME: Agregar implementación de Bezel::Cache
 % FIXME: Párrafo para finalizar el capitulo 3

@@ -47,7 +47,7 @@ module Bezel::CacheBase
     end
 
     def key_for(id_or_key, scoped = false)
-      if @cache_type == :local
+      if @cache_type == :shared
         prefix = "#{Bezel.tenant}-#{Bezel.tag}-#{model_name}"
       else
         prefix = "#{Bezel.tenant}-#{Bezel.tag}-#{model_name}-#{Bezel.client.auth_token}"
@@ -67,8 +67,10 @@ module Bezel::CacheBase
   end
 
   def update(attrs)
-    a = super
+    result = super
     cache_delete(self.id)
+
+    result
   end
 
   def destroy
