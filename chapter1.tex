@@ -140,7 +140,9 @@ por lo que las ventajas al usarlo son:
 \item Reducir sustancialmente la cantidad de código redundante al no
   tener que reimplementar la jerarquía de objetos, que era enviada
   por el servidor en formato JSON y interpretada por el cliente.
-\item Existía una única representación de una clase por ejemplo la
+\item Existía una única representación de una clase\footnote{En Javascript
+  (ECMAScript 5) no hay clases pero dentro del marco de trabajo interno se definen
+  por medio funciones de construcción y herencia de prototipo.} por ejemplo la
   clase \textit{Building} era una clase de Javascript que se usaba
   tanto en el servidor como en el cliente.
 \end{itemize}
@@ -239,5 +241,7 @@ se propuso el uso de un conjunto de pruebas de integración utilizadas
 principalmente para asegurar que la transición fuera exitosa y con la menor
 cantidad de errores.
 
-% FIXME: Falta párrafo de cierre del capitulo.
-% Como se puede ver en este capitulo ...
+Como se puede ver en este capitulo el sistema \texttt{PEAT} no solo es parte de
+un conjunto ya existente de sistemas en operación si no que hace uso de estos
+sistemas para dar un servicio de suma importancia a una audiencia de tamaño
+considerable.
