@@ -20,11 +20,7 @@ class Bezel::Cache
   end
 
   def write(key, value, type = :local, opts = {})
-    if Moneta::Adapters::Memory === @caches[type]
-      @caches[type].store(key, value)
-    else
-      @caches[type].store(key, value, opts)
-    end
+    @caches[type].store(key, value, opts)
   end
 
   def remove_id(key, id, type = :local)
@@ -36,6 +32,6 @@ class Bezel::Cache
   end
 
   def update(id, new_value, type = :local, opts = {})
-    # ..
+    # ...
   end
 end
