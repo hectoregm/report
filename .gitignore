@@ -5,6 +5,7 @@
 *.zip
 *.bbl
 *.blg
+*.out
 report.pdf
 report.bcf
 report.run.xml

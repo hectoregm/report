@@ -605,6 +605,14 @@ Se tienen dos tipos de cache:
 
 \lstinputlisting[language=Ruby]{code/cache.rb}
 
+En las líneas 2-14 se tiene el constructor para la clase el cual dependiendo de
+los parámetros de configuración hace uso del adaptador corrector para inicializar
+el cache. Por medio de la biblioteca \texttt{Moneta}, la cual define API
+estándar para acceder a repositorios del tipo llave-valor\footnote{Moneta tiene
+  adaptadores para Memcached, Redis, Cassandra, Berkeley DB, MongoDB, etcetera.}, se
+permite que \texttt{Bezel::Cache} puede usar una amplia gama de repositorios solo
+cambiando la configuración.
+
 
 En este capítulo se analizaron las diferentes decisiones de arquitectura y diseño que
 se tomaron para satisfacer los requerimientos del sistema \texttt{PEAT}.
