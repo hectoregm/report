@@ -101,22 +101,22 @@ que el sistema debe pasar para llegar al ambiente de producción. Para el sistem
   el proceso de despliegue.
 \item Pruebas de unidad: Al detectarse un cambio en el repositorio se corren
   pruebas las pruebas de unidad del sistema. Se usa la biblioteca \texttt{RSpec}
-  para implementar las pruebas de unidad para el código en Ruby, mientras que se
-  usa la biblioteca \texttt{Jasmine} para las pruebas de unidad para el código en
-  Javascript. El equipo de desarrollo recibe retroalimentación del resultado de
-  las pruebas, si el resultado es positivo se pasa a la siguiente etapa.
+  para implementar las pruebas de unidad para el código en Ruby, mientras que para
+  el código en Javascript se hace uso de la biblioteca \texttt{Jasmine} para las
+  pruebas de unidad. El equipo de desarrollo recibe retroalimentación del resultado
+  de las pruebas, si el resultado es positivo se pasa a la siguiente etapa.
   En la primera secuencia en la Figura \ref{fig:pipeline} se tiene el caso
   cuando las pruebas de unidad son negativas y se detiene el proceso de despliegue.
 \item Pruebas de aceptación: Se hace uso de la biblioteca \texttt{Cucumber}
-  para implementar las pruebas de aceptación, de la misma forma que las pruebas
-  de unidad si se tiene un resultado positivo se continua a la siguiente etapa en
-  caso contrario se detiene el proceso de despliegue.
+  para implementar las pruebas de aceptación, de la misma forma que la etapa de
+  pruebas de unidad si se obtiene un resultado positivo se continua a la siguiente
+  etapa en caso contrario se detiene el proceso de despliegue.
 \item Ambientes de prueba: Se hace el despliegue del sistema en los ambientes de
   prueba, es decir, a los ambientes \textit{peatstage}, \textit{peattest} y
-  \textit{peatqa}. En esta etapa se realizan pruebas de rendimiento y de prueba
-  de calidad de forma manual.
+  \textit{peatqa}. En esta etapa se realizan pruebas de rendimiento y de calidad
+  de forma manual y automatizada.
 \item Producción: se hace un despliegue a producción cuando la versión en los
-  sistemas de prueba han sido revisados de forma satisfactoria.
+  sistemas de prueba han sido revisado de forma satisfactoria.
 \end{itemize}
 
 \rjcimage{1.0}{imagenes/Deployment-Pipeline.png}{Proceso de despliegue para
@@ -131,22 +131,22 @@ el despliegue al ambiente de producción se realiza de forma manual.
 
 \subsubsection{Herramientas}
 
-Para lograr la automatización del proceso de despliegue se hace de un gran numero
-de herramientas, las mas importantes son:
+El proceso de despliegue se hace uso de un gran numero de herramientas, las más
+importantes son:
 
 \begin{itemize}
+\item \texttt{AWS}: \textit{Amazon Web Services} (AWS), es un conjunto de servicios
+  de computo en la nube que permite la implementación de sistemas escalables.
 \item \texttt{Jenkins}: es un servidor de despliegue continuo, que permite
   definir las etapas de un proceso de despliegue y las acciones que se realizan
   según el resultado de la etapa.
-\item \texttt{Capistrano}: es una herramienta para correr programas para el
-  despliegue de sistemas.
-\item \texttt{CloudTest}: es una herramienta para la realización de pruebas de
+\item \texttt{Capistrano}: es una herramienta que facilita la creación de tareas
+  para el despliegue de sistemas en servidores remotos.
+\item \texttt{CloudTest}: es una herramienta para la ejecución de pruebas de
   carga y rendimiento para aplicaciones móviles y web.
 \item \texttt{SauceLabs}: es una herramienta que permite ejecutar las pruebas de un
   sistema en mas de 500 combinaciones de navegadores, sistema operativos
   y dispositivos.
-\item \texttt{AWS}: \textit{Amazon Web Services} (AWS), es un conjunto de servicios
-  de computo en la nube que permite la implementación de sistemas escalables.
 \end{itemize}
 
 \subsection{Configuración y despliegue automatizado de ambientes}
@@ -160,17 +160,18 @@ El uso de \texttt{EC2} presentaba las siguientes ventajas:
 \begin{itemize}
 \item Una comunicación mas rápida y segura con \texttt{backend}, es decir, el
   servidor C3 dado que este corre bajo la servicio \texttt{EC2}.
-\item El servicio \texttt{EC2} permite la configuración absoluta de los servidores
+\item El servicio \texttt{EC2} permite la configuración total de los servidores
   permitiendo automatizar la creación y configuración de éstos permitiendo
   que el sistema pueda escalar rápidamente según las necesidades de computo.
 \end{itemize}
 
 \subsubsection{Capistrano}
 
-Para configurar los servidores para \texttt{PEAT} se uso \textit{Capistrano} que
-es una herramienta para ejecutar tareas en múltiples servidores remotos por medio
-de SSH. Esta herramienta define un DSL basado en Ruby para la definición de tareas.
+Para configurar los servidores del servicio \texttt{EC2} para \texttt{PEAT} se usa
+\textit{Capistrano} que es una herramienta para definir y ejecutar tareas en
+múltiples servidores remotos por medio de SSH. Esta herramienta define un DSL
+basado en Ruby para la definición de tareas.
 
 \textit{Capistrano} contiene tareas predefinidas para el despliegue de sistemas
 basados en el marco de trabajo Rails, pero para el sistema \texttt{PEAT} se
-necesito definir mas tareas para realizar un despliegue exitoso.
+implementaron tareas adicionales para realizar un despliegue exitoso.
