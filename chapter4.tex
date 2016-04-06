@@ -42,33 +42,33 @@ Los principales beneficios de esta práctica son:
 \end{itemize}
 
 En \texttt{PEAT} los riesgos de lograr un despliegue a producción exitoso
-eran mas grande de lo habitual dada la complejidad del sistema y la cantidad
-de requerimientos. Además PG\&E requería la implementación de varios ambientes
-previos al despliegue del sistema en el ambiente de producción, entonces
-el implementar el proceso de despliegue continuo para \texttt{PEAT} fue de vital
-importancia para cumplir con las necesidades del cliente.
+eran más grandes de lo habitual dada la complejidad del sistema y la cantidad
+de requerimientos. Además PG\&E requería el despliegue del sistema en ambientes
+de pruebas previo a un despliegue del sistema en el ambiente de producción.
+La implementación de un proceso de despliegue continuo para \texttt{PEAT} fue de
+vital importancia para cumplir con las necesidades del cliente.
 
 \vspace{2.5mm}
 
 Para PG\&E era necesario que se tuvieran los siguientes ambientes:
 \begin{itemize}
-\item \textit{peattest}: este ambiente es para un grupo de usuarios seleccionados
-  por PG\&E para obtener retroalimentación sobre el sistema.
-\item \textit{peatqa}: este ambiente es para un equipo de PG\&E para realizar
-  control de calidad y de rendimiento.
+\item \textit{peattest}: este ambiente es usado para hacer pruebas con usuarios
+  seleccionados por PG\&E para obtener retroalimentación sobre el sistema.
+\item \textit{peatqa}: este ambiente es usado por PG\&E para realizar control de
+  calidad y de rendimiento.
 \item \textit{peatprod}: este ambiente es el ambiente final de producción.
 \end{itemize}
 
 Para uso interno en C3 Energy se tenia además el ambiente \textit{peatstage}
 el cual era usado para realizar pruebas de rendimiento y de control de calidad.
 
-En total se tenían cuatro ambientes, los cuales tenían que tener que ser lo mas
-parecidos a la configuración final del ambiente de producción para que las pruebas
-de calidad y de rendimiento generaran información que fuera lo mas cercano al
-comportamiento del sistema en el ambiente de producción. Dados estos requerimientos
-la implementación del proceso de despliegue continuo para el sistema \texttt{PEAT}
-fue una decisión casi natural para permitir manejar el despliegue del sistema para
-cualquier combinación de versión-ambiente requerido.
+En total se tenían cuatro ambientes, los cuales tenían que tener ser lo mas
+parecidos en su configuración a la configuración del ambiente de producción
+principalmente para que las pruebas de calidad y de rendimiento regresaran resultados
+lo mas cercanos al comportamiento del sistema en el ambiente de producción.
+Dados estos requerimientos la implementación del proceso de despliegue continuo para
+el sistema \texttt{PEAT} era la mejor forma para manejar el despliegue del sistema
+en esta diversidad de ambientes.
 
 \subsection{Proceso de despliegue}
 
@@ -79,15 +79,16 @@ un sistema \cite{28_humble_farley_2011}.
 
 \vspace{2.5mm}
 
-Este proceso otorgar las siguientes ventajas:
+Este proceso tiene las siguientes ventajas:
 \begin{itemize}
 \item Visibilidad: todas las etapas del sistema de despliegue son visibles
   para todos los miembros del equipo.
-\item Retroalimentación: Los miembros del equipo obtiene información sobre los
-  problemas cuando se producen de modo que son capaces de solucionarlos lo mas
-  rápido posible.
+\item Retroalimentación: los miembros del equipo obtiene información sobre los
+  problemas en el momento en que ocurren de modo que son capaces de dar solución
+  a éstos rápidamente.
 \item Despliegue: por medio de un proceso totalmente automatizado se puede
-  desplegar y liberar cualquier versión del sistema en cualquier ambiente.
+  desplegar y liberar cualquier versión del sistema en cualquier ambiente y en
+  cualquier momento.
 \end{itemize}
 
 El proceso de despliegue se conforma de una serie de etapas de validación por las
