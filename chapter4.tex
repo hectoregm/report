@@ -206,3 +206,12 @@ de un ambiente\footnote{Esta tarea es solo ejecutada una única vez para prepara
   un nuevo ambiente.} y la segunda tarea es realizada al reiniciar el sistema.
 
 \lstinputlisting[language=Ruby]{code/deploy-tasks.rb}
+
+En el código anterior se tiene las tareas mas importantes definidas para el
+despliegue del sistema. En las lineas 3-5 se define la tarea \texttt{upstart}
+la cual por medio del comando \texttt{foreman} genera la configuración para agregar
+al sistema \texttt{PEAT} como un servicio al sistema Upstart\footnote{Es un demonio
+  que maneja el inicio de tareas y servicios durante el arranque del servidor y la
+  supervisión de éstos mientras el servidor esta funcionando} usado en el sistema
+operativo Ubuntu 12.04 LTS que es el sistema operativo seleccionado para los
+servidores EC2.
