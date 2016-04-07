@@ -176,4 +176,33 @@ basado en Ruby para la definición de tareas.
 basados en el marco de trabajo Rails, pero para el sistema \texttt{PEAT} se
 implementaron tareas adicionales para realizar un despliegue exitoso.
 
-\lstinputlisting[language=Ruby]{code/deploy.rb}
+\lstinputlisting[language=Ruby]{code/deploy-vars.rb}
+
+El código anterior muestra la configuración base de variables para el
+despliegue del sistema \texttt{PEAT} usando el DSL definido por \texttt{Capistrano}.
+En las líneas 1-9 se definen las variables de configuración para el sistema
+\texttt{PEAT} y el servidor Nginx, los valores por defecto están definidos
+para un ambiente en producción, esto posteriormente facilita saber que diferencias
+hay entre el ambiente en producción y los ambientes de pruebas.
+
+En la linea 11 se definen los ambientes soportados, teniendo los cuatro
+ambientes descritos anteriormente, cabe señalar que cada ambiente tiene
+su propio archivo de configuración en donde se indican los cambios en variables
+y/o tareas con respecto a la configuración base.
+
+En las lineas 14-16 se configura que el sistema de versiones, la dirección
+en donde se encuentra el repositorio y la rama que se usa para obtener el código
+fuente del sistema. El sistema de versiones que se usa es Git donde la rama por
+defecto es \textquote{release/v1.0} que es la rama estable del sistema que
+se usa para producción, sin embargo es posible modificar la rama para permitir
+el despliegue de cualquier versión/rama del sistema.
+
+En las lineas 18-24 se tiene el uso de las declaraciones \texttt{after}
+y \texttt{before} que permiten el establecer que una tarea sea realizada
+antes o después de una segunda tarea. Cabe señalar que las tareas
+\texttt{deploy:setup} y \texttt{deploy:restart} son tareas que son definidas
+por \texttt{Capistrano}, la primera es una tarea para la configuración inicial
+de un ambiente\footnote{Esta tarea es solo ejecutada una única vez para preparar
+  un nuevo ambiente.} y la segunda tarea es realizada al reiniciar el sistema.
+
+\lstinputlisting[language=Ruby]{code/deploy-tasks.rb}
