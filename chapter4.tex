@@ -181,6 +181,8 @@ definición de tareas de despliegue y mantenimiento.
 basados en el marco de trabajo Rails, sin embargo para el sistema \texttt{PEAT} se
 implementaron tareas adicionales para realizar un despliegue exitoso.
 
+\subsubsection{Configuración de ambientes}
+
 \lstinputlisting[language=Ruby]{code/deploy-vars.rb}
 
 El código anterior muestra la configuración base de variables para el
@@ -227,7 +229,7 @@ de la configuración generada para el sistema Upstart en la tarea anterior para
 iniciar o parar fácilmente el sistema.
 
 En las lineas 15-19 se define la tarea \texttt{peat\_setup} la cual genera
-los archivos de configuracion para \texttt{PEAT} (\texttt{peat.yml}) y
+los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
 Nginx (\texttt{nginx.conf}) y posteriormente los transfiere a los servidores
 del ambiente, esta tarea se ejecuta solamente cuando se inicializa un nuevo
 ambiente.
@@ -237,25 +239,27 @@ hace lo mismo que la tarea anterior pero en el contexto de que el ambiente
 ya esta en linea por lo que al finalizar la tarea se reinicia el sistema.
 
 En las lineas 30-35 se define la tarea \texttt{config} la cual genera
-los archivos de configuracion para \texttt{PEAT} (\texttt{peat.yml}) y
+los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
 Nginx (\texttt{nginx.conf}) por medio de la clase \texttt{ConfigCreator}.
 
 \lstinputlisting[language=Ruby]{code/deploy-peatstage.rb}
 
 Como se menciono antes cada ambiente tiene su propio archivo de configuración,
-el codigo anterior es la configuracion para el ambiente \texttt{peatstage}.
+el código anterior es la configuración para el ambiente \texttt{peatstage}.
 
 En la linea 1-2 se define el servidor asociado al ambiente. En las lineas
-3-10 se redefinen varias variables de configuracion para el ambiente siendo uno
+3-10 se redefinen varias variables de configuración para el ambiente siendo uno
 de los principales cambios que la rama por defecto es \textquote{master} la
 cual es la rama principal de desarrollo en el sistema \texttt{PEAT}.
 En las líneas 29-46 se redefinen las tareas \texttt{peat\_setup},
-\texttt{config\_sync} y \texttt{config} para que tomen en cuenta la configuracion
-actualizada por medio del metodo \texttt{override\_defaults}.
+\texttt{config\_sync} y \texttt{config} para que tomen en cuenta la configuración
+actualizada por medio del método \texttt{override\_defaults}.
 
-La interaccion con \texttt{Capistrano} es por medio del comando \texttt{cap}
-en la linea de comandos, asi para hacer un despligue al ambiente \texttt{peatprod}
-se ejecutaria el siguiente comando.
+\subsubsection{Despliegue automatizado de ambientes}
+
+La interacción con \texttt{Capistrano} es por medio del comando \texttt{cap}
+en la linea de comandos, así para hacer un despliegue al ambiente \texttt{peatprod}
+se ejecutaría el siguiente comando.
 
 \begin{verbatim}
 cap peatprod deploy
@@ -267,17 +271,33 @@ de la tarea a realizar.
 
 Como se puede ver por medio de \texttt{Capistrano} se puede realizar tanto
 la configuración inicial de los ambientes y el despliegue del sistema \texttt{PEAT}.
-Teniendose las siguientes ventajas:
 
+El uso de \texttt{Capistrano} para el despliegue tiene las siguientes ventajas:
 \begin{itemize}
-\item Rapidamente se puede agregar un nuevo ambiente agregando su nombre a la
-  variable \texttt{stages} y agregando su archivo de configuracion con los
+\item Rápidamente se puede agregar un nuevo ambiente agregando su nombre a la
+  variable \texttt{stages} y agregando su archivo de configuración con los
   cambios deseados para este nuevo ambiente.
-\item La configuracion definida con \texttt{Capistrano} es parte del codigo fuente
+\item La configuración definida con \texttt{Capistrano} es parte del código fuente
   del sistema y se encuentra en el sistema de versiones por lo que se tiene historia
-  de los cambios realizados en la configuracion de los ambientes.
+  de los cambios realizados en la configuración de los ambientes.
 \item El sistema es auto contenido, es decir, el código para realizar el despliegue
   del sistema es parte del código fuente del sistema.
 \end{itemize}
 
+En el servidor Jenkins se implemento una tarea que al tenerse un resultado
+positivos de las pruebas del sistema se hace uso del comando \texttt{cap}
+para efectuar el despliegue del sistema en los ambientes de prueba.
+
 \subsection{Pruebas de unidad y aceptación}
+
+En el servidor Jenkins se definieron las etapas del proceso de despliegue, siendo
+el inicio del proceso cuando se detectaba un cambio en el repositorio del sistema.
+Al detectarse un cambio se ejecuta la primera etapa que corre las pruebas
+de unidad.
+
+\subsubsection{Pruebas de unidad}
+
+Así en la primera etapa el servidor Jenkins obtiene el código fuente del sistema
+y ejecuta el comando \texttt{rspec} el cual ejecuta todas las pruebas de unidad
+dentro del sistema.
+
