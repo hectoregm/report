@@ -1,5 +1,5 @@
 set :hostname, 'dev-peatstage-ruby-01.c3-e.com'
-server "#{hostname}", :app, :web, :db, :primary => true
+server "#{hostname}", :app, :web, :primary => true
 
 set :branch, "#{ENV['branch'] || 'master'}"
 set :application, "pge"

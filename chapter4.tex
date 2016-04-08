@@ -215,3 +215,61 @@ al sistema \texttt{PEAT} como un servicio al sistema Upstart\footnote{Es un demo
   supervisión de éstos mientras el servidor esta funcionando} usado en el sistema
 operativo Ubuntu 12.04 LTS que es el sistema operativo seleccionado para los
 servidores EC2.
+
+En las líneas 6-13 se definen las tareas para iniciar y parar el sistema
+\texttt{PEAT}, se hace uso de los comandos \texttt{start} y \texttt{stop} y
+de la configuración generada en la tarea anterior para iniciar o parar
+fácilmente la aplicación.
+
+En las lineas 15-19 se define la tarea \texttt{peat\_setup} la cual genera
+los archivos de configuracion para \texttt{PEAT} (\texttt{peat.yml}) y
+Nginx (\texttt{nginx.conf}) y posteriormente los transfiere a los servidores
+del ambiente, esta tarea se ejecuta solamente cuando se inicializa un nuevo
+ambiente.
+
+En las lineas 21-27 se define la tarea \texttt{config\_sync} la cual
+hace lo mismo que la tarea anterior pero en el contexto de que el ambiente
+ya esta en linea por lo que al finalizar la tarea se reinicia el sistema.
+en las lineas 30-35 se define la tarea \texttt{config} la cual genera
+los archivos de configuracion para \texttt{PEAT} (\texttt{peat.yml}) y
+Nginx (\texttt{nginx.conf}) por medio de la clase \texttt{ConfigCreator}.
+
+\lstinputlisting[language=Ruby]{code/deploy-peatstage.rb}
+
+Como se menciono antes cada ambiente tiene su propio archivo de configuracion
+el codigo anterior es la configuracion para el ambiente \texttt{peatstage}.
+
+En la linea 1-2 se define el servidor asociado al ambiente. En las lineas
+3-10 se redefinen varias variables de configuracion para el ambiente siendo uno
+de los principales cambios que la rama por defecto es \textquote{master} la
+cual es la rama principal de desarrollo en el sistema \texttt{PEAT}.
+En las líneas 29-46 se redefinen las tareas \texttt{peat\_setup},
+\texttt{config\_sync} y \texttt{config} para que tomen en cuenta la configuracion
+actualizada por medio del metodo \texttt{override\_defaults}.
+
+La interaccion con \texttt{Capistrano} es por medio del comando \texttt{cap}
+en la linea de comandos, asi para hacer un despligue al ambiente \texttt{peatprod}
+se ejecutaria el siguiente comando.
+
+\begin{verbatim}
+cap peatprod deploy
+\end{verbatim}
+
+El comando \texttt{cap} toma dos argumentos el primero es algunos de los
+ambientes definidos en la variable \texttt{stages} y el segundo es el nombre
+de la tarea a realizar.
+
+Como se puede ver por medio de \texttt{Capistrano} se puede realizar tanto
+la configuración inicial de los ambientes y el despliegue del sistema \texttt{PEAT}.
+Teniendose las siguientes ventajas:
+
+\begin{itemize}
+\item Rapidamente se puede agregar un nuevo ambiente agregando su nombre a la
+  variable \texttt{stages} y agregando su archivo de configuracion con los
+  cambios deseados para este nuevo ambiente.
+\item La configuracion definida con \texttt{Capistrano} es parte del codigo fuente
+  del sistema y se encuentra en el sistema de versiones por lo que se tiene historia
+  de los cambios realizados en la configuracion de los ambientes.
+\end{itemize}
+
+\subsection{Pruebas de unidad y aceptación}
