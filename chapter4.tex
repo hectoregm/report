@@ -158,22 +158,27 @@ para correr aplicaciones.
 
 El uso de \texttt{EC2} presentaba las siguientes ventajas:
 \begin{itemize}
-\item Una comunicación mas rápida y segura con \texttt{backend}, es decir, el
-  servidor C3 dado que este corre bajo la servicio \texttt{EC2}.
-\item El servicio \texttt{EC2} permite la configuración total de los servidores
-  permitiendo automatizar la creación y configuración de éstos permitiendo
-  que el sistema pueda escalar rápidamente según las necesidades de computo.
+\item Una comunicación mas rápida y segura con el \texttt{backend} dado que el
+  servidor C3 corre bajo el servicio \texttt{EC2}.
+\item Permite un gran margen de maniobra en la configuración de los servidores
+  puesto que permite elegir entre una gran variedad de sistema operativos,
+  capacidad de computo, etcétera.
+\item Permite la creación y configuración automatizada de los servidores
+  permitiendo que el sistema pueda escalar rápidamente según las necesidades
+  de computo.
 \end{itemize}
 
 \subsubsection{Capistrano}
 
 Para configurar los servidores del servicio \texttt{EC2} para \texttt{PEAT} se usa
 \textit{Capistrano} que es una herramienta para definir y ejecutar tareas en
-múltiples servidores remotos por medio de SSH. Esta herramienta define un DSL
-basado en Ruby para la definición de tareas.
+múltiples servidores remotos por medio de SSH\footnote{Es un protocolo que permite
+  acceder a servidores remotos de forma segura a través de una red
+  \cite{29_ssh_protocol}.}. Esta herramienta define un DSL basado en Ruby para la
+definición de tareas de despliegue y mantenimiento.
 
 \textit{Capistrano} contiene tareas predefinidas para el despliegue de sistemas
-basados en el marco de trabajo Rails, pero para el sistema \texttt{PEAT} se
+basados en el marco de trabajo Rails, sin embargo para el sistema \texttt{PEAT} se
 implementaron tareas adicionales para realizar un despliegue exitoso.
 
 \lstinputlisting[language=Ruby]{code/deploy-vars.rb}
@@ -182,20 +187,20 @@ El código anterior muestra la configuración base de variables para el
 despliegue del sistema \texttt{PEAT} usando el DSL definido por \texttt{Capistrano}.
 En las líneas 1-9 se definen las variables de configuración para el sistema
 \texttt{PEAT} y el servidor Nginx, los valores por defecto están definidos
-para un ambiente en producción, esto posteriormente facilita saber que diferencias
-hay entre el ambiente en producción y los ambientes de pruebas.
+para un ambiente en producción, esto posteriormente facilita saber las diferencias
+entre el ambiente de producción y los ambientes de pruebas.
 
 En la linea 11 se definen los ambientes soportados, teniendo los cuatro
 ambientes descritos anteriormente, cabe señalar que cada ambiente tiene
 su propio archivo de configuración en donde se indican los cambios en variables
 y/o tareas con respecto a la configuración base.
 
-En las lineas 14-16 se configura que el sistema de versiones, la dirección
-en donde se encuentra el repositorio y la rama que se usa para obtener el código
-fuente del sistema. El sistema de versiones que se usa es Git donde la rama por
-defecto es \textquote{release/v1.0} que es la rama estable del sistema que
-se usa para producción, sin embargo es posible modificar la rama para permitir
-el despliegue de cualquier versión/rama del sistema.
+En las lineas 14-16 se indica el sistema de versiones, la dirección del repositorio
+y la rama a usar para obtener el código fuente del sistema.
+En \texttt{PEAT} el sistema de versiones es Git, donde la rama por defecto
+es \textquote{release/v1.0} que es la rama estable del sistema que
+se usa para producción, por medio de la variable de ambiente \texttt{BRANCH} es
+posible hacer el despliegue de cualquier versión del sistema.
 
 En las lineas 18-24 se tiene el uso de las declaraciones \texttt{after}
 y \texttt{before} que permiten el establecer que una tarea sea realizada
@@ -207,19 +212,19 @@ de un ambiente\footnote{Esta tarea es solo ejecutada una única vez para prepara
 
 \lstinputlisting[language=Ruby]{code/deploy-tasks.rb}
 
-En el código anterior se tiene las tareas mas importantes definidas para el
+En el código anterior se tiene las tareas mas importantes para el
 despliegue del sistema. En las lineas 3-5 se define la tarea \texttt{upstart}
 la cual por medio del comando \texttt{foreman} genera la configuración para agregar
 al sistema \texttt{PEAT} como un servicio al sistema Upstart\footnote{Es un demonio
   que maneja el inicio de tareas y servicios durante el arranque del servidor y la
-  supervisión de éstos mientras el servidor esta funcionando} usado en el sistema
+  supervisión de éstos mientras el servidor esta funcionando.} usado en el sistema
 operativo Ubuntu 12.04 LTS que es el sistema operativo seleccionado para los
 servidores EC2.
 
 En las líneas 6-13 se definen las tareas para iniciar y parar el sistema
 \texttt{PEAT}, se hace uso de los comandos \texttt{start} y \texttt{stop} y
-de la configuración generada en la tarea anterior para iniciar o parar
-fácilmente la aplicación.
+de la configuración generada para el sistema Upstart en la tarea anterior para
+iniciar o parar fácilmente el sistema.
 
 En las lineas 15-19 se define la tarea \texttt{peat\_setup} la cual genera
 los archivos de configuracion para \texttt{PEAT} (\texttt{peat.yml}) y
@@ -230,13 +235,14 @@ ambiente.
 En las lineas 21-27 se define la tarea \texttt{config\_sync} la cual
 hace lo mismo que la tarea anterior pero en el contexto de que el ambiente
 ya esta en linea por lo que al finalizar la tarea se reinicia el sistema.
-en las lineas 30-35 se define la tarea \texttt{config} la cual genera
+
+En las lineas 30-35 se define la tarea \texttt{config} la cual genera
 los archivos de configuracion para \texttt{PEAT} (\texttt{peat.yml}) y
 Nginx (\texttt{nginx.conf}) por medio de la clase \texttt{ConfigCreator}.
 
 \lstinputlisting[language=Ruby]{code/deploy-peatstage.rb}
 
-Como se menciono antes cada ambiente tiene su propio archivo de configuracion
+Como se menciono antes cada ambiente tiene su propio archivo de configuración,
 el codigo anterior es la configuracion para el ambiente \texttt{peatstage}.
 
 En la linea 1-2 se define el servidor asociado al ambiente. En las lineas
@@ -270,6 +276,8 @@ Teniendose las siguientes ventajas:
 \item La configuracion definida con \texttt{Capistrano} es parte del codigo fuente
   del sistema y se encuentra en el sistema de versiones por lo que se tiene historia
   de los cambios realizados en la configuracion de los ambientes.
+\item El sistema es auto contenido, es decir, el código para realizar el despliegue
+  del sistema es parte del código fuente del sistema.
 \end{itemize}
 
 \subsection{Pruebas de unidad y aceptación}
