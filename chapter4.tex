@@ -297,6 +297,20 @@ de unidad.
 
 \subsubsection{Pruebas de unidad}
 
+En la sección 2.3.2 se hablo sobre la practica del desarrollo guiado por
+comportamiento (BDD) la cual involucra escribir las pruebas preferentemente antes
+de escribir el codigo fuente y la refactorización continua del codigo fuente.
+En las pruebas por BDD se enfocan en describir el comportamiento de unidades
+de codigo. Para el sistema \texttt{PEAT}  se hace uso de la biblioteca
+\textit{RSpec} la cual define un lenguaje DSL para facilitar la implementación
+de pruebas unitarias y de aceptación.
+
+\texttt{RSpec} da acceso al comando \texttt{rspec} que permite correr y verificar
+que el sistema pasa todas las pruebas del sistema. Por medio del comando
+\texttt{rspec} el servidor Jenkins puede automaticamente verificar que el
+sistema sigue pasando todas la pruebas unitarias.
+
+
 Así en la primera etapa el servidor Jenkins obtiene el código fuente del sistema
 y ejecuta el comando \texttt{rspec} el cual ejecuta todas las pruebas de unidad
 dentro del sistema.
