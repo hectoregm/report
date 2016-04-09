@@ -307,15 +307,67 @@ de los módulos del sistema. Para el sistema \texttt{PEAT} se hace uso del marco
 de trabajo \textit{RSpec} la cual define un lenguaje de dominio específico (DSL)
 para implementar las pruebas unitarias.
 
-\texttt{RSpec} da acceso al comando \texttt{rspec} que permite correr y verificar
-que el sistema pasa todas las pruebas del sistema. Por medio del comando
-\texttt{rspec} el servidor Jenkins puede automáticamente verificar que el
-sistema sigue pasando todas la pruebas unitarias.
-
-
-Así en la primera etapa el servidor Jenkins obtiene el código fuente del sistema
-y ejecuta el comando \texttt{rspec} el cual ejecuta todas las pruebas de unidad
-dentro del sistema.
+RSpec da acceso al comando \texttt{rspec} que permite correr y verificar
+que el sistema pasa todas las pruebas unitarias del sistema. En la primera
+etapa el servidor Jenkins obtiene el código fuente del sistema y ejecuta el
+comando \texttt{rspec} el cual ejecuta todas las pruebas unitarias del sistema.
 
 \lstinputlisting[language=Ruby]{code/rspec-questions-controller.rb}
 
+El código anterior es un ejemplo de una prueba unitaria para el controlador
+\ \texttt{QuestionsController} (linea 3) que maneja las acciones en relación
+a las preguntas asociadas al perfil de un edificio. En las lineas 4-13 se
+inicializan los modelos necesarios para llevar a cabo las pruebas de este
+controlador.
+En las lineas 16-20 se tiene por medio de la declaración \texttt{it} la
+prueba unitaria sobre la acción \texttt{next} la cual debe regresar
+la siguiente pregunta a contestar del perfil del edificio. En la linea
+17 se define la expectativa de que el controlador llama al método \texttt{next
+  \_question} del modelo \texttt{PEATEngine} para obtener la siguiente pregunta.
+
+Por medio de \texttt{RSpec} se tienen pruebas de los controladores y vistas
+principales del sistema \texttt{PEAT}. Los modelos no son probados directamente
+dado que los modelos hacen uso de la clase \texttt{Bezel::Base} de la biblioteca
+\texttt{Bezel} la cual también tiene pruebas de unidad por medio de \texttt{RSpec}.
+
+\subsubsection{Pruebas de aceptación}
+
+Para el sistema \texttt{PEAT} se hace uso del marco de trabajo \texttt{Cucumber}
+el cual permite especificar y ejecutar pruebas de aceptación siguiendo el proceso
+BDD.
+
+\begin{lstlisting}
+Característica:
+Permitir a los usuarios el añadir una recomendación a su plan de ahorro
+El usuario tiene una cuenta, una dirección de servicio y un edificio
+
+  Antecedentes:
+    Dado que ingreso como el usuario @user1 por vez primera
+    Y que tengo una cuenta, una dirección de servicio y un edificio
+
+  @javascript
+  Escenario: Despliega la lista de recomendaciones
+    Cuando visito la pagina de recomendaciones
+    Entonces debo ver un botón de añadir al plan en cada recomendación
+
+  @javascript
+  Escenario: Cambiar al estado "Completado" a una recomendación
+    Dado que visito la pagina de recomendaciones
+    Y selecciono el primer botón añadir al plan
+    Debo ver un menú de selección
+    Cuando selecciono la opción "Completado" en el menú desplegable
+    Entonces el botón de añadir al plan debe indicar "Completado"
+
+  @javascript
+  Scenario: Añadir una recomendación al plan de ahorro
+    Dado que visito la pagina de recomendaciones
+    Cuando selecciono "Añadir al plan" en la primera recomendacion
+    Y selecciono "Guardar" en la ventana.
+    Entonces el botón de añadir al plan debe indicar "Agregado"
+    Y no debo ver el menú despegable
+\end{lstlisting}
+
+Cucumber da acceso al comando \texttt{cucumber} que permite correr y verificar
+que el sistema pasa todas las pruebas de aceptación del sistema. El servidor
+Jenkins ejecuta el comando \texttt{cucumber} si el resultado de las pruebas
+unitarias es exitoso.

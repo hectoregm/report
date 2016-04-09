@@ -8,17 +8,16 @@ describe QuestionsController do
                            recommendations_valid: true,
                            locations: [])
     Building.stub(:find) { @building }
+    @bpa = mock_model(BuildingProfileAnswer, id: "bpa_1", to_partial_path: "questions/text")
+    PEATEngine.stub(:next_question) { @bpa }
   end
 
   describe "GET 'next'" do
-    before :each do
-      @bpa = mock_model(BuildingProfileAnswer, id: "bpa_1", to_partial_path: "questions/text")
-      PEATEngine.stub(:next_question) { @bpa }
-    end
-
     it "gets the next question" do
       PEATEngine.should_receive(:next_question).and_return(@bpa)
       get :next, { building_id: "building_id"}
     end
   end
+  
+  # ...
 end
