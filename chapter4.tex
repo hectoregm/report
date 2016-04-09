@@ -290,20 +290,22 @@ para efectuar el despliegue del sistema en los ambientes de prueba.
 
 \subsection{Pruebas de unidad y aceptación}
 
-En el servidor Jenkins se definieron las etapas del proceso de despliegue, siendo
-el inicio del proceso cuando se detectaba un cambio en el repositorio del sistema.
-Al detectarse un cambio se ejecuta la primera etapa que corre las pruebas
-de unidad.
+En el servidor Jenkins se definen las etapas del proceso de despliegue, siendo
+el inicio del proceso de despliegue cuando se detecta un cambio en el repositorio
+del sistema. Al detectarse este cambio se ejecuta la primera etapa que implica
+correr las pruebas de unidad.
 
 \subsubsection{Pruebas de unidad}
 
 En la sección 2.3.2 se hablo sobre la practica del desarrollo guiado por
-comportamiento (BDD) la cual involucra escribir las pruebas preferentemente antes
-de escribir el codigo fuente y la refactorización continua del codigo fuente.
-En las pruebas por BDD se enfocan en describir el comportamiento de unidades
-de codigo. Para el sistema \texttt{PEAT}  se hace uso de la biblioteca
-\textit{RSpec} la cual define un lenguaje DSL para facilitar la implementación
-de pruebas unitarias y de aceptación.
+comportamiento (\textit{Behavior Driven Development}, BDD) la cual involucra
+escribir las pruebas antes de escribir el código fuente y la refactorización
+continua del código fuente.
+
+En BDD las pruebas se enfocan en describir el comportamiento y la interacción
+de los módulos del sistema. Para el sistema \texttt{PEAT} se hace uso del marco
+de trabajo \textit{RSpec} la cual define un lenguaje de dominio específico (DSL)
+para implementar las pruebas unitarias.
 
 \texttt{RSpec} da acceso al comando \texttt{rspec} que permite correr y verificar
 que el sistema pasa todas las pruebas del sistema. Por medio del comando
