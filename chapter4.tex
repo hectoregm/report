@@ -342,7 +342,7 @@ Permitir a los usuarios el añadir una recomendación a su plan de ahorro
 El usuario tiene una cuenta, una dirección de servicio y un edificio
 
   Antecedentes:
-    Dado que ingreso como el usuario @user1 por vez primera
+    Dado que ingreso como el usuario @juan por vez primera
     Y que tengo una cuenta, una dirección de servicio y un edificio
 
   @javascript
@@ -359,13 +359,31 @@ El usuario tiene una cuenta, una dirección de servicio y un edificio
     Entonces el botón de añadir al plan debe indicar "Completado"
 
   @javascript
-  Scenario: Añadir una recomendación al plan de ahorro
+  Escenario: Añadir una recomendación al plan de ahorro
     Dado que visito la pagina de recomendaciones
-    Cuando selecciono "Añadir al plan" en la primera recomendacion
+    Cuando selecciono "Añadir al plan" en la primera recomendación
     Y selecciono "Guardar" en la ventana.
     Entonces el botón de añadir al plan debe indicar "Agregado"
     Y no debo ver el menú despegable
 \end{lstlisting}
+
+El código anterior es una prueba de aceptación sobre el requerimiento de que los
+usuarios puedan añadir una recomendación a su plan de ahorro.
+En las lineas 1-3 se documenta el objetivo de la característica que se esta
+probando, se prueba una sola característica por archivo pero se pueden tener
+varios escenarios por característica. En las lineas 5-7 se definen
+los antecedentes, es decir, el contexto inicial que comparten todos los
+escenarios. Cada escenario empieza con la declaración \texttt{Escenario:}
+con una breve descripción del escenario, las lineas posteriores indican
+tanto el contexto como la expectativa del escenario. Los escenarios
+pueden ser etiquetados en este ejemplo tienen la etiqueta \texttt{@javascript}
+lo que indica que estos escenarios hacen uso de un navegador con soporte
+a Javascript para ejecutar la prueba.
+
+Cabe señalar el parecido entre el caso de uso \textit{Administrar recomendaciones}
+y la prueba de aceptación, esto es una de las ventajas del uso de \textit{Gherkin}
+que es el lenguaje DSL definido por Cucumber para facilitar la implementación
+de pruebas de aceptación a partir de casos de uso.
 
 Cucumber da acceso al comando \texttt{cucumber} que permite correr y verificar
 que el sistema pasa todas las pruebas de aceptación del sistema. El servidor
