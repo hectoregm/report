@@ -388,4 +388,57 @@ de pruebas de aceptación a partir de casos de uso.
 Cucumber da acceso al comando \texttt{cucumber} que permite correr y verificar
 que el sistema pasa todas las pruebas de aceptación del sistema. El servidor
 Jenkins ejecuta el comando \texttt{cucumber} si el resultado de las pruebas
-unitarias es exitoso.
+unitarias es exitoso. Si el resultado de las pruebas de aceptacion es positivo
+entonces se hace un despliegue del sistema a los ambientes de prueba.
+
+\subsection{Ambientes de prueba}
+
+Después que tanto las pruebas de unidad y aceptación dan resultados positivos el
+servidor Jenkins realiza el despliegue del sistema al ambiente \textit{peatstage}.
+
+En el ambiente \textit{peatstage} se realizan pruebas de rendimiento por medio
+de la herramienta CloudTest, la cual permite realizar pruebas de carga y
+rendimiento para sistemas web además esta herramienta tiene integración con
+Jenkins por lo que se agrego como una etapa mas en el proceso de despliegue.
+
+Usando CloudTest se tenían tres pruebas de carga, estas pruebas hacían pruebas de
+carga con 500, 1000 y 2000 usuarios concurrentes respectivamente. Si estas pruebas
+eran satisfactorias entonces el servidor \texttt{Jenkins} hace un despliegue del
+sistema en los ambientes \textit{peattest} y \textit{peatqa}.
+
+\subsection{Ciclo tipico de desarrollo}
+
+Durante el desarrollo del sistema \texttt{PEAT} se tenia el siguiente ciclo
+tipico de desarrollo.
+
+\begin{enumerate}
+\item El programador crea una nueva rama de trabajo en repositorio Git para la
+  implementacion de una nueva caracteristica del sistema.
+\item Conforme se van guardando cambios de la caracteristica en la rama de trabajo
+  el servidor Jenkins ejecuta solamente las pruebas de unidad y aceptacion,
+  permitiendo una rapida retroalimentacion del estado del sistema al programador.
+\item Cuando la implementacion se considera terminada y las pruebas son positivas
+  se realiza una revision del codigo de la rama de trabajo por el resto del
+  equipo.
+\item Despues de la revision y dado el visto bueno del equipo se integra el
+  codigo de la rama de trabajo a la rama \texttt{master}, lo cual provoca el
+  inicio de todo el proceso de despliegue.
+\item El servidor ejecuta las pruebas de unidad y aceptacion del sistema en
+  caso positivo realiza un despliegue al ambiente \textit{peatstage}, en caso
+  contrario el equipo es informado de cuales pruebas fallaron.
+\item El servidor ejecuta las pruebas de carga usando el ambiente \textit{peatstage}
+  si el resultado es positivo se hace un despliegue a los ambientes \textit{peattest}
+  y \textit{peatqa}, en caso contrario se informa al equipo sobre que partes del
+  sistema no tiene el rendimiento esperado.
+\item En coordinación con PG\&E se despliega la versión en uso en \textit{peattest}
+  al ambiente en producción.
+\end{enumerate}
+
+Cualquier falla se volvía prioridad para el equipo de desarrollo tratando de evitar
+que el lapso de tiempo en que el sistema no podia ser desplegado a los sistemas de ambiente fuera lo mas corto posible. 
+
+Haciendo uso de CD el equipo entero tiene conocimiento sobre el estado del sistema,
+aunque el sistema \texttt{PEAT} estuviera en un estado inconsistente por fallas ya
+sea en las pruebas unitarias, aceptacion o de carga se tiene informacion sobre la
+naturaleza y origen de la falla. Esta informacion permite al equipo arreglar el
+sistema de una forma mas eficiente.
