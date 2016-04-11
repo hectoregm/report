@@ -406,24 +406,24 @@ carga con 500, 1000 y 2000 usuarios concurrentes respectivamente. Si estas prueb
 eran satisfactorias entonces el servidor \texttt{Jenkins} hace un despliegue del
 sistema en los ambientes \textit{peattest} y \textit{peatqa}.
 
-\subsection{Ciclo tipico de desarrollo}
+\subsection{Ciclo típico de desarrollo}
 
 Durante el desarrollo del sistema \texttt{PEAT} se tenia el siguiente ciclo
-tipico de desarrollo.
+típico de desarrollo:
 
 \begin{enumerate}
 \item El programador crea una nueva rama de trabajo en repositorio Git para la
-  implementacion de una nueva caracteristica del sistema.
-\item Conforme se van guardando cambios de la caracteristica en la rama de trabajo
-  el servidor Jenkins ejecuta solamente las pruebas de unidad y aceptacion,
-  permitiendo una rapida retroalimentacion del estado del sistema al programador.
-\item Cuando la implementacion se considera terminada y las pruebas son positivas
-  se realiza una revision del codigo de la rama de trabajo por el resto del
+  implementación de una nueva característica del sistema.
+\item Conforme se van guardando cambios de la característica en la rama de trabajo
+  el servidor Jenkins ejecuta solamente las pruebas de unidad y aceptación,
+  permitiendo una rápida retroalimentación del estado del sistema al programador.
+\item Cuando la implementación se considera terminada y las pruebas son positivas
+  se realiza una revisión del código de la rama de trabajo por el resto del
   equipo.
-\item Despues de la revision y dado el visto bueno del equipo se integra el
-  codigo de la rama de trabajo a la rama \texttt{master}, lo cual provoca el
+\item Después de la revisión y dado el visto bueno del equipo se integra el
+  código de la rama de trabajo a la rama \textquote{master}, lo cual provoca el
   inicio de todo el proceso de despliegue.
-\item El servidor ejecuta las pruebas de unidad y aceptacion del sistema en
+\item El servidor ejecuta las pruebas de unidad y aceptación del sistema en
   caso positivo realiza un despliegue al ambiente \textit{peatstage}, en caso
   contrario el equipo es informado de cuales pruebas fallaron.
 \item El servidor ejecuta las pruebas de carga usando el ambiente \textit{peatstage}
@@ -434,11 +434,12 @@ tipico de desarrollo.
   al ambiente en producción.
 \end{enumerate}
 
-Cualquier falla se volvía prioridad para el equipo de desarrollo tratando de evitar
-que el lapso de tiempo en que el sistema no podia ser desplegado a los sistemas de ambiente fuera lo mas corto posible. 
+Cualquier falla se convierte en una tarea prioritaria para el equipo de desarrollo
+para evitar que el lapso de tiempo en que el sistema no puede ser desplegado sea
+el mínimo posible.
 
-Haciendo uso de CD el equipo entero tiene conocimiento sobre el estado del sistema,
-aunque el sistema \texttt{PEAT} estuviera en un estado inconsistente por fallas ya
-sea en las pruebas unitarias, aceptacion o de carga se tiene informacion sobre la
-naturaleza y origen de la falla. Esta informacion permite al equipo arreglar el
-sistema de una forma mas eficiente.
+Haciendo uso del despliegue continuo el equipo entero tiene conocimiento sobre el
+estado del sistema aunque el sistema \texttt{PEAT} se encuentre en un estado
+inconsistente por fallas, ya sea en las pruebas unitarias, aceptación o de carga,
+se tiene información sobre la naturaleza y origen de las fallas. Esta información
+permite al equipo arreglar el sistema de una forma eficiente.
