@@ -42,7 +42,7 @@ El ambiente de producción tiene los siguientes componentes:
   disponibilidad (Ver Figura \ref{fig:produccion} ELB).
 \item Servidores EC2: son servidores con capacidades de computo que pueden ser
   activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan instancias
-  del tipo \texttt{M3}\footnote{Estas instancias proporcionan un CPU virtual y
+  del tipo \texttt{M3}\footnote{Estas instancias proporcionan 2 CPU virtuales y
     2 GB de memoria.}. Para el servidor C3 se usan instancias de tipo \texttt{M4}
   \footnote{Estas instancias proporcionan 4 CPU virtuales y 16 GB de memoria.}
   (Ver Figura \ref{fig:produccion} M3 y M4).
@@ -51,7 +51,8 @@ El ambiente de producción tiene los siguientes componentes:
   (Ver Figura \ref{fig:produccion} Oracle).
 \item Cassandra: un cluster de nodos corriendo Cassandra donde se
   realiza análisis de los datos contenidos en la base de datos de Oracle y
-  también se usa como capa de cache del servidor C3.
+  también se usa como capa de cache del servidor C3 (Ver Figura \ref{fig:produccion}
+  Cassandra).
 \end{itemize}
 
 Se pude observar que la figura que se tienen dos zonas de disponibilidad estas zonas
@@ -59,10 +60,30 @@ se encuentran en ubicaciones físicas distintas que cuentan con su propia
 infraestructura, independiente y físicamente distinta con lo que se tiene una mayor
 redundancia al no tener punto único de error.
 
-Se tienen dos equilibradores de carga el primero dirige la peticion de los usuarios
-a una instancia EC2 que corre el sistema \texttt{PEAT}, el segundo equilibrador de
-carga es usado para distribuir la carga de peticiones al servidor C3 por parte de
-todas las instancias EC2.
+Se tienen dos equilibradores de carga el primero dirige las peticiones de los
+usuarios a una instancia EC2 que corre el sistema \texttt{PEAT}, el segundo
+equilibrador de carga es usado para distribuir la carga de peticiones al servidor C3
+por parte de todas las instancias EC2.
+
+\subsection{Phusion Passenger y Nginx}
+
+Para el funcionamiento de \texttt{PEAT} es necesario un servidor web y de aplicacion.
+Para \texttt{PEAT} se eligio utilizar Phusion Passenger como servidor de aplicaicon
+por las siguientes razones:
+
+\begin{itemize}
+\item Gran soporte para sistemas implementados con Ruby.
+\item Crea y apaga instancias del sistema segun la demanda, asi se tiene un
+  buen rendimiento aun en momento de mucha demanda pero conservando recursos
+  cuando sea posible.
+\item Reduce el uso de memoria para el sistema por medio de tecnicas como
+  la precarga y la gestión de memoria copia en escritura
+  (\textit{copy-on-write}, COW).
+\item Hace uso de todos los núcleos de CPU disponibles para el sistema.
+\end{itemize}
+
+\rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
+
 
 % https://aws.amazon.com/es/ec2/instance-types/ EC2
 % https://aws.amazon.com/es/ec2/faqs/
