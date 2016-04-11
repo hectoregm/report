@@ -1,13 +1,17 @@
 \chapter{Despliegue a producción y optimizaciones}
 
-La etapa para desplegar una aplicación es una etapa de creciente importancia ya
-que por un lado hace algunos años las aplicaciones web se desarrollaban bajo el
-modelo de tres capas: la base de datos, el servidor de la aplicación y el servidor
-web; actualmente se tienen mas servicios que deben estar en línea sobre todo para
-garantizar un servicio concurrente; caches, equilibradores de carga, servidores
-de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en sus
-diferentes contextos, desarrollo, producción y pruebas, es de vital importancia
-para el desarrollo de software en tiempo y en forma.
+El despliegue de un sistema es una etapa de creciente importancia dado que los
+sistemas actuales van requiriendo mas servicios y subsistemas de apoyo para
+su funcionamiento. En la actualidad para garantizar un servicio estable para
+un gran numero de usuarios es necesario contar con caches, equilibradores de
+carga, servidores de cola, etcétera.
+
+En este contexto se encuentra \texttt{PEAT} puesto que uno de sus requerimientos
+el dar soporte a por lo menos mil usuarios concurrentes, en este capitulo se
+describe la infraestructura del ambiente de producción, el proceso de despliegue
+continuo para el despliegue del sistema \texttt{PEAT} en los ambientes de prueba
+como de producción y las optimizaciones realizadas tanto al sistema como a la
+estructura de los ambientes para permitir la mayor capacidad de carga.
 
 \section{Arquitectura de los ambientes de prueba y producción}
 
@@ -30,11 +34,11 @@ El uso de \texttt{EC2} presentaba las siguientes ventajas:
 
 \rjcimage{1.0}{imagenes/Ambiente-Produccion.png}{Arquitectura ambiente de producción.}{produccion}
 
-El ambiente de produccion tiene los siguientes componentes:
+El ambiente de producción tiene los siguientes componentes:
 \begin{itemize}
 \item Equilibradores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
-  (ELB) permite obtener nivel altos de tolerancia al permitir enrutar el trafico
-  de forma automatica a varias instancias EC2 en varias zonas de
+  (ELB) el cual permite obtener nivel altos de tolerancia al permitir enrutar el
+  trafico de forma automática a varias instancias EC2 en varias zonas de
   disponibilidad (Ver Figura \ref{fig:produccion} ELB).
 \item Servidores EC2: son servidores con capacidades de computo que pueden ser
   activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan instancias
@@ -42,20 +46,23 @@ El ambiente de produccion tiene los siguientes componentes:
     2 GB de memoria.}. Para el servidor C3 se usan instancias de tipo \texttt{M4}
   \footnote{Estas instancias proporcionan 4 CPU virtuales y 16 GB de memoria.}
   (Ver Figura \ref{fig:produccion} M3 y M4).
-\item Oracle BD: la base de datos usada para almacenar la informacion usada
+\item Oracle BD: la base de datos usada para almacenar la información usada
   por el servidor C3 es administrada por una base de datos Oracle Database 10g
   (Ver Figura \ref{fig:produccion} Oracle).
-\item Cassandra: se tenia un cluster de nodos corriendo Cassandra donde se
-  realiza analisis de los datos contenidos en la base de datos de Oracle y
-  tambien se usaba como capa de cache del servidor C3.
+\item Cassandra: un cluster de nodos corriendo Cassandra donde se
+  realiza análisis de los datos contenidos en la base de datos de Oracle y
+  también se usa como capa de cache del servidor C3.
 \end{itemize}
 
 Se pude observar que la figura que se tienen dos zonas de disponibilidad estas zonas
 se encuentran en ubicaciones físicas distintas que cuentan con su propia
 infraestructura, independiente y físicamente distinta con lo que se tiene una mayor
-redundancia al no tener un solo punto punto de error.
+redundancia al no tener punto único de error.
 
-
+Se tienen dos equilibradores de carga el primero dirige la peticion de los usuarios
+a una instancia EC2 que corre el sistema \texttt{PEAT}, el segundo equilibrador de
+carga es usado para distribuir la carga de peticiones al servidor C3 por parte de
+todas las instancias EC2.
 
 % https://aws.amazon.com/es/ec2/instance-types/ EC2
 % https://aws.amazon.com/es/ec2/faqs/
