@@ -9,6 +9,58 @@ de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en s
 diferentes contextos, desarrollo, producción y pruebas, es de vital importancia
 para el desarrollo de software en tiempo y en forma.
 
+\section{Arquitectura de los ambientes de prueba y producción}
+
+Para el despliegue de los ambientes requeridos para \texttt{PEAT} se hizo uso de
+\textit{Amazon Web Services} (AWS) en particular del servicio
+\textit{Amazon Elastic Compute Cloud} (EC2) que permite la renta de servidores
+para correr aplicaciones.
+
+El uso de \texttt{EC2} presentaba las siguientes ventajas:
+\begin{itemize}
+\item Una comunicación mas rápida y segura con el \texttt{backend} dado que el
+  servidor C3 corre bajo el servicio \texttt{EC2}.
+\item Permite un gran margen de maniobra en la configuración de los servidores
+  puesto que permite elegir entre una gran variedad de sistema operativos,
+  capacidad de computo, etcétera.
+\item Permite la creación y configuración automatizada de los servidores
+  permitiendo que el sistema pueda escalar rápidamente según las necesidades
+  de computo.
+\end{itemize}
+
+\rjcimage{1.0}{imagenes/Ambiente-Produccion.png}{Arquitectura ambiente de producción.}{produccion}
+
+El ambiente de produccion tiene los siguientes componentes:
+\begin{itemize}
+\item Equilibradores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
+  (ELB) permite obtener nivel altos de tolerancia al permitir enrutar el trafico
+  de forma automatica a varias instancias EC2 en varias zonas de
+  disponibilidad (Ver Figura \ref{fig:produccion} ELB).
+\item Servidores EC2: son servidores con capacidades de computo que pueden ser
+  activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan instancias
+  del tipo \texttt{M3}\footnote{Estas instancias proporcionan un CPU virtual y
+    2 GB de memoria.}. Para el servidor C3 se usan instancias de tipo \texttt{M4}
+  \footnote{Estas instancias proporcionan 4 CPU virtuales y 16 GB de memoria.}
+  (Ver Figura \ref{fig:produccion} M3 y M4).
+\item Oracle BD: la base de datos usada para almacenar la informacion usada
+  por el servidor C3 es administrada por una base de datos Oracle Database 10g
+  (Ver Figura \ref{fig:produccion} Oracle).
+\item Cassandra: se tenia un cluster de nodos corriendo Cassandra donde se
+  realiza analisis de los datos contenidos en la base de datos de Oracle y
+  tambien se usaba como capa de cache del servidor C3.
+\end{itemize}
+
+Se pude observar que la figura que se tienen dos zonas de disponibilidad estas zonas
+se encuentran en ubicaciones físicas distintas que cuentan con su propia
+infraestructura, independiente y físicamente distinta con lo que se tiene una mayor
+redundancia al no tener un solo punto punto de error.
+
+
+
+% https://aws.amazon.com/es/ec2/instance-types/ EC2
+% https://aws.amazon.com/es/ec2/faqs/
+
+
 \section{Despliegue continuo}
 
 El despliegue continuo (\textit{Continuous Delivery}, CD) es una práctica de software
