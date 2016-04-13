@@ -80,7 +80,7 @@ por las siguientes razones:
   buen rendimiento cuando se tiene mucha demanda pero conservando recursos cuando
   sea posible.
 \item Reduce el uso de memoria para el sistema por medio de técnicas como
-  la precarga de aplicación y la gestión de memoria copia en escritura
+  la precarga de aplicación y la usando gestión de memoria de copia en escritura
   (\textit{copy-on-write}, COW).
   % FIXME: Poner enlace a la sección donde se habla de esto en la optimización
 \item Hace uso de todos los núcleos de CPU disponibles para el sistema.
@@ -92,14 +92,80 @@ haciendo que estos se encarguen tanto del manejo de archivos estáticos
 la carga de peticiones para Passenger.
 
 Se eligió integrar Nginx como servidor web por dos razones 1) la configuración es
-mucho mas simple que con Apache 2) permite fácilmente agregar encabezados a las
+mucho mas simple que en Apache y 2) permite fácilmente agregar encabezados a las
 peticiones entrantes sin afectar el rendimiento del sistema lo que permitió un
 análisis mucho profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
 
+De esta forma tenemos que en cada instancia \texttt{M3} se tiene los
+siguientes componentes (Ver Figura \ref{fig:passenger}):
+\begin{itemize}
+\item Nginx: sirve los archivos estáticos del sistema y es también el
+  equilibrador de carga de las instancias (Ver Figura \ref{fig:passenger} Nginx).
+\item \textit{Preloader}: es un proceso que carga todo el sistema \texttt{PEAT},
+  este proceso es copiado para obtener las instancias \texttt{PEAT} que manejan las
+  peticiones (Ver Figura \ref{fig:passenger} Nginx Preloader).
+\item Instancias \texttt{PEAT}: son instancias del sistema \texttt{PEAT} obtenidos
+  por medio de \textit{Preloader} el numero mínimo de instancias se fijo en diez
+  teniéndose la capacidad de crear hasta veinte instancias en forma automática.
+\end{itemize}
+
 \rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
 
+Aunque en la Figura \ref{fig:passenger} se tienen cinco instancias \texttt{PEAT}
+corriendo en producción se tienen por lo menos diez instancias corriendo en todo
+momento con la posibilidad de crearse hasta 20 instancias al tenerse mas trafico.
 
-% https://aws.amazon.com/es/ec2/instance-types/ EC2
+Mediante varias pruebas de carga se determino que el sistema debía manejar picos
+de demanda de hasta 30,000 peticiones por minuto para dar soporte al menos
+1,000 usuarios concurrentes. Cada instancia PEAT es capaz de procesar hasta
+300 peticiones por minuto por lo que cada servidor \texttt{M3} procesa entre
+3,000 a 6,000 peticiones por minuto. Para el ambiente de producción se determino
+usar seis servidores \texttt{M3} por lo que la capacidad base es de 18,000
+peticiones por minuto pero con capacidad de crecer con la demanda hasta
+36,000 peticiones por minuto.
+
+Los ambientes de prueba tenían la misma estructura solo cambiando el numero
+de servidores según las necesidades y pruebas a realizar.
+
+
+\subsection{Inicialización e invalidación del cache}
+
+Uno de los principales cuellos de botella encontrados durante el desarrollo
+del sistema \texttt{PEAT} fue la gran cantidad de peticiones realizadas al
+servicio web. Para reducir el numero de peticiones se determino que un gran
+numero se podían evitar teniendo un cache sobre modelos que se pueden considerar
+estáticos. Estos modelos son:
+
+\begin{itemize}
+\item \textit{BuildingQuestion}: este modelo representa una pregunta sobre
+  el perfil de un edifico, se tienen 45 preguntas por tipo de edificio, en
+  total se tienen 500 preguntas. Las preguntas son actualizadas cada seis
+  meses.
+\item \textit{Recommendation}: este modelo representa una recomendación
+  con todos su información de costo, beneficios, etcétera. Se inicio con un
+  total de cien recomendaciones las cuales se actualizarían cada seis meses.
+\item \textit{ValidAnswer}: las respuestas validas para una pregunta, dado
+  que la mayoría de las preguntas tiene en promedio cuatro respuestas posibles
+  se tiene que había dos mil respuestas posibles. Igual que las preguntas
+  estas son actualizadas cada seis meses.
+\end{itemize}
+
+Se determino que la mejor solución fue que al inicializar el sistema \texttt{PEAT}
+se inicializara el cache con la información de los modelos descritos anteriormente
+por medio del servicio web C3. De esta forma se redujo el numero de peticiones de
+forma substancial puesto pero teniendo el inconveniente de incrementarse el tiempo
+de inicialización de una instancia del sistema \texttt{PEAT}.
+
+Para minimizar el impacto de un mayor tiempo de inicialización se hizo uso de las
+características de precarga y de gestión de memoria de copia en escritura
+(\textit{copy-on-write}, COW). Al iniciar el sistema usando Passenger se inicia el
+proceso \texttt{Preloader} el cual en su inicialización del sistema \texttt{PEAT}
+realiza la precarga de modelos en el cache. Para iniciar una nueva instancia del
+sistema se realiza una copia del proceso \textit{Preloader} el cual contiene
+los modelos precargados en el cache por lo que la inicialización de nuevas
+instancias es casi instantánea.
+
+% Https://aws.amazon.com/es/ec2/instance-types/ EC2
 % https://aws.amazon.com/es/ec2/faqs/
 
 
@@ -431,34 +497,34 @@ el cual permite especificar y ejecutar pruebas de aceptación siguiendo el proce
 BDD.
 
 \begin{lstlisting}
-Característica:
-Permitir a los usuarios el añadir una recomendación a su plan de ahorro
-El usuario tiene una cuenta, una dirección de servicio y un edificio
+  Característica:
+  Permitir a los usuarios el añadir una recomendación a su plan de ahorro
+  El usuario tiene una cuenta, una dirección de servicio y un edificio
 
   Antecedentes:
-    Dado que ingreso como el usuario @juan por vez primera
-    Y que tengo una cuenta, una dirección de servicio y un edificio
+  Dado que ingreso como el usuario @juan por vez primera
+  Y que tengo una cuenta, una dirección de servicio y un edificio
 
   @javascript
   Escenario: Despliega la lista de recomendaciones
-    Cuando visito la pagina de recomendaciones
-    Entonces debo ver un botón de añadir al plan en cada recomendación
+  Cuando visito la pagina de recomendaciones
+  Entonces debo ver un botón de añadir al plan en cada recomendación
 
   @javascript
   Escenario: Cambiar al estado "Completado" a una recomendación
-    Dado que visito la pagina de recomendaciones
-    Y selecciono el primer botón añadir al plan
-    Debo ver un menú de selección
-    Cuando selecciono la opción "Completado" en el menú desplegable
-    Entonces el botón de añadir al plan debe indicar "Completado"
+  Dado que visito la pagina de recomendaciones
+  Y selecciono el primer botón añadir al plan
+  Debo ver un menú de selección
+  Cuando selecciono la opción "Completado" en el menú desplegable
+  Entonces el botón de añadir al plan debe indicar "Completado"
 
   @javascript
   Escenario: Añadir una recomendación al plan de ahorro
-    Dado que visito la pagina de recomendaciones
-    Cuando selecciono "Añadir al plan" en la primera recomendación
-    Y selecciono "Guardar" en la ventana.
-    Entonces el botón de añadir al plan debe indicar "Agregado"
-    Y no debo ver el menú despegable
+  Dado que visito la pagina de recomendaciones
+  Cuando selecciono "Añadir al plan" en la primera recomendación
+  Y selecciono "Guardar" en la ventana.
+  Entonces el botón de añadir al plan debe indicar "Agregado"
+  Y no debo ver el menú despegable
 \end{lstlisting}
 
 El código anterior es una prueba de aceptación sobre el requerimiento de que los
