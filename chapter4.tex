@@ -4,14 +4,16 @@ El despliegue de un sistema es una etapa de creciente importancia dado que los
 sistemas actuales van requiriendo mas servicios y subsistemas de apoyo para
 su funcionamiento. En la actualidad para garantizar un servicio estable para
 un gran numero de usuarios es necesario contar con caches, equilibradores de
-carga, servidores de cola, etcétera.
+carga, servidores de cola, etcétera. Esta creciente complejidad incrementa los
+riesgos para lograr un despliegue a producción exitoso.
 
 En este contexto se encuentra \texttt{PEAT} puesto que uno de sus requerimientos
-el dar soporte a por lo menos mil usuarios concurrentes, en este capitulo se
+es dar soporte a por lo menos mil usuarios concurrentes, en este capitulo se
 describe la infraestructura del ambiente de producción, el proceso de despliegue
 continuo para el despliegue del sistema \texttt{PEAT} en los ambientes de prueba
-como de producción y las optimizaciones realizadas tanto al sistema como a la
-estructura de los ambientes para permitir la mayor capacidad de carga.
+y producción. También se describen las optimizaciones realizadas tanto al
+sistema como a la arquitectura de los ambientes para permitir la mayor capacidad
+de carga.
 
 \section{Arquitectura de los ambientes de prueba y producción}
 
