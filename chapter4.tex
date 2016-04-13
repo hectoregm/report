@@ -86,13 +86,15 @@ por las siguientes razones:
 \item Hace uso de todos los núcleos de CPU disponibles para el sistema.
 \end{itemize}
 
-Phusion Passenger permite integración con los servidores web Apache y Nginx esto
-permite que estos tomen el rol de equilibrador de carga para Passenger y porque
-estos son mas eficientes para servir archivos estáticos como imágenes, hojas de
-estilo, etcétera. Se eligió a Nginx por dos razones 1) la configuración es mucho
-mas simple que con Apache 2) permite fácilmente agregar encabezados a las peticiones
-recibidas sin afectar el rendimiento del sistema lo que permitió un análisis mas
-profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
+Phusion Passenger permite la integración con los servidores web Apache o Nginx,
+haciendo que estos se encarguen tanto del manejo de archivos estáticos
+\footnote{Imágenes, hojas de estilo, codigo Javascript, etcétera} como de distribuir
+la carga de peticiones para Passenger.
+
+Se eligió integrar Nginx como servidor web por dos razones 1) la configuración es
+mucho mas simple que con Apache 2) permite fácilmente agregar encabezados a las
+peticiones entrantes sin afectar el rendimiento del sistema lo que permitió un
+análisis mucho profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
 
 \rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
 
