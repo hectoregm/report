@@ -22,26 +22,28 @@ Para el despliegue de los ambientes requeridos para \texttt{PEAT} se hizo uso de
 \textit{Amazon Elastic Compute Cloud} (EC2) que permite la renta de servidores
 para correr aplicaciones.
 
-El uso de \texttt{EC2} presentaba las siguientes ventajas:
+El uso de EC2 presentaba las siguientes ventajas:
 \begin{itemize}
-\item Una comunicación mas rápida y segura con el \texttt{backend} dado que el
-  servidor C3 corre bajo el servicio \texttt{EC2}.
 \item Permite un gran margen de maniobra en la configuración de los servidores
   puesto que permite elegir entre una gran variedad de sistema operativos,
   capacidad de computo, etcétera.
 \item Permite la creación y configuración automatizada de los servidores
   permitiendo que el sistema pueda escalar rápidamente según las necesidades
   de computo.
+\item Una comunicación mas rápida y segura con el \texttt{backend} dado que el
+  servidor C3 corre también bajo servidores EC2.
 \end{itemize}
 
 \rjcimage{1.0}{imagenes/Ambiente-Produccion.png}{Arquitectura ambiente de producción.}{produccion}
 
-El ambiente de producción tiene los siguientes componentes:
+El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig:produccion}):
 \begin{itemize}
 \item Equilibradores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
-  (ELB) el cual permite obtener nivel altos de tolerancia al permitir enrutar el
-  trafico de forma automática a varias instancias EC2 en varias zonas de
-  disponibilidad (Ver Figura \ref{fig:produccion} ELB).
+  (ELB) el cual permite obtener nivel altos de tolerancia al distribuir el trafico
+  de forma automática entre varias instancias EC2 las cuales se pueden estar en
+  varias zonas de disponibilidad\footnote{Zonas que se encuentran en
+    ubicaciones físicas distintas que cuentan con su propia infraestructura,
+    independiente y físicamente distinta.} (Ver Figura \ref{fig:produccion} ELB).
 \item Servidores EC2: son servidores con capacidades de computo que pueden ser
   activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan instancias
   del tipo \texttt{M3}\footnote{Estas instancias proporcionan 2 CPU virtuales y
@@ -51,38 +53,46 @@ El ambiente de producción tiene los siguientes componentes:
 \item Oracle BD: la base de datos usada para almacenar la información usada
   por el servidor C3 es administrada por una base de datos Oracle Database 10g
   (Ver Figura \ref{fig:produccion} Oracle).
-\item Cassandra: un cluster de nodos corriendo Cassandra donde se
-  realiza análisis de los datos contenidos en la base de datos de Oracle y
-  también se usa como capa de cache del servidor C3 (Ver Figura \ref{fig:produccion}
-  Cassandra).
+\item Apache Cassandra: un \textit{cluster} de nodos corriendo Apache Cassandra
+  donde se realiza análisis en tiempo real de los datos contenidos en la
+  base de datos de Oracle y también se usa como capa de cache del servidor C3
+  (Ver Figura \ref{fig:produccion} Cassandra).
 \end{itemize}
 
-Se pude observar que la figura que se tienen dos zonas de disponibilidad estas zonas
-se encuentran en ubicaciones físicas distintas que cuentan con su propia
-infraestructura, independiente y físicamente distinta con lo que se tiene una mayor
-redundancia al no tener punto único de error.
+Se pude observar que la figura que se tienen dos zonas de disponibilidad esto logra
+que se tenga una mayor redundancia al no tener un único punto de error.
 
 Se tienen dos equilibradores de carga el primero dirige las peticiones de los
-usuarios a una instancia EC2 que corre el sistema \texttt{PEAT}, el segundo
-equilibrador de carga es usado para distribuir la carga de peticiones al servidor C3
-por parte de todas las instancias EC2.
+usuarios a una instancia EC2 que corre instancias del sistema \texttt{PEAT},
+el segundo equilibrador de carga es usado para distribuir la carga de peticiones
+al servidor C3 por parte de todas las instancias \texttt{PEAT}.
 
 \subsection{Phusion Passenger y Nginx}
 
-Para el funcionamiento de \texttt{PEAT} es necesario un servidor web y de aplicacion.
-Para \texttt{PEAT} se eligio utilizar Phusion Passenger como servidor de aplicaicon
+Para el funcionamiento de \texttt{PEAT} es necesario tener tanto un servidor web
+como un servidor de aplicación.
+Para \texttt{PEAT} se eligió utilizar Phusion Passenger como servidor de aplicación
 por las siguientes razones:
 
 \begin{itemize}
 \item Gran soporte para sistemas implementados con Ruby.
-\item Crea y apaga instancias del sistema segun la demanda, asi se tiene un
-  buen rendimiento aun en momento de mucha demanda pero conservando recursos
-  cuando sea posible.
-\item Reduce el uso de memoria para el sistema por medio de tecnicas como
-  la precarga y la gestión de memoria copia en escritura
+\item Crea y apaga instancias del sistema según la demanda, lo que permite tener
+  buen rendimiento cuando se tiene mucha demanda pero conservando recursos cuando
+  sea posible.
+\item Reduce el uso de memoria para el sistema por medio de técnicas como
+  la precarga de aplicación y la gestión de memoria copia en escritura
   (\textit{copy-on-write}, COW).
+  % FIXME: Poner enlace a la sección donde se habla de esto en la optimización
 \item Hace uso de todos los núcleos de CPU disponibles para el sistema.
 \end{itemize}
+
+Phusion Passenger permite integración con los servidores web Apache y Nginx esto
+permite que estos tomen el rol de equilibrador de carga para Passenger y porque
+estos son mas eficientes para servir archivos estáticos como imágenes, hojas de
+estilo, etcétera. Se eligió a Nginx por dos razones 1) la configuración es mucho
+mas simple que con Apache 2) permite fácilmente agregar encabezados a las peticiones
+recibidas sin afectar el rendimiento del sistema lo que permitió un análisis mas
+profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
 
 \rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
 
