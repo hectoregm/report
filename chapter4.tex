@@ -1,4 +1,4 @@
-\chapter{Despliegue a producción y optimizaciones}
+\chapter{Arquitectura y despliegue del ambiente de producción}
 
 El despliegue de un sistema es una etapa de creciente importancia dado que los
 sistemas actuales van requiriendo mas servicios y subsistemas de apoyo para
@@ -8,12 +8,12 @@ carga, servidores de cola, etcétera. Esta creciente complejidad incrementa los
 riesgos para lograr un despliegue a producción exitoso.
 
 En este contexto se encuentra \texttt{PEAT} puesto que uno de sus requerimientos
-es dar soporte a por lo menos mil usuarios concurrentes, en este capitulo se
-describe la infraestructura del ambiente de producción, el proceso de despliegue
-continuo para el despliegue del sistema \texttt{PEAT} en los ambientes de prueba
-y producción. También se describen las optimizaciones realizadas tanto al
-sistema como a la arquitectura de los ambientes para permitir la mayor capacidad
-de carga.
+principales es dar soporte a por lo menos mil usuarios concurrentes, en este
+capitulo se describe la arquitectura del ambiente de producción, el proceso
+de despliegue continuo para el despliegue del sistema \texttt{PEAT} en los
+ambientes de prueba y producción. También se describen las optimizaciones realizadas
+tanto al sistema como a la arquitectura de los ambientes para permitir el mayor
+rendimiento posible.
 
 \section{Arquitectura de los ambientes de prueba y producción}
 
@@ -89,12 +89,12 @@ por las siguientes razones:
 Phusion Passenger permite la integración con los servidores web Apache o Nginx,
 haciendo que estos se encarguen tanto del manejo de archivos estáticos
 \footnote{Imágenes, hojas de estilo, codigo Javascript, etcétera} como de distribuir
-la carga de peticiones para Passenger.
+la carga de peticiones entrantes.
 
-Se eligió integrar Nginx como servidor web por dos razones 1) la configuración es
+Se eligió integrar Nginx como servidor web por dos razones 1) su configuración es
 mucho mas simple que en Apache y 2) permite fácilmente agregar encabezados a las
 peticiones entrantes sin afectar el rendimiento del sistema lo que permitió un
-análisis mucho profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
+análisis más profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
 
 De esta forma tenemos que en cada instancia \texttt{M3} se tiene los
 siguientes componentes (Ver Figura \ref{fig:passenger}):
@@ -110,6 +110,13 @@ siguientes componentes (Ver Figura \ref{fig:passenger}):
 \end{itemize}
 
 \rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
+
+Como se ve en la Figura \ref{fig:passenger} el servidor Nginx recibe una peticion
+por parte del equilibrador de carga para \texttt{PEAT} dependiendo de la carga
+en los instancias \texttt{PEAT} la peticion se manda a una instancia \texttt{PEAT}
+o es puesta en una cola de espera. Passenger detecta si la carga va aumentando y
+determina automaticamente si es necesario crear nuevas instancias del sistema
+\texttt{PEAT} por medio del proceso \texttt{Preloader}.
 
 Aunque en la Figura \ref{fig:passenger} se tienen cinco instancias \texttt{PEAT}
 corriendo en producción se tienen por lo menos diez instancias corriendo en todo
@@ -127,33 +134,31 @@ peticiones por minuto pero con capacidad de crecer con la demanda hasta
 Los ambientes de prueba tenían la misma estructura solo cambiando el numero
 de servidores según las necesidades y pruebas a realizar.
 
-
 \subsection{Inicialización e invalidación del cache}
 
 Uno de los principales cuellos de botella encontrados durante el desarrollo
 del sistema \texttt{PEAT} fue la gran cantidad de peticiones realizadas al
 servicio web. Para reducir el numero de peticiones se determino que un gran
-numero se podían evitar teniendo un cache sobre modelos que se pueden considerar
-estáticos. Estos modelos son:
+numero de éstas se podían evitar teniendo un cache sobre modelos que dado que
+su actualización es cada seis meses se pueden considerar estáticos.
 
+Los modelos que se pueden considerar que contienen información estatica son:
 \begin{itemize}
 \item \textit{BuildingQuestion}: este modelo representa una pregunta sobre
   el perfil de un edifico, se tienen 45 preguntas por tipo de edificio, en
-  total se tienen 500 preguntas. Las preguntas son actualizadas cada seis
-  meses.
+  total se tienen 500 preguntas.
 \item \textit{Recommendation}: este modelo representa una recomendación
   con todos su información de costo, beneficios, etcétera. Se inicio con un
-  total de cien recomendaciones las cuales se actualizarían cada seis meses.
+  total de cien recomendaciones.
 \item \textit{ValidAnswer}: las respuestas validas para una pregunta, dado
-  que la mayoría de las preguntas tiene en promedio cuatro respuestas posibles
-  se tiene que había dos mil respuestas posibles. Igual que las preguntas
-  estas son actualizadas cada seis meses.
+  que la mayoría de las preguntas tiene cuatro posibles respuestas se tiene
+  un estimado de dos mil respuestas en el sistema.
 \end{itemize}
 
 Se determino que la mejor solución fue que al inicializar el sistema \texttt{PEAT}
 se inicializara el cache con la información de los modelos descritos anteriormente
 por medio del servicio web C3. De esta forma se redujo el numero de peticiones de
-forma substancial puesto pero teniendo el inconveniente de incrementarse el tiempo
+forma substancial pero teniendo el inconveniente de un incremento en el tiempo
 de inicialización de una instancia del sistema \texttt{PEAT}.
 
 Para minimizar el impacto de un mayor tiempo de inicialización se hizo uso de las
