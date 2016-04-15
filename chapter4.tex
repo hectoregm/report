@@ -16,6 +16,7 @@ tanto al sistema como a la arquitectura de los ambientes para permitir el mayor
 rendimiento posible.
 
 \section{Arquitectura del ambiente de producción}
+\label{sec:production}
 
 Para el despliegue de los ambientes requeridos para \texttt{PEAT} se hizo uso de
 \textit{Amazon Web Services} (AWS) en particular del servicio
@@ -111,11 +112,11 @@ siguientes componentes (Ver Figura \ref{fig:passenger}):
 
 \rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
 
-Como se ve en la Figura \ref{fig:passenger} el servidor Nginx recibe una peticion
+Como se ve en la Figura \ref{fig:passenger} el servidor Nginx recibe una petición
 por parte del equilibrador de carga para \texttt{PEAT} dependiendo de la carga
-en los instancias \texttt{PEAT} la peticion se manda a una instancia \texttt{PEAT}
+en los instancias \texttt{PEAT} la petición se manda a una instancia \texttt{PEAT}
 o es puesta en una cola de espera. Passenger detecta si la carga va aumentando y
-determina automaticamente si es necesario crear nuevas instancias del sistema
+determina automáticamente si es necesario crear nuevas instancias del sistema
 \texttt{PEAT} por medio del proceso \texttt{Preloader}.
 
 Aunque en la Figura \ref{fig:passenger} se tienen cinco instancias \texttt{PEAT}
@@ -169,7 +170,7 @@ Phusion Passenger se inicia el proceso \texttt{Preloader} que realiza la
 inicialización del sistema \texttt{PEAT} y la precarga de modelos en el cache.
 
 En la Figura \ref{fig:cache} se puede ver que por medio de \textit{Preloader}
-se comparte en memoria el codigo del marco de trabajo Rails, el codigo del sistema
+se comparte en memoria el código del marco de trabajo Rails, el código del sistema
 \texttt{PEAT} y el cache de los modelos descritos anteriormente. Cada instancia
 solo usa memoria para sus propios objetos utilizados para manejar las
 peticiones entrantes.
@@ -331,27 +332,14 @@ importantes son:
 
 \subsection{Configuración y despliegue automatizado de ambientes}
 
-Para el despliegue de los ambientes requeridos para \texttt{PEAT} se hizo uso de
-\textit{Amazon Web Services} (AWS) en particular del servicio
-\textit{Amazon Elastic Compute Cloud} (EC2) que permite la renta de servidores
-para correr aplicaciones.
-
-El uso de \texttt{EC2} presentaba las siguientes ventajas:
-\begin{itemize}
-\item Una comunicación mas rápida y segura con el \texttt{backend} dado que el
-  servidor C3 corre bajo el servicio \texttt{EC2}.
-\item Permite un gran margen de maniobra en la configuración de los servidores
-  puesto que permite elegir entre una gran variedad de sistema operativos,
-  capacidad de computo, etcétera.
-\item Permite la creación y configuración automatizada de los servidores
-  permitiendo que el sistema pueda escalar rápidamente según las necesidades
-  de computo.
-\end{itemize}
+En la Sección \ref{sec:production} se hablo sobre la arquitectura del ambiente
+de producción para \texttt{PEAT} en donde se indico el uso de servidores EC2
+proporcionados por \textit{Amazon Web Services} (AWS).
 
 \subsubsection{Capistrano}
 
-Para configurar los servidores del servicio \texttt{EC2} para \texttt{PEAT} se usa
-\textit{Capistrano} que es una herramienta para definir y ejecutar tareas en
+Para configurar los servidores EC2 para \texttt{PEAT} se usa \textit{Capistrano}
+que es una herramienta para definir y ejecutar tareas en
 múltiples servidores remotos por medio de SSH\footnote{Es un protocolo que permite
   acceder a servidores remotos de forma segura a través de una red
   \cite{29_ssh_protocol}.}. Esta herramienta define un DSL basado en Ruby para la
@@ -372,19 +360,19 @@ En las líneas 1-9 se definen las variables de configuración para el sistema
 para un ambiente en producción, esto posteriormente facilita saber las diferencias
 entre el ambiente de producción y los ambientes de pruebas.
 
-En la linea 11 se definen los ambientes soportados, teniendo los cuatro
+En la línea 11 se definen los ambientes soportados, teniendo los cuatro
 ambientes descritos anteriormente, cabe señalar que cada ambiente tiene
 su propio archivo de configuración en donde se indican los cambios en variables
 y/o tareas con respecto a la configuración base.
 
-En las lineas 14-16 se indica el sistema de versiones, la dirección del repositorio
+En las líneas 14-16 se indica el sistema de versiones, la dirección del repositorio
 y la rama a usar para obtener el código fuente del sistema.
 En \texttt{PEAT} el sistema de versiones es Git, donde la rama por defecto
 es \textquote{release/v1.0} que es la rama estable del sistema que
 se usa para producción, por medio de la variable de ambiente \texttt{BRANCH} es
 posible hacer el despliegue de cualquier versión del sistema.
 
-En las lineas 18-24 se tiene el uso de las declaraciones \texttt{after}
+En las líneas 18-24 se tiene el uso de las declaraciones \texttt{after}
 y \texttt{before} que permiten el establecer que una tarea sea realizada
 antes o después de una segunda tarea. Cabe señalar que las tareas
 \texttt{deploy:setup} y \texttt{deploy:restart} son tareas que son definidas
@@ -395,7 +383,7 @@ de un ambiente\footnote{Esta tarea es solo ejecutada una única vez para prepara
 \lstinputlisting[language=Ruby]{code/deploy-tasks.rb}
 
 En el código anterior se tiene las tareas mas importantes para el
-despliegue del sistema. En las lineas 3-5 se define la tarea \texttt{upstart}
+despliegue del sistema. En las líneas 3-5 se define la tarea \texttt{upstart}
 la cual por medio del comando \texttt{foreman} genera la configuración para agregar
 al sistema \texttt{PEAT} como un servicio al sistema Upstart\footnote{Es un demonio
   que maneja el inicio de tareas y servicios durante el arranque del servidor y la
@@ -408,17 +396,17 @@ En las líneas 6-13 se definen las tareas para iniciar y parar el sistema
 de la configuración generada para el sistema Upstart en la tarea anterior para
 iniciar o parar fácilmente el sistema.
 
-En las lineas 15-19 se define la tarea \texttt{peat\_setup} la cual genera
+En las líneas 15-19 se define la tarea \texttt{peat\_setup} la cual genera
 los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
 Nginx (\texttt{nginx.conf}) y posteriormente los transfiere a los servidores
 del ambiente, esta tarea se ejecuta solamente cuando se inicializa un nuevo
 ambiente.
 
-En las lineas 21-27 se define la tarea \texttt{config\_sync} la cual
+En las líneas 21-27 se define la tarea \texttt{config\_sync} la cual
 hace lo mismo que la tarea anterior pero en el contexto de que el ambiente
-ya esta en linea por lo que al finalizar la tarea se reinicia el sistema.
+ya esta en línea por lo que al finalizar la tarea se reinicia el sistema.
 
-En las lineas 30-35 se define la tarea \texttt{config} la cual genera
+En las líneas 30-35 se define la tarea \texttt{config} la cual genera
 los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
 Nginx (\texttt{nginx.conf}) por medio de la clase \texttt{ConfigCreator}.
 
@@ -427,7 +415,7 @@ Nginx (\texttt{nginx.conf}) por medio de la clase \texttt{ConfigCreator}.
 Como se menciono antes cada ambiente tiene su propio archivo de configuración,
 el código anterior es la configuración para el ambiente \texttt{peatstage}.
 
-En la linea 1-2 se define el servidor asociado al ambiente. En las lineas
+En la línea 1-2 se define el servidor asociado al ambiente. En las líneas
 3-10 se redefinen varias variables de configuración para el ambiente siendo uno
 de los principales cambios que la rama por defecto es \textquote{master} la
 cual es la rama principal de desarrollo en el sistema \texttt{PEAT}.
@@ -438,7 +426,7 @@ actualizada por medio del método \texttt{override\_defaults}.
 \subsubsection{Despliegue automatizado de ambientes}
 
 La interacción con \texttt{Capistrano} es por medio del comando \texttt{cap}
-en la linea de comandos, así para hacer un despliegue al ambiente \texttt{peatprod}
+en la línea de comandos, así para hacer un despliegue al ambiente \texttt{peatprod}
 se ejecutaría el siguiente comando.
 
 \begin{verbatim}
@@ -495,13 +483,13 @@ comando \texttt{rspec} el cual ejecuta todas las pruebas unitarias del sistema.
 \lstinputlisting[language=Ruby]{code/rspec-questions-controller.rb}
 
 El código anterior es un ejemplo de una prueba unitaria para el controlador
-\ \texttt{QuestionsController} (linea 3) que maneja las acciones en relación
-a las preguntas asociadas al perfil de un edificio. En las lineas 4-13 se
+\ \texttt{QuestionsController} (línea 3) que maneja las acciones en relación
+a las preguntas asociadas al perfil de un edificio. En las líneas 4-13 se
 inicializan los modelos necesarios para llevar a cabo las pruebas de este
 controlador.
-En las lineas 16-20 se tiene por medio de la declaración \texttt{it} la
+En las líneas 16-20 se tiene por medio de la declaración \texttt{it} la
 prueba unitaria sobre la acción \texttt{next} la cual debe regresar
-la siguiente pregunta a contestar del perfil del edificio. En la linea
+la siguiente pregunta a contestar del perfil del edificio. En la línea
 17 se define la expectativa de que el controlador llama al método \texttt{next
   \_question} del modelo \texttt{PEATEngine} para obtener la siguiente pregunta.
 
@@ -549,12 +537,12 @@ BDD.
 
 El código anterior es una prueba de aceptación sobre el requerimiento de que los
 usuarios puedan añadir una recomendación a su plan de ahorro.
-En las lineas 1-3 se documenta el objetivo de la característica que se esta
+En las líneas 1-3 se documenta el objetivo de la característica que se esta
 probando, se prueba una sola característica por archivo pero se pueden tener
-varios escenarios por característica. En las lineas 5-7 se definen
+varios escenarios por característica. En las líneas 5-7 se definen
 los antecedentes, es decir, el contexto inicial que comparten todos los
 escenarios. Cada escenario empieza con la declaración \texttt{Escenario:}
-con una breve descripción del escenario, las lineas posteriores indican
+con una breve descripción del escenario, las líneas posteriores indican
 tanto el contexto como la expectativa del escenario. Los escenarios
 pueden ser etiquetados en este ejemplo tienen la etiqueta \texttt{@javascript}
 lo que indica que estos escenarios hacen uso de un navegador con soporte
