@@ -1,0 +1,46 @@
+\chapter{Conclusiones}
+
+En este documento se expuso el diseño e implementación del sistema \texttt{PEAT} que
+permite a sus usuarios el identificar y monitorear su consumo energético. En la
+implementación de \texttt{PEAT} se tiene el contexto en el cual se tiene varios
+sistemas en producción con un lenguaje de programación y herramientas ya
+probadas.
+
+Nuevas necesidades se presentan las cuales no siempre se pueden solucionar en
+forma óptima haciendo uso del lenguaje de programación y/o herramientas usadas
+anteriormente. Este contexto es el ocurrido al inicio del sistema \texttt{PEAT}
+donde se eligió tener un ambiente de desarrolló políglota en el cual se hace uso
+de un lenguaje de programación o herramienta en los contextos en que estos dan la
+mayor ventaja. Un ambiente políglota trae consigo sus propios retos como la
+integración con sistemas ya existentes y el despliegue exitoso de los sistemas a
+producción. En el capitulo 3 se describió el uso de las capacidades de
+metaprogramación de Ruby para facilitar la implementación de la biblioteca
+\texttt{Bezel} que permite la integración con los subsistemas ya existentes.
+
+Otro punto de creciente importancia es el despliegue del sistema, ya que por
+un lado hace algunos años las aplicaciones web se desarrollaban bajo el modelo
+de tres capas la base de datos, el servidor de la aplicación y el servidor web;
+actualmente se tienen mas servicios que deben estar en linea sobre todo para
+garantizar un servicio concurrente:; caches, equilibradores de carga, servidores
+de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en sus
+diferentes ambientes, desarrollo, pruebas y producción, es de vital importancia
+para siempre conocer el estado del sistema y así lograr que el proyecto sea
+desarrollado en tiempo y en forma. En el capitulo 4 se vio tanto la arquitectura
+usada para el despliegue del sistema como la implementación de un proceso
+de despliegue continuo con el cual se logro tener un despliegue a producción sin
+problemas dado que desde meses antes del despliegue final a producción se
+realizaron despliegues en ambientes de prueba que eran idénticos al ambiente de
+producción.
+
+El uso del despliegue continuo y de pruebas con usuarios fueron vitales
+que el sistema cumpliera con su objetivo de dar la mayor utilidad posible
+a los usuarios PyMES sobre su consumo energético. La retroalimentación continua
+obtenida por los ambientes de prueba permitió detectar deficiencias tanto en el
+\texttt{backend} como en la interfaz del usuario, las cuales pudieron ser arregladas
+en tiempo y forma para lograr tener una entrega exitosa.
+
+El sistema \texttt{PEAT} fue recibido muy bien por los usuarios y el cliente PG\&E
+tenido ya cuatro años en funcionamiento. Su éxito provoco que el sistema fuera
+también adoptado por otras compañías proveedoras de electricidad y gas como
+San Diego Gas \& Electric, Westar Energy y Southern California Edison.
+
