@@ -89,7 +89,7 @@ por las siguientes razones:
 
 Phusion Passenger permite la integración con los servidores web Apache o Nginx,
 haciendo que estos se encarguen tanto del manejo de archivos estáticos
-\footnote{Imágenes, hojas de estilo, codigo Javascript, etcétera} como de distribuir
+\footnote{Imágenes, hojas de estilo, código Javascript, etcétera} como de distribuir
 la carga de peticiones entrantes.
 
 Se eligió integrar Nginx como servidor web por dos razones 1) su configuración es
@@ -157,8 +157,8 @@ Los modelos que se pueden considerar que contienen información estática son:
   un estimado de dos mil respuestas en el sistema.
 \end{itemize}
 
-Se determino que la mejor solución fue que al inicializar el sistema \texttt{PEAT}
-se inicializara el cache con la información de los modelos descritos anteriormente
+Se determino que la mejor solución fue que al iniciar el sistema \texttt{PEAT}
+se precargara el cache con la información de los modelos descritos anteriormente
 por medio del servicio web C3. De esta forma se redujo el numero de peticiones de
 forma substancial pero teniendo el inconveniente de un incremento en el tiempo
 de inicialización de una instancia del sistema \texttt{PEAT}.
@@ -399,7 +399,7 @@ iniciar o parar fácilmente el sistema.
 En las líneas 15-19 se define la tarea \texttt{peat\_setup} la cual genera
 los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
 Nginx (\texttt{nginx.conf}) y posteriormente los transfiere a los servidores
-del ambiente, esta tarea se ejecuta solamente cuando se inicializa un nuevo
+del ambiente, esta tarea se ejecuta solamente cuando se inicia un nuevo
 ambiente.
 
 En las líneas 21-27 se define la tarea \texttt{config\_sync} la cual
@@ -556,7 +556,7 @@ de pruebas de aceptación a partir de casos de uso.
 Cucumber da acceso al comando \texttt{cucumber} que permite correr y verificar
 que el sistema pasa todas las pruebas de aceptación del sistema. El servidor
 Jenkins ejecuta el comando \texttt{cucumber} si el resultado de las pruebas
-unitarias es exitoso. Si el resultado de las pruebas de aceptacion es positivo
+unitarias es exitoso. Si el resultado de las pruebas de aceptación es positivo
 entonces se hace un despliegue del sistema a los ambientes de prueba.
 
 \subsection{Ambientes de prueba}
