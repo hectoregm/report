@@ -80,8 +80,8 @@ por las siguientes razones:
 \item Crea y apaga instancias del sistema según la demanda, lo que permite tener
   buen rendimiento cuando se tiene mucha demanda pero conservando recursos cuando
   sea posible.
-\item Reduce el uso de memoria para el sistema por medio de técnicas como
-  la precarga de aplicación y la usando gestión de memoria de copia en escritura
+\item Reduce el uso de memoria para el sistema, por medio de técnicas como
+  la precarga de aplicación y usando la gestión de memoria de copia en escritura
   (\textit{copy-on-write}, COW).
   % FIXME: Poner enlace a la sección donde se habla de esto en la optimización
 \item Hace uso de todos los núcleos de CPU disponibles para el sistema.
@@ -92,15 +92,15 @@ haciendo que estos se encarguen tanto del manejo de archivos estáticos
 \footnote{Imágenes, hojas de estilo, código Javascript, etcétera} como de distribuir
 la carga de peticiones entrantes.
 
-Se eligió integrar Nginx como servidor web por dos razones 1) su configuración es
-mucho mas simple que en Apache y 2) permite fácilmente agregar encabezados a las
+Se eligió integrar Nginx como servidor web por dos razones (1) su configuración es
+mucho mas simple que en Apache y (2) permite fácilmente agregar encabezados a las
 peticiones entrantes sin afectar el rendimiento del sistema lo que permitió un
 análisis más profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
 
 De esta forma tenemos que en cada instancia \texttt{M3} se tiene los
 siguientes componentes (Ver Figura \ref{fig:passenger}):
 \begin{itemize}
-\item Nginx: sirve los archivos estáticos del sistema y es también el
+\item Nginx: proporciona los archivos estáticos del sistema y es también el
   equilibrador de carga de las instancias (Ver Figura \ref{fig:passenger} Nginx).
 \item \textit{Preloader}: es un proceso que carga todo el sistema \texttt{PEAT},
   este proceso es copiado para obtener las instancias \texttt{PEAT} que manejan las
@@ -113,26 +113,27 @@ siguientes componentes (Ver Figura \ref{fig:passenger}):
 \rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
 
 Como se ve en la Figura \ref{fig:passenger} el servidor Nginx recibe una petición
-por parte del equilibrador de carga para \texttt{PEAT} dependiendo de la carga
+por parte del equilibrador de carga para \texttt{PEAT}, dependiendo de la carga
 en los instancias \texttt{PEAT} la petición se manda a una instancia \texttt{PEAT}
-o es puesta en una cola de espera. Passenger detecta si la carga va aumentando y
-determina automáticamente si es necesario crear nuevas instancias del sistema
+libre o es puesta en una cola de espera. Passenger detecta si la carga va aumentando
+y determina automáticamente si es necesario crear nuevas instancias del sistema
 \texttt{PEAT} por medio del proceso \texttt{Preloader}.
 
 Aunque en la Figura \ref{fig:passenger} se tienen cinco instancias \texttt{PEAT}
-corriendo en producción se tienen por lo menos diez instancias corriendo en todo
-momento con la posibilidad de crearse hasta 20 instancias al tenerse mas trafico.
+ejecutándose en producción se tienen por lo menos diez instancias ejecutándose en
+todo momento con la posibilidad de crearse hasta 20 instancias al tenerse más
+trafico.
 
 Mediante varias pruebas de carga se determino que el sistema debía manejar picos
 de demanda de hasta 30,000 peticiones por minuto para dar soporte al menos
 1,000 usuarios concurrentes. Cada instancia PEAT es capaz de procesar hasta
 300 peticiones por minuto por lo que cada servidor \texttt{M3} procesa entre
-3,000 a 6,000 peticiones por minuto. Para el ambiente de producción se determino
+3,000 a 6,000 peticiones por minuto. Para el ambiente de producción se determinó
 usar seis servidores \texttt{M3} por lo que la capacidad base es de 18,000
 peticiones por minuto pero con capacidad de crecer con la demanda hasta
 36,000 peticiones por minuto.
 
-Los ambientes de prueba tenían la misma estructura solo cambiando el numero
+Los ambientes de prueba tenían la misma estructura solo cambiando el número
 de servidores según las necesidades y pruebas a realizar.
 
 \subsection{Inicialización e invalidación del repositorio de memoria}
