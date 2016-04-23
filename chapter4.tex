@@ -3,16 +3,16 @@
 El despliegue de un sistema es una etapa de creciente importancia dado que los
 sistemas actuales van requiriendo mas servicios y subsistemas de apoyo para
 su funcionamiento. En la actualidad para garantizar un servicio estable para
-un gran numero de usuarios es necesario contar con caches, equilibradores de
-carga, servidores de cola, etcétera. Esta creciente complejidad incrementa los
-riesgos para lograr un despliegue a producción exitoso.
+un gran número de usuarios es necesario contar con repositorios de memoria,
+equilibradores de carga, servidores de cola, etcétera. Esta creciente complejidad
+incrementa los riesgos para lograr un despliegue a producción exitoso.
 
 En este contexto se encuentra \texttt{PEAT} puesto que uno de sus requerimientos
 principales es dar soporte a por lo menos mil usuarios concurrentes, en este
-capitulo se describe la arquitectura del ambiente de producción, el proceso
+capítulo se describe la arquitectura del ambiente de producción, el proceso
 de despliegue continuo para el despliegue del sistema \texttt{PEAT} en los
-ambientes de prueba y producción. También se describen las optimizaciones realizadas
-tanto al sistema como a la arquitectura de los ambientes para permitir el mayor
+ambientes de prueba y producción, así como las optimizaciones realizadas
+tanto al sistema como a la arquitectura de los ambientes para permitir un mayor
 rendimiento posible.
 
 \section{Arquitectura del ambiente de producción}
@@ -56,7 +56,7 @@ El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig
   (Ver Figura \ref{fig:produccion} Oracle).
 \item Apache Cassandra: un \textit{cluster} de nodos corriendo Apache Cassandra
   donde se realiza análisis en tiempo real de los datos contenidos en la
-  base de datos de Oracle y también se usa como capa de cache del servidor C3
+  base de datos de Oracle y también se usa como capa de repositorio de memoria del servidor C3
   (Ver Figura \ref{fig:produccion} Cassandra).
 \end{itemize}
 
@@ -135,12 +135,12 @@ peticiones por minuto pero con capacidad de crecer con la demanda hasta
 Los ambientes de prueba tenían la misma estructura solo cambiando el numero
 de servidores según las necesidades y pruebas a realizar.
 
-\subsection{Inicialización e invalidación del cache}
+\subsection{Inicialización e invalidación del repositorio de memoria}
 
 Uno de los principales cuellos de botella encontrados durante el desarrollo
 del sistema \texttt{PEAT} fue la gran cantidad de peticiones realizadas al
 servicio web. Para reducir el numero de peticiones se determino que un gran
-numero de éstas se podían evitar teniendo un cache de modelos que solo pueden
+numero de éstas se podían evitar teniendo un repositorio de memoria de modelos que solo pueden
 ser modificados por el administrador de sistema \texttt{PEAT} y que además
 son actualizados cada seis meses. 
 
@@ -158,7 +158,7 @@ Los modelos que se pueden considerar que contienen información estática son:
 \end{itemize}
 
 Se determino que la mejor solución fue que al iniciar el sistema \texttt{PEAT}
-se precargara el cache con la información de los modelos descritos anteriormente
+se precargara el repositorio de memoria con la información de los modelos descritos anteriormente
 por medio del servicio web C3. De esta forma se redujo el numero de peticiones de
 forma substancial pero teniendo el inconveniente de un incremento en el tiempo
 de inicialización de una instancia del sistema \texttt{PEAT}.
@@ -167,23 +167,23 @@ Para minimizar el impacto de un mayor tiempo de inicialización se hizo uso de l
 características de precarga y de gestión de memoria de copia en escritura
 (\textit{copy-on-write}, COW) proporcionados por Phusion Passenger. Al iniciar
 Phusion Passenger se inicia el proceso \texttt{Preloader} que realiza la
-inicialización del sistema \texttt{PEAT} y la precarga de modelos en el cache.
+inicialización del sistema \texttt{PEAT} y la precarga de modelos en el repositorio de memoria.
 
 En la Figura \ref{fig:cache} se puede ver que por medio de \textit{Preloader}
 se comparte en memoria el código del marco de trabajo Rails, el código del sistema
-\texttt{PEAT} y el cache de los modelos descritos anteriormente. Cada instancia
+\texttt{PEAT} y el repositorio de memoria de los modelos descritos anteriormente. Cada instancia
 solo usa memoria para sus propios objetos utilizados para manejar las
 peticiones entrantes.
 
 De esta manera al iniciar una nueva instancia del sistema se realiza una copia del
-proceso \textit{Preloader} el cual contiene los modelos precargados en el cache por
+proceso \textit{Preloader} el cual contiene los modelos precargados en el repositorio de memoria por
 lo que la inicialización de nuevas instancias es casi instantánea.
 
 \rjcimage{1.0}{imagenes/Passenger-Cache.png}{Diagrama de la memoria compartida entre
   \textit{Preloader} y las instancias \texttt{PEAT}.}{cache}
 
-Para la invalidación del cache de los modelos se tenia una acción para el
-administrador del sistema que permite limpiar el cache y actualizar los modelos
+Para la invalidación del repositorio de memoria de los modelos se tenia una acción para el
+administrador del sistema que permite limpiar el repositorio de memoria y actualizar los modelos
 por medio del servicio web C3.
 
 % Https://aws.amazon.com/es/ec2/instance-types/ EC2
