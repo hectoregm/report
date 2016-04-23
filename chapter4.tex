@@ -25,14 +25,14 @@ para correr aplicaciones.
 
 El uso de EC2 presentaba las siguientes ventajas:
 \begin{itemize}
-\item Permite un gran margen de maniobra en la configuración de los servidores
+\item Permite un gran márgen de maniobra en la configuración de los servidores
   puesto que permite elegir entre una gran variedad de sistema operativos,
-  capacidad de computo, etcétera.
+  capacidad de cómputo, etcétera.
 \item Permite la creación y configuración automatizada de los servidores
   permitiendo que el sistema pueda escalar rápidamente según las necesidades
-  de computo.
+  de cómputo.
 \item Una comunicación mas rápida y segura con el \texttt{backend} dado que el
-  servidor C3 corre también bajo servidores EC2.
+  servidor C3 se ejecuta también bajo servidores EC2.
 \end{itemize}
 
 \rjcimage{1.0}{imagenes/Ambiente-Produccion.png}{Arquitectura ambiente de producción.}{produccion}
@@ -41,17 +41,17 @@ El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig
 \begin{itemize}
 \item Equilibradores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
   (ELB) el cual permite obtener nivel altos de tolerancia al distribuir el trafico
-  de forma automática entre varias instancias EC2 las cuales se pueden estar en
+  de forma automática entre varias instancias EC2 las cuales se encuentran en
   varias zonas de disponibilidad\footnote{Zonas que se encuentran en
     ubicaciones físicas distintas que cuentan con su propia infraestructura,
     independiente y físicamente distinta.} (Ver Figura \ref{fig:produccion} ELB).
-\item Servidores EC2: son servidores con capacidades de computo que pueden ser
+\item Servidores EC2: son servidores con capacidades de cómputo que pueden ser
   activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan instancias
   del tipo \texttt{M3}\footnote{Estas instancias proporcionan 2 CPU virtuales y
     2 GB de memoria.}. Para el servidor C3 se usan instancias de tipo \texttt{M4}
   \footnote{Estas instancias proporcionan 4 CPU virtuales y 16 GB de memoria.}
   (Ver Figura \ref{fig:produccion} M3 y M4).
-\item Oracle BD: la base de datos usada para almacenar la información usada
+\item Oracle BD: base de datos usada para almacenar la información usada
   por el servidor C3 es administrada por una base de datos Oracle Database 10g
   (Ver Figura \ref{fig:produccion} Oracle).
 \item Apache Cassandra: un \textit{cluster} de nodos corriendo Apache Cassandra
@@ -60,8 +60,8 @@ El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig
   (Ver Figura \ref{fig:produccion} Cassandra).
 \end{itemize}
 
-Se pude observar que la figura que se tienen dos zonas de disponibilidad esto logra
-que se tenga una mayor redundancia al no tener un único punto de error.
+Se pude observar en la figura \ref{fig:produccion} dos zonas de disponibilidad
+esto permite tener una mayor redundancia al no tener un único punto de error.
 
 Se tienen dos equilibradores de carga el primero dirige las peticiones de los
 usuarios a una instancia EC2 que corre instancias del sistema \texttt{PEAT},
