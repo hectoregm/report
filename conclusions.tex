@@ -1,38 +1,46 @@
 \chapter{Conclusiones}
 
 En este documento se expuso el diseño e implementación del sistema \texttt{PEAT} que
-permite a sus usuarios el identificar y monitorear su consumo energético. En la
-implementación de \texttt{PEAT} se tiene el contexto en el cual se tiene varios
-sistemas en producción con un lenguaje de programación y herramientas ya
-probadas.
+permite a sus usuarios el identificar y monitorear su consumo energético. En C3
+Energy se tienen varios sistemas en producción haciendo uso de lenguajes de
+programación como Java y Javascript y herramientas como Rhino y Ext JS.
 
-Nuevas necesidades se presentan las cuales no siempre se pueden solucionar en
-forma óptima haciendo uso del lenguaje de programación y/o herramientas usadas
-anteriormente. Este contexto es el ocurrido al inicio del sistema \texttt{PEAT}
-donde se eligió tener un ambiente de desarrolló políglota en el cual se hace uso
-de un lenguaje de programación o herramienta en los contextos en que estos dan la
-mayor ventaja. Un ambiente políglota trae consigo sus propios retos como la
-integración con sistemas ya existentes y el despliegue exitoso de los sistemas a
-producción. En el capitulo 3 se describió el uso de las capacidades de
-metaprogramación de Ruby para facilitar la implementación de la biblioteca
-\texttt{Bezel} que permite la integración con los subsistemas ya existentes.
+En la implementación de \texttt{PEAT} se presentaron nuevas necesidades como la
+necesidad de una interfaz simple y de rápida respuesta a las acciones del usuario y
+dar servicio a un numero considerable de usuarios.
+Estas necesidades no se podían solucionar de forma óptima haciendo uso de los
+lenguajes y herramientas usadas hasta ese momento. Es por eso que al iniciar
+la implementación del sistema \texttt{PEAT} se eligió tener un ambiente de
+desarrollo multi-lenguaje en el cual se hace uso de un lenguaje de programación
+o herramienta en los contextos en que estos dan la mayor ventaja. Un ambiente
+multi-lenguaje trae consigo sus propios retos como la integración con sistemas ya
+existentes y el despliegue exitoso de los sistemas a producción.
+
+En el Capítulo 3 se describió la implementación de la interfaz de usuario y el flujo
+de navegación y de interacción del usuario con el sistema permitiendo a éste obtener
+la mayor información para tomar decisiones sobre su edificio con la menor información
+disponible. En este capitulo también se describió el uso de las capacidades de
+metaprogramación de Ruby para facilitar la implementación y uso de la biblioteca
+\texttt{Bezel} que permite la integración con los subsistemas ya existentes al
+permitir definir en pocas lineas de código los modelos y sus asociaciones.
 
 Otro punto de creciente importancia es el despliegue del sistema, ya que por
 un lado hace algunos años las aplicaciones web se desarrollaban bajo el modelo
 de tres capas la base de datos, el servidor de la aplicación y el servidor web;
-actualmente se tienen mas servicios que deben estar en linea sobre todo para
-garantizar un servicio concurrente:; caches, equilibradores de carga, servidores
+actualmente se tienen mas servicios que deben estar en línea, para garantizar un
+servicio concurrente: caches, equilibradores de carga, servidores
 de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en sus
-diferentes ambientes, desarrollo, pruebas y producción, es de vital importancia
-para siempre conocer el estado del sistema y así lograr que el proyecto sea
-desarrollado en tiempo y en forma. En el capitulo 4 se vio tanto la arquitectura
-usada para el despliegue del sistema como la implementación de un proceso
-de despliegue continuo con el cual se logro tener un despliegue a producción sin
-problemas dado que desde meses antes del despliegue final a producción se
-realizaron despliegues en ambientes de prueba que eran idénticos al ambiente de
-producción.
+diferentes ambientes, como el de desarrollo, pruebas y producción, es de vital
+importancia para conocer siempre el estado del sistema y así lograr que el proyecto
+sea desarrollado en tiempo y en forma.
 
-El uso del despliegue continuo y de pruebas con usuarios fueron vitales
+En el capitulo 4 se describió tanto la arquitectura usada para el despliegue del
+sistema como la implementación de un de despliegue continuo con el cual se logró
+tener un despliegue en la etapa de producción sin problemas, dado el que
+con anterioridad se realizaron varios despliegues en ambientes de prueba los cuales
+eran idénticos al ambiente de producción.
+
+El uso del despliegue continuo y de pruebas con usuarios finales fueron vitales
 que el sistema cumpliera con su objetivo de dar la mayor utilidad posible
 a los usuarios PyMES sobre su consumo energético. La retroalimentación continua
 obtenida por los ambientes de prueba permitió detectar deficiencias tanto en el
@@ -40,7 +48,8 @@ obtenida por los ambientes de prueba permitió detectar deficiencias tanto en el
 en tiempo y forma para lograr tener una entrega exitosa.
 
 El sistema \texttt{PEAT} fue recibido muy bien por los usuarios y el cliente PG\&E
-tenido ya cuatro años en funcionamiento dando servicio a cerca de 250,000 usuarios
-PyMES\cite{30_pge_annual_report}. Su éxito provoco que el sistema fuera
-también adoptado por otras compañías proveedoras de electricidad y gas como
-San Diego Gas \& Electric y Southern California Edison.
+ya desde que hace cuatro años se encuentra en funcionamiento dando servicio a cerca
+de 250,000 usuarios PyMES a la fecha\cite{30_pge_annual_report}. Su éxito provocó que
+el sistema fuera también adoptado por otras compañías proveedoras de electricidad y
+gas como San Diego Gas \& Electric y Southern California Edison, que prácticamente
+abarca el estado de California en los Estados Unidos de América.
