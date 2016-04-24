@@ -182,7 +182,7 @@ proceso \textit{Preloader} el cual contiene los modelos precargados en el
 repositorio de memoria por lo que la inicialización de nuevas instancias es casi
 instantánea.
 
-\rjcimage{1.0}{imagenes/Passenger-Cache.png}{Diagrama de la memoria compartida entre
+\rjcimage{0.8}{imagenes/Passenger-Cache.png}{Diagrama de la memoria compartida entre
   \textit{Preloader} y las instancias \texttt{PEAT}.}{cache}
 
 Para la invalidación del repositorio de memoria de los modelos se tenia una acción
@@ -195,10 +195,10 @@ actualizar los modelos por medio del servicio web C3.
 
 \section{Despliegue continuo}
 
-El despliegue continuo (\textit{Continuous Delivery}, CD) es una práctica de software
-en la cual se implementa software de tal forma de que éste pueda ser desplegado a
-producción en cualquier momento\cite{27_martin_fowler_cd}. Su objetivo es crear,
-probar y liberar software más rápido y con mayor frecuencia.
+El despliegue continuo (\textit{Continuous Delivery}, CD) es una buena práctica de
+software en la cual se implementa software de tal forma de que éste pueda ser
+desplegado a producción en cualquier momento\cite{27_martin_fowler_cd}. Su objetivo
+es crear, probar y liberar software más rápido y con mayor frecuencia.
 
 \vspace{2.5mm}
 
@@ -225,8 +225,8 @@ Los principales beneficios de esta práctica son:
   rápida y frecuente permite evaluar que tan útil es el sistema para el usuario.
 \end{itemize}
 
-En \texttt{PEAT} los riesgos de lograr un despliegue a producción exitoso
-eran más grandes de lo habitual dada la complejidad del sistema y la cantidad
+En \texttt{PEAT} los riesgos asociados al despliegue de producción exitoso
+eran mayores a lo habitual, dada la complejidad del sistema y la cantidad
 de requerimientos. Además PG\&E requería el despliegue del sistema en ambientes
 de pruebas previo a un despliegue del sistema en el ambiente de producción.
 La implementación de un proceso de despliegue continuo para \texttt{PEAT} fue de
@@ -243,13 +243,13 @@ Para PG\&E era necesario que se tuvieran los siguientes ambientes:
 \item \textit{peatprod}: este ambiente es el ambiente final de producción.
 \end{itemize}
 
-Para uso interno en C3 Energy se tenia además el ambiente \textit{peatstage}
+Para uso interno en C3 Energy se tenía además el ambiente \textit{peatstage},
 el cual era usado para realizar pruebas de rendimiento y de control de calidad.
 
-En total se tenían cuatro ambientes, los cuales tenían que tener ser lo mas
-parecidos en su configuración a la configuración del ambiente de producción
-principalmente para que las pruebas de calidad y de rendimiento regresaran resultados
-lo mas cercanos al comportamiento del sistema en el ambiente de producción.
+En total se contaba con cuatro ambientes, los cuales debían ser lo mas parecidos
+en su arquitectura y configuración a la del ambiente de producción para que así las
+pruebas de calidad y de rendimiento regresaran resultados cercanos al comportamiento
+del sistema en el ambiente de producción.
 Dados estos requerimientos la implementación del proceso de despliegue continuo para
 el sistema \texttt{PEAT} era la mejor forma para manejar el despliegue del sistema
 en esta diversidad de ambientes.
@@ -257,7 +257,7 @@ en esta diversidad de ambientes.
 \subsection{Proceso de despliegue}
 
 En el despliegue continuo se tiene al proceso de despliegue (\textit{deployment
-  pipeline}) como concepto central, el cual en esencia es la implementación
+  pipeline}) como concepto central, el cual, en esencia es la implementación
 automatizada de los procesos de configuración, construcción, prueba y despliegue de
 un sistema \cite{28_humble_farley_2011}.
 
@@ -280,22 +280,25 @@ que el sistema debe pasar para llegar al ambiente de producción. Para el sistem
 \texttt{PEAT} las etapas de validación son las siguientes (Ver Figura
 \ref{fig:pipeline}):
 \begin{itemize}
-\item Control de versiones: El equipo de desarrollo ingresa los cambios
+\item Control de versiones: el equipo de desarrollo ingresa los cambios
   realizados al sistema por medio del control de versiones Git, esto inicia
   el proceso de despliegue.
-\item Pruebas de unidad: Al detectarse un cambio en el repositorio se corren
-  pruebas las pruebas de unidad del sistema. Se usa la biblioteca \texttt{RSpec}
-  para implementar las pruebas de unidad para el código en Ruby, mientras que para
-  el código en Javascript se hace uso de la biblioteca \texttt{Jasmine} para las
-  pruebas de unidad. El equipo de desarrollo recibe retroalimentación del resultado
-  de las pruebas, si el resultado es positivo se pasa a la siguiente etapa.
+\item Pruebas de unidad: al detectarse un cambio en el repositorio se ejecutan las
+  pruebas de unidad del sistema.
+
+  Se usa la biblioteca \texttt{RSpec} para implementar las pruebas de unidad
+  para el código en Ruby, mientras que para el código en Javascript se hace uso de
+  la biblioteca \texttt{Jasmine} para las pruebas de unidad.
+
+  El equipo de desarrollo recibe retroalimentación del resultado de las pruebas,
+  si el resultado es positivo se pasa a la siguiente etapa.
   En la primera secuencia en la Figura \ref{fig:pipeline} se tiene el caso
   cuando las pruebas de unidad son negativas y se detiene el proceso de despliegue.
-\item Pruebas de aceptación: Se hace uso de la biblioteca \texttt{Cucumber}
+\item Pruebas de aceptación: se hace uso de la biblioteca \texttt{Cucumber}
   para implementar las pruebas de aceptación, de la misma forma que la etapa de
-  pruebas de unidad si se obtiene un resultado positivo se continua a la siguiente
+  pruebas de unidad si se obtiene un resultado positivo se continúa a la siguiente
   etapa en caso contrario se detiene el proceso de despliegue.
-\item Ambientes de prueba: Se hace el despliegue del sistema en los ambientes de
+\item Ambientes de prueba: se hace el despliegue del sistema en los ambientes de
   prueba, es decir, a los ambientes \textit{peatstage}, \textit{peattest} y
   \textit{peatqa}. En esta etapa se realizan pruebas de rendimiento y de calidad
   de forma manual y automatizada.
@@ -303,24 +306,24 @@ que el sistema debe pasar para llegar al ambiente de producción. Para el sistem
   sistemas de prueba han sido revisado de forma satisfactoria.
 \end{itemize}
 
-\rjcimage{1.0}{imagenes/Deployment-Pipeline.png}{Proceso de despliegue para
+\rjcimage{1.1}{imagenes/Deployment-Pipeline.png}{Proceso de despliegue para
   \texttt{PEAT}.}{pipeline}
 
 Las primeras etapas del proceso se desarrollan en forma completamente automatizada
 hasta llegar a la etapa de despliegue a los ambientes de pruebas, en esta etapa
 al principio se realizaban pruebas de calidad y rendimiento de forma manual, estas
-actividades se fueron automatizando conforme fue pasando el tiempo haciendo uso de
-herramientas como \texttt{SauceLabs} y \texttt{CloudTest}. La ejecución para
-el despliegue al ambiente de producción se realiza de forma manual.
+actividades se fueron automatizando una por una  haciendo uso de herramientas como
+\texttt{SauceLabs} y \texttt{CloudTest}. La ejecución para el despliegue al ambiente
+de producción se realiza de forma manual.
 
 \subsubsection{Herramientas}
 
-El proceso de despliegue se hace uso de un gran numero de herramientas, las más
+El proceso de despliegue se hace uso de un gran número de herramientas, las más
 importantes son:
 
 \begin{itemize}
 \item \texttt{AWS}: \textit{Amazon Web Services} (AWS), es un conjunto de servicios
-  de computo en la nube que permite la implementación de sistemas escalables.
+  de cómputo en la nube que permite la implementación de sistemas escalables.
 \item \texttt{Jenkins}: es un servidor de despliegue continuo, que permite
   definir las etapas de un proceso de despliegue y las acciones que se realizan
   según el resultado de la etapa.
