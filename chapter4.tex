@@ -124,7 +124,7 @@ ejecutándose en producción se tienen por lo menos diez instancias ejecutándos
 todo momento con la posibilidad de crearse hasta 20 instancias al tenerse más
 trafico.
 
-Mediante varias pruebas de carga se determino que el sistema debía manejar picos
+Mediante varias pruebas de carga se determinó que el sistema debía manejar picos
 de demanda de hasta 30,000 peticiones por minuto para dar soporte al menos
 1,000 usuarios concurrentes. Cada instancia PEAT es capaz de procesar hasta
 300 peticiones por minuto por lo que cada servidor \texttt{M3} procesa entre
@@ -140,10 +140,10 @@ de servidores según las necesidades y pruebas a realizar.
 
 Uno de los principales cuellos de botella encontrados durante el desarrollo
 del sistema \texttt{PEAT} fue la gran cantidad de peticiones realizadas al
-servicio web. Para reducir el numero de peticiones se determino que un gran
-numero de éstas se podían evitar teniendo un repositorio de memoria de modelos que solo pueden
-ser modificados por el administrador de sistema \texttt{PEAT} y que además
-son actualizados cada seis meses. 
+servicio web. Para reducir el numero de peticiones se determinó que un gran
+número de éstas se podían evitar teniendo un repositorio de memoria de los modelos
+que solo pueden ser modificados por el administrador de sistema \texttt{PEAT}
+y que además son actualizados cada seis meses. 
 
 Los modelos que se pueden considerar que contienen información estática son:
 \begin{itemize}
@@ -153,39 +153,41 @@ Los modelos que se pueden considerar que contienen información estática son:
 \item \textit{Recommendation}: este modelo representa una recomendación
   con todos su información de costo, beneficios, etcétera. Se inicio con un
   total de cien recomendaciones.
-\item \textit{ValidAnswer}: las respuestas validas para una pregunta, dado
+\item \textit{ValidAnswer}: las respuestas válidas para una pregunta, dado
   que la mayoría de las preguntas tiene cuatro posibles respuestas se tiene
   un estimado de dos mil respuestas en el sistema.
 \end{itemize}
 
-Se determino que la mejor solución fue que al iniciar el sistema \texttt{PEAT}
-se precargara el repositorio de memoria con la información de los modelos descritos anteriormente
-por medio del servicio web C3. De esta forma se redujo el numero de peticiones de
-forma substancial pero teniendo el inconveniente de un incremento en el tiempo
-de inicialización de una instancia del sistema \texttt{PEAT}.
+Se determinó que la mejor solución fue que al iniciar el sistema \texttt{PEAT}
+se precargara el repositorio de memoria con la información de los modelos descritos
+anteriormente por medio del servicio web C3. De esta forma se redujo el numero de
+peticiones de forma substancial pero teniendo el inconveniente de un incremento
+en el tiempo de inicialización de una instancia del sistema \texttt{PEAT}.
 
 Para minimizar el impacto de un mayor tiempo de inicialización se hizo uso de las
 características de precarga y de gestión de memoria de copia en escritura
 (\textit{copy-on-write}, COW) proporcionados por Phusion Passenger. Al iniciar
 Phusion Passenger se inicia el proceso \texttt{Preloader} que realiza la
-inicialización del sistema \texttt{PEAT} y la precarga de modelos en el repositorio de memoria.
+inicialización del sistema \texttt{PEAT} y la precarga de modelos en el
+repositorio de memoria.
 
 En la Figura \ref{fig:cache} se puede ver que por medio de \textit{Preloader}
 se comparte en memoria el código del marco de trabajo Rails, el código del sistema
-\texttt{PEAT} y el repositorio de memoria de los modelos descritos anteriormente. Cada instancia
-solo usa memoria para sus propios objetos utilizados para manejar las
+\texttt{PEAT} y el repositorio de memoria de los modelos descritos anteriormente.
+Cada instancia solo usa memoria para sus propios objetos utilizados para manejar las
 peticiones entrantes.
 
 De esta manera al iniciar una nueva instancia del sistema se realiza una copia del
-proceso \textit{Preloader} el cual contiene los modelos precargados en el repositorio de memoria por
-lo que la inicialización de nuevas instancias es casi instantánea.
+proceso \textit{Preloader} el cual contiene los modelos precargados en el
+repositorio de memoria por lo que la inicialización de nuevas instancias es casi
+instantánea.
 
 \rjcimage{1.0}{imagenes/Passenger-Cache.png}{Diagrama de la memoria compartida entre
   \textit{Preloader} y las instancias \texttt{PEAT}.}{cache}
 
-Para la invalidación del repositorio de memoria de los modelos se tenia una acción para el
-administrador del sistema que permite limpiar el repositorio de memoria y actualizar los modelos
-por medio del servicio web C3.
+Para la invalidación del repositorio de memoria de los modelos se tenia una acción
+para el administrador del sistema que permite limpiar el repositorio de memoria y
+actualizar los modelos por medio del servicio web C3.
 
 % Https://aws.amazon.com/es/ec2/instance-types/ EC2
 % https://aws.amazon.com/es/ec2/faqs/
