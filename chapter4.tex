@@ -363,7 +363,7 @@ El código anterior muestra la configuración base de variables para el
 despliegue del sistema \texttt{PEAT} usando el DSL definido por \texttt{Capistrano}.
 En las líneas 1-9 se definen las variables de configuración para el sistema
 \texttt{PEAT} y el servidor Nginx, los valores por defecto están definidos
-para un ambiente en producción, esto posteriormente facilita saber las diferencias
+para un ambiente en producción, lo cual facilita conocer las diferencias
 entre el ambiente de producción y los ambientes de pruebas.
 
 En la línea 11 se definen los ambientes soportados, teniendo los cuatro
@@ -372,7 +372,8 @@ su propio archivo de configuración en donde se indican los cambios en variables
 y/o tareas con respecto a la configuración base.
 
 En las líneas 14-16 se indica el sistema de versiones, la dirección del repositorio
-y la rama a usar para obtener el código fuente del sistema.
+y la rama\footnote{Es una versión etiquetada del código fuente en el control de
+  versiones Git.} a usar para obtener el código fuente del sistema.
 En \texttt{PEAT} el sistema de versiones es Git, donde la rama por defecto
 es \textquote{release/v1.0} que es la rama estable del sistema que
 se usa para producción, por medio de la variable de ambiente \texttt{BRANCH} es
@@ -381,7 +382,7 @@ posible hacer el despliegue de cualquier versión del sistema.
 En las líneas 18-24 se tiene el uso de las declaraciones \texttt{after}
 y \texttt{before} que permiten el establecer que una tarea sea realizada
 antes o después de una segunda tarea. Cabe señalar que las tareas
-\texttt{deploy:setup} y \texttt{deploy:restart} son tareas que son definidas
+\texttt{deploy:setup} y \texttt{deploy:restart} son tareas definidas
 por \texttt{Capistrano}, la primera es una tarea para la configuración inicial
 de un ambiente\footnote{Esta tarea es solo ejecutada una única vez para preparar
   un nuevo ambiente.} y la segunda tarea es realizada al reiniciar el sistema.
@@ -398,7 +399,7 @@ operativo Ubuntu 12.04 LTS que es el sistema operativo seleccionado para los
 servidores EC2.
 
 En las líneas 6-13 se definen las tareas para iniciar y parar el sistema
-\texttt{PEAT}, se hace uso de los comandos \texttt{start} y \texttt{stop} y
+\texttt{PEAT}, se hace uso de los comandos \texttt{start} y \texttt{stop}, así como
 de la configuración generada para el sistema Upstart en la tarea anterior para
 iniciar o parar fácilmente el sistema.
 
@@ -409,17 +410,18 @@ del ambiente, esta tarea se ejecuta solamente cuando se inicia un nuevo
 ambiente.
 
 En las líneas 21-27 se define la tarea \texttt{config\_sync} la cual
-hace lo mismo que la tarea anterior pero en el contexto de que el ambiente
-ya esta en línea por lo que al finalizar la tarea se reinicia el sistema.
+realiza las tares de generar los archivos de configuración, transferirlos y
+ejecuta el reinicio del sistema para que éste cargue los cambios de configuración.
 
 En las líneas 30-35 se define la tarea \texttt{config} la cual genera
 los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
-Nginx (\texttt{nginx.conf}) por medio de la clase \texttt{ConfigCreator}.
+Nginx (\texttt{nginx.conf}) por medio de \texttt{ConfigCreator}.
 
 \lstinputlisting[language=Ruby]{code/deploy-peatstage.rb}
 
-Como se menciono antes cada ambiente tiene su propio archivo de configuración,
-el código anterior es la configuración para el ambiente \texttt{peatstage}.
+Como se mencionó anteriormente cada ambiente tiene su propio archivo de
+configuración, el código anterior es la configuración para el ambiente
+\texttt{peatstage}.
 
 En la línea 1-2 se define el servidor asociado al ambiente. En las líneas
 3-10 se redefinen varias variables de configuración para el ambiente siendo uno
@@ -428,6 +430,8 @@ cual es la rama principal de desarrollo en el sistema \texttt{PEAT}.
 En las líneas 29-46 se redefinen las tareas \texttt{peat\_setup},
 \texttt{config\_sync} y \texttt{config} para que tomen en cuenta la configuración
 actualizada por medio del método \texttt{override\_defaults}.
+
+\vspace{2.5mm}
 
 \subsubsection{Despliegue automatizado de ambientes}
 
@@ -459,7 +463,7 @@ El uso de \texttt{Capistrano} para el despliegue tiene las siguientes ventajas:
 \end{itemize}
 
 En el servidor Jenkins se implemento una tarea que al tenerse un resultado
-positivos de las pruebas del sistema se hace uso del comando \texttt{cap}
+positivo de las pruebas del sistema se hace uso del comando \texttt{cap}
 para efectuar el despliegue del sistema en los ambientes de prueba.
 
 \subsection{Pruebas de unidad y aceptación}
