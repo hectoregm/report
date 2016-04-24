@@ -471,29 +471,29 @@ para efectuar el despliegue del sistema en los ambientes de prueba.
 En el servidor Jenkins se definen las etapas del proceso de despliegue, siendo
 el inicio del proceso de despliegue cuando se detecta un cambio en el repositorio
 del sistema. Al detectarse este cambio se ejecuta la primera etapa que implica
-correr las pruebas de unidad.
+ejecutar las pruebas de unidad.
 
 \subsubsection{Pruebas de unidad}
 
-En la sección 2.3.2 se hablo sobre la practica del desarrollo guiado por
+En la sección 2.3.2 se habló sobre la práctica del desarrollo guiado por
 comportamiento (\textit{Behavior Driven Development}, BDD) la cual involucra
 escribir las pruebas antes de escribir el código fuente y la refactorización
-continua del código fuente.
+continúa en el código fuente.
 
-En BDD las pruebas se enfocan en describir el comportamiento y la interacción
-de los módulos del sistema. Para el sistema \texttt{PEAT} se hace uso del marco
-de trabajo \textit{RSpec} la cual define un lenguaje de dominio específico (DSL)
-para implementar las pruebas unitarias.
+En el desarrollo guiado por comportamiento las pruebas se enfocan en describir el
+comportamiento y la interacción de los módulos del sistema. Para el sistema
+\texttt{PEAT} se hace uso del marco de trabajo \textit{RSpec} la cual define un
+Lenguaje de Dominio Específico (LDE) para implementar las pruebas unitarias.
 
-RSpec da acceso al comando \texttt{rspec} que permite correr y verificar
+RSpec da acceso al comando \texttt{rspec} que permite ejecutar y verificar
 que el sistema pasa todas las pruebas unitarias del sistema. En la primera
 etapa el servidor Jenkins obtiene el código fuente del sistema y ejecuta el
 comando \texttt{rspec} el cual ejecuta todas las pruebas unitarias del sistema.
 
 \lstinputlisting[language=Ruby]{code/rspec-questions-controller.rb}
 
-El código anterior es un ejemplo de una prueba unitaria para el controlador
-\ \texttt{QuestionsController} (línea 3) que maneja las acciones en relación
+El código anterior se tiene un ejemplo de una prueba unitaria para el controlador
+\texttt{QuestionsController} (línea 3) que maneja las acciones en relación
 a las preguntas asociadas al perfil de un edificio. En las líneas 4-13 se
 inicializan los modelos necesarios para llevar a cabo las pruebas de este
 controlador.
@@ -512,7 +512,7 @@ dado que los modelos hacen uso de la clase \texttt{Bezel::Base} de la biblioteca
 
 Para el sistema \texttt{PEAT} se hace uso del marco de trabajo \texttt{Cucumber}
 el cual permite especificar y ejecutar pruebas de aceptación siguiendo el proceso
-BDD.
+del desarrollo guiado por comportamiento.
 
 \begin{lstlisting}
   Característica:
@@ -560,10 +560,10 @@ a Javascript para ejecutar la prueba.
 
 Cabe señalar el parecido entre el caso de uso \textit{Administrar recomendaciones}
 y la prueba de aceptación, esto es una de las ventajas del uso de \textit{Gherkin}
-que es el lenguaje DSL definido por Cucumber para facilitar la implementación
-de pruebas de aceptación a partir de casos de uso.
+que es el lenguaje DLE definido por \texttt{Cucumber} para facilitar la
+implementación de pruebas de aceptación a partir de casos de uso.
 
-Cucumber da acceso al comando \texttt{cucumber} que permite correr y verificar
+Cucumber da acceso al comando \texttt{cucumber} que permite ejecutar y verificar
 que el sistema pasa todas las pruebas de aceptación del sistema. El servidor
 Jenkins ejecuta el comando \texttt{cucumber} si el resultado de las pruebas
 unitarias es exitoso. Si el resultado de las pruebas de aceptación es positivo
@@ -571,31 +571,32 @@ entonces se hace un despliegue del sistema a los ambientes de prueba.
 
 \subsection{Ambientes de prueba}
 
-Después que tanto las pruebas de unidad y aceptación dan resultados positivos el
-servidor Jenkins realiza el despliegue del sistema al ambiente \textit{peatstage}.
+Después de que tanto las pruebas de unidad como las de aceptación dan resultados
+positivos el servidor Jenkins realiza el despliegue del sistema al ambiente
+\textit{peatstage}.
 
 En el ambiente \textit{peatstage} se realizan pruebas de rendimiento por medio
 de la herramienta CloudTest, la cual permite realizar pruebas de carga y
-rendimiento para sistemas web además esta herramienta tiene integración con
-Jenkins por lo que se agrego como una etapa mas en el proceso de despliegue.
+rendimiento para sistemas web, además esta herramienta tiene integración con
+Jenkins por lo que se agregó como una etapa mas en el proceso de despliegue.
 
-Usando CloudTest se tenían tres pruebas de carga, estas pruebas hacían pruebas de
-carga con 500, 1000 y 2000 usuarios concurrentes respectivamente. Si estas pruebas
-eran satisfactorias entonces el servidor \texttt{Jenkins} hace un despliegue del
-sistema en los ambientes \textit{peattest} y \textit{peatqa}.
+Usando CloudTest se tenían tres pruebas de carga, teniendo en cada prueba 500, 1000
+y 2000 usuarios concurrentes respectivamente. Si estas pruebas eran satisfactorias
+entonces el servidor \texttt{Jenkins} hace un despliegue del sistema en los
+ambientes \textit{peattest} y \textit{peatqa}.
 
 \subsection{Ciclo típico de desarrollo}
 
-Durante el desarrollo del sistema \texttt{PEAT} se tenia el siguiente ciclo
-típico de desarrollo:
+En el sistema \texttt{PEAT} se tenia el siguiente ciclo típico de desarrollo de
+software:
 
 \begin{enumerate}
-\item El programador crea una nueva rama de trabajo en repositorio Git para la
-  implementación de una nueva característica del sistema.
-\item Conforme se van guardando cambios de la característica en la rama de trabajo
+\item El programador crea una nueva rama de trabajo en el repositorio \texttt{Git}
+  para la implementación de una nueva característica del sistema.
+\item Conforme se van acumulando los cambios del código en la rama de trabajo
   el servidor Jenkins ejecuta solamente las pruebas de unidad y aceptación,
   permitiendo una rápida retroalimentación del estado del sistema al programador.
-\item Cuando la implementación se considera terminada y las pruebas son positivas
+\item Cuando la implementación se considera terminada y las pruebas son positivas,
   se realiza una revisión del código de la rama de trabajo por el resto del
   equipo.
 \item Después de la revisión y dado el visto bueno del equipo se integra el
