@@ -294,7 +294,7 @@ que el sistema debe pasar para llegar al ambiente de producción. Para el sistem
   si el resultado es positivo se pasa a la siguiente etapa.
   En la primera secuencia en la Figura \ref{fig:pipeline} se tiene el caso
   cuando las pruebas de unidad son negativas y se detiene el proceso de despliegue.
-\item Pruebas de aceptación: se hace uso de la biblioteca \texttt{Cucumber}
+\item Pruebas de aceptación: se hace uso de la biblioteca \textit{Cucumber}
   para implementar las pruebas de aceptación, de la misma forma que la etapa de
   pruebas de unidad si se obtiene un resultado positivo se continúa a la siguiente
   etapa en caso contrario se detiene el proceso de despliegue.
@@ -462,16 +462,16 @@ El uso de \texttt{Capistrano} para el despliegue tiene las siguientes ventajas:
   del sistema es parte del código fuente del sistema.
 \end{itemize}
 
-En el servidor Jenkins se implemento una tarea que al tenerse un resultado
+En el servidor \textit{Jenkins} se implemento una tarea que al tenerse un resultado
 positivo de las pruebas del sistema se hace uso del comando \texttt{cap}
 para efectuar el despliegue del sistema en los ambientes de prueba.
 
 \subsection{Pruebas de unidad y aceptación}
 
-En el servidor Jenkins se definen las etapas del proceso de despliegue, siendo
-el inicio del proceso de despliegue cuando se detecta un cambio en el repositorio
-del sistema. Al detectarse este cambio se ejecuta la primera etapa que implica
-ejecutar las pruebas de unidad.
+En el servidor \textit{Jenkins} se definen las etapas del proceso de despliegue,
+siendo el inicio del proceso de despliegue cuando se detecta un cambio en el
+repositorio del sistema. Al detectarse este cambio se ejecuta la primera etapa
+que implica ejecutar las pruebas de unidad.
 
 \subsubsection{Pruebas de unidad}
 
@@ -487,7 +487,7 @@ Lenguaje de Dominio Específico (LDE) para implementar las pruebas unitarias.
 
 RSpec da acceso al comando \texttt{rspec} que permite ejecutar y verificar
 que el sistema pasa todas las pruebas unitarias del sistema. En la primera
-etapa el servidor Jenkins obtiene el código fuente del sistema y ejecuta el
+etapa el servidor \textit{Jenkins} obtiene el código fuente del sistema y ejecuta el
 comando \texttt{rspec} el cual ejecuta todas las pruebas unitarias del sistema.
 
 \lstinputlisting[language=Ruby]{code/rspec-questions-controller.rb}
@@ -510,7 +510,7 @@ dado que los modelos hacen uso de la clase \texttt{Bezel::Base} de la biblioteca
 
 \subsubsection{Pruebas de aceptación}
 
-Para el sistema \texttt{PEAT} se hace uso del marco de trabajo \texttt{Cucumber}
+Para el sistema \texttt{PEAT} se hace uso del marco de trabajo \textit{Cucumber}
 el cual permite especificar y ejecutar pruebas de aceptación siguiendo el proceso
 del desarrollo guiado por comportamiento.
 
@@ -560,29 +560,29 @@ a Javascript para ejecutar la prueba.
 
 Cabe señalar el parecido entre el caso de uso \textit{Administrar recomendaciones}
 y la prueba de aceptación, esto es una de las ventajas del uso de \textit{Gherkin}
-que es el lenguaje DLE definido por \texttt{Cucumber} para facilitar la
+que es el lenguaje DLE definido por \textit{Cucumber} para facilitar la
 implementación de pruebas de aceptación a partir de casos de uso.
 
-Cucumber da acceso al comando \texttt{cucumber} que permite ejecutar y verificar
-que el sistema pasa todas las pruebas de aceptación del sistema. El servidor
-Jenkins ejecuta el comando \texttt{cucumber} si el resultado de las pruebas
-unitarias es exitoso. Si el resultado de las pruebas de aceptación es positivo
-entonces se hace un despliegue del sistema a los ambientes de prueba.
+\textit{Cucumber} da acceso al comando \texttt{cucumber} que permite ejecutar y
+verificar que el sistema pasa todas las pruebas de aceptación del sistema.
+El servidor \textit{Jenkins} ejecuta el comando \texttt{cucumber} si el resultado
+de las pruebas unitarias es exitoso. Si el resultado de las pruebas de aceptación es
+positivo entonces se hace un despliegue del sistema a los ambientes de prueba.
 
 \subsection{Ambientes de prueba}
 
 Después de que tanto las pruebas de unidad como las de aceptación dan resultados
-positivos el servidor Jenkins realiza el despliegue del sistema al ambiente
+positivos el servidor \textit{Jenkins} realiza el despliegue del sistema al ambiente
 \textit{peatstage}.
 
 En el ambiente \textit{peatstage} se realizan pruebas de rendimiento por medio
 de la herramienta CloudTest, la cual permite realizar pruebas de carga y
 rendimiento para sistemas web, además esta herramienta tiene integración con
-Jenkins por lo que se agregó como una etapa mas en el proceso de despliegue.
+\textit{Jenkins} por lo que se agregó como una etapa mas en el proceso de despliegue.
 
 Usando CloudTest se tenían tres pruebas de carga, teniendo en cada prueba 500, 1000
 y 2000 usuarios concurrentes respectivamente. Si estas pruebas eran satisfactorias
-entonces el servidor \texttt{Jenkins} hace un despliegue del sistema en los
+entonces el servidor \textit{Jenkins} hace un despliegue del sistema en los
 ambientes \textit{peattest} y \textit{peatqa}.
 
 \subsection{Ciclo típico de desarrollo}
@@ -594,7 +594,7 @@ software:
 \item El programador crea una nueva rama de trabajo en el repositorio \texttt{Git}
   para la implementación de una nueva característica del sistema.
 \item Conforme se van acumulando los cambios del código en la rama de trabajo
-  el servidor Jenkins ejecuta solamente las pruebas de unidad y aceptación,
+  el servidor \textit{Jenkins} ejecuta solamente las pruebas de unidad y aceptación,
   permitiendo una rápida retroalimentación del estado del sistema al programador.
 \item Cuando la implementación se considera terminada y las pruebas son positivas,
   se realiza una revisión del código de la rama de trabajo por el resto del

@@ -168,9 +168,10 @@ Las clases y módulos que conforman la biblioteca son
 \item \texttt{Bezel::Associations}: módulo que define las asociaciones entre
   modelos.
 \item \texttt{Bezel::CacheBase}: módulo que redefine las acciones básicas y
-  de búsqueda sobre un modelo haciendo uso de un cache \texttt{Bezel::Cache}.
+  de búsqueda sobre un modelo haciendo uso de un repositorio de memoria
+  \texttt{Bezel::Cache}.
 \item \texttt{Bezel::Cache}: clase que define un API para realizar operaciones
-  de lectura/escritura sobre un cache.
+  de lectura/escritura sobre un repositorio de memoria.
 \end{itemize}
 
 \rjcimage{1.0}{imagenes/Diagrama-Clase-Bezel.png}{Diagrama de clase de la biblioteca
@@ -183,7 +184,7 @@ de apoyo:
 
 \begin{itemize}
 \item moneta: proporciona un API uniforme para realizar
-  operaciones de lectura y escritura en un repositorio de cache.
+  operaciones de lectura y escritura en un repositorio de memoria.
 \item faraday: proporciona un API uniforme para realizar
   peticiones HTTP.
 \item hashie: proporciona un conjunto de metodos que extienden la funcionalidad
@@ -359,13 +360,14 @@ Los métodos principales son:
     no se haga ninguna carga adelantada.
   \end{itemize}
   Finalmente en la línea 33 se configura que el modelo por defecto no hace uso
-  de un cache.
+  de un repositorio de memoria.
 \item \texttt{c3\_cached} (líneas 36 a 42): este método permite indicar
-  que el modelo hace uso de un cache y las opciones de configuración para éste.
-  Para activar el cache es necesario tener una instancia de cache definida en
-  \texttt{Bezel.cache}, si esto ocurre entonces se hace un \texttt{include}
-  del módulo \texttt{Bezel::CacheBase} (línea 38) que agrega el uso y
-  mantenimiento del cache a las acciones básicas y de búsqueda del modelo.
+  que el modelo hace uso de un repositorio de memoria y las opciones de
+  configuración para éste. Para activar el repositorio de memoria es necesario
+  tener una instancia de definida en \texttt{Bezel.cache}, si esto ocurre entonces
+  se hace un \texttt{include} del módulo \texttt{Bezel::CacheBase} (línea 38)
+  que agrega el uso y mantenimiento del repositorio de memoria a las acciones
+  básicas y de búsqueda del modelo.
 \end{itemize}
 
 \subsubsection{Métodos de instancia}
@@ -555,7 +557,7 @@ caso de uso especifico.
 
 El módulo \texttt{Bezel::CacheBase} mejora los métodos definidos en
 \texttt{Connections} permitiendo que las acciones básicas y de búsqueda hagan uso
-de un cache (\texttt{Bezel::Cache}).
+de un repositorio de memoria (\texttt{Bezel::Cache}).
 
 El módulo sigue el mismo patrón de agrupación de los métodos de clase en el submódulo
 \texttt{ClassMethods} así como los métodos de instancia en el módulo principal,
@@ -564,61 +566,65 @@ de clase.
 
 \lstinputlisting[language=Ruby]{code/cache_base.rb}
 
-En las líneas 9-11 se inicializa el cache con una instancia de \texttt{Bezel::Cache}
-si es necesario.
+En las líneas 9-11 se inicializa el repositorio de memoria con una instancia de
+\texttt{Bezel::Cache} si es necesario.
 
-En las líneas 13-27 se agregan métodos auxiliares de clase para operaciones de lectura, escritura y borrado de modelos en el cache.
+En las líneas 13-27 se agregan métodos auxiliares de clase para operaciones de
+lectura, escritura y borrado de modelos en el repositorio de memoria.
 
 En las líneas 29-43 se tiene la implementación del método \texttt{all} haciendo
 uso del método \texttt{cache\_read} (línea 31) para obtener los modelos por medio
-del cache, si los modelos no se encuentren en el cache se llama a \texttt{super}
-(línea 36) que ejecuta la implementación del método \texttt{all} definido en
-\texttt{Bezel::Connections} el cual realiza una petición al servicio web C3.
-El resultado de la petición es almacenado en el cache por medio del método
-\texttt{cache\_write} (líneas 37 y 39).
+del repositorio de memoria, si los modelos no se encuentren en el repositorio se
+llama a \texttt{super} (línea 36) que ejecuta la implementación del método
+\texttt{all} definido en \texttt{Bezel::Connections} el cual realiza una petición
+al servicio web C3. El resultado de la petición es almacenado en el repositorio de
+memoria por medio del método \texttt{cache\_write} (líneas 37 y 39).
 
 Los métodos \texttt{one}, \texttt{save}, \texttt{update} y \texttt{destroy} siguen
 el mismo patrón de implementación visto en el método \texttt{all}, es decir,
-se realiza alguna operación en el cache y opcionalmente se delega la ejecución
-de la petición a la implementación del método definida en \texttt{Bezel::Connections}
-por medio de \texttt{super}.
+se realiza alguna operación en el repositorio de memoria y opcionalmente se delega
+la ejecución de la petición a la implementación del método definida en
+\texttt{Bezel::Connections} por medio de \texttt{super}.
 
 El método auxiliar \texttt{key\_for} es usado para construir las llaves usadas para
-almacenar los modelos en el cache, la generación de la llave depende del tipo de
-cache seleccionado para el modelo.
+almacenar los modelos en el repositorio de memoria, la generación de la llave
+depende del tipo de repositorio seleccionado para el modelo.
 
 \subsection{\texttt{Bezel::Cache}}
 
-La clase \texttt{Cache} representa un cache y las operaciones para manipularlo
-directamente. Esta clase es usada principalmente por \texttt{Bezel::CacheBase}
-para almacenar las respuestas a peticiones realizadas al servicio web C3.
+La clase \texttt{Cache} representa un repositorio de memoria y las operaciones
+para manipularlo directamente. Esta clase es usada principalmente por
+\texttt{Bezel::CacheBase} para almacenar las respuestas a peticiones realizadas
+al servicio web C3.
 
-Se tienen dos tipos de cache:
+Se tienen dos tipos de repositorio de memoria:
 \begin{itemize}
-\item \textit{shared}: en este cache se almacenan valores que son utilizados
+\item \textit{shared}: en este repositorio se almacenan valores que son utilizados
   globalmente en el sistema.
-\item \textit{local}: en este cache se almacenan valores específicos a un usuario.
-  se usa el elemento de autenticación (\textit{auth\_token}) del usuario para
-  generar las llaves para el cache local.
+\item \textit{local}: en este repositorio se almacenan valores específicos a un
+  usuario. Se usa el elemento de autenticación (\textit{auth\_token}) del usuario
+  para generar las llaves para el repositorio de memoria local.
 \end{itemize}
 
 \lstinputlisting[language=Ruby]{code/cache.rb}
 
 En las líneas 2-14 se tiene el constructor para la clase el cual dependiendo de
 los parámetros de configuración hace uso del adaptador corrector para inicializar
-el cache. Por medio de la biblioteca \texttt{Moneta} se logra definir un API uniforme
-para manipular un cache teniendo como \texttt{backend} una gran cantidad de
-repositorios de tipo llave-valor\footnote{Moneta tiene adaptadores para Memcached,
-  Redis, Cassandra, Berkeley DB, MongoDB, etcetera.}.
+el repositorio de memoria. Por medio de la biblioteca \texttt{Moneta} se logra
+definir un API uniforme para manipular un repositorio de memoria teniendo como
+\texttt{backend} una gran cantidad de repositorios de tipo llave-valor\footnote{
+  Moneta tiene adaptadores para Memcached, Redis, Cassandra, Berkeley DB, MongoDB,
+  etcetera.}.
 En las líneas 18-20 se tiene la implementación del método \texttt{read} que permite
-recuperar un valor del cache dada una llave y el tipo de cache.
+recuperar un valor del repositorio de memoria dada una llave y el tipo de
+repositorio.
 En la líneas 22-28 se tiene la implementación del método \texttt{write} que permite
-asociar una llave con un valor en el cache, en este meto.
+asociar una llave con un valor en el repositorio de memoria.
 
-Esta clase se implemento para abstraer el uso de un cache y no acoplar las
-operaciones de cache a una sola biblioteca como \texttt{Moneta} o a un
-repositorio llave-valor en particular como \texttt{Memcached} dando flexibilidad de
-cambiar de biblioteca o repositorio.
+Esta clase se implemento para abstraer el uso de un repositorio de memoria y no
+acoplar las operaciones de repositorio de memoria a una sola biblioteca como
+\texttt{Moneta} o a un repositorio llave-valor en particular como
+\texttt{Memcached} dando flexibilidad de cambiar de biblioteca o repositorio.
 
 En este capítulo se analizaron las diferentes decisiones de arquitectura y diseño que
 se tomaron para satisfacer los requerimientos del sistema \texttt{PEAT}.
