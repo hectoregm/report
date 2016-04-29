@@ -37,6 +37,19 @@ El uso de EC2 presentaba las siguientes ventajas:
 
 \rjcimage{1.0}{imagenes/Ambiente-Produccion.png}{Arquitectura ambiente de producción.}{produccion}
 
+Se hicieron uso de los siguientes tipos de nodos:
+\begin{itemize}
+\item M3: estos nodos cuentan con 2 CPU virtuales, 3.75 GB de memoria y
+  410 GB de almacenamiento HDD.
+\item M4: estos nodos cuentan con 4 CPU virtuales, 15 GB de memoria y
+  850 GB de almacenamiento HDD.
+\end{itemize}
+
+Cada CPU virtual proporciona la capacidad de computo equivalente a un CPU
+Xeon de 1.2 GHz del 2007.
+
+\vspace{2.5mm}
+
 El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig:produccion}):
 \begin{itemize}
 \item Equilibradores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
@@ -45,19 +58,27 @@ El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig
   varias zonas de disponibilidad\footnote{Zonas que se encuentran en
     ubicaciones físicas distintas que cuentan con su propia infraestructura,
     independiente y físicamente distinta.} (Ver Figura \ref{fig:produccion} ELB).
-\item Servidores EC2: son servidores con capacidades de cómputo que pueden ser
-  activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan instancias
-  del tipo \texttt{M3}\footnote{Estas instancias proporcionan 2 CPU virtuales y
-    2 GB de memoria.}. Para el servidor C3 se usan instancias de tipo \texttt{M4}
-  \footnote{Estas instancias proporcionan 4 CPU virtuales y 16 GB de memoria.}
+\item Nodos EC2: son servidores con capacidades de cómputo que pueden ser
+  activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan seis
+  instancias del tipo \texttt{M3}. Para el servidor C3 se usan cuatro instancias de
+  tipo \texttt{M4}.
   (Ver Figura \ref{fig:produccion} M3 y M4).
 \item Oracle BD: base de datos usada para almacenar la información usada
   por el servidor C3 es administrada por una base de datos Oracle Database 10g
-  (Ver Figura \ref{fig:produccion} Oracle).
-\item Apache Cassandra: un \textit{cluster} de nodos corriendo Apache Cassandra
-  donde se realiza análisis en tiempo real de los datos contenidos en la
-  base de datos de Oracle y también se usa como capa de repositorio de memoria del servidor C3
-  (Ver Figura \ref{fig:produccion} Cassandra).
+  (Ver Figura \ref{fig:produccion} Oracle). Se tienen cuatro nodos por medio del
+  servicio \textit{Amazon RDS for Oracle Database} los cuales cuentan con
+  16 CPU virtuales y 64 GB de memoria.
+\item Apache Cassandra: un \textit{cluster} de diez nodos de tipo M4 ejecutando
+  Apache Cassandra el cual tiene las siguiente funciones (Ver Figura
+  \ref{fig:produccion} Cassandra):
+  \begin{itemize}
+  \item Recopilar y analizar grandes volúmenes de datos en secuencia, como el
+    historial de consumo de energía que se maneja para PEAT\footnote{Al escribir
+      datos en Cassandra, datos se ordenan secuencialmente y escribe en el disco,
+      al recuperar datos de clave de fila y luego por rango, se obtiene un patrón
+      de acceso rápido y eficiente}.
+  \item Como capa de repositorio de memoria del servidor C3.
+  \end{itemize}
 \end{itemize}
 
 Se pude observar en la figura \ref{fig:produccion} dos zonas de disponibilidad
