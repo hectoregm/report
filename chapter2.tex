@@ -304,16 +304,16 @@ puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptación
 
 Un ejemplo de prueba de aceptación es el siguiente:
 \begin{lstlisting}
-Característica:
+  Característica:
   Para disminuir mis costos de energía eléctrica
   Como un usuario del sistema PEAT
   Quiero saber sobre las posibles mejoras a mi edificio
 
   Escenario: Desplegar la lista de recomendaciones
-    Dado que ingreso al sistema como el usuario @juan por primera vez
-    Y que tengo una cuenta y un edificio
-    Cuando me entro a la pagina de recomendaciones
-    Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
+  Dado que ingreso al sistema como el usuario @juan por primera vez
+  Y que tengo una cuenta y un edificio
+  Cuando me entro a la pagina de recomendaciones
+  Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
 \end{lstlisting}
 
 \textit{Gherkin} es un lenguaje que usa la identación para definir su estructura,
@@ -432,35 +432,37 @@ lenguaje de programación Ruby. La aplicación de la metaprogramación fue pieza
 para la rápida implementación de la biblioteca \texttt{Bezel} como se mostrara en la
 Sección \ref{sec:bezel}.
 
-%% \section{Importancia del conocimiento obtenido durante la carrera}
+\section{Importancia del conocimiento obtenido durante la carrera}
 
-%% Durante la implementación del sistema \texttt{PEAT} hice uso de conocimiento obtenido
-%% durante mi paso por la carrera de Ciencias de Computación. Aunque no aplique
-%% directamente el conocimiento obtenido en la mayoría de las materias relacionadas
-%% con matemática pura estas me dieron herramientas para abordar y resolver problemas.
+Durante la implementación del sistema \texttt{PEAT} hice uso de conocimiento obtenido
+durante mi paso por la carrera de Ciencias de Computación. Aunque no aplique
+directamente el conocimiento obtenido en la mayoría de las materias relacionadas
+con matemáticas puras estas me dieron herramientas para abordar y resolver problemas.
 
-%% Del resto de las materias vistas durante la carrera si adquirí conceptos y
-%% conocimiento que fue de utilidad para la implementación de \texttt{PEAT} que
-%% detallo a continuación:
+Del resto de las materias vistas durante la carrera adquirí varios conceptos y
+conocimiento que fue de utilidad para la implementación de \texttt{PEAT}, que
+detallo a continuación:
 
-%% \begin{itemize}
-%% \item Lenguajes de programación: los conceptos adquiridos en esta materia me
-%%   han permitido aprender rápidamente nuevos lenguajes de programación, también
-%%   el saber los diferentes paradigmas permite saber cuando un lenguaje permite
-%%   una mayor productividad en relación a otro lenguaje. El concepto de lenguajes
-%%   de dominio especifico (LDE) me sirvió para lograr resolver de forma mas
-%%   eficiente la automatización del despliegue a producción y la integración de
-%%   \texttt{PEAT} con el servidor C3 por medio de la biblioteca \texttt{Bezel} que
-%%   define un LDE para definir modelos en base a tipos obtenidos del servidor C3.
-%% \item Sistema Operativos: el conocimiento obtenido sobre el manejo de procesos
-%%   y memoria fue pieza fundamental para obtener mejoras en el tiempo de inicialización
-%%   del sistema \texttt{PEAT} y de su rendimiento en general.
-%% \item Procesos Paralelos: me dio herramientas para poder solucionar problemas
-%%   que se presentan en sistemas distribuidos como sincronización de sesiones y
-%%   datos.
-%% \item Redes de computadoras: al tener un conocimiento de los protocolos
-%%   TCP/IP y del protocolo HTTP permite el uso óptimo de la arquitectura REST.
-%% \item Ingeniería de Software: permitió ver la necesidad de especificar
-%%   ciertas lagunas en los requerimientos, detectar deficiencias en los primeros
-%%   borradores de los casos de uso del sistema.
-%% \end{itemize}
+\begin{itemize}
+\item Lenguajes de programación: los conceptos adquiridos en esta materia me
+  han permitido aprender rápidamente nuevos lenguajes de programación, también
+  el saber los diferentes paradigmas (estructurado, funcional, orientado a objetos)
+  permite obtener la mayor productividad en relación al problema a solucionar.
+  El concepto de lenguaje de dominio especifico (LDE) fue de vital importancia para
+  la implementación exitosa del sistema \texttt{PEAT} puesto que permitió el
+  diseño e implementación de la biblioteca \texttt{Bezel} la cual define un LDE
+  para definir modelos y sus asociaciones en base a tipos obtenidos del servidor C3.
+\item Sistema operativos: el conocimiento obtenido sobre manejo de procesos
+  y memoria fue pieza fundamental para obtener mejoras en el tiempo de inicialización
+  del sistema \texttt{PEAT} y de su rendimiento en general.
+\item Procesos paralelos: me dio herramientas para poder solucionar problemas
+  que se presentan en sistemas distribuidos como sincronización de sesiones y
+  datos, permitiendo conocer las ventajas y desventajas de hacer uso de memoria
+  compartida distribuida para comunicación de sesiones y datos entre las diferentes
+  instancias del sistema \texttt{PEAT}.
+\item Redes de computadoras: al tener un conocimiento de los protocolos
+  TCP/IP y del protocolo HTTP permite el uso óptimo de la arquitectura REST.
+\item Ingeniería de software: permitió ver la necesidad de detalle en varios
+  de los requerimientos iniciales, detectar deficiencias en los primeros
+  borradores de los casos de uso del sistema.
+\end{itemize}
