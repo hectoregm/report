@@ -112,7 +112,25 @@ Del servicio web C3 se manejaron los siguientes tipos:
 \item \textquote{User}: este tipo representa un cliente de PG\&E, solamente
   se necesita información básica como su nombre y apellido, código postal y
   su correo electrónico (Ver Figura \ref{fig:c3-types} Building).
-  \item \textquote{Building}: este tipo representa un edificio 
+\item \textquote{Account}: este tipo representa uno o mas contratos de servicio,
+  tambien contiene informacion sobre la industria a la que pertenece el negocio
+  del usuario (Ver Figura \ref{fig:c3-types} Account).
+\item \textquote{Building}: este tipo representa un edificio y contiene las
+  características básicas de un edificio: tipo, tamaño y antigüedad.
+\item \textquote{Location}: este tipo representa una direccion de servicio,
+  es decir, una ubicación fisica donde se prestan los servicios.
+\item \textquote{BuildingProfileAnswer}: este tipo representa las respuestas
+  dadas por el usuario o sus valores por default para las caracteristicas detalladas
+  y opcionales de un edificio, tiene siempre una pregunta asociada).
+\item \textquote{BuildingQuestion}: este tipo representa una pregunta asociada
+  a una caracteristica detallada o opcional de un edificio, puede tener una o
+  varias respuestas validas asociadas.
+\item \textquote{ValidAnswer}:
+\item \textquote{ProductCategory}:
+\item \textquote{Recommendation}:
+\item \textquote{EnergyConservationOption}
+\item \textquote{RecommendationFAQ}
+\item \textquote{ChartData}
 \end{itemize}
 
 \rjcimagefull{1.4}{imagenes/C3-Types.png}{Diagrama tipo ER de los tipos del
