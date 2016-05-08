@@ -609,14 +609,18 @@ ambientes \textit{peattest} y \textit{peatqa}.
 \subsection{Ciclo de desarrollo}
 
 En \texttt{PEAT} se tiene que el modelo de desarrollo es una combinación tanto del
-modelo en cascada y del modelo ágil, teniendo en un inicio la creación de documentos
-sobre los requerimientos de los componentes del sistema y su arquitectura general.
-A diferencia de un modelo típico de cascada en cuanto se tenían la suficiente
-información sobre un componente se iniciaba su implementación haciendo uso de
-practicas mas asociadas al modelo ágil como:
+modelo en cascada y del modelo incremental, teniendo en un inicio la creación de
+documentos sobre los requerimientos de los componentes del sistema y su
+arquitectura general. Luego se usa el modelo incremental al realizar la
+implementación de los componentes del sistema \texttt{PEAT} en forma incremental por
+medio de iteraciones con duración de dos semanas, de esta forma en cuanto se tenía
+suficiente información sobre los requerimientos de un componente se iniciaba su
+implementación para la siguiente iteración.
+
+Durante el desarrollo se hizo uso de practicas ágiles como:
 
 \begin{itemize}
-  \item Reunion diaria de sincronización del equipo.
+  \item Reunión diaria de sincronización del equipo.
   \item Desarrollo guiado por pruebas.
   \item Planeación por iteraciones.
   \item Poker de planeación.
@@ -650,7 +654,12 @@ software:
   al ambiente en producción.
 \end{enumerate}
 
-Cualquier falla se convierte en una tarea prioritaria para el equipo de desarrollo
+Cabe mencionar que al menos cada semana un representante de PG\&E se presentaba
+en las instalaciones de C3 Energy para discutir y hablar sobre los avances del
+sistema, aparte se tenia una comunicación electrónica continua con los resultados
+de las pruebas realizadas por PG\&E en los ambientes de pruebas.
+
+Cualquier falla se convertía en una tarea prioritaria para el equipo de desarrollo
 para evitar que el lapso de tiempo en que el sistema no puede ser desplegado sea
 el mínimo posible.
 
