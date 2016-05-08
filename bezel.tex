@@ -105,6 +105,19 @@ Muchas acciones reciben ciertos parámetros los cuales son almacenados dentro de
 cuerpo de la petición POST, por lo que el único parámetro que se envía por medio
 de la URL es el nombre la acción a realizar.
 
+\subsubsection{Tipos principales}
+
+Del servicio web C3 se manejaron los siguientes tipos:
+\begin{itemize}
+\item \textquote{User}: este tipo representa un cliente de PG\&E, solamente
+  se necesita información básica como su nombre y apellido, código postal y
+  su correo electrónico (Ver Figura \ref{fig:c3-types} Building).
+  \item \textquote{Building}: este tipo representa un edificio 
+\end{itemize}
+
+\rjcimagefull{1.4}{imagenes/C3-Types.png}{Diagrama tipo ER de los tipos del
+  servicio web C3 utilizados para \texttt{PEAT}}{c3-types}
+
 \subsection{Arquitectura general}
 
 La biblioteca \texttt{Bezel} está conformada por cinco clases y cinco módulos,
