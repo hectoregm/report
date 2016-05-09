@@ -304,16 +304,16 @@ puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptación
 
 Un ejemplo de prueba de aceptación es el siguiente:
 \begin{lstlisting}
-  Característica:
+Característica:
   Para disminuir mis costos de energía eléctrica
   Como un usuario del sistema PEAT
   Quiero saber sobre las posibles mejoras a mi edificio
 
   Escenario: Desplegar la lista de recomendaciones
-  Dado que ingreso al sistema como el usuario @juan por primera vez
-  Y que tengo una cuenta y un edificio
-  Cuando me entro a la pagina de recomendaciones
-  Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
+    Dado que ingreso al sistema como el usuario @juan por primera vez
+    Y que tengo una cuenta y un edificio
+    Cuando me entro a la pagina de recomendaciones
+    Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
 \end{lstlisting}
 
 \textit{Gherkin} es un lenguaje que usa la identación para definir su estructura,
@@ -432,19 +432,20 @@ lenguaje de programación Ruby. La aplicación de la metaprogramación fue pieza
 para la rápida implementación de la biblioteca \texttt{Bezel} como se mostrara en la
 Sección \ref{sec:bezel}.
 
-\section{Importancia del conocimiento obtenido durante la carrera}
+\section{Conocimiento obtenido durante la carrera}
 
-Durante la implementación del sistema \texttt{PEAT} hice uso de conocimiento obtenido
-durante mi paso por la carrera de Ciencias de Computación. Aunque no aplique
-directamente el conocimiento obtenido en la mayoría de las materias relacionadas
-con matemáticas puras estas me dieron herramientas para abordar y resolver problemas.
+Durante la implementación del sistema \texttt{PEAT} hice uso del conocimiento
+obtenido durante mi paso por la carrera de Ciencias de Computación, materias
+como Matemáticas Discretas y Análisis Lógico me han servido para ser un mejor
+programador, el resto de las materias relacionadas con matemáticas puras me
+ayudaron a tener en mente varias forma de abordar y resolver los problemas que se
+presentaban durante la implementación del sistema PEAT.
 
-Del resto de las materias vistas durante la carrera adquirí varios conceptos y
-conocimiento que fue de utilidad para la implementación de \texttt{PEAT}, que
-detallo a continuación:
+De las materias restantes adquirí conceptos y conocimiento que fueron de gran
+utilidad para la implementación de \texttt{PEAT}:
 
 \begin{itemize}
-\item Lenguajes de programación: los conceptos adquiridos en esta materia me
+\item Lenguajes de Programación: los conceptos adquiridos en esta materia me
   han permitido aprender rápidamente nuevos lenguajes de programación, también
   el saber los diferentes paradigmas (estructurado, funcional, orientado a objetos)
   permite obtener la mayor productividad en relación al problema a solucionar.
@@ -452,15 +453,15 @@ detallo a continuación:
   la implementación exitosa del sistema \texttt{PEAT} puesto que permitió el
   diseño e implementación de la biblioteca \texttt{Bezel} la cual define un LDE
   para definir modelos y sus asociaciones en base a tipos obtenidos del servidor C3.
-\item Sistema operativos: el conocimiento obtenido sobre manejo de procesos
+\item Sistema Operativos: el conocimiento obtenido sobre manejo de procesos
   y memoria fue pieza fundamental para obtener mejoras en el tiempo de inicialización
   del sistema \texttt{PEAT} y de su rendimiento en general.
-\item Computación distribuida: me dio herramientas para poder solucionar problemas
+\item Computación Distribuida: me dio herramientas para poder solucionar problemas
   que se presentan en sistemas distribuidos como sincronización de sesiones y
   datos, permitiendo conocer las ventajas y desventajas de hacer uso de memoria
   compartida distribuida para comunicación de sesiones y datos entre las diferentes
   instancias del sistema \texttt{PEAT}.
-\item Redes de computadoras: al tener un conocimiento de los protocolos
+\item Redes de Computadoras: al tener un conocimiento de los protocolos
   TCP/IP y del protocolo HTTP permite el uso óptimo de la arquitectura REST.
 \item Ingeniería de software: permitió ver la necesidad de detalle en varios
   de los requerimientos iniciales, detectar deficiencias en los primeros
