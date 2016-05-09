@@ -106,16 +106,16 @@ cuerpo de la petición POST, por lo que el único parámetro que se envía por m
 de la URL es el nombre la acción a realizar.
 
 \pagebreak
-\subsubsection{Tipos principales}
+\subsubsection{Tipos del servicio web C3}
 
-Del servicio web C3 se manejaron los siguientes tipos:
+Del servicio web C3 se manejaron los siguientes tipos (Ver Figura
+\ref{fig:c3-types}):
 \begin{itemize}
 \item \textquote{User}: este tipo representa un cliente de PG\&E, solamente
-  se necesita información básica como su nombre y apellido, código postal y
-  su correo electrónico (Ver Figura \ref{fig:c3-types} Building).
+  contiene información básica como el nombre, código postal y su correo electrónico.
 \item \textquote{Account}: este tipo representa uno o mas contratos de servicio,
   también contiene información sobre la industria a la que pertenece el negocio
-  del usuario (Ver Figura \ref{fig:c3-types} Account).
+  del usuario.
 \item \textquote{Building}: este tipo representa un edificio y contiene las
   características básicas de un edificio: tipo, tamaño y antigüedad.
 \item \textquote{Location}: este tipo representa una dirección de servicio,
@@ -124,26 +124,26 @@ Del servicio web C3 se manejaron los siguientes tipos:
   dadas por el usuario o sus valores por defecto para las características de un
   edificio, tiene siempre una pregunta asociada.
 \item \textquote{BuildingQuestion}: este tipo representa una pregunta asociada
-  a una característica de un edificio, puede tener una o varias respuestas validas
+  a una característica de un edificio, tiene una o varias respuestas validas
   asociadas.
 \item \textquote{ValidAnswer}: este tipo representa una respuesta valida asociada
   a una pregunta sobre una característica de un edificio, cabe recordar que
   la mayoría de las preguntas tiene un numero limitado de respuestas validas.
 \item \textquote{ProductCategory}: este tipo representa las categorías en las
-  que se clasifican las recomendaciones, preguntas y opciones de conservación.
-  Iluminación y calefacción son algunas de las categorías que se tienen
+  que se clasifican las recomendaciones, preguntas y opciones de conservación de
+  energía. Iluminación y calefacción son algunas de las categorías que se tienen
   definidas.
 \item \textquote{EnergyConservationOption}: este tipo representa una medida o
-  opción de conservación que se puede realizar en edificio para lograr disminuir
-  su consumo energético. En este tipo se tiene la informacion generica como el
-  nombre, descripcion y la informacion para realizar el calculo especifico de costo,
-  ahorro y recuperación de la inversión.
+  opción de conservación de energía que se puede implementar en un edificio para
+  lograr disminuir su consumo energético. En este tipo contiene la información
+  como el nombre y descripción que se despliega al usuario final y también
+  contiene la información sobre el costo, ahorro y recuperación de la inversión.
 \item \textquote{Recommendation}: este tipo representa la implementación de una
-  opción de conservación en relación a un único edificio, es decir, contiene la
-  información de costo, ahorro y recuperación de la inversión en base a las
-  características del edificio asociado.
+  opción de conservación en relación a un edificio, es decir, contiene la
+  información de costo, ahorro y recuperación de la inversión para un edificio
+  en particular en base a las características del edificio.
 \item \textquote{RecommendationFAQ}: este tipo contiene las preguntas frecuentes
-  y sus respuestas sobre la implementación y beneficios de una recomendación.
+  y sus respuestas en relación a la implementación de una recomendación.
 \item \textquote{ChartData}: este tipo representa toda la información de consumo
   obtenida de los medidores inteligentes instalados en las direcciones de servicio.
 \end{itemize}
