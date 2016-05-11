@@ -4,7 +4,7 @@ El despliegue de un sistema es una etapa de creciente importancia dado que los
 sistemas actuales van requiriendo mas servicios y subsistemas de apoyo para
 su funcionamiento. En la actualidad para garantizar un servicio estable para
 un gran número de usuarios es necesario contar con repositorios de memoria,
-equilibradores de carga, servidores de cola, etcétera. Esta creciente complejidad
+balanceadores de carga, servidores de cola, etcétera. Esta creciente complejidad
 incrementa los riesgos para lograr un despliegue a producción exitoso.
 
 En este contexto se encuentra \texttt{PEAT} puesto que uno de sus requerimientos
@@ -52,7 +52,7 @@ Xeon de 1.2 GHz del 2007.
 
 El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig:produccion}):
 \begin{itemize}
-\item Equilibradores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
+\item Balanceadores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
   (ELB) el cual permite obtener nivel altos de tolerancia al distribuir el trafico
   de forma automática entre varias instancias EC2 las cuales se encuentran en
   varias zonas de disponibilidad\footnote{Zonas que se encuentran en
@@ -84,9 +84,9 @@ El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig
 Se pude observar en la figura \ref{fig:produccion} dos zonas de disponibilidad
 esto permite tener una mayor redundancia al no tener un único punto de error.
 
-Se tienen dos equilibradores de carga el primero dirige las peticiones de los
+Se tienen dos balanceadores de carga el primero dirige las peticiones de los
 usuarios a una instancia EC2 que corre instancias del sistema \texttt{PEAT},
-el segundo equilibrador de carga es usado para distribuir la carga de peticiones
+el segundo balanceador de carga es usado para distribuir la carga de peticiones
 al servidor C3 por parte de todas las instancias \texttt{PEAT}.
 
 \subsection{Phusion Passenger y Nginx}
@@ -122,7 +122,7 @@ De esta forma tenemos que en cada instancia M3 se tiene los
 siguientes componentes (Ver Figura \ref{fig:passenger}):
 \begin{itemize}
 \item Nginx: proporciona los archivos estáticos del sistema y es también el
-  equilibrador de carga de las instancias (Ver Figura \ref{fig:passenger} Nginx).
+  balanceador de carga de las instancias (Ver Figura \ref{fig:passenger} Nginx).
 \item \textit{Preloader}: es un proceso que carga todo el sistema \texttt{PEAT},
   este proceso es copiado para obtener las instancias \texttt{PEAT} que manejan las
   peticiones (Ver Figura \ref{fig:passenger} Nginx Preloader).
@@ -134,7 +134,7 @@ siguientes componentes (Ver Figura \ref{fig:passenger}):
 \rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
 
 Como se ve en la Figura \ref{fig:passenger} el servidor Nginx recibe una petición
-por parte del equilibrador de carga para \texttt{PEAT}, dependiendo de la carga
+por parte del balanceador de carga para \texttt{PEAT}, dependiendo de la carga
 en los instancias \texttt{PEAT} la petición se manda a una instancia \texttt{PEAT}
 libre o es puesta en una cola de espera. Passenger detecta si la carga va aumentando
 y determina automáticamente si es necesario crear nuevas instancias del sistema
