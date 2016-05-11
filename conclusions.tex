@@ -16,31 +16,18 @@ o herramienta en los contextos en que éstos dan la mayor ventaja. Un ambiente
 multi-lenguaje trae consigo sus propios retos como la integración con sistemas ya
 existentes y el despliegue exitoso de los sistemas a producción.
 
-En el Capítulo 3 se describió la implementación de la interfaz de usuario y el flujo
-de navegación y de interacción del usuario con el sistema permitiendo a éste obtener
-la mayor información para tomar decisiones sobre su edificio con la menor información
-disponible. El uso de la metaprogramación y la creación de un lenguaje de
-dominio especifico por medio de la biblioteca \texttt{Bezel} permitió la
-implementación de los modelos necesarios para el funcionamiento del sistema
-de forma eficiente y con la flexibilidad necesaria para lograr la integración
-del sistema \texttt{PEAT} con los subsistemas ya existentes, permitiendo
-definir en pocas lineas de código los modelos y sus asociaciones.
+Haciendo uso de las capacidades de metaprogramación del lenguaje de programación
+Ruby y de la creación de un lenguaje de dominio especifico en la biblioteca
+\texttt{Bezel} se facilito la implementación de los modelos necesarios para
+el funcionamiento del sistema de forma eficiente y con la flexibilidad necesaria
+para lograr la integración del sistema \texttt{PEAT} con los subsistemas ya
+existentes, permitiendo al programador definir modelos y sus asociaciones con
+pocas lineas de código.
 
-Otro punto de creciente importancia es el despliegue del sistema, ya que por
-un lado hace algunos años las aplicaciones web se desarrollaban bajo el modelo
-de tres capas la base de datos, el servidor de la aplicación y el servidor web;
-actualmente se tienen mas servicios que deben estar en línea, para garantizar un
-servicio concurrente; repositorios de memoria, balanceadores de carga, servidores
-de cola, etcétera. Por lo que automatizar el despliegue de una aplicación en sus
-diferentes ambientes, como el de desarrollo, pruebas y producción, es de vital
-importancia para conocer siempre el estado del sistema y así lograr que el proyecto
-sea desarrollado en tiempo y en forma.
-
-En el Capítulo 4 se describió tanto la arquitectura usada en los ambientes de
-prueba y producción así como la implementación de un despliegue continuo con el
-cual se logró tener un lanzamiento a la etapa de producción sin problemas, dado el
-que con anterioridad se realizaron varios despliegues en ambientes de prueba
-los cuales eran idénticos al ambiente de producción.
+El uso de lenguajes de dominio especifico fue el aspecto mas sobresaliente
+para el desarrollo exitoso del sistema \texttt{PEAT} por su ayuda en la
+integración con los subsistemas ya existentes y en la automatización de la
+configuración y despliegue del sistema.
 
 El uso del despliegue continuo y de pruebas con usuarios finales fueron vitales para
 que el sistema cumpliera con su objetivo de dar la mayor utilidad posible
@@ -51,10 +38,12 @@ detectada la dificultad de ingreso de la información inicial para crear un perf
 de un edificio. Gracias a esta retroalimentación se pudo obtener una interfaz
 mas intuitiva para el usuario sin afectar el tiempo de entrega.
 
-El uso de lenguajes de dominio especifico fue el aspecto mas sobresaliente
-para el desarrollo exitoso del sistema \texttt{PEAT} porque permitió una rápida
-integración con los subsistemas ya existentes y permitió también automatizar la
-configuración y despliegue del sistema.
+También por medio del despliegue continuo se logro tener un lanzamiento a la etapa
+de producción sin problemas, dado el que con anterioridad se realizaron varios
+despliegues en ambientes de prueba los cuales eran idénticos al ambiente de
+producción.
+
+\pagebreak
 
 El sistema \texttt{PEAT} fue recibido muy bien por los usuarios y el cliente PG\&E
 ya desde que hace cuatro años se encuentra en funcionamiento dando servicio a cerca
