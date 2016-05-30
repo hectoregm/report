@@ -1,0 +1,20 @@
+1. Datos del alumno
+Gómez
+Morales
+Héctor Enrique
+5518505001
+Universidad Nacional Autónoma de México
+Facultad de Ciencias
+Ciencias de la Computación
+401048742
+
+2. Datos del asesor.
+Ramírez
+Pulido
+Karla
+
+3. Datos de la tesis
+Diseño e implementación del sistema PEAT (Progressive Energy Audit Tool)
+104 p.
+2016
+
