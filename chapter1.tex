@@ -24,11 +24,11 @@ En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociad
 \cite{16_pge_time_of_use_2015}:
 
 \begin{itemize}
-\item  Demanda baja: es la tarifa mas baja, se aplica durante las horas de la
+\item  Demanda baja: es la tarifa más baja, se aplica durante las horas de la
   mañana, en la noche y los fines de semana.
 \item Demanda mediana: es la tarifa intermedia, se aplica durante las horas de
   10 am a 1pm y de 7 pm a 9 pm.
-\item Demanda alta: es la tarifa mas cara, se aplica durante las horas de
+\item Demanda alta: es la tarifa más cara, se aplica durante las horas de
   1 pm a 7 pm.
 \end{itemize}
 
@@ -39,18 +39,18 @@ de demanda alta provoca que se reduzcan los costos de generación de energía de
 forma general.
 
 Un esquema \texttt{TOU} es solo posible con la llegada de los medidores
-inteligentes, a diferencia de los antiguos medidores analógicos los medidores
-inteligentes son capaces de medir el consumo de electricidad de forma instantánea,
+inteligentes, a diferencia de los analógicos los medidores inteligentes
+son capaces de medir el consumo de electricidad de forma instantánea,
 de distinguir y facturar el consumo de electricidad según el momento en que se
 esta realizando el consumo. Desde inicios del 2010 Pacific Gas and
 Electric Company (PG\&E) empezó la instalación de medidores inteligentes
 en su territorio, por lo que para inicios del 2012 ya casi había
-completado la transición de los medidores.
+completado la transición.
 
 La fecha de arranque de la nueva legislación fue durante el mes de noviembre
 del 2012, mes en el cual las empresas como PG\&E podían iniciar la transición
 a un esquema \texttt{TOU} de sus usuarios PyMES.
-Una parte vital que permitió la transición fue que la empresa PG\&E brindara
+Una parte vital que permitió la transición fue que la empresa PG\&E brindará
 herramientas para que el usuario final pudiera analizar sus gastos de energía
 y así tomar decisiones sobre su consumo de energía según las nuevas tarifas
 y su historial de consumo.
@@ -59,7 +59,7 @@ Dada la situación descrita anteriormente es que nace el sistema
 \textit{Progressive Energy Audit Tool} \ (PEAT) para solventar la necesidad
 de información del usuario final sobre sus gastos de energía en una forma detallada.
 La licitación para la implementación del sistema \texttt{PEAT} fue puesta
-a concurso por parte PG\&E siendo la compañía C3 Energy la ganadora de dicha
+a concurso por parte de PG\&E siendo la compañía C3 Energy la ganadora de dicha
 licitación  ya que contaba con la infraestructura necesaria para el
 procesamiento de una gran cantidad de datos de consumo de energía,
 además contaba con un sistema de monitoreo de consumo de energía enfocado
@@ -108,7 +108,7 @@ el análisis en tiempo real de los datos, además de servir como capa
 de caché para los datos mas solicitados en el sistema.
 
 \subsection{Servidor y API}
-Sobre la base de datos anterior anterior se tenía un API\footnote{
+Sobre la base de datos anterior se tenía un API\footnote{
   \textit{Application Programming Interface} es el conjunto de procedimientos
   que ofrece una biblioteca para ser utilizado por otro
   software \cite{3_sommerville_2011}.}
@@ -128,8 +128,8 @@ eran del tipo SPA (\textit{Single Page Application}) los cuales son conocidos co
 sistemas web que tienen el fin de dar una experiencia de usuario similar a la
 de una aplicación de escritorio \cite{21_mikowski_powell}.
 
-Estos sistemas fueron implementados usando un marco de trabajo desarrollado dentro
-de la compañía usando Javascript. Se tenía una gran jerarquía de clases
+Estos sistemas fueron implementados haciendo uso del marco de trabajo desarrollado
+dentro de la compañía usando Javascript. Se tenía una gran jerarquía de clases
 la cual era compartida tanto con el servidor como con el cliente, obteniendo una
 sola fuente de la descripción de las clases y objetos del sistema.
 
@@ -145,14 +145,14 @@ que requerían un rendimiento óptimo con el fin de manejar peticiones concurren
 por lo que las ventajas al usarlo son:
 
 \begin{itemize}
-\item Reducir al mínimo el cambio de contexto entre lenguajes entre
+\item Reducir al mínimo el cambio de contexto de lenguajes entre
   el \textit{frontend} y el \textit{backend}.
 \item Reducir sustancialmente la cantidad de código redundante al no
   tener que reimplementar la jerarquía de objetos, que era enviada
-  por el servidor en formato JSON y interpretada por el cliente.
+  por el servidor en formato JSON e interpretada por el cliente.
 \item Existía una única representación de una clase\footnote{En Javascript
   (ECMAScript 5) no hay clases pero dentro del marco de trabajo interno se definen
-  por medio funciones de construcción y herencia de prototipo.} por ejemplo la
+  por medio de funciones de construcción y herencia de prototipo.} por ejemplo la
   clase \textit{Building} era una clase de Javascript que se usaba
   tanto en el servidor como en el cliente.
 \end{itemize}
@@ -176,7 +176,7 @@ Los primeros prototipos presentaban varios problemas bajo este esquema:
   usando Ext JS eran excelentes en ese contexto, pues mostraban una gran
   cantidad de información al usuario, por otro lado en \texttt{PEAT}
   el volumen de información era menor y el aspecto de mayor relevancia
-  era el mostrar al usuario dicha información de manera mas fluída y rápida.
+  era el mostrar al usuario dicha información de manera más fluída y rápida.
 \end{itemize}
 
 Para solucionar los problemas antes mencionados, se tomó la decisión de
@@ -199,7 +199,7 @@ las razones principales fueron:
   que será usada para lograr la integración con el \textit{backend}
   y la automatización del despliegue de la aplicación.
 \item Gran integración con una gran cantidad de herramientas y bibliotecas para
-  desarrollar, diseñar y implementar interfases de usuario.
+  desarrollar, diseñar e implementar interfases de usuario.
 \item Gran soporte para realizar extensas pruebas unitarias, funcionales
   y de integración, por medio de bibliotecas como \textit{RSpec}, \textit{Cucumber},
   \textit{Capybara}, etcétera.
@@ -211,12 +211,12 @@ cuenta con tres partes principales de desarrollo:
 Javascript, con un núcleo escrito en Java, (b) \texttt{Bezel} (Figura 1.1 - B)
 una biblioteca en Ruby que permite la interacción del \textit{backend}
 con el servidor de \texttt{PEAT} y (c) el \textit{frontend} (Figura 1.1 - C) escrito
-también con Ruby haciendo uso del marco de trabajo Ruby on Rails.
+también con Ruby haciendo uso del marco de trabajo Ruby on Rails (Rails).
 
 \jcimage{1.0}{imagenes/Arquitectura-PEAT.png}{Esquema de alto nivel de la arquitectura para el sistema \texttt{PEAT}}
 
 El \textit{frontend} está implementado por medio del marco de trabajo
-Ruby on Rails (Rails), haciendo uso de la biblioteca \textit{Backbone.js}
+Rails, haciendo uso de la biblioteca \textit{Backbone}
 para dar estructura a los módulos de Javascript que se utilizan en la vista.
 Para las gráficas y manejo de datos se seguirá haciendo uso de Ext JS
 por su gran facilidad para implementar cualquier tipo de gráficas.
