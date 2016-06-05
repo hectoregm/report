@@ -32,7 +32,7 @@ diferentes presentaciones. También puede crear nuevas vistas para un modelo
 sin reescribir este último \cite{14_gamma_1995}.
 
 \subsection{MVC y Rails}
-En el marco de trabajo Rails se hace uso de MVC como patrón de arquitectura
+El marco de trabajo Rails hace uso de MVC como patrón de arquitectura
 para implementar sistemas web. En Rails los modelos se definen haciendo
 uso de la biblioteca \textit{ActiveRecord}, la cual implementa el
 patrón de mapeo objeto-relacional (\textit{Object-relational mapping},
@@ -224,7 +224,7 @@ El proceso clásico en TDD es el siguiente \cite{12_rappin_2010}:
 \item Mejorar el código fuente: se elimina toda repetición que se originó al
   implementar la nueva funcionalidad para lograr que la prueba pase
   satisfactoriamente, dentro de esta fase también se realiza cualquier
-  otra optimización y/o abstracción necesaria. Esta proceso recibe el nombre de
+  otra optimización y/o abstracción necesaria. Este proceso recibe el nombre de
   refactorización, el cual es parte vital del proceso.
 \end{enumerate}
 
@@ -238,8 +238,8 @@ mejorar la estructura del código fuente, por esto es que TDD es una práctica
 de software y no solamente una herramienta de verificación.
 
 Al alinear continuamente el código fuente con las pruebas se obtiene código fuente
-conformado por pequeños métodos, cada uno de los cuales tiene solamente tiene
-una sola responsabilidad. Estos métodos tienden a tener bajo acoplamiento y
+conformado por pequeños métodos, cada uno de los cuales tiene solamente una sola
+responsabilidad. Estos métodos tienden a tener bajo acoplamiento y
 con pocos efectos laterales, lo que facilita su comprensión y mantenimiento.
 
 \subsubsection{Desventajas}
@@ -248,7 +248,7 @@ que el software funciona según los requerimientos del cliente.
 
 TDD asume que se conoce el resultado esperado que se quiere verificar,
 cuando los requerimientos no son totalmente claros, entonces TDD no resulta adecuado
-puesto que es difícil escribir las pruebas de un proceso que no se conocen en
+puesto que es difícil escribir las pruebas de un proceso que no se conoce en
 detalle.
 
 \subsubsection{RSpec}
@@ -269,7 +269,7 @@ esta corriendo la versión 2.
 
 \subsection{Desarrollo guiado por comportamiento (BDD)}
 En desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
-es una practica de software surgida de el TDD, al igual que esta ultima
+es una práctica de software surgida de el TDD, al igual que esta última
 involucra escribir las pruebas antes de escribir el código fuente y la
 refactorización contínua del código fuente. Así mientras que el TDD se enfoca
 en describir el comportamiento de unidades de código el BDD se enfoca en
@@ -315,15 +315,13 @@ Característica:
   Escenario: Desplegar la lista de recomendaciones
     Dado que ingreso al sistema como el usuario @juan por primera vez
     Y que tengo una cuenta y un edificio
-    Cuando me entro a la pagina de recomendaciones
+    Cuando entró a la página de recomendaciones
     Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
 \end{lstlisting}
 
 \textit{Gherkin} es un lenguaje que usa la identación para definir su estructura,
 de manera que los saltos de línea dividen las diferentes declaraciones,
 la mayoría de las líneas empiezan con palabras clave.
-
-% FIXME: , por ejemplo (cuales usas en el ejemplo) hay que explicarlo mas.
 
 \vspace{2.5mm}
 
@@ -333,7 +331,7 @@ En los escenarios se tiene tres principales palabras clave:
   el sistema en el estado deseado para iniciar la prueba correspondiente,
   antes de que el usuario (o un sistema externo) interactué con el sistema.
 \item Cuando (\textit{When}): el propósito de esta declaración es el describir
-  la acción que se realizar por el usuario, la cual vamos a probar.
+  la acción que se realiza por el usuario, la cual vamos a probar.
 \item Entonces (\textit{Then}): el propósito de esta declaración es observar
   los resultado de la acción realizada, estas observaciones debe ser visibles
   para el usuario o sistema externo.
@@ -349,7 +347,7 @@ de las pruebas unitarias y de aceptación del sistema.
 
 Cabe mencionar que el uso de pruebas de aceptación permite a su vez que la
 transición del uso de datos estáticos al uso del API final sea lo mas fluído
-posible, ya que se indicaba los puntos críticos en los que se tiene que realizar
+posible, ya que se indicaban los puntos críticos en los que se tiene que realizar
 cambios para obtener nuevamente el comportamiento esperado por el cliente.
 
 \section{Ruby, metaprogramación y lenguajes DSL}
@@ -411,7 +409,7 @@ Para implementar un DSL se tienen dos rutas:
   se necesita. A este tipo de DSL se les conoce por el nombre de DSL internos.
 \end{itemize}
 
-En el siguiente ejemplo se tiene un ejemplo de código Ruby que usa la biblioteca
+En el siguiente ejemplo se tiene código Ruby que usa la biblioteca
 \textit{Markaby} para generar HTML. En este caso se tiene un DSL para generar HTML
 haciendo uso de Ruby como lenguaje GPL base.
 \lstinputlisting[language=Ruby]{code/dsl-example.rb}
@@ -428,19 +426,19 @@ Cabe mencionar que éstos no dejan de tener un gran parecido a Java por lo rígi
 su sintaxis, mientras que la sintaxis de Ruby es flexible lo que permite que los DSL
 internos definidos con este se vean mas adaptados al problema en cuestión.
 
-En este capitulo se vieron tanto patrones de arquitectura como practicas de software
+En este capítulo se vieron tanto patrones de arquitectura como prácticas de software
 que influyeron en gran medida en la implementación del sistema \texttt{PEAT}.
 También se expuso el concepto de metaprogramación y sus beneficios en contexto del
 lenguaje de programación Ruby. La aplicación de la metaprogramación fue pieza clave
-para la rápida implementación de la biblioteca \texttt{Bezel} como se mostrara en la
+para la rápida implementación de la biblioteca \texttt{Bezel} como se mostrará en la
 Sección \ref{sec:bezel}.
 
 \section{Conocimiento obtenido durante la carrera}
 
 Durante la implementación del sistema \texttt{PEAT} hice uso del conocimiento
-obtenido durante mi paso por la carrera de Ciencias de Computación, materias
+obtenido durante mi paso por la carrera de Ciencias de la Computación, materias
 como Matemáticas Discretas y Análisis Lógico me han servido para ser un mejor
-programador, el resto de las materias relacionadas con matemáticas puras me
+programador. El resto de las materias relacionadas con matemáticas puras me
 ayudaron a tener en mente varias forma de abordar y resolver los problemas que se
 presentaban durante la implementación del sistema PEAT.
 

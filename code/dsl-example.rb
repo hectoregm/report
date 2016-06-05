@@ -1,14 +1,14 @@
 require 'markaby'
 
 html = Markaby::Builder.new do
-  head {  title "Mi pagina personal"}
+  head {  title "Mi página personal"}
   body do
-    h1 "Bienvenido a mi pagina personal"
+    h1 "Bienvenido a mi página personal"
     b "Mis pasatiempos"
     ul do
       li "Correr"
       li "Leer"
-      li "Programacion"
+      li "Programación"
     end
   end
 end
