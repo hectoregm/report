@@ -6,7 +6,7 @@ componentes principales:
 \begin{itemize}
 \item Perfil sencillo del edificio (\textit{Simple Building Profile}): este
   componente realiza la configuración inicial del edificio, realizando solamente
-  un numero limitado de preguntas básicas para definir las características básicas
+  un número limitado de preguntas básicas para definir las características básicas
   del mismo.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}):
   este componente se encarga del manejo de las características básicas, detalladas y
@@ -24,7 +24,7 @@ componentes principales:
 
 El  modelo de edificio es el principal modelo dentro de \texttt{PEAT}, por lo que
 obtener una correspondencia correcta entre un edificio y su consumo energético
-es de vital importancia para dar la información y recomendaciones mas útiles y
+es de vital importancia para dar la información y recomendaciones más útiles y
 fidedignas al usuario.
 
 \section{Modelo de información}
@@ -32,7 +32,7 @@ fidedignas al usuario.
 El objetivo principal del modelo de información de \texttt{PEAT} es definir el
 modelo de edificio y su relación con el consumo energético del usuario. Así
 tenemos el concepto de edificio el cual es una estructura independiente a la
-cual se le esta proporcionando un servicio ya sea de electricidad o gas.
+que se le esta proporcionando un servicio ya sea de electricidad o gas.
 
 \subsection{Estructura de facturación de PG\&E}
 Para obtener esta correspondencia entre edificio-consumo es necesario
@@ -48,7 +48,7 @@ del modelo de información:
 \item Usuario: representa al empresario, el cual puede tener una o más cuentas.
 \item Cuenta: representa la contabilidad financiera del usuario. Tiene uno o más
   contratos de servicio, uno por tipo de servicio (electricidad o gas), también
-  S  tiene una o más direcciones de servicio asociadas.
+  se tiene una o más direcciones de servicio asociadas.
 \item Contrato de servicio: representa los servicios que el cliente adquiere
   de PG\&E, como la electricidad o el gas y puede tener uno o más puntos
   de servicio asociados.
@@ -78,9 +78,9 @@ La relación entre todos estos modelos se puede ver en la Figura 3.1.
 Para que \texttt{PEAT} pueda cumplir sus requerimientos funcionales es necesario
 definir claramente la relación entre un edificio y su consumo energético calculado
 por uno o varios medidores.
-A pesar de los medidores mantienen la información de consumo, el relacionar
+A pesar de que los medidores mantienen la información de consumo, el relacionar
 directamente un medidor con un edificio no es una tarea sencilla para un usuario,
-porque aunque el usuario generalmente conoce el numero de medidores que tiene no
+porque aunque el usuario generalmente conoce el número de medidores que tiene no
 conoce los identificadores para cada uno de éstos.
 
 Dado el escenario anterior para facilitar la creación del perfil de un edificio se
@@ -104,7 +104,7 @@ siguiente manera:
 \begin{itemize}
 \item Perfil sencillo del edificio (\textit{Simple Building Profile}): Tiene
   solo el caso de uso \textit{Crear perfil del edificio} pero este caso de uso
-  es uno de los mas complejos en cuestión de interacción con el usuario y su
+  es uno de los más complejos en cuestión de interacción con el usuario y su
   importancia para obtener las características básicas del edificio.
 \item Perfil detallado del edificio (\textit{Detailed Building Profile}): Contiene
   los casos de uso \textit{Administrar perfil del edificio} y
@@ -161,15 +161,15 @@ medio del perfil detallado del edificio.
     o menos.
   }
   \addscenario{Flujo normal:}{
-  \item El sistema checa si el usuario tiene mas de una cuenta.
+  \item El sistema checa si el usuario tiene más de una cuenta.
     \begin{enumerate}
-    \item Si hay mas de una cuenta el sistema despliega una lista
+    \item Si hay más de una cuenta el sistema despliega una lista
       de cuentas, y el sistema requiere que el usuario elija una cuenta.
     \end{enumerate}
-  \item El sistema despliega información sobre la cuenta: numero de cuenta y
+  \item El sistema despliega información sobre la cuenta: número de cuenta y
     direcciones de servicio asociadas.
     \begin{enumerate}
-    \item Si la cuenta tiene mas de una dirección de servicio
+    \item Si la cuenta tiene más de una dirección de servicio
       el sistema requiere que el usuario seleccione por lo menos una dirección
       de servicio.
     \end{enumerate}
@@ -200,8 +200,8 @@ Para el sistema \texttt{PEAT} se tiene las siguientes características:
 \begin{itemize}
 \item Básicas: se refiere a las características esenciales de un edificio: tipo,
   tamaño y antigüedad, las cuales son vitales para el funcionamiento del sistema.
-\item Detalladas: son las características mas significativas y fáciles de
-  responder. Por ejemplo: horas de operación, numero de empleados, numero
+\item Detalladas: son las características más significativas y fáciles de
+  responder. Por ejemplo: horas de operación, número de empleados, número
   de pisos, etcétera.
 \item Opcionales: son características técnicas más avanzadas sobre el equipo
   y estructura de un edificio.
@@ -217,7 +217,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
   Esta ruta esta documentada en este caso de uso.
 \item Un componente que es embebido en varias partes del sistema
   que realiza una sola pregunta al usuario para ir obteniendo progresivamente
-  mas información sobre el edificio. Este componente llamado componente
+  más información sobre el edificio. Este componente llamado componente
   de ingreso progresivo (\textit{Progressive Profile Widget} PPW).
   Esta ruta es documentada en el caso de uso \textit{Obtener información
     del edificio}.
@@ -242,7 +242,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
   \addscenario{Flujo normal:}{
   \item El sistema verifica si la cuenta tiene más de un edificio asociado.
     \begin{itemize}
-    \item Si hay mas de un edificio asociado a la cuenta, el usuario
+    \item Si hay más de un edificio asociado a la cuenta, el usuario
       tiene que seleccionar el edificio correspondiente.
     \end{itemize}
   \item El sistema despliega una lista de preguntas y respuestas, dividida en
@@ -270,7 +270,7 @@ detalladas y opcionales son definidas por medio de dos rutas:
     las recomendaciones asociadas al edificio.
   }
   \additemizedfield{Postcondiciones:}{
-  \item Un perfil del edificio mas detallado si el usuario dio respuesta a una
+  \item Un perfil del edificio más detallado si el usuario dio respuesta a una
     pregunta sin contestar sobre su edificio.
   \item Si el usuario dio nueva información se recalculan las recomendaciones
     asociadas al edificio.
@@ -279,13 +279,13 @@ detalladas y opcionales son definidas por medio de dos rutas:
 
 \subsection{Obtener información del edificio}
 
-Uno de los requerimientos mas importante para \texttt{PEAT} es el incentivar y
-obtener mas información sobre las características de los edificios del usuario,
-ya que entre mas información se obtenga de éstos se podrán generar mejores planes
+Uno de los requerimientos más importante para \texttt{PEAT} es el incentivar y
+obtener más información sobre las características de los edificios del usuario,
+ya que entre más datos se obtenga de éstos se podrán generar mejores planes
 de ahorro y recomendaciones para el usuario.
 
 La forma en como se aborda esta necesidad es por medio de la implementación
-de un componente que ésta presente en las dos partes principales del sistema:
+de un componente que esta presente en las dos partes principales del sistema:
 el plan de ahorro y la lista de recomendaciones. Este elemento llamado
 componente de ingreso progresivo (\textit{Progressive Profile Widget}, PPW),
 tal componente realiza una sola pregunta al usuario obteniendo progresivamente
@@ -437,7 +437,7 @@ Las recomendaciones se muestran en tres partes del sistema:
 
 En el plan de ahorro, la lista de recomendaciones o en el perfil detallado
 del edificio solo se despliega el título y una breve descripción de cada
-recomendación. Entonces es necesario proporcionar al usuario mas información
+recomendación. Entonces es necesario proporcionar al usuario más información
 detallada sobre la recomendación que el usuario quiere implementar.
 
 \begin{usecase}
@@ -544,7 +544,7 @@ acciones concretas para reducir sus costos de energía.
       del plan de ahorro.
     \item El sistema elige estas recomendaciones por medio de la siguiente lógica:
       \begin{itemize}
-      \item Son ordenadas según su periodo de recuperación (definido por el ahorro
+      \item Son ordenadas según su período de recuperación (definido por el ahorro
         anual en dólares / costo en dólares, por adelantado).
       \item Recomendaciones con costo inicial cero (por ejemplo, acciones basadas
         en comportamiento) se consideran que tienen un reembolso de dos años.
@@ -552,7 +552,7 @@ acciones concretas para reducir sus costos de energía.
         no son parte de la selección para el plan de ahorro.
       \end{itemize}
     \end{enumerate}
-  \item El usuario a agregado una o mas recomendaciones a su plan de ahorro.
+  \item El usuario a agregado una o más recomendaciones a su plan de ahorro.
     \begin{itemize}
     \item La mejor recomendación es desplegada debajo del componente PPW.
     \item El sistema despliega una lista de las recomendaciones que el usuario
@@ -560,7 +560,7 @@ acciones concretas para reducir sus costos de energía.
       \begin{itemize}
       \item El sistema debe indicar que la lista de recomendaciones es el plan
         de ahorro.
-      \item El usuario puede agregar mas recomendaciones desde la lista de
+      \item El usuario puede agregar más recomendaciones desde la lista de
         recomendaciones, cuando se añade una de estas solamente es
         visible en el plan de ahorro ya no debe de aparecer en la lista de
         recomendaciones
@@ -570,7 +570,7 @@ acciones concretas para reducir sus costos de energía.
       \end{itemize}
     \item El usuario puede ordenar la lista por nombre, categoría, costo, ahorro
       o reembolso.
-    \item El usuario puede obtener mas información al seleccionar el nombre
+    \item El usuario puede obtener más información al seleccionar el nombre
       de la recomendación.
     \item El usuario actualiza el estado de una recomendación a
       \textquote{Completada} o \textquote{Remover}.
@@ -627,7 +627,7 @@ Todas las páginas del sistema muestran un menú de navegación que permite al
 usuario navegar directamente a las páginas \textquote{Plan de ahorro},
 \textquote{Recomendaciones} y \textquote{Perfil detallado del edificio}.
 
-La descripción general de la páginas es la siguiente:
+La descripción general de las páginas es la siguiente:
 
 \begin{enumerate}
 \item Un usuario ingresa al portal de PG\&E, luego a la página de ingreso del
@@ -640,7 +640,7 @@ La descripción general de la páginas es la siguiente:
   \textquote{Crear perfil del edificio} (Ver Figura 3.3 2), aquí el usuario
   solo contesta las preguntas básicas sobre su edificio
   (Ver caso de uso \textit{Crear perfil del edificio}).
-  El usuario regresa a esta página cuando requiere agregar mas edificios a su cuenta.
+  El usuario regresa a esta página cuando requiere agregar más edificios a su cuenta.
   Al finalizar la creación del perfil se redirige al usuario a la página de
   \textquote{Plan de ahorro}.
 \item La página de \textquote{Plan de ahorro} es la página principal del sistema
@@ -732,7 +732,7 @@ Para facilitar al usuario el ingreso de información se decidió implementar
 las siguientes mejoras:
 
 \begin{enumerate}
-\item Se redujo el numero de opciones para el tipo de industria, inicialmente
+\item Se redujo el número de opciones para el tipo de industria, inicialmente
   esta lista era numerosa lo que implicaba mas trabajo al usuario, se redujo
   a cinco opciones que son visibles inmediatamente.
 \item Se dividió el ingreso de información en dos partes.
@@ -740,7 +740,7 @@ las siguientes mejoras:
 
 En la versión final el sistema inicialmente pide al usuario seleccionar el tipo
 de industria que mejor describe su negocio, las opciones son: comercial, industrial,
-agricultura, agrícola, otro (Ver Figura 3.6).
+agrícola, multifamiliar y otro (Ver Figura 3.6).
 
 \jcimageinline{0.75}{imagenes/SBP-Modal1.png}{Se pide al usuario
   el seleccionar el tipo de industria de su negocio.}
@@ -794,7 +794,7 @@ La sección superior consta de las siguientes partes:
 Para la implementación de las gráficas se utilizó el marco de trabajo
 Ext JS, este marco de trabajo está diseñado para implementar aplicaciones
 de tipo \textit{SPA} por medio del lenguaje de programación Javascript.
-Ext JS implementa un gran numero de controles de interfaz como paneles,
+Ext JS implementa un gran número de controles de interfaz como paneles,
 barras de herramientas, pestañas, etcétera.
 
 Ext JS es una elección natural para el sistema \texttt{PEAT} dado que tiene un
@@ -829,7 +829,7 @@ Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización dife
   visualizando (Ver Figura 3.12).
   \jcimage{0.9}{imagenes/Vista-Mensual.png}{Visualización mensual del gasto de
     electricidad.}
-\item Diario: Se muestra una gráfica similar a la vista mensual pero en este caso
+\item Diario: Se muestra una gráfica similar a la vista mensual, pero en este caso
   se visualizan los últimos treinta días de gasto (Ver Figura 3.13)
   \jcimage{0.9}{imagenes/Vista-Diaria.png}{Visualización diaria del gasto de
     electricidad, con la comparativa al gasto del año pasado y datos del
@@ -1002,7 +1002,7 @@ La página se encuentra dividida en varias secciones\footnote{Una sección por
   categoría}:
 \begin{itemize}
 \item Edificio (\textit{Building}).
-\item Iluminación (\textit{Lightning}).
+\item Iluminación (\textit{Lighting}).
 \item Calefacción, ventilación y aire acondicionado (\textit{Heating, Ventilation and Air Conditioning} HVAC).
 \item Refrigeración (\textit{Refrigeration}).
 \item Cocina (\textit{Cooking}).
@@ -1028,7 +1028,7 @@ Cada sección está dividida en las siguientes partes (Ver Figura
   (Ver Figura \ref{fig:perfil-seccion} 1).
 \item Preguntas y respuestas: las preguntas son breves y se refieren a una
   característica particular del edificio. La mayoría de las preguntas
-  tiene respuestas definidas\footnote{Se cuenta solo con un reducido numero de
+  tiene respuestas definidas\footnote{Se cuenta solo con un reducido número de
     preguntas donde se espera el ingreso de un valor numérico}. Las respuestas se
   presentan de las siguientes formas (Ver Figura \ref{fig:perfil-seccion} 2):
   \begin{enumerate}[a)]
@@ -1039,8 +1039,8 @@ Cada sección está dividida en las siguientes partes (Ver Figura
   \item Campo de texto limitado (solo un valor numérico): para las preguntas
     en que se necesita un valor numérico exacto.
   \item Botón de opción (con texto o imagen): para preguntas que tiene un
-    numero limitado de respuesta posibles. Se hace uso de imágenes para las
-    preguntas mas técnicas para facilitar al usuario el contestar la pregunta.
+    número limitado de respuestas posibles. Se hace uso de imágenes para las
+    preguntas más técnicas para facilitar al usuario el contestar la pregunta.
   \end{enumerate}
 \item Botón siguiente: para progresar a la siguiente categoría (Ver Figura \ref{fig:perfil-seccion} 3).
 \end{enumerate}
