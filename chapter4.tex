@@ -1,7 +1,7 @@
 \chapter{Despliegue del sistema}
 
 El despliegue de un sistema es una etapa de creciente importancia dado que los
-sistemas actuales van requiriendo mas servicios y subsistemas de apoyo para
+sistemas actuales van requiriendo más servicios y subsistemas de apoyo para
 su funcionamiento. En la actualidad para garantizar un servicio estable para
 un gran número de usuarios es necesario contar con repositorios de memoria,
 balanceadores de carga, servidores de cola, etcétera. Esta creciente complejidad
@@ -31,7 +31,7 @@ El uso de EC2 presentaba las siguientes ventajas:
 \item Permite la creación y configuración automatizada de los servidores
   permitiendo que el sistema pueda escalar rápidamente según las necesidades
   de cómputo.
-\item Una comunicación mas rápida y segura con el \texttt{backend} dado que el
+\item Una comunicación más rápida y segura con el \texttt{backend} dado que el
   servidor C3 se ejecuta también bajo servidores EC2.
 \end{itemize}
 
@@ -45,7 +45,7 @@ Se hizo uso de los siguientes tipos de nodos:
   850 GB de almacenamiento HDD.
 \end{itemize}
 
-Cada CPU virtual proporciona la capacidad de computo equivalente a un CPU
+Cada CPU virtual proporciona la capacidad de cómputo equivalente a un CPU
 Xeon de 1.2 GHz del 2007.
 
 \vspace{2.5mm}
@@ -53,7 +53,7 @@ Xeon de 1.2 GHz del 2007.
 El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig:produccion}):
 \begin{itemize}
 \item Balanceadores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
-  (ELB) el cual permite obtener nivel altos de tolerancia al distribuir el trafico
+  (ELB) el cual permite obtener niveles altos de tolerancia al distribuir el tráfico
   de forma automática entre varias instancias EC2 las cuales se encuentran en
   varias zonas de disponibilidad\footnote{Zonas que se encuentran en
     ubicaciones físicas distintas que cuentan con su propia infraestructura,
@@ -114,7 +114,7 @@ haciendo que estos se encarguen tanto del manejo de archivos estáticos
 la carga de peticiones entrantes.
 
 Se eligió integrar Nginx como servidor web por dos razones (1) su configuración es
-mucho mas simple que en Apache y (2) permite fácilmente agregar encabezados a las
+mucho más simple que en Apache y (2) permite fácilmente agregar encabezados a las
 peticiones entrantes sin afectar el rendimiento del sistema lo que permitió un
 análisis más profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
 
@@ -127,7 +127,7 @@ siguientes componentes (Ver Figura \ref{fig:passenger}):
   este proceso es copiado para obtener las instancias \texttt{PEAT} que manejan las
   peticiones (Ver Figura \ref{fig:passenger} Nginx Preloader).
 \item Instancias \texttt{PEAT}: son instancias del sistema \texttt{PEAT} obtenidos
-  por medio de \textit{Preloader} el numero mínimo de instancias se fijo en diez
+  por medio de \textit{Preloader} el número mínimo de instancias se fijo en diez
   teniéndose la capacidad de crear hasta veinte instancias en forma automática.
 \end{itemize}
 
@@ -135,7 +135,7 @@ siguientes componentes (Ver Figura \ref{fig:passenger}):
 
 Como se ve en la Figura \ref{fig:passenger} el servidor Nginx recibe una petición
 por parte del balanceador de carga para \texttt{PEAT}, dependiendo de la carga
-en los instancias \texttt{PEAT} la petición se manda a una instancia \texttt{PEAT}
+en las instancias \texttt{PEAT} la petición se manda a una instancia \texttt{PEAT}
 libre o es puesta en una cola de espera. Passenger detecta si la carga va aumentando
 y determina automáticamente si es necesario crear nuevas instancias del sistema
 \texttt{PEAT} por medio del proceso \texttt{Preloader}.
@@ -143,7 +143,7 @@ y determina automáticamente si es necesario crear nuevas instancias del sistema
 Aunque en la Figura \ref{fig:passenger} se tienen cinco instancias \texttt{PEAT}
 ejecutándose en producción se tienen por lo menos diez instancias ejecutándose en
 todo momento con la posibilidad de crearse hasta 20 instancias al tenerse más
-trafico.
+tráfico.
 
 Mediante varias pruebas de carga se determinó que el sistema debía manejar picos
 de demanda de hasta 30,000 peticiones por minuto para dar soporte al menos
@@ -161,7 +161,7 @@ de servidores según las necesidades y pruebas a realizar.
 
 Uno de los principales cuellos de botella encontrados durante el desarrollo
 del sistema \texttt{PEAT} fue la gran cantidad de peticiones realizadas al
-servicio web. Para reducir el numero de peticiones se determinó que un gran
+servicio web. Para reducir el número de peticiones se determinó que un gran
 número de éstas se podían evitar teniendo un repositorio de memoria de los modelos
 que solo pueden ser modificados por el administrador de sistema \texttt{PEAT}
 y que además son actualizados cada seis meses. 
@@ -181,7 +181,7 @@ Los modelos que se pueden considerar que contienen información estática son:
 
 Se determinó que la mejor solución fue que al iniciar el sistema \texttt{PEAT}
 se precargara el repositorio de memoria con la información de los modelos descritos
-anteriormente por medio del servicio web C3. De esta forma se redujo el numero de
+anteriormente por medio del servicio web C3. De esta forma se redujo el número de
 peticiones de forma substancial pero teniendo el inconveniente de un incremento
 en el tiempo de inicialización de una instancia del sistema \texttt{PEAT}.
 
@@ -239,7 +239,7 @@ Los principales beneficios de esta práctica son:
 \item Reducción del riesgo de despliegue: dado que se realizan despliegues
   a producción de forma recurrente los cambios contenidos en cada despliegue
   son menores por lo que hay menores posibilidades de errores y si un error
-  se presenta en mas fácil de localizar y arreglar.
+  se presenta es más fácil de localizar y arreglar.
 \item Retroalimentación del usuario: uno de los mayores riesgos en la ingeniería
   del software es el desarrollar un sistema que no es útil para el cliente o usuario.
   Por lo tanto obtener retroalimentación sobre el desarrollo del sistema de forma
@@ -267,7 +267,7 @@ Para PG\&E era necesario que se tuvieran los siguientes ambientes:
 Para uso interno en C3 Energy se tenía además el ambiente \textit{peatstage},
 el cual era usado para realizar pruebas de rendimiento y de control de calidad.
 
-En total se contaba con cuatro ambientes, los cuales debían ser lo mas parecidos
+En total se contaba con cuatro ambientes, los cuales debían ser lo más parecidos
 en su arquitectura y configuración a la del ambiente de producción para que así las
 pruebas de calidad y de rendimiento regresaran resultados cercanos al comportamiento
 del sistema en el ambiente de producción.
@@ -360,7 +360,7 @@ importantes son:
 \subsection{Configuración y despliegue automatizado de ambientes}
 
 En la Sección \ref{sec:production} se hablo sobre la arquitectura del ambiente
-de producción para \texttt{PEAT} en donde se indico el uso de servidores EC2
+de producción para \texttt{PEAT} en donde se indicó el uso de servidores EC2
 proporcionados por \textit{Amazon Web Services} (AWS).
 
 \subsubsection{Capistrano}
@@ -372,7 +372,7 @@ múltiples servidores remotos por medio de SSH\footnote{Es un protocolo que perm
   \cite{29_ssh_protocol}.}. Esta herramienta define un DSL basado en Ruby para la
 definición de tareas de despliegue y mantenimiento.
 
-\textit{Capistrano} contiene tareas predefinidas para el despliegue de sistemas
+\textit{Capistrano} contiene tareas predefinidas para el despliegue de sistemás
 basados en el marco de trabajo Rails, sin embargo para el sistema \texttt{PEAT} se
 implementaron tareas adicionales para realizar un despliegue exitoso.
 
@@ -410,12 +410,12 @@ de un ambiente\footnote{Esta tarea es solo ejecutada una única vez para prepara
 
 \lstinputlisting[language=Ruby]{code/deploy-tasks.rb}
 
-En el código anterior se tiene las tareas mas importantes para el
+En el código anterior se tiene las tareas más importantes para el
 despliegue del sistema. En las líneas 3-5 se define la tarea \texttt{upstart}
 la cual por medio del comando \texttt{foreman} genera la configuración para agregar
 al sistema \texttt{PEAT} como un servicio al sistema Upstart\footnote{Es un demonio
   que maneja el inicio de tareas y servicios durante el arranque del servidor y la
-  supervisión de éstos mientras el servidor esta funcionando.} usado en el sistema
+  supervisión de éstos mientras el servidor está funcionando.} usado en el sistema
 operativo Ubuntu 12.04 LTS que es el sistema operativo seleccionado para los
 servidores EC2.
 
@@ -431,7 +431,7 @@ del ambiente, esta tarea se ejecuta solamente cuando se inicia un nuevo
 ambiente.
 
 En las líneas 21-27 se define la tarea \texttt{config\_sync} la cual
-realiza las tares de generar los archivos de configuración, transferirlos y
+realiza las tareas de generar los archivos de configuración, transferirlos y
 ejecuta el reinicio del sistema para que éste cargue los cambios de configuración.
 
 En las líneas 30-35 se define la tarea \texttt{config} la cual genera
@@ -483,7 +483,7 @@ El uso de \texttt{Capistrano} para el despliegue tiene las siguientes ventajas:
   del sistema es parte del código fuente del sistema.
 \end{itemize}
 
-En el servidor \textit{Jenkins} se implemento una tarea que al tenerse un resultado
+En el servidor \textit{Jenkins} se implementó una tarea que al tenerse un resultado
 positivo de las pruebas del sistema se hace uso del comando \texttt{cap}
 para efectuar el despliegue del sistema en los ambientes de prueba.
 
@@ -599,7 +599,7 @@ positivos el servidor \textit{Jenkins} realiza el despliegue del sistema al ambi
 En el ambiente \textit{peatstage} se realizan pruebas de rendimiento por medio
 de la herramienta CloudTest, la cual permite realizar pruebas de carga y
 rendimiento para sistemas web, además esta herramienta tiene integración con
-\textit{Jenkins} por lo que se agregó como una etapa mas en el proceso de despliegue.
+\textit{Jenkins} por lo que se agregó como una etapa más en el proceso de despliegue.
 
 Usando CloudTest se tenían tres pruebas de carga, teniendo en cada prueba 500, 1000
 y 2000 usuarios concurrentes respectivamente. Si estas pruebas eran satisfactorias
@@ -611,24 +611,24 @@ ambientes \textit{peattest} y \textit{peatqa}.
 En \texttt{PEAT} se tiene que el modelo de desarrollo es una combinación tanto del
 modelo en cascada y del modelo incremental, teniendo en un inicio la creación de
 documentos sobre los requerimientos de los componentes del sistema y su
-arquitectura general. Luego se aplico el modelo incremental al realizar la
+arquitectura general. Luego se aplicó el modelo incremental al realizar la
 implementación de los componentes del sistema \texttt{PEAT} en forma incremental por
 medio de iteraciones con duración de dos semanas para cada iteracion, de esta forma
 en cuanto se tenía suficiente información sobre los requerimientos de un componente
 se programaba el inicio de su implementación para la siguiente iteración.
 
-Durante el desarrollo se hizo uso de practicas ágiles como:
+Durante el desarrollo se hizo uso de prácticas ágiles como:
 
 \begin{itemize}
   \item Reunión diaria de sincronización del equipo.
   \item Desarrollo guiado por pruebas.
   \item Planeación por iteraciones.
-  \item Poker de planeación.
+  \item Póker de planeación.
   \item Retrospectivas al final de una iteración.
   \item Despliegue continuo.
 \end{itemize}
 
-En el sistema \texttt{PEAT} se tenia el siguiente ciclo de desarrollo de
+En el sistema \texttt{PEAT} se tenía el siguiente ciclo de desarrollo de
 software:
 
 \begin{enumerate}
