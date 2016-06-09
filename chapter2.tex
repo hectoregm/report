@@ -1,7 +1,7 @@
 \chapter{Fundamentos teóricos}
 
-En este capitulo se exponen los conceptos teóricos mas influyentes en el diseño e
-implementación del sistema \texttt{PEAT}.
+En este capitulo se presentan los conceptos teóricos que permitieron
+el diseño e implementación del sistema \texttt{PEAT}.
 
 \section{Patrón Modelo-Vista-Controlador (MVC)}
 El patrón Modelo Vista Controlador (MVC) es probablemente el patrón
@@ -69,6 +69,7 @@ coordinan la interacción entre el usuario, las vistas y el modelo
   \texttt{Bezel}.
   Estos cambios no tuvieron un alto impacto en el desarrollo del sistema per se,
   dado el desacoplamiento existente entre los modelos y las vistas.
+\pagebreak
 \item Vista: haciendo uso de plantillas se generan representaciones de los
   principales modelos del sistema en HTML y JSON.
 
@@ -409,9 +410,15 @@ Para implementar un DSL se tienen dos rutas:
   se necesita. A este tipo de DSL se les conoce por el nombre de DSL internos.
 \end{itemize}
 
+En el lenguaje de programación Ruby se tiene una gran cantidad de lenguajes
+DSL internos dada la flexibilidad de la sintaxis del lenguaje.
+
 En el siguiente ejemplo se tiene código Ruby que usa la biblioteca
 \textit{Markaby} para generar HTML. En este caso se tiene un DSL para generar HTML
 haciendo uso de Ruby como lenguaje GPL base.
+
+\pagebreak
+
 \lstinputlisting[language=Ruby]{code/dsl-example.rb}
 
 El ejemplo anterior muestra un código válido en Ruby, pero tiene la forma de un
