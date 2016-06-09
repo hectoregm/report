@@ -77,6 +77,8 @@
 \newcommand{\jcimagefull}[3]{\begin{figure}[p]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\end{figure}}
 \renewcommand{\arraystretch}{1.5}
 
+\newcommand{\imagefull}[4]{\begin{figure}\makebox[\textwidth][c]{\includegraphics[width=#1\textwidth]{#2}}\caption{#3}\label{fig:#4}\end{figure}}
+
 \begin{document}
 
 \thispagestyle{empty}
