@@ -25,14 +25,13 @@ module Bezel::Associations
     define_method(field_name) do
       value = @attributes[field_name.to_s] || @attributes[field_name.to_sym]
 
-      # Caundo el modelo tiene ya tiene los identificadores de los objetos asociados
       if value
         if one
           model.find(value["id"])
         else
           value.map {|v| model.find(v["id"]) }
         end
-      else # Se tienen que utilizar un JOIN para obtener los objetos asociados
+      else
         if id = @attributes["#{field_name}_id"]
           res = model.find(id)
         else

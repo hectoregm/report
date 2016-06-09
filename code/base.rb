@@ -74,7 +74,6 @@ module Bezel
         return @attributes[original_name] if @attributes.key?(original_name)
         camelized_name = name.to_s.camelize(:lower)
         return @attributes[camelized_name] if @attributes.key?(camelized_name)
-        # Bezel.debug("Could not get '#{name}' returning null in #{caller(1)[0]}")
         return nil
       end
       super

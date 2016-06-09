@@ -20,5 +20,5 @@ after "deploy:setup", "deploy:peat_setup"
 before 'deploy:setup', 'rvm:install_rvm'
 before 'deploy:setup', 'rvm:install_ruby'
 
-# Se reinicia el sistema despues de actualizar su configuración
+# Se reinicia el sistema después de actualizar su configuración
 after "peat:config_sync", "deploy:restart"
