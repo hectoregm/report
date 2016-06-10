@@ -24,7 +24,6 @@ module Bezel::Associations
   def define_assoc_method(field_name, model, one = true)
     define_method(field_name) do
       value = @attributes[field_name.to_s] || @attributes[field_name.to_sym]
-
       if value
         if one
           model.find(value["id"])
@@ -37,7 +36,6 @@ module Bezel::Associations
         else
           res = model.find(:all, 
             filter: "#{c3_type.to_s.camelize(:lower)}.id == '#{@attributes["id"]}'")
-
           one ? res[0] : res
         end
       end

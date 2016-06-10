@@ -56,6 +56,8 @@ se hace por medio de un lenguaje de dominio específico que permite implementar
 modelos basados en tipos del servicio web C3 aprovechando que este servicio
 es tipo RESTful y las capacidades de metaprogramación de Ruby.
 
+\pagebreak
+
 \texttt{Bezel} tiene dos modos principales de uso:
 \begin{itemize}
 \item Como un cliente REST con ciertas adecuaciones para una mejor integración
@@ -549,7 +551,7 @@ donde se hace uso del método \texttt{constantize} que realiza la recuperación
 de una constante a partir de una cadena dada, en este caso para recuperar de
 una cadena una clase.
 
-En las líneas 24-49 se tiene la implementación del método
+En las líneas 24-43 se tiene la implementación del método
 \texttt{define\_assoc\_method} el cual hace uso del método \texttt{define\_method}
 para construir un método de instancia el cual se encarga de realizar la búsqueda de
 los objetos asociados al modelo.
@@ -617,6 +619,7 @@ de clase.
 
 \lstinputlisting[language=Ruby]{code/cache_base.rb}
 
+\pagebreak
 En las líneas 9-11 se inicializa el repositorio de memoria con una instancia de
 \texttt{Bezel::Cache} si es necesario.
 

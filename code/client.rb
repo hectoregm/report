@@ -47,7 +47,5 @@ module Bezel
 
       action
     end
-
-    # ...
   end
 end

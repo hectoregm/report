@@ -18,6 +18,4 @@ describe QuestionsController do
       get :next, { building_id: "building_id"}
     end
   end
-  
-  # ...
 end

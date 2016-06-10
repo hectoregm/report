@@ -357,10 +357,12 @@ mas información sobre el edificio.
 
 \subsection{Administrar recomendaciones}
 
-En los casos de uso anteriores se obtiene del usuario el perfil del edificio
-, al menos sus características básicas. Haciendo uso de esta información
+En los casos de uso anteriores se obtiene del usuario el perfil del edificio,
+al menos sus características básicas. Haciendo uso de esta información
 el sistema \texttt{PEAT} genera recomendaciones sobre como disminuir el consumo
 de energía a través de cambios de comportamiento y/o modernización de equipo.
+
+\vspace{2.5mm}
 
 Las recomendaciones se muestran en tres partes del sistema:
 \begin{enumerate}
@@ -368,6 +370,10 @@ Las recomendaciones se muestran en tres partes del sistema:
 \item En las recomendaciones.
 \item En el perfil detallado del edificio.
 \end{enumerate}
+
+El comportamiento general al administrar las recomendaciones en estas tres
+secciones es definido en este caso de uso, teniéndose en los casos de uso
+posteriores los detalles particulares del comportamiento para esa sección.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Administrar recomendaciones.}
@@ -438,8 +444,9 @@ Las recomendaciones se muestran en tres partes del sistema:
 
 En el plan de ahorro, la lista de recomendaciones o en el perfil detallado
 del edificio solo se despliega el título y una breve descripción de cada
-recomendación. Entonces es necesario proporcionar al usuario más información
-detallada sobre la recomendación que el usuario quiere implementar.
+recomendación. Para dar mayor información sobre la recomendación a implementar se
+proporciona al usuario más información sobre los pasos para lograr su
+implementación.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Ver recomendación}
@@ -475,8 +482,6 @@ detallada sobre la recomendación que el usuario quiere implementar.
 \end{usecase}
 
 \subsection{Ver historial de consumo}
-
-% FIXME: Descripción general sobre las gráficas de energía.
 
 \begin{usecase}
   \addtitle{Caso de Uso:}{Ver historial de consumo}
@@ -678,9 +683,8 @@ La descripción general de las páginas es la siguiente:
   el consumo en el edificio (Ver caso de uso \textit{Ver recomendación}).
 \end{enumerate}
 
-% FIXME: Remover pagina proxy del esquema de navegación.
-\jcimageinline{1.0}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
-  la navegación en el sistema \texttt{PEAT}.}
+\rjcimage{0.7}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
+  la navegación en el sistema \texttt{PEAT}.}{ui-navegation}
 
 \subsection{Encabezado general}
 
@@ -709,8 +713,8 @@ el cual tiene las siguientes secciones (Ver Figura 3.4):
   de ahorro del edificio.
 \end{enumerate}
 
-\jcimageinline{1.0}{imagenes/Disposicion-Encabezado.png}{Encabezado principal
-  del sistema \texttt{PEAT}.}
+\rjcimage{1.0}{imagenes/Disposicion-Encabezado.png}{Encabezado principal
+  del sistema \texttt{PEAT}.}{global-header}
 
 
 \subsection{Crear perfil del edificio}
@@ -742,15 +746,15 @@ En la versión final el sistema inicialmente pide al usuario seleccionar el tipo
 de industria que mejor describe su negocio, las opciones son: comercial, industrial,
 agrícola, multifamiliar y otro (Ver Figura 3.6).
 
-\jcimageinline{0.75}{imagenes/SBP-Modal1.png}{Se pide al usuario
-  el seleccionar el tipo de industria de su negocio.}
+\rjcimage{0.75}{imagenes/SBP-Modal1.png}{Se pide al usuario
+  el seleccionar el tipo de industria de su negocio.}{sdp-modal1}
 
 Después el sistema pide al usuario seleccionar su cuenta y dirección
 de servicio, el alias del edificio, el tipo de edificio y su área
 (Ver Figura 3.7).
 
-\jcimageinline{0.75}{imagenes/SBP-Modal2.png}{Se pide al usuario ingresar
-  las características básicas de su edificio.}
+\rjcimage{0.6}{imagenes/SBP-Modal2.png}{Se pide al usuario ingresar
+  las características básicas de su edificio.}{sdp-modal2}
 
 Al ingresar esta información el usuario es redirigido a la página de
 \textquote{Plan de ahorro} del perfil creado.
@@ -811,8 +815,6 @@ del cliente.
 Así se decidió hacer uso solamente del módulo de graficación de Ext JS y
 hacer la implementación de los controles necesarios para la interfaz desde cero
 haciendo uso de \texttt{Backbone}.
-
-% TODO: Escribir un poco de Backbone y su papel en la interfaz
 
 Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización diferente:
 
