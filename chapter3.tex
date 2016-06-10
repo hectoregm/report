@@ -688,8 +688,9 @@ La descripción general de las páginas es la siguiente:
 
 \subsection{Encabezado general}
 
-Todas las páginas del sistema \texttt{PEAT} comparten el mismo encabezado
-el cual tiene las siguientes secciones (Ver Figura 3.4):
+Todas las páginas del sistema \texttt{PEAT} comparten el mismo encabezado,
+como se muestra en la Figura \ref{fig:global-header}, el cual tiene las
+siguientes secciones:
 
 \begin{enumerate}[a)]
 \item Componente de selección de edificios: este control muestra un menú
@@ -726,8 +727,8 @@ también es usada cuando el usuario agrega más edificios a su cuenta.
 Esta página tuvo varias iteraciones por la retroalimentación obtenida por las
 pruebas con los usuarios, en las primeras iteraciones la página requería que el
 usuario contestara toda la información requerida según el caso de uso
-\textit{Crear perfil del edificio}, lo cual representaba mucho trabajo al usuario
-(Ver Figura 3.5).
+\textit{Crear perfil del edificio} como se muestra en la Figura 3.5, lo cual
+representaba mucho trabajo al usuario.
 
 \jcimagefull{1.0}{imagenes/SBP-Wireframe.png}{Versión inicial para crear
   un perfil de edificio.}
@@ -744,14 +745,14 @@ las siguientes mejoras:
 
 En la versión final el sistema inicialmente pide al usuario seleccionar el tipo
 de industria que mejor describe su negocio, las opciones son: comercial, industrial,
-agrícola, multifamiliar y otro (Ver Figura 3.6).
+agrícola, multifamiliar y otro como se puede ver en la Figura 3.6.
 
 \rjcimage{0.75}{imagenes/SBP-Modal1.png}{Se pide al usuario
   el seleccionar el tipo de industria de su negocio.}{sdp-modal1}
 
 Después el sistema pide al usuario seleccionar su cuenta y dirección
 de servicio, el alias del edificio, el tipo de edificio y su área
-(Ver Figura 3.7).
+como se puede ver en la Figura 3.7.
 
 \rjcimage{0.6}{imagenes/SBP-Modal2.png}{Se pide al usuario ingresar
   las características básicas de su edificio.}{sdp-modal2}
@@ -822,24 +823,24 @@ Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización dife
 \item Anual: se hace una comparativa entre el gasto del edificio en los últimos doce
   meses, el promedio de gasto de un edificio de características similares y
   el gasto de un edificio eficiente en su consumo energético. Para hacer estas
-  comparaciones se utiliza gráficas de barras (Ver Figura 3.11).
+  comparaciones se utiliza gráficas de barras como se puede ver en la Figura 3.11.
   \jcimage{1.0}{imagenes/Vista-Anual.png}{Visualización anual del gasto de
     electricidad.}
 \item Mensual: se muestra una gráfica de líneas del gasto del edificio
-  en los últimos 12 meses, además permite comparar con el gasto del año anterior.
-  Se pueden agregar los datos sobre el clima durante el período que se está
-  visualizando (Ver Figura 3.12).
+  en los últimos 12 meses, además permite comparar con el gasto del año anterior
+  como se puede observar en la Figura 3.12. Además se pueden agregar los datos sobre
+  el clima durante el período que se está visualizando.
   \jcimage{0.9}{imagenes/Vista-Mensual.png}{Visualización mensual del gasto de
     electricidad.}
 \item Diario: Se muestra una gráfica similar a la vista mensual, pero en este caso
-  se visualizan los últimos treinta días de gasto (Ver Figura 3.13)
+  se visualizan los últimos treinta días de gasto como se muestra en la Figura 3.13.
   \jcimage{0.9}{imagenes/Vista-Diaria.png}{Visualización diaria del gasto de
     electricidad, con la comparativa al gasto del año pasado y datos del
     clima.}
 \item Análisis: Se muestra un análisis del gasto del edificio en categorías
-  por medio de una gráfica circular, este análisis es realizado usando
-  aprendizaje de máquina por lo que este análisis es solo una estimación
-  (ver Figura 3.14).
+  por medio de una gráfica circular como se puede observar en la Figura 3.14, este
+  análisis es realizado usando aprendizaje de máquina por lo que este análisis es
+  solo una estimación.
   \jcimage{0.9}{imagenes/Vista-Analisis.png}{Visualización del análisis del gasto de
     electricidad.}
 \end{itemize}
@@ -849,7 +850,7 @@ visualizaciones son idénticas para el gasto en gas.
 
 \subsubsection{Administración}
 
-La sección inferior consta de las siguientes partes (Ver Figura 3.15):
+La sección inferior como se muestra en la Figura 3.15 consta de las siguientes partes:
 \begin{itemize}
 \item Componente de ingreso progresivo: en este se despliega una pregunta
   sobre el edificio del usuario, las características de este componente
@@ -882,13 +883,14 @@ El componente de lista de recomendaciones consta de las siguientes secciones:
 \begin{itemize}
 \item Encabezado: se muestran las características principales por las cuales
   el usuario puede ordenar la lista ya sea por nombre, categoría, costo, ahorro
-  y recuperación de la inversión (Ver Figura 3.16).
+  y recuperación de la inversión, como se puede ver en la Figura 3.16.
   \jcimage{1.0}{imagenes/Recomendaciones-Encabezado.png}{Encabezado de la lista
     de recomendaciones.}
 \item Renglón: por cada recomendación en la lista se despliegan las
   características principales definidas en el encabezado, además se tiene un botón
   que permite al usuario cambiar el estado de la recomendación.
-  Para cada recomendación se tiene las siguientes secciones (Ver Figura 3.17):
+  Para cada recomendación se tiene las siguientes secciones como se puede
+  ver en la Figura 3.17:
   \begin{enumerate}[a)]
   \item Imagen representativa de la recomendación.
   \item Descripción de una línea de la recomendación.
@@ -936,16 +938,18 @@ de una recomendación. Este componente tiene dos formas de interacción:
 
 Como se indico anteriormente para realizar la transición del estado
 \textquote{Por implementar} al estado \textquote{Añadido} el usuario solo tiene
-que presionar el control en su parte izquierda (Ver Figuras \ref{fig:boton-inicial}
-y \ref{fig:boton-final}).
+que presionar el control en su parte izquierda como se puede ver en las Figuras
+\ref{fig:boton-inicial} y \ref{fig:boton-final}.
+
 \rjcimage{0.4}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
   de añadir al plan.}{boton-inicial}
 \rjcimage{0.4}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
   a sido añadida al plan.}{boton-final}
 
-El sistema despliega una ventana preguntando al usuario una estimación
+El sistema despliega una ventana como se puede ver en la Figura
+\ref{fig:estimacion-recomendacion} preguntando al usuario una estimación
 del tiempo en que se podrá implementar las medidas propuestas por la
-recomendación que se esta agregando al plan de ahorro (Ver Figura \ref{fig:estimacion-recomendacion}).
+recomendación que se esta agregando al plan de ahorro.
 \rjcimage{0.5}{imagenes/Recomendaciones-Estimacion.png}{Al agregar una
   recomendación al plan el sistema pregunta el tiempo estimado para completar
   la recomendación.}{estimacion-recomendacion}
@@ -956,14 +960,17 @@ presencia de un menú despegable.
 Estando la recomendación es un estado inicial \textquote{Por implementar} las
 acciones en el menu despegable son para indicar que se ha completado la recomendación
 (estado \textquote{Completada}) o que no es aplicable
-(estado \textquote{No aplicable}) (Ver Figura \ref{fig:menu-anadir-inicial}).
+(estado \textquote{No aplicable}) como se puede observar en la Figura
+\ref{fig:menu-anadir-inicial}.
 
 \rjcimage{0.5}{imagenes/Boton-Plan-Menu-Inicial.png}{Las acciones de
   completar o indicar no aplicable en el menú despegable.}{menu-anadir-inicial}
 
 Cuando la recomendación se encuentra en el estado de \textquote{Añadido} las
 acciones en el menú despegable son las relacionadas con completar, remover o indicar
-que no es aplicable a la recomendación (Ver Figura \ref{fig:menu-anadir-anadido}).
+que no es aplicable a la recomendación como se muestra en la Figura
+\ref{fig:menu-anadir-anadido}.
+
 \rjcimage{0.35}{imagenes/Boton-Plan-Menu-Anadido.png}{Las acciones de
   completar, remover o indicar no aplicable en el menú despegable.}{menu-anadir-anadido}
 
@@ -976,20 +983,22 @@ el consumo energético del edificio.
 La página está dividida en las siguientes secciones:
 \begin{itemize}
 \item Encabezado: se muestra una descripción breve de la recomendación y a su
-  derecha se tiene el componente \textquote{Añadir al plan} (Ver Figura
-  \ref{fig:recomendacion-encabezado}).
+  derecha se tiene el componente \textquote{Añadir al plan} como se muestra
+  en la Figura \ref{fig:recomendacion-encabezado}.
   \rjcimage{1.0}{imagenes/Recomendacion-Titulo.png}{Encabezado de la recomendación
     para la instalación de un sistema de paneles solares.}{recomendacion-encabezado}
 \item Descripción: se describe a detalle la información sobre las medidas
   necesarias para reducir el consumo energético del edificio.
-  Dentro de la descripción se pueden tener una o varias preguntas al usuario
-  para obtener mas datos con el fin de establecer una mejor
-  estimación sobre los costos y ahorro esperados al completar la recomendación.
+\item Preguntas:  Como se puede observar en la Figura
+  \ref{fig:recomendacion-descripcion} después de la descripción se pueden
+  tener una o varias preguntas al usuario para obtener mas datos con el fin de
+  establecer una mejor estimación sobre los costos y ahorro esperados al completar
+  la recomendación.
   En la sección lateral se despliega el resultado del cálculo estimado
   de costos y ahorro al completar la recomendación, estos datos son
   actualizados de forma asíncrona cuando el usuario contesta o cambia
   la respuesta a alguna de las preguntas presentadas en el contenido
-  principal (Ver Figura \ref{fig:recomendacion-descripcion}).
+  principal.
   \rjcimage{1.0}{imagenes/Recomendacion-Descripcion.png}{Descripción detallada
     de la recomendación, con la estimación de costo y ahorro en la sección lateral.}{recomendacion-descripcion}
 \end{itemize}
@@ -998,7 +1007,8 @@ La página está dividida en las siguientes secciones:
 
 La página de \textquote{Perfil detallado del edificio} permite al usuario el ingreso
 o actualización de las características de su edificio por medio de un
-conjunto de preguntas y respuestas divididas en categorías.
+conjunto de preguntas y respuestas divididas en categorías, como se puede
+observar en la Figura \ref{fig:perfil-categorias}.
 
 La página se encuentra dividida en varias secciones\footnote{Una sección por
   categoría}:
@@ -1013,7 +1023,7 @@ La página se encuentra dividida en varias secciones\footnote{Una sección por
 \end{itemize}
 
 Varias categorías como cocina y refrigeración solo son mostradas
-para ciertos tipos de edificios (Ver Figura \ref{fig:perfil-categorias})
+para ciertos tipos de edificios.
 
 \rjcimage{1.0}{imagenes/Perfil-Secciones.png}{Las preguntas y respuestas sobre
   el edificio se organizan en categorías.}{perfil-categorias}
@@ -1021,8 +1031,8 @@ para ciertos tipos de edificios (Ver Figura \ref{fig:perfil-categorias})
 El usuario selecciona una categoría seleccionando el título de una categoría,
 para que esa sección presente las preguntas y respuestas asociadas a ésta.
 
-Cada sección está dividida en las siguientes partes (Ver Figura
-\ref{fig:perfil-seccion}):
+Cada sección está dividida, como se muestra en la Figura \ref{fig:perfil-seccion},
+en las siguientes partes:
 \begin{enumerate}
 \item Encabezado de la sección: cada encabezado tiene un ícono característico,
   el nombre de la categoría y en la parte derecha un marcador indica
@@ -1074,7 +1084,8 @@ Este componente muestra al usuario una pregunta y sus posibles respuestas sobre 
 perfil del edificio. Este componente es usado en las páginas de
 \textquote{Plan de ahorro} y de \textquote{Recomendaciones}.
 
-El componente tiene las siguientes partes (Ver Figura \ref{fig:ingreso-progresivo}):
+El componente, como se puede ver en la Figura \ref{fig:ingreso-progresivo}, tiene
+las siguientes partes:
 \begin{enumerate}[a)]
 \item Pregunta y respuesta: se despliega una sola pregunta y
   las respuestas se presentan según los tipos de respuesta expuestos
