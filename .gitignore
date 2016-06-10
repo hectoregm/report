@@ -13,3 +13,6 @@ report.run.xml
 *.vpp~*
 *.lb
 *.gz
+tesis.bcf
+tesis.pdf
+tesis.run.xml

@@ -1,0 +1,692 @@
+\section{Biblioteca Bezel}
+\label{sec:bezel}
+
+Para lograr la integración entre el sistema \texttt{PEAT} y el servicio web C3,
+el API proporcionado por el servidor C3, se ha implementado una biblioteca
+con el nombre de \textbf{\texttt{Bezel}}.
+
+\texttt{PEAT} hace uso del marco de trabajo Rails, el cual a su vez hace
+uso del patrón de arquitectura MVC. En Rails los modelos por lo general hacen uso
+de la biblioteca \texttt{ActiveRecord} la cual permite implementar modelos basados
+en tablas de bases de datos relacionales. En \texttt{PEAT} los datos
+son proporcionados por el servicio web C3 el cual es administrado por el
+servidor C3.
+
+Dentro del marco de trabajo Rails también se tiene la biblioteca
+\texttt{ActiveResource} la cual implementa el caso de uso en que los datos son
+provistos por un servicio web tipo RESTful.
+
+En una primera versión se trató de realizar la integración de \texttt{PEAT} con el
+servicio web C3 haciendo uso de esta biblioteca, sin embargo se tenían las siguientes
+dificultades:
+
+\begin{itemize}
+\item Presupone que el servicio web hace uso de todos los métodos HTTP (GET, POST,
+  UPDATE, DELETE) para definir las acciones básicas sobre un recurso.
+\item No permite la definición de asociaciones entre recursos.
+\end{itemize}
+
+Aunque el servicio web C3 es de tipo RESTful, éste no hace uso de los métodos
+HTTP para realizar acciones sobre los recursos del servicio. El servicio web
+C3 realiza todas sus acciones usando el método HTTP POST.
+
+Otra dificultad era que la biblioteca \texttt{ActiveResource} no da ninguna facilidad
+para definir asociaciones entre los modelos lo que implicaba el tener que implementar
+una gran cantidad de código dado el gran numero de asociaciones presentes entre los
+tipos definidos por el servicio web C3.
+
+Dada las dificultades descritas en los párrafos anteriores el hacer uso de
+\texttt{ActiveResource} no era una solución viable, sin embargo sirvió como una
+primera aproximación para implementar la biblioteca \texttt{Bezel} y así
+proporcionar acceso al servicio web C3.
+
+Cabe recordar que el servidor C3 está implementado en dos lenguajes de programación,
+la gran mayoría implementado con Javascript, mientras que el núcleo y funciones
+criticas están implementadas en Java. El servidor C3 puede enviar tanto XML como
+JSON como respuesta a las peticiones realizadas al servidor\footnote{La representación en JSON
+  es la más utilizada dado que el sistema de tipos que se usa en el sistema esta
+  definido en Javascript.}.
+
+\texttt{Bezel} permite la reconstrucción automática de los tipos definidos por el
+servidor C3 en Javascript a modelos compatibles con el marco de trabajo Rails
+y el lenguaje de programación Ruby. Esta reconstrucción automática permite
+evitar desfases entre la definición de los tipos entre los dos sistemas y
+agiliza el desarrollo del sistema \texttt{PEAT}. Esta reconstrucción automática
+se hace por medio de un lenguaje de dominio específico que permite implementar
+modelos basados en tipos del servicio web C3 aprovechando que este servicio
+es tipo RESTful y las capacidades de metaprogramación de Ruby.
+
+\pagebreak
+
+\texttt{Bezel} tiene dos modos principales de uso:
+\begin{itemize}
+\item Como un cliente REST con ciertas adecuaciones para una mejor integración
+  con el API del servidor C3.
+\item Como un lenguaje de dominio específico interno para Ruby para lograr
+  la implementación automatizada de tipos y sus asociaciones del servicio web C3.
+\end{itemize}
+
+\subsection{Servicio web C3}
+
+El servicio web C3 es de tipo RESTful, es decir, cada recurso o tipo tiene una única
+dirección URL asociada. Las direcciones URL tienen la siguiente forma:
+
+\vspace{2.5mm}
+\texttt{POST} /api/$<$\textit{version}$>$/$<$\textit{tenant}$>$/$<$\textit{module}$>$;$<$\textit{tag}$>$/$<$\textit{type}$>$?action=$<$\textit{action-name}$>$
+
+\begin{itemize}
+\item \textit{version}: indica la versión del servicio a la cual se está accediendo,
+  el sistema \texttt{PEAT} hace uso de la versión 1.0.
+\item \textit{tenant}: se refiera al producto o cliente, esto es porque cada
+  producto y/o cliente tiene cierta funcionalidad específica. Para \texttt{PEAT}
+  se tiene \textquote{peat} y \textquote{c3}.
+\item \textit{module}: indica el módulo al que se está accediendo, un conjunto de
+  tipos se definen en un módulo en particular. Para el sistema \texttt{PEAT} el
+  módulo más usado es el módulo \textquote{peat}, haciendo uso de los módulos
+  \textquote{billing} y \textquote{structure}.
+\item \textit{tag}: indica el tipo de ambiente, es decir, si el servicio web C3 es
+  para ambiente de pruebas, control de calidad, producción, etcétera.
+  \textit{peatprod} y \textit{peatqa} son algunas de las etiquetas que se usan
+  en \texttt{PEAT}.
+\item \textit{type}: se refiere al tipo al que se quiere acceder, por ejemplo
+  \textquote{Building}, \textquote{Location} y
+  \textquote{BuildingEnergyConservationOption} son algunos de los tipos utilizados
+  en \texttt{PEAT}.
+\item \textit{action-name}: indica la acción que se quiere realizar sobre
+  el tipo indicado anteriormente. En este caso \textquote{fetch}, \textquote{upsert}
+  y \textquote{remove} son algunas de las acciones que se pueden realizar.
+\end{itemize}
+
+Como se comentó anteriormente el servicio web C3 no es totalmente de tipo RESTful,
+principalmente porque utiliza del mismo método HTTP POST para todas las acciones,
+indicando por medio del \textquote{action-name} la acción a realizar.
+Para la implementación de \texttt{Bezel} solamente se espera que el servicio web
+tenga direcciones únicas para cada tipo definido.
+
+Muchas acciones reciben ciertos parámetros los cuales son almacenados dentro del
+cuerpo de la petición POST, por lo que el único parámetro que se envía por medio
+de la URL es el nombre la acción a realizar.
+
+\pagebreak
+\subsubsection{Tipos del servicio web C3}
+
+Del servicio web C3 se manejaron los siguientes tipos (Ver Figura
+\ref{fig:c3-types}):
+\begin{itemize}
+\item User: este tipo representa un cliente de PG\&E, solamente
+  contiene información básica como el nombre, código postal y su correo electrónico.
+\item Account: este tipo representa uno o más contratos de servicio,
+  también contiene información sobre la industria a la que pertenece el negocio
+  del usuario.
+\item Building: este tipo representa un edificio y contiene las
+  características básicas de un edificio: tipo, tamaño y antigüedad.
+\item Location: este tipo representa una dirección de servicio,
+  es decir, una ubicación física donde se prestan los servicios.
+\item BuildingProfileAnswer: este tipo representa las respuestas
+  dadas por el usuario o sus valores por defecto para las características de un
+  edificio, tiene siempre una pregunta asociada.
+\item BuildingQuestion: este tipo representa una pregunta asociada
+  a una característica de un edificio, tiene una o varias respuestas válidas
+  asociadas.
+\item ValidAnswer: este tipo representa una respuesta válida asociada
+  a una pregunta sobre una característica de un edificio, cabe recordar que
+  la mayoría de las preguntas tiene un numero limitado de respuestas válidas.
+\item ProductCategory: este tipo representa las categorías en las
+  que se clasifican las recomendaciones, preguntas y opciones de conservación de
+  energía. Iluminación y calefacción son algunas de las categorías que se tienen
+  definidas.
+\item EnergyConservationOption: este tipo representa una medida o
+  opción de conservación de energía que se puede implementar en un edificio para
+  lograr disminuir su consumo energético. En este tipo contiene la información
+  como el nombre y descripción que se despliega al usuario final y también
+  contiene la información sobre el costo, ahorro y recuperación de la inversión.
+\item Recommendation: este tipo representa la implementación de una
+  opción de conservación en relación a un edificio, es decir, contiene la
+  información de costo, ahorro y recuperación de la inversión para un edificio
+  en particular en base a las características del edificio.
+\item RecommendationFAQ: este tipo contiene las preguntas frecuentes
+  y sus respuestas en relación a la implementación de una recomendación.
+\item ChartData: este tipo representa toda la información de consumo
+  obtenida de los medidores inteligentes instalados en las direcciones de servicio.
+\end{itemize}
+
+Los tipos \textquote{User}, \textquote{Account}, \textquote{Building} y
+\textquote{Location} ya estaban completamente definidos por el servicio web C3, los
+demás tipos fueron modelados en coordinación con el grupo de modelado del
+servidor C3.
+
+\imagefull{1.4}{imagenes/C3-Types.png}{Diagrama tipo ER de los tipos del
+  servicio web C3 utilizados para \texttt{PEAT}}{c3-types}
+
+\subsection{Arquitectura general}
+
+La biblioteca \texttt{Bezel} está conformada por cinco clases y cinco módulos,
+siendo las clases principales \texttt{Bezel::Client} y \texttt{Bezel::Base}.
+
+En el lenguaje de programación Ruby se tiene el concepto de módulo (\texttt{module}),
+el cual es mas que una agrupación de objetos bajo un único nombre. Los objetos
+pueden ser constantes, métodos, clases y otros módulos.
+
+Los módulos tienen dos tipos de usos (1) se pueden utilizar un módulo como una
+manera conveniente de agrupar objetos o (2) se pueden incorporar los objetos del
+módulo a una clase haciendo uso de \texttt{include} o \texttt{extend}.
+
+\lstinputlisting[language=Ruby]{code/module-namespace.rb}
+
+El ejemplo anterior muestra el uso de los módulos como un espacio de nombres,
+en la línea 2 se define la constante \texttt{PI} y en las líneas 3 y 7 se definen
+los métodos \texttt{sin} y \texttt{cos}, estos métodos son usados fuera del
+módulo por medio del nombre del módulo como ocurre en la línea 12, en esta
+línea se hace referencia tanto a la constante \texttt{PI} como al método
+\texttt{sin}.
+
+\lstinputlisting[language=Ruby]{code/module-include.rb}
+
+Ahora en este ejemplo se muestra el uso de los módulos para incorporar métodos
+de clase o de instancia. En las líneas 1-11 se define el módulo \texttt{Boolean}
+el cual define dos métodos \texttt{boolean?} y \texttt{to\_bool}, mientras que
+en las líneas 13-17 se define el módulo \texttt{RandomString} el cual a su vez
+define un método \texttt{random}. En las líneas 19-22 se permite modificar cualquier
+clase en tiempo de ejecución aunque esta clase sea parte de la biblioteca estándar,
+así en la línea 20 se hace uso de \texttt{include} para agregar los métodos del
+módulo dado como parámetro como métodos de instancia, el uso de estos métodos se
+puede ver en las líneas 24-25. Finalmente en la línea 21 se hace uso de la
+declaración \texttt{extend} para agregar los métodos del módulo dado como métodos
+de clase como se puede ver en la línea 26.
+
+Por lo anterior se tiene que el uso de módulos es una parte importante para
+organizar y compartir funcionalidad en el lenguaje de programación Ruby.
+
+Para la biblioteca \texttt{Bezel} tenemos el módulo \texttt{Bezel} que contiene
+a todas las clases y módulos de la biblioteca. Además se tienen cinco submódulos
+que permiten organizar de forma coherente la funcionalidad de la biblioteca.
+
+Las clases y módulos que conforman la biblioteca son
+(Ver Figura \ref{fig:diagrama-clase}):
+\begin{itemize}
+\item \texttt{Bezel}: módulo principal que contiene a los demás submódulos y
+  clases de la biblioteca.
+\item \texttt{Bezel::Config}: módulo que define los métodos y valores válidos
+  para configurar el cliente con el servicio web C3.
+\item \texttt{Bezel::Client}: clase que define un cliente para usar el servicio
+  web C3.
+\item \texttt{Bezel::Target}: clase que representa un tipo en un contexto
+  específico (\textit{tenant}, \textit{tag}, \textit{module}).
+\item \texttt{Bezel::Action}: clase que representa una acción sobre
+  un tipo representado por un \texttt{Bezel::Target}.
+\item \texttt{Bezel::Base}: clase abstracta que permite definir un modelo en Ruby
+  con base en un tipo del servicio web C3.
+\item \texttt{Bezel::Connections}: módulo que define las acciones básicas y de
+  búsqueda sobre un modelo.
+\item \texttt{Bezel::Associations}: módulo que define las asociaciones entre
+  modelos.
+\item \texttt{Bezel::CacheBase}: módulo que redefine las acciones básicas y
+  de búsqueda sobre un modelo haciendo uso de un repositorio de memoria
+  \texttt{Bezel::Cache}.
+\item \texttt{Bezel::Cache}: clase que define un API para realizar operaciones
+  de lectura/escritura sobre un repositorio de memoria.
+\end{itemize}
+
+\rjcimage{1.0}{imagenes/Diagrama-Clase-Bezel.png}{Diagrama de clase de la biblioteca
+  Bezel}{diagrama-clase}
+
+\subsubsection{Dependencias}
+
+En la implementación de \texttt{Bezel} se hace uso de las siguientes bibliotecas
+de apoyo:
+
+\begin{itemize}
+\item moneta: proporciona un API uniforme para realizar
+  operaciones de lectura y escritura en un repositorio de memoria.
+\item faraday: proporciona un API uniforme para realizar
+  peticiones HTTP.
+\item hashie: proporciona un conjunto de métodos que extienden la funcionalidad
+  de la clase \texttt{Hash} en Ruby.
+\item activemodel: proporciona interfaces para modelos que deben operar sobre
+  Rails.
+\end{itemize}
+
+\subsection{\texttt{Bezel}}
+
+El módulo \texttt{Bezel} no solo sirve como el espacio de nombres principal para la
+biblioteca, pues a su vez implementa varios métodos auxiliares para facilitar la
+configuración y creación de clientes para acceder al servicio web C3.
+
+\lstinputlisting[language=Ruby]{code/bezel.rb}
+
+En el código anterior se tiene la implementación abreviada de \texttt{Bezel},
+en la línea 2 por medio de \texttt{extend} se añaden varios métodos de clase
+para configurar la biblioteca. En las líneas 4-20 se definen los
+métodos auxiliares más importantes:
+
+\begin{itemize}
+\item \texttt{new} (líneas 5-7): regresa una nueva instancia \texttt{Bezel::Client}.
+\item \texttt{invoke} (líneas 9-11): realiza una petición al servicio web C3
+  por medio del cliente asociado al módulo \texttt{Bezel}.
+\item \texttt{client} (líneas 13-15): usando una variable de clase se inicializa o
+  reusa una instancia \texttt{Bezel::Client}. Este método permite reutilizar un
+  mismo cliente y conexión al servidor C3 evitando el costo de establecer un
+  nuevo cliente y en establecer una conexión HTTP con el servidor C3.
+\item \texttt{context} (líneas 17-19): permite cambiar el contexto de las
+  peticiones que se realizan dentro de un bloque, se regresa al contexto original
+  al finalizar de ejecutar el código dentro del bloque.
+\end{itemize}
+
+\subsubsection{\texttt{Bezel::Config}}
+
+El módulo \texttt{Bezel::Config} define los atributos que permiten configurar
+el comportamiento de la biblioteca y de los clientes que se obtienen por medio
+de ella. Este módulo se usa tanto en \texttt{Bezel} para definir una configuración
+global de la biblioteca como en \texttt{Bezel::Client} para tener también una
+configuración local por cliente.
+
+\lstinputlisting[language=Ruby]{code/config.rb}
+
+En el módulo \texttt{Config} se definen dos constantes:
+
+\begin{itemize}
+\item \texttt{VALID\_OPTIONS\_KEYS} (líneas 4-13): un arreglo de símbolos que indica
+  que atributos son válidos.
+\item \texttt{DEFAULT\_VALUES} (líneas 15-24): una tabla \textit{hash} donde se
+  indican los valores por defecto de los atributos válidos.
+\end{itemize}
+
+Haciendo uso del método \texttt{attr\_accessor} en la línea 26 se definen por cada
+símbolo en \texttt{VALID\_OPTIONS\_KEYS} un atributo de instancia con sus
+correspondientes métodos de acceso y escritura. El método \texttt{attr\_accessor} es
+un ejemplo del uso de metaprogramación en Ruby, dado que con base en el símbolo
+dado, se genera un atributo y sus métodos de acceso.
+
+En la línea 30 se tiene el método \texttt{extended} el cual es un \textit{callback}
+que es llamado cuando un módulo es extendido, es decir, es utilizado como parámetro
+al método \texttt{extend}. Para el módulo \texttt{Config} se tiene que cuando el
+módulo es extendido, como es en el caso de \texttt{Config} dentro del módulo
+\texttt{Bezel}, se llama al método \texttt{reset} para inicializar todos los
+atributos definidos en el módulo con sus valores por defecto.
+El método \texttt{extended} es solo uno de varios métodos \textit{callback} que
+proporciona Ruby para la metaprogramación.
+
+Otro método muy importante para la metaprogramación es \texttt{send} el cual es usado
+en la línea 35 para inicializar los atributos definidos por \texttt{Config}, el
+método \texttt{send} invoca el método identificado con un símbolo o cadena dada,
+pasando los argumentos posteriores como argumentos a la invocación del método.
+Haciendo uso de \texttt{send} y de las dos constantes definidas en el módulo
+se puede inicializar cada uno de los atributos.
+
+\subsection{\texttt{Bezel::Client}}
+
+La clase \texttt{Client} representa un cliente que permite realizar peticiones al
+servicio web C3, por medio del módulo \texttt{Config} se permite configurar
+cada cliente instanciado.
+
+\lstinputlisting[language=Ruby]{code/client.rb}
+
+En la línea 3 se tiene un \texttt{include} que añade las constantes
+y atributos para configurar al cliente. En las líneas 7-13 se define el método
+\texttt{conn} que inicializa una conexión HTTP según la configuración definida
+para el cliente y pidiendo que las respuestas mandadas por el servidor
+sean de tipo JSON.
+
+En las líneas 13-49 se tiene la implementación del método \texttt{invoke}, en
+la línea 14 se define un \textit{target} de tipo \texttt{Bezel::Target} usando
+tanto el contexto del cliente, es decir el \textit{tenant} y \textit{tag} mas
+la información del \textit{module} y \textit{type} proporcionados en los argumentos.
+En la línea 15 se define una acción de tipo \texttt{Bezel::Action} que representa
+una acción sobre un tipo con sus parámetros.
+
+En la línea 17 se define la URL a la cual se hará la petición al servicio web C3,
+haciendo uso de la información de los objetos previos, se convierte los parámetros
+de la acción al formato JSON para ser enviados en el cuerpo de la petición POST
+al servicio web.
+
+En las líneas 22 a 30 se definen los encabezados y cuerpo de la petición POST al
+servicio web. Finalmente en la línea 37 se realiza la petición POST por medio
+de la conexión creada por el método \texttt{conn} y con los parámetros definidos
+anteriormente.
+
+Posteriormente el resultado de la petición es almacenado en el objeto \texttt{action}
+y este objeto es regresado como resultado de la invocación del método
+\texttt{invoke}.
+
+\subsection{\texttt{Bezel::Base}}
+
+\texttt{Bezel::Base} es una clase abstracta la cual define la mayor parte de su
+funcionalidad en base al nombre de la clase que hereda de ella. Es decir no se hace
+uso directo de \texttt{Bezel::Base} si no que al heredar de esta clase abstracta
+se obtiene funcionalidad para crear modelos basados en tipos provenientes
+del servicio web C3.
+
+\lstinputlisting[language=Ruby]{code/base-example.rb}
+
+El código anterior ejemplifica el uso de \texttt{Bezel::Base} para definir el modelo
+por medio de herencia, en la línea 1 se define \texttt{Recommendation}. En la línea 2
+se tiene el método de clase \texttt{set\_c3\_type} que permite al modelo definir
+a que tipo del sistema web C3 está ligado, en este caso el modelo esta acotado al
+tipo de nombre \texttt{BuildingEnergyConservationOption}. En la línea 4 se define
+que el modelo tiene una asociación con el modelo \texttt{EnergyConservationOption}
+en forma única por medio del método \texttt{has\_one}.
+
+Ya definido el modelo en la línea 7 se hace la búsqueda de una recomendación mediante
+su identificador único por medio del método \texttt{find}. En la línea 8 se
+obtiene el costo total de la recomendación buscada anteriormente por medio de
+\texttt{totalCost}. Los métodos \texttt{set\_c3\_type}, \texttt{has\_one} y
+\texttt{find} son definidos por \texttt{Bezel::Base} pero el método
+\texttt{totalCost} es definido en tiempo de ejecución por medio de la
+metaprogramación.
+
+\subsubsection{Métodos de clase}
+
+Los métodos de clase que se definen en \texttt{Bezel::Base} son necesarios para
+definir métodos de configuración del modelo y para realizar operaciones
+de búsqueda sobre el modelo.
+
+\lstinputlisting[language=Ruby]{code/base-class-methods.rb}
+
+Los métodos principales son:
+\begin{itemize}
+\item \texttt{config\_option} (líneas 6-19): este método permite la definición
+  de nuevos atributos sobre el modelo en tiempo de ejecución por medio del uso
+  de método \texttt{define\_method} que permite crear métodos en tiempo
+  de ejecución, con este método y de \texttt{attr\_writer} se definen tanto
+  atributos de clase como de instancia. El método toma dos parámetros
+  el primero es el nombre de la configuración a crear y el segundo
+  es el valor por defecto de la configuración.
+\item \texttt{find} (línea 21): este método permite realizar búsquedas sobre
+  el modelo por medio de un identificador, también permite realizar búsquedas
+  más avanzadas por medio de parámetros como \texttt{filter}.
+\item \texttt{invoke} (líneas 25-27): este método permite realizar
+  un acción sobre el modelo, como se puede ver en la línea 26 se hace uso del
+  método \texttt{invoke} del módulo \texttt{Bezel} haciendo
+  uso del contexto del modelo, es decir, su módulo y tipo correspondiente.
+\item \texttt{inherited} (líneas 29-34): este método es parte de API de
+  metaprogramación de Ruby, el método es invocado cuando una subclase de
+  \texttt{Bezel::Base} es creada. La subclase es pasada como el parámetro
+  \texttt{klass} y por medio del método \texttt{config\_option} se definen
+  tres configuraciones:
+  \begin{itemize}
+  \item \texttt{c3\_type} (línea 30): define el tipo asociado al modelo
+    siendo el nombre de la subclase su valor por defecto.
+  \item \texttt{c3\_module} (línea 31): define el módulo asociado al modelo
+    siendo su valor por defecto el módulo \textquote{peat}.
+  \item \texttt{c3\_include} (línea 32): define si se hace una carga adelantada
+    de información de las asociaciones del modelo. El valor por defecto es que
+    no se haga ninguna carga adelantada.
+  \end{itemize}
+  Finalmente en la línea 33 se configura que el modelo por defecto no hace uso
+  de un repositorio de memoria.
+\item \texttt{c3\_cached} (líneas 36 a 42): este método permite indicar
+  que el modelo hace uso de un repositorio de memoria y las opciones de
+  configuración para éste. Para activar el repositorio de memoria es necesario
+  tener una instancia definida en \texttt{Bezel.cache}, si esto ocurre entonces
+  se hace un \texttt{include} del módulo \texttt{Bezel::CacheBase} (línea 38)
+  que agrega el uso y mantenimiento del repositorio de memoria a las acciones
+  básicas y de búsqueda del modelo.
+\end{itemize}
+
+\subsubsection{Métodos de instancia}
+
+Los métodos de clase que se definen en \texttt{Bezel::Base} son para
+inicializar un nuevo modelo, obtener la información sobre un atributo
+del modelo y las asociaciones con otros modelos
+
+Cabe recordar que el servicio web C3 hace uso del formato JSON en sus
+respuestas a las peticiones al servicio. El formato JSON realiza una serialización
+de objetos, arreglos, números, cadenas, booleanos, y \texttt{null} con base en la
+sintaxis de Javascript\footnote{La principal divergencia es en el manejo de la
+  codificación de las cadenas.}.
+
+En JSON los objetos son colecciones de llave-valor en donde la llave siempre
+es una cadena y el valor es alguno de los tipos básicos permitidos en JSON, esta
+estructura permite una biyección directa entre el formato JSON y tablas \textit{hash}
+en Ruby.
+
+\lstinputlisting[language=Ruby]{code/base-json.rb}
+
+En el código anterior tenemos una cadena con un objeto definido según el formato
+JSON en la línea 1. Haciendo uso de la biblioteca JSON en la línea 2 se parsea
+esta cadena y nos regresa una tabla \textit{hash} la cual contiene la información
+definida en la cadena JSON original.
+
+En Bezel se tiene que los atributos de los modelos obtenidos por medio del servicio
+web C3 son almacenados en una tabla \textit{hash} interna, permitiendo el acceso
+a la información de una forma más orientada a objetos por medio de atributos
+y métodos de acceso.
+
+\lstinputlisting[language=Ruby]{code/base-instance-methods.rb}
+
+En la mayoría de los lenguajes de programación que soportan el paradigma orientado
+a objetos se lanza una excepción cuando se llama un método que no está implementado
+por la clase del objeto o en la jerarquía de clases del objeto. En el caso de Ruby
+se lanza la excepción \texttt{NoMethodError} para indicar que no se encontró la
+implementación del método invocado sobre un objeto, sin embargo Ruby permite al
+programador manejar esta excepción por medio del método \texttt{method\_missing}
+permitiendo que un objeto pueda responder a una conjunto de mensajes en forma
+dinámica.
+
+\vspace{2.5mm}
+
+El método \texttt{method\_missing} es un método \texttt{callback} que recibe
+como argumentos:
+\begin{itemize}
+\item \textit{name}: el nombre del método sin implementar en el objeto
+\item \textit{*args}: un arreglo con los argumentos originales con los
+  que se llamó al método sin implementar.
+\end{itemize}
+
+Implementando el método \texttt{method\_missing} se permite
+que los modelos definidos usando \texttt{Bezel::Base} puedan responder
+de forma dinámicamente a mensajes para acceder a los atributos del modelo.
+
+\vspace{2.5mm}
+
+Los métodos principales son:
+\begin{itemize}
+\item \texttt{initialize} (líneas 8-12): este método es el constructor por defecto
+  en Ruby es invocado cuando se crea objeto nuevo. Los datos del modelo son obtenidos
+  por medio del parámetro \texttt{attributes} que es una tabla \textit{hash}
+\end{itemize}
+
+\begin{itemize}
+\item \texttt{load} (línea 14): este método permite el cargar en un objeto ya
+  existente nuevos valores de sus atributos.
+\item \texttt{method\_missing} (líneas 18-27): como se explicó anteriormente se hace
+  uso de este \textit{callback} para permitir el acceso de los atributos del modelo
+  en forma dinámica sin tener que definir explícitamente métodos de acceso para cada
+  atributo del modelo.
+  En la línea 21 se trata de ver si el nombre del método es una llave en la tabla
+  \textit{hash} de los atributos, si es así se regresa el valor contenido en la
+  tabla.
+  En la línea 23 se hace el mismo tipo de búsqueda pero se transforma el
+  nombre al estilo de tipografía \textit{lowerCamelCase}.
+  Si ninguna llave corresponde se regresa \texttt{nil}.
+\item \texttt{id} (líneas 29-31): como se puede observar el método regresa
+  el valor asociado a la llave \texttt{id} en la tabla de atributos del modelo
+  este método de acceso no es necesario dada la implementación utilizada
+  en \texttt{method\_missing} pero esta solución tiene sus costos en rendimiento
+  puesto que la invocación a un método es más eficiente que pasar por toda
+  la búsqueda de un método inexistente hasta llegar a la invocación del método
+  \texttt{method\_missing}.
+
+  En la implementación total de \texttt{method\_missing} se hace uso de
+  \texttt{define\_method} para crear un método de acceso de forma dinámica para
+  hacer mas eficiente el acceso posterior al atributo.
+  Así para varios atributos básicos como \texttt{id} se define una implementación
+  estática.
+\end{itemize}
+
+\subsubsection{\texttt{Bezel::Associations}}
+
+En el módulo \texttt{Bezel::Associations} se definen métodos para definir
+asociaciones entre modelos basados en \texttt{Bezel::Base}. Este módulo
+es agregado por medio \texttt{extend} por lo que son métodos de clase
+
+\lstinputlisting[language=Ruby]{code/base-associations-example.rb}
+
+En el código anterior se tiene la definición del modelo
+\texttt{EnergyConservationOption} el cual representa una característica del perfil
+de un edificio que está ligada a una recomendación. Para este modelo se definen
+dos asociaciones por medio del uso de los métodos \texttt{has\_one} y
+\texttt{has\_many}. La primera por medio de \texttt{has\_one} (línea 5) se define
+una relación uno a uno con el modelo \texttt{ProductCategory} que representa una
+categoría de un catálogo de productos. Y la segunda con el método \texttt{has\_many}
+(línea 6) se define una relación uno a muchos con el
+modelo \texttt{RecommendationFAQ}.
+
+En las líneas 10 y 11 se tiene el uso de los métodos \texttt{productCategory} y
+\texttt{faqs}, los cuales regresan los modelos asociados al modelo, éstos son creados
+dinámicamente por los métodos \texttt{has\_one} y \texttt{has\_many}.
+
+\lstinputlisting[language=Ruby]{code/associations.rb}
+
+En la implementación de ambos métodos se hace uso de dos métodos auxiliares
+\texttt{get\_model\_class} y \texttt{define\_assoc\_method}.
+En las líneas 7 y 11 se hace uso de \texttt{get\_model\_class} para obtener
+la clase del modelo con la que se está haciendo la asociación. Posteriormente en las
+líneas 8 y 13 se hace uso del método \texttt{define\_assoc\_method} para
+definir dinámicamente un método de instancia que realiza la recuperación
+y búsqueda de los modelos asociados.
+
+En las líneas 18-22 se tiene la implementación del método \texttt{get\_model\_class}
+donde se hace uso del método \texttt{constantize} que realiza la recuperación
+de una constante a partir de una cadena dada, en este caso para recuperar de
+una cadena una clase.
+
+En las líneas 24-43 se tiene la implementación del método
+\texttt{define\_assoc\_method} el cual hace uso del método \texttt{define\_method}
+para construir un método de instancia el cual se encarga de realizar la búsqueda de
+los objetos asociados al modelo.
+
+\subsubsection{\texttt{Bezel::Connections}}
+
+En el módulo \texttt{Bezel::Connections} se definen los métodos que permiten
+realizar las acciones básicas sobre el modelo. La implementación de este módulo
+sigue un patrón bastante común en el cual se definen métodos tanto de clase
+como de instancia en un mismo módulo.
+
+\lstinputlisting[language=Ruby]{code/connections.rb}
+
+En la línea 2 se tiene la implementación del método \texttt{included} que es un
+\textit{callback} que es invocado cuando el módulo \texttt{Connections} es
+utilizado en un \texttt{include}. En la línea 3 al incluirse el módulo en una
+clase o módulo \texttt{base} se agregan como métodos de clase los métodos
+definidos en el submódulo \texttt{ClassMethods}.
+
+Los métodos de clase más importantes son:
+\begin{itemize}
+\item \texttt{all} (líneas 7-16): este método realiza una búsqueda dentro del modelo.
+  En la línea 8 se toma en cuenta la configuración \texttt{c3\_include} para indicar
+  que modelos asociados se deben precargar en la búsqueda. En la línea 9 se realiza
+  la petición usando la acción \texttt{fetch} la cual permite hacer búsquedas
+  en el servicio web C3. En las líneas 11 a 15 se tiene la lógica necesaria para
+  manejar el resultado de la petición del servicio web C3, cabe señalar que el
+  resultado de la petición es un arreglo de tablas \texttt{hash}, cada tabla es usada
+  para crear un nuevo modelo (línea 14) para regresar finalmente un arreglo de
+  modelos como espera el programador.
+\item \texttt{one} (líneas 18-22): este método realiza una búsqueda la cual
+  regresa solamente el primer objeto que cumpla el criterio de búsqueda. En la
+  peticion al servicio web se hace uso de la acción \texttt{fetch} (línea 20).
+\item \texttt{upsert} (líneas 24-28): este método maneja tanto la creación como la
+  actualización de modelos, espera como argumento una tabla \textit{hash} con los
+  atributos del modelo a crear o actualizar. La acción \texttt{upsert} es usada
+  para realizar la petición al servicio web (línea 26).
+\end{itemize}
+
+Aunque el método de clase \texttt{upsert} permite al programador el crear o
+actualizar los modelos se definen métodos de instancia para facilitar cada
+caso de uso específico.
+
+\begin{itemize}
+\item \texttt{save}: este método de instancia hace uso de \texttt{upsert}
+  y de la representación \textit{hash} del modelo (\texttt{to\_hash}) para
+  guardar el modelo en el servicio web C3.
+\item \texttt{update}: este método de instancia realiza la actualización del modelo
+  siendo más eficiente en tiempo de ejecución, ya que solo se actualizan
+  los atributos que han sido cambiados.
+\item \texttt{destroy}: este método elimina el modelo por medio de la acción
+  \texttt{remove} (línea 44).
+\end{itemize}
+
+\subsubsection{\texttt{Bezel::CacheBase}}
+
+El módulo \texttt{Bezel::CacheBase} mejora los métodos definidos en
+\texttt{Connections} permitiendo que las acciones básicas y de búsqueda hagan uso
+de un repositorio de memoria (\texttt{Bezel::Cache}).
+
+El módulo sigue el mismo patrón de agrupación de los métodos de clase en el submódulo
+\texttt{ClassMethods} así como los métodos de instancia en el módulo principal,
+haciendo uso del método \textit{callback} \texttt{included} para agregar los métodos
+de clase.
+
+\lstinputlisting[language=Ruby]{code/cache_base.rb}
+
+\pagebreak
+En las líneas 9-11 se inicializa el repositorio de memoria con una instancia de
+\texttt{Bezel::Cache} si es necesario.
+
+En las líneas 13-27 se agregan métodos auxiliares de clase para operaciones de
+lectura, escritura y borrado de modelos en el repositorio de memoria.
+
+En las líneas 29-43 se tiene la implementación del método \texttt{all} haciendo
+uso del método \texttt{cache\_read} (línea 31) para obtener los modelos por medio
+del repositorio de memoria, si los modelos no se encuentren en el repositorio se
+llama a \texttt{super} (línea 36) que ejecuta la implementación del método
+\texttt{all} definido en \texttt{Bezel::Connections} el cual realiza una petición
+al servicio web C3. El resultado de la petición es almacenado en el repositorio de
+memoria por medio del método \texttt{cache\_write} (líneas 37 y 39).
+
+Los métodos \texttt{one}, \texttt{save}, \texttt{update} y \texttt{destroy} siguen
+el mismo patrón de implementación visto en el método \texttt{all}, es decir,
+se realiza alguna operación en el repositorio de memoria y opcionalmente se delega
+la ejecución de la petición a la implementación del método definida en
+\texttt{Bezel::Connections} por medio de \texttt{super}.
+
+El método auxiliar \texttt{key\_for} es usado para construir las llaves usadas para
+almacenar los modelos en el repositorio de memoria, la generación de la llave
+depende del tipo de repositorio seleccionado para el modelo.
+
+\subsection{\texttt{Bezel::Cache}}
+
+La clase \texttt{Cache} representa un repositorio de memoria y las operaciones
+para manipularlo directamente. Esta clase es usada principalmente por
+\texttt{Bezel::CacheBase} para almacenar las respuestas a peticiones realizadas
+al servicio web C3.
+
+Se tienen dos tipos de repositorio de memoria:
+\begin{itemize}
+\item \textit{shared}: en este repositorio se almacenan valores que son utilizados
+  globalmente en el sistema.
+\item \textit{local}: en este repositorio se almacenan valores específicos a un
+  usuario. Se usa el elemento de autenticación (\textit{auth\_token}) del usuario
+  para generar las llaves para el repositorio de memoria local.
+\end{itemize}
+
+\lstinputlisting[language=Ruby]{code/cache.rb}
+
+En las líneas 2-14 se tiene el constructor para la clase el cual dependiendo de
+los parámetros de configuración hace uso del adaptador corrector para inicializar
+el repositorio de memoria. Por medio de la biblioteca \texttt{Moneta} se logra
+definir un API uniforme para manipular un repositorio de memoria teniendo como
+\texttt{backend} una gran cantidad de repositorios de tipo llave-valor\footnote{
+  Moneta tiene adaptadores para Memcached, Redis, Cassandra, Berkeley DB, MongoDB,
+  etcétera.}.
+En las líneas 18-20 se tiene la implementación del método \texttt{read} que permite
+recuperar un valor del repositorio de memoria dada una llave y el tipo de
+repositorio.
+En la líneas 22-28 se tiene la implementación del método \texttt{write} que permite
+asociar una llave con un valor en el repositorio de memoria.
+
+Esta clase se implemento para abstraer el uso de un repositorio de memoria y no
+acoplar las operaciones de repositorio de memoria a una sola biblioteca como
+\texttt{Moneta} o a un repositorio llave-valor en particular como
+\texttt{Memcached} dando flexibilidad de cambiar de biblioteca o repositorio.
+
+En este capítulo se analizaron las diferentes decisiones de arquitectura y diseño que
+se tomaron para satisfacer los requerimientos del sistema \texttt{PEAT}.
+Se vio con detalle la implementación de los casos de uso del sistema poniendo énfasis
+en la implementación de la interfaz de usuario y la biblioteca \texttt{Bezel}.
+También se mostró el efecto de las pruebas con usuarios durante la implementación de
+la interfaz, donde se observó la necesidad de simplificar principalmente la creación
+del perfil de edificio.
+En la implementación de \texttt{Bezel} se mostraron los beneficios de la
+metaprogramación para la rápida implementación de modelos basados
+en recursos provenientes de servicios web de tipo RESTful.

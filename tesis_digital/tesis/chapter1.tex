@@ -1,0 +1,259 @@
+\chapter{Situación original}
+
+En este capitulo se describe el contexto que dio pie al desarrollo del sistema
+\texttt{PEAT}, con una descripción de la arquitectura y sistemas ya existentes
+en la compañía C3 Energy, los cuales sirvieron como punto de partida para la
+implementación del sistema \texttt{PEAT}.
+
+\section{Contexto}
+De 2000 a 2002 se tuvo una crisis energética en el estado de California en los
+Estados Unidos de América, esta crisis provocó que el gobierno del estado empezara a
+tomar decisiones de largo plazo acerca de su estrategia energética. En los años
+subsecuentes se aprobaron nuevas leyes para incentivar el uso de energía renovable,
+la producción de energía, entre otros.
+
+Para el 2010 se aprobó una nueva legislación que permitía un nuevo esquema
+de cobro a las empresas generadoras de electricidad. Este nuevo esquema
+llamado hora de consumo (\textit{time-of-use}, \texttt{TOU}) define que las
+tasas de cobro varíen en función de la temporada y la hora del día en que
+se usa la energía eléctrica, en contraste con las tasas fijas tradicionales.
+
+\vspace{2.5mm}
+
+En un esquema \texttt{TOU} se definen tres tarifas y sus zonas de tiempo asociadas
+\cite{16_pge_time_of_use_2015}:
+
+\begin{itemize}
+\item  Demanda baja: es la tarifa más baja, se aplica durante las horas de la
+  mañana, en la noche y los fines de semana.
+\item Demanda mediana: es la tarifa intermedia, se aplica durante las horas de
+  10 am a 1pm y de 7 pm a 9 pm.
+\item Demanda alta: es la tarifa más cara, se aplica durante las horas de
+  1 pm a 7 pm.
+\end{itemize}
+
+El objetivo de un esquema \texttt{TOU} es el distribuir la carga de la red
+eléctrica, alentando a los usuarios a cambiar su consumo durante períodos
+de demanda alta a períodos de demanda baja, al bajar la demanda en los períodos
+de demanda alta provoca que se reduzcan los costos de generación de energía de
+forma general.
+
+Un esquema \texttt{TOU} es solo posible con la llegada de los medidores
+inteligentes, a diferencia de los analógicos los medidores inteligentes
+son capaces de medir el consumo de electricidad de forma instantánea,
+de distinguir y facturar el consumo de electricidad según el momento en que se
+esta realizando el consumo. Desde inicios del 2010 Pacific Gas and
+Electric Company (PG\&E) empezó la instalación de medidores inteligentes
+en su territorio, por lo que para inicios del 2012 ya casi había
+completado la transición.
+
+La fecha de arranque de la nueva legislación fue durante el mes de noviembre
+del 2012, mes en el cual las empresas como PG\&E podían iniciar la transición
+a un esquema \texttt{TOU} de sus usuarios PyMES.
+Una parte vital que permitió la transición fue que la empresa PG\&E brindará
+herramientas para que el usuario final pudiera analizar sus gastos de energía
+y así tomar decisiones sobre su consumo de energía según las nuevas tarifas
+y su historial de consumo.
+
+Dada la situación descrita anteriormente es que nace el sistema
+\textit{Progressive Energy Audit Tool} \ (PEAT) para solventar la necesidad
+de información del usuario final sobre sus gastos de energía en una forma detallada.
+La licitación para la implementación del sistema \texttt{PEAT} fue puesta
+a concurso por parte de PG\&E siendo la compañía C3 Energy la ganadora de dicha
+licitación  ya que contaba con la infraestructura necesaria para el
+procesamiento de una gran cantidad de datos de consumo de energía,
+además contaba con un sistema de monitoreo de consumo de energía enfocado
+a empresas de nivel multinacional. El reto era pasar de un sistema y procesos
+diseñados para una docena de clientes, a un sistema que diera servicio a
+cientos de miles de clientes PyMES.
+
+Para el funcionamiento del sistema PEAT es necesario contar con una cantidad
+considerable de información del consumo de energía del usuario por lo que
+el sistema esta enfocado a PyMES que cuenten con medidores inteligentes y
+con un historial de consumo de por lo menos un año.
+
+\section{Arquitectura previa}
+En C3 Energy ya se contaba con toda una infraestructura para el
+procesamiento y análisis en tiempo real de datos de consumo eléctrico
+y de gas.
+
+\vspace{2.5mm}
+
+El sistema consta de cuatro capas:
+
+\begin{itemize}
+\item Una capa de almacenamiento de información que era de referencia
+  o datos ya procesados
+\item Una capa de análisis en las que se hacía el análisis de los datos
+  y que también tomaba el rol de la capa de caché.
+\item Una capa de servicios web que permitía acceder a los datos contenidos
+  en las capas anteriores.
+\item Una capa en donde se encuentran los sistemas que hacen uso de los
+  servicios web para dar información al usuario final.
+\end{itemize}
+
+\subsection{Bases de datos}
+Las dos primeras capas almacenan y analizan la información obtenida
+de un gran número de bases de datos externas relacionadas con temas
+de energía. Todos estos datos son concentrados en una base de datos
+central en la que se usaba Oracle Database 10g\footnote{Es un sistema de
+  gestión de base de datos de tipo objeto-relacional desarrollado por Oracle.}
+para este rol.
+
+También se contaba con un \textit{cluster} de Apache Cassandra\footnote{Es
+  una base de datos de tipo NoSQL distribuida, basada en un modelo de
+  almacenamiento llave-valor, es desarrollada por Apache Software
+  Foundation \cite{19_apache_cassandra}.} el cual era usado para realizar
+el análisis en tiempo real de los datos, además de servir como capa
+de caché para los datos mas solicitados en el sistema.
+
+\subsection{Servidor y API}
+Sobre la base de datos anterior se tenía un API\footnote{
+  \textit{Application Programming Interface} es el conjunto de procedimientos
+  que ofrece una biblioteca para ser utilizado por otro
+  software \cite{3_sommerville_2011}.}
+la cual permitía el hacer consultas y operaciones sobre los datos contenidos
+y/o analizados en este sistema.
+Este API estaba implementado en Javascript bajo Rhino\footnote{Un intérprete
+  de Javascript de código abierto desarrollado en Java \cite{20_mozilla_rhino}.}
+mismo que se ejecuta bajo la máquina virtual de Java (\textit{Java Virtual Machine},
+JVM), obteniendo como ventaja principal el poder realizar la implementación
+de rutinas críticas en un lenguaje con mejor rendimiento como lo es Java.
+De esta forma se tenía el núcleo del servidor implementado en Java con el
+resto del API implementada en Javascript.
+
+\subsection{Sistemas en producción}
+Los sistemas existentes hasta ese momento (2012) para varias empresas multinacionales
+eran del tipo SPA (\textit{Single Page Application}) los cuales son conocidos como
+sistemas web que tienen el fin de dar una experiencia de usuario similar a la
+de una aplicación de escritorio \cite{21_mikowski_powell}.
+
+Estos sistemas fueron implementados haciendo uso del marco de trabajo desarrollado
+dentro de la compañía usando Javascript. Se tenía una gran jerarquía de clases
+la cual era compartida tanto con el servidor como con el cliente, obteniendo una
+sola fuente de la descripción de las clases y objetos del sistema.
+
+Se utilizaba el marco de trabajo Ext JS, enfocado a construir sistemas SPA
+en Javascript, usado principalmente por la facilidad para generar
+todo tipo de gráficas rápidamente y de esta forma mostrar una gran cantidad
+de información al usuario.
+
+Por lo descrito en los párrafos anteriores podemos decir que tanto en el
+\textit{frontend} como en el \textit{backend} hacían uso del lenguaje
+de programación Javascript principalmente con un núcleo de Java para las partes
+que requerían un rendimiento óptimo con el fin de manejar peticiones concurrentes,
+por lo que las ventajas al usarlo son:
+
+\begin{itemize}
+\item Reducir al mínimo el cambio de contexto de lenguajes entre
+  el \textit{frontend} y el \textit{backend}.
+\item Reducir sustancialmente la cantidad de código redundante al no
+  tener que reimplementar la jerarquía de objetos, que era enviada
+  por el servidor en formato JSON e interpretada por el cliente.
+\item Existía una única representación de una clase\footnote{En Javascript
+  (ECMAScript 5) no hay clases pero dentro del marco de trabajo interno se definen
+  por medio de funciones de construcción y herencia de prototipo.} por ejemplo la
+  clase \textit{Building} era una clase de Javascript que se usaba
+  tanto en el servidor como en el cliente.
+\end{itemize}
+
+\section{Propuesta de desarrollo}
+La primera propuesta para el desarrollo de \texttt{PEAT} consistía
+en implementar una aplicación de tipo SPA (como los otros sistemas
+existentes dentro de C3 Energy), es decir, desarrollar un cliente
+de Javascript que hiciera uso del API y jerarquía de objetos
+ya existente (con ciertas adicciones y modificaciones).
+Los primeros prototipos presentaban varios problemas bajo este esquema:
+
+\begin{itemize}
+\item El tiempo para realizar la precarga de todos los módulos y
+  objetos dados por el API en el cliente tomaba un tiempo
+  considerable (5+ segundos). Los sistemas anteriores eran usados
+  por un número reducido de personas autorizadas, que hacían uso
+  extensivo del sistema en sesiones de larga duración, por lo
+  que este tiempo de arranque era tolerable.
+\item El tipo de interfases y la experiencia de usuario que se obtenían
+  usando Ext JS eran excelentes en ese contexto, pues mostraban una gran
+  cantidad de información al usuario, por otro lado en \texttt{PEAT}
+  el volumen de información era menor y el aspecto de mayor relevancia
+  era el mostrar al usuario dicha información de manera más fluída y rápida.
+\end{itemize}
+
+Para solucionar los problemas antes mencionados, se tomó la decisión de
+usar otro tipo de herramientas para construir aplicaciones finales al usuario,
+que permitieran reusar todo el API y la jerarquía de objetos implementados
+hasta ese momento.
+
+Después de desarrollar varios prototipos con diferentes tecnologías se decidió
+usar el lenguaje de programación Ruby y el marco de trabajo Ruby on Rails (Rails),
+las razones principales fueron:
+
+\begin{itemize}
+\item Ruby tiene un gran soporte para la metaprogramación, es decir, para la
+  creación de clases y sus atributos ``al vuelo'', lo cual es de vital
+  importancia para lograr una buena integración con la jerarquía de clases
+  ya definida en el \textit{backend}.
+\item Ruby tiene una gran capacidad para implementar lenguajes de dominio
+  específico (\textit{Domain Specific Language}, DSL), los cuales son lenguajes
+  diseñados para solucionar problemas de un dominio en particular, característica
+  que será usada para lograr la integración con el \textit{backend}
+  y la automatización del despliegue de la aplicación.
+\item Gran integración con una gran cantidad de herramientas y bibliotecas para
+  desarrollar, diseñar e implementar interfases de usuario.
+\item Gran soporte para realizar extensas pruebas unitarias, funcionales
+  y de integración, por medio de bibliotecas como \textit{RSpec}, \textit{Cucumber},
+  \textit{Capybara}, etcétera.
+\end{itemize}
+
+En el proyecto de implementación del sistema \texttt{PEAT}
+cuenta con tres partes principales de desarrollo:
+(a) el \textit{backend} (Figura 1.1 - A) implementado en su mayoría usando
+Javascript, con un núcleo escrito en Java, (b) \texttt{Bezel} (Figura 1.1 - B)
+una biblioteca en Ruby que permite la interacción del \textit{backend}
+con el servidor de \texttt{PEAT} y (c) el \textit{frontend} (Figura 1.1 - C) escrito
+también con Ruby haciendo uso del marco de trabajo Ruby on Rails (Rails).
+
+\jcimage{1.0}{imagenes/Arquitectura-PEAT.png}{Esquema de alto nivel de la arquitectura para el sistema \texttt{PEAT}}
+
+\pagebreak
+
+El \textit{frontend} está implementado por medio del marco de trabajo
+Rails, haciendo uso de la biblioteca \textit{Backbone}
+para dar estructura a los módulos de Javascript que se utilizan en la vista.
+Para las gráficas y manejo de datos se seguirá haciendo uso de Ext JS
+por su gran facilidad para implementar cualquier tipo de gráficas.
+
+El servidor de Rails recibe las peticiones de la interfaz web y
+coordina las peticiones necesarias al \textit{backend}. El trabajo
+de la realización de las peticiones a los servicios web ya existentes para la
+creación de clases y objetos en Ruby basados en la jerarquía de clases
+definida en Javascript es realizada por la biblioteca \texttt{Bezel},
+la cual es implementada en su totalidad.
+
+Aunque en la parte del \textit{backend} tiene un sistema de procesamiento
+y análisis de datos, es necesario diseñar e implementar dos nuevos componentes
+en éste. El primero es el módulo de recomendaciones (\textit{Recommendations API}),
+el cual según las respuestas obtenidas por el usuario se utilizan para generar
+recomendaciones hechas a la medida del contexto de operación de cada usuario.
+El segundo módulo es el de desagregación (\textit{Disaggregation API}) que toma los
+datos de consumo del usuario y usando aprendizaje de máquina separa dicho consumo
+en sus diferentes partes.
+
+Para acelerar el desarrollo del sistema se implementó el \textit{frontend}
+y el \textit{backend} en forma concurrente y dado que una parte significativa
+estaría en desarrollo, se optó por usar datos estáticos contenidos
+en una base de datos como PostgreSQL, mientras se esperaba la implementación
+de los nuevos componentes del \textit{backend} y de la implementación de la
+biblioteca \texttt{Bezel}.
+
+Dado que al principio el \textit{frontend} haría uso de un \textit{backend}
+provisional con datos estáticos, al hacer el cambio al \textit{backend} final
+se tendrían varias incompatibilidades, para acelerar este proceso de integración
+se propuso el uso de un conjunto de pruebas de integración utilizadas
+principalmente para asegurar que la transición fuera exitosa y con la menor
+cantidad de errores.
+
+Como se puede ver en este capitulo el sistema \texttt{PEAT} no solo es parte de
+un conjunto ya existente de sistemas en operación si no que hace uso de estos
+sistemas para dar un servicio de suma importancia a una audiencia de tamaño
+considerable.

@@ -15,6 +15,6 @@ Karla
 
 3. Datos de la tesis
 Diseño e implementación del sistema PEAT (Progressive Energy Audit Tool)
-100 p.
+104 p.
 2016
 

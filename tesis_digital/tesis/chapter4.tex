@@ -1,0 +1,669 @@
+\chapter{Despliegue del sistema}
+
+El despliegue de un sistema es una etapa de creciente importancia dado que los
+sistemas actuales van requiriendo más servicios y subsistemas de apoyo para
+su funcionamiento. En la actualidad para garantizar un servicio estable para
+un gran número de usuarios es necesario contar con repositorios de memoria,
+balanceadores de carga, servidores de cola, etcétera. Esta creciente complejidad
+incrementa los riesgos para lograr un despliegue a producción exitoso.
+
+En este contexto se encuentra \texttt{PEAT} puesto que uno de sus requerimientos
+principales es dar soporte a por lo menos mil usuarios concurrentes, en este
+capítulo se describe la arquitectura del ambiente de producción, el proceso
+de despliegue continuo para el despliegue del sistema \texttt{PEAT} en los
+ambientes de prueba y producción, así como las optimizaciones realizadas
+tanto al sistema como a la arquitectura de los ambientes para permitir un mayor
+rendimiento posible.
+
+\section{Arquitectura del ambiente de producción}
+\label{sec:production}
+
+Para el despliegue de los ambientes requeridos para \texttt{PEAT} se hizo uso de
+\textit{Amazon Web Services} (AWS) en particular del servicio
+\textit{Amazon Elastic Compute Cloud} (EC2) que permite la renta de servidores
+para correr aplicaciones.
+
+El uso de EC2 presentaba las siguientes ventajas:
+\begin{itemize}
+\item Permite un gran márgen de maniobra en la configuración de los servidores
+  puesto que permite elegir entre una gran variedad de sistema operativos,
+  capacidad de cómputo, etcétera.
+\item Permite la creación y configuración automatizada de los servidores
+  permitiendo que el sistema pueda escalar rápidamente según las necesidades
+  de cómputo.
+\item Una comunicación más rápida y segura con el \texttt{backend} dado que el
+  servidor C3 se ejecuta también bajo servidores EC2.
+\end{itemize}
+
+\rjcimage{1.0}{imagenes/Ambiente-Produccion.png}{Arquitectura ambiente de producción.}{produccion}
+
+Se hizo uso de los siguientes tipos de nodos:
+\begin{itemize}
+\item M3: estos nodos cuentan con 2 CPU virtuales, 3.75 GB de memoria y
+  410 GB de almacenamiento HDD.
+\item M4: estos nodos cuentan con 4 CPU virtuales, 15 GB de memoria y
+  850 GB de almacenamiento HDD.
+\end{itemize}
+
+Cada CPU virtual proporciona la capacidad de cómputo equivalente a un CPU
+Xeon de 1.2 GHz del 2007.
+
+\vspace{2.5mm}
+
+El ambiente de producción tiene los siguientes componentes (Ver Figura \ref{fig:produccion}):
+\begin{itemize}
+\item Balanceadores de carga: AWS tiene el servicio \textit{Elastic Load Balancing}
+  (ELB) el cual permite obtener niveles altos de tolerancia al distribuir el tráfico
+  de forma automática entre varias instancias EC2 las cuales se encuentran en
+  varias zonas de disponibilidad\footnote{Zonas que se encuentran en
+    ubicaciones físicas distintas que cuentan con su propia infraestructura,
+    independiente y físicamente distinta.} (Ver Figura \ref{fig:produccion} ELB).
+\item Nodos EC2: son servidores con capacidades de cómputo que pueden ser
+  activadas en cuestión de minutos. Para el sistema \texttt{PEAT} se usan seis
+  instancias del tipo M3. Para el servidor C3 se usan cuatro instancias de
+  tipo M4 (Ver Figura \ref{fig:produccion} M3 y M4).
+\item Oracle BD: base de datos usada para almacenar la información usada
+  por el servidor C3 es administrada por una base de datos Oracle Database 10g
+  (Ver Figura \ref{fig:produccion} Oracle). Se tienen cuatro nodos por medio del
+  servicio \textit{Amazon RDS for Oracle Database} los cuales cuentan con
+  16 CPU virtuales y 64 GB de memoria.
+\item Apache Cassandra: un \textit{cluster} de diez nodos de tipo M4 ejecutando
+  Apache Cassandra el cual tiene las siguiente funciones (Ver Figura
+  \ref{fig:produccion} Cassandra):
+  \begin{itemize}
+  \item Recopilar y analizar grandes volúmenes de datos en secuencia, como el
+    historial de consumo de energía obtenido por los medidores inteligentes\footnote{
+      Al escribir datos en Cassandra, éstos se ordenan y se guardan en forma secuencial
+      en disco, por lo que para recuperar los datos solo se necesita
+      de la clave de fila y un rango, logrando un patrón de acceso rápido y eficiente
+      \cite{33_time_series}}.
+  \item Como capa de repositorio de memoria del servidor C3.
+  \end{itemize}
+\end{itemize}
+
+Se pude observar en la figura \ref{fig:produccion} dos zonas de disponibilidad
+esto permite tener una mayor redundancia al no tener un único punto de error.
+
+Se tienen dos balanceadores de carga el primero dirige las peticiones de los
+usuarios a una instancia EC2 que corre instancias del sistema \texttt{PEAT},
+el segundo balanceador de carga es usado para distribuir la carga de peticiones
+al servidor C3 por parte de todas las instancias \texttt{PEAT}.
+
+\subsection{Phusion Passenger y Nginx}
+
+Para el funcionamiento de \texttt{PEAT} es necesario tener tanto un servidor web
+como un servidor de aplicación.
+Para \texttt{PEAT} se eligió utilizar Phusion Passenger como servidor de aplicación
+por las siguientes razones:
+
+\begin{itemize}
+\item Gran soporte para sistemas implementados con Ruby.
+\item Crea y apaga instancias del sistema según la demanda, lo que permite tener
+  buen rendimiento cuando se tiene mucha demanda pero conservando recursos cuando
+  sea posible.
+\item Reduce el uso de memoria para el sistema, por medio de técnicas como
+  la precarga de aplicación y usando la gestión de memoria de copia en escritura
+  (\textit{copy-on-write}, COW).
+\item Hace uso de todos los núcleos de CPU disponibles para el sistema.
+\end{itemize}
+
+Phusion Passenger permite la integración con los servidores web Apache o Nginx,
+haciendo que estos se encarguen tanto del manejo de archivos estáticos
+\footnote{Imágenes, hojas de estilo, código Javascript, etcétera} como de distribuir
+la carga de peticiones entrantes.
+
+Se eligió integrar Nginx como servidor web por dos razones (1) su configuración es
+mucho más simple que en Apache y (2) permite fácilmente agregar encabezados a las
+peticiones entrantes sin afectar el rendimiento del sistema lo que permitió un
+análisis más profundo de las peticiones procesadas por el sistema \texttt{PEAT}.
+
+De esta forma tenemos que en cada instancia M3 se tiene los
+siguientes componentes (Ver Figura \ref{fig:passenger}):
+\begin{itemize}
+\item Nginx: proporciona los archivos estáticos del sistema y es también el
+  balanceador de carga de las instancias (Ver Figura \ref{fig:passenger} Nginx).
+\item \textit{Preloader}: es un proceso que carga todo el sistema \texttt{PEAT},
+  este proceso es copiado para obtener las instancias \texttt{PEAT} que manejan las
+  peticiones (Ver Figura \ref{fig:passenger} Nginx Preloader).
+\item Instancias \texttt{PEAT}: son instancias del sistema \texttt{PEAT} obtenidos
+  por medio de \textit{Preloader} el número mínimo de instancias se fijo en diez
+  teniéndose la capacidad de crear hasta veinte instancias en forma automática.
+\end{itemize}
+
+\rjcimage{1.0}{imagenes/PEAT-EC2.png}{Arquitectura ambiente de producción.}{passenger}
+
+Como se ve en la Figura \ref{fig:passenger} el servidor Nginx recibe una petición
+por parte del balanceador de carga para \texttt{PEAT}, dependiendo de la carga
+en las instancias \texttt{PEAT} la petición se manda a una instancia \texttt{PEAT}
+libre o es puesta en una cola de espera. Passenger detecta si la carga va aumentando
+y determina automáticamente si es necesario crear nuevas instancias del sistema
+\texttt{PEAT} por medio del proceso \texttt{Preloader}.
+
+Aunque en la Figura \ref{fig:passenger} se tienen cinco instancias \texttt{PEAT}
+ejecutándose en producción se tienen por lo menos diez instancias ejecutándose en
+todo momento con la posibilidad de crearse hasta 20 instancias al tenerse más
+tráfico.
+
+Mediante varias pruebas de carga se determinó que el sistema debía manejar picos
+de demanda de hasta 30,000 peticiones por minuto para dar soporte al menos
+1,000 usuarios concurrentes. Cada instancia PEAT es capaz de procesar hasta
+300 peticiones por minuto por lo que cada servidor M3 procesa entre
+3,000 a 6,000 peticiones por minuto. Para el ambiente de producción se determinó
+usar seis servidores M3 por lo que la capacidad base es de 18,000
+peticiones por minuto pero con capacidad de crecer con la demanda hasta
+36,000 peticiones por minuto.
+
+Los ambientes de prueba tenían la misma estructura solo cambiando el número
+de servidores según las necesidades y pruebas a realizar.
+
+\subsection{Inicialización e invalidación del repositorio de memoria}
+
+Uno de los principales cuellos de botella encontrados durante el desarrollo
+del sistema \texttt{PEAT} fue la gran cantidad de peticiones realizadas al
+servicio web. Para reducir el número de peticiones se determinó que un gran
+número de éstas se podían evitar teniendo un repositorio de memoria de los modelos
+que solo pueden ser modificados por el administrador de sistema \texttt{PEAT}
+y que además son actualizados cada seis meses. 
+
+Los modelos que se pueden considerar que contienen información estática son:
+\begin{itemize}
+\item \textit{BuildingQuestion}: este modelo representa una pregunta sobre
+  el perfil de un edifico, se tienen 45 preguntas por tipo de edificio, en
+  total se tienen 500 preguntas.
+\item \textit{Recommendation}: este modelo representa una recomendación
+  con todos su información de costo, beneficios, etcétera. Se inicio con un
+  total de cien recomendaciones.
+\item \textit{ValidAnswer}: las respuestas válidas para una pregunta, dado
+  que la mayoría de las preguntas tiene cuatro posibles respuestas se tiene
+  un estimado de dos mil respuestas en el sistema.
+\end{itemize}
+
+Se determinó que la mejor solución fue que al iniciar el sistema \texttt{PEAT}
+se precargara el repositorio de memoria con la información de los modelos descritos
+anteriormente por medio del servicio web C3. De esta forma se redujo el número de
+peticiones de forma substancial pero teniendo el inconveniente de un incremento
+en el tiempo de inicialización de una instancia del sistema \texttt{PEAT}.
+
+Para minimizar el impacto de un mayor tiempo de inicialización se hizo uso de las
+características de precarga y de gestión de memoria de copia en escritura
+(\textit{copy-on-write}, COW) proporcionados por Phusion Passenger. Al iniciar
+Phusion Passenger se inicia el proceso \texttt{Preloader} que realiza la
+inicialización del sistema \texttt{PEAT} y la precarga de modelos en el
+repositorio de memoria.
+
+En la Figura \ref{fig:cache} se puede ver que por medio de \textit{Preloader}
+se comparte en memoria el código del marco de trabajo Rails, el código del sistema
+\texttt{PEAT} y el repositorio de memoria de los modelos descritos anteriormente.
+Cada instancia solo usa memoria para sus propios objetos utilizados para manejar las
+peticiones entrantes.
+
+De esta manera al iniciar una nueva instancia del sistema se realiza una copia del
+proceso \textit{Preloader} el cual contiene los modelos precargados en el
+repositorio de memoria por lo que la inicialización de nuevas instancias es casi
+instantánea.
+
+\rjcimage{0.8}{imagenes/Passenger-Cache.png}{Diagrama de la memoria compartida entre
+  \textit{Preloader} y las instancias \texttt{PEAT}.}{cache}
+
+Para la invalidación del repositorio de memoria de los modelos se tenia una acción
+para el administrador del sistema que permite limpiar el repositorio de memoria y
+actualizar los modelos por medio del servicio web C3.
+
+% Https://aws.amazon.com/es/ec2/instance-types/ EC2
+% https://aws.amazon.com/es/ec2/faqs/
+
+
+\section{Despliegue continuo}
+
+El despliegue continuo (\textit{Continuous Delivery}, CD) es una buena práctica de
+software en la cual se implementa software de tal forma de que éste pueda ser
+desplegado a producción en cualquier momento\cite{27_martin_fowler_cd}. Su objetivo
+es crear, probar y liberar software más rápido y con mayor frecuencia.
+
+\vspace{2.5mm}
+
+Se considera que un sistema implementa el despliegue continuo cuando
+\cite{27_martin_fowler_cd}:
+\begin{itemize}
+\item El sistema puede ser desplegado a producción en cualquier momento del
+  ciclo de desarrollo.
+\item Se tiene una rápida retroalimentación sobre la capacidad del sistema
+  para ser desplegado en producción al realizarse cambios en el sistema.
+\item Se puede desplegar de forma sencilla cualquier versión del software para
+  cualquier entorno.
+\end{itemize}
+
+Los principales beneficios de esta práctica son:
+\begin{itemize}
+\item Reducción del riesgo de despliegue: dado que se realizan despliegues
+  a producción de forma recurrente los cambios contenidos en cada despliegue
+  son menores por lo que hay menores posibilidades de errores y si un error
+  se presenta es más fácil de localizar y arreglar.
+\item Retroalimentación del usuario: uno de los mayores riesgos en la ingeniería
+  del software es el desarrollar un sistema que no es útil para el cliente o usuario.
+  Por lo tanto obtener retroalimentación sobre el desarrollo del sistema de forma
+  rápida y frecuente permite evaluar que tan útil es el sistema para el usuario.
+\end{itemize}
+
+En \texttt{PEAT} los riesgos asociados al despliegue de producción exitoso
+eran mayores a lo habitual, dada la complejidad del sistema y la cantidad
+de requerimientos. Además PG\&E requería el despliegue del sistema en ambientes
+de pruebas previo a un despliegue del sistema en el ambiente de producción.
+La implementación de un proceso de despliegue continuo para \texttt{PEAT} fue de
+vital importancia para cumplir con las necesidades del cliente.
+
+\vspace{2.5mm}
+
+Para PG\&E era necesario que se tuvieran los siguientes ambientes:
+\begin{itemize}
+\item \textit{peattest}: este ambiente es usado para hacer pruebas con usuarios
+  seleccionados por PG\&E para obtener retroalimentación sobre el sistema.
+\item \textit{peatqa}: este ambiente es usado por PG\&E para realizar control de
+  calidad y de rendimiento.
+\item \textit{peatprod}: este ambiente es el ambiente final de producción.
+\end{itemize}
+
+Para uso interno en C3 Energy se tenía además el ambiente \textit{peatstage},
+el cual era usado para realizar pruebas de rendimiento y de control de calidad.
+
+En total se contaba con cuatro ambientes, los cuales debían ser lo más parecidos
+en su arquitectura y configuración a la del ambiente de producción para que así las
+pruebas de calidad y de rendimiento regresaran resultados cercanos al comportamiento
+del sistema en el ambiente de producción.
+Dados estos requerimientos la implementación del proceso de despliegue continuo para
+el sistema \texttt{PEAT} era la mejor forma para manejar el despliegue del sistema
+en esta diversidad de ambientes.
+
+\subsection{Proceso de despliegue}
+
+En el despliegue continuo se tiene al proceso de despliegue (\textit{deployment
+  pipeline}) como concepto central, el cual, en esencia es la implementación
+automatizada de los procesos de configuración, construcción, prueba y despliegue de
+un sistema \cite{28_humble_farley_2011}.
+
+\vspace{2.5mm}
+
+Este proceso tiene las siguientes ventajas:
+\begin{itemize}
+\item Visibilidad: todas las etapas del sistema de despliegue son visibles
+  para todos los miembros del equipo.
+\item Retroalimentación: los miembros del equipo obtiene información sobre los
+  problemas en el momento en que ocurren de modo que son capaces de dar solución
+  a éstos rápidamente.
+\item Despliegue: por medio de un proceso totalmente automatizado se puede
+  desplegar y liberar cualquier versión del sistema en cualquier ambiente y en
+  cualquier momento.
+\end{itemize}
+
+El proceso de despliegue se conforma de una serie de etapas de validación por las
+que el sistema debe pasar para llegar al ambiente de producción. Para el sistema
+\texttt{PEAT} las etapas de validación son las siguientes (Ver Figura
+\ref{fig:pipeline}):
+\begin{itemize}
+\item Control de versiones: el equipo de desarrollo ingresa los cambios
+  realizados al sistema por medio del control de versiones Git, esto inicia
+  el proceso de despliegue.
+\item Pruebas de unidad: al detectarse un cambio en el repositorio se ejecutan las
+  pruebas de unidad del sistema.
+
+  Se usa la biblioteca \texttt{RSpec} para implementar las pruebas de unidad
+  para el código en Ruby, mientras que para el código en Javascript se hace uso de
+  la biblioteca \texttt{Jasmine} para las pruebas de unidad.
+
+  El equipo de desarrollo recibe retroalimentación del resultado de las pruebas,
+  si el resultado es positivo se pasa a la siguiente etapa.
+  En la primera secuencia en la Figura \ref{fig:pipeline} se tiene el caso
+  cuando las pruebas de unidad son negativas y se detiene el proceso de despliegue.
+\item Pruebas de aceptación: se hace uso de la biblioteca \textit{Cucumber}
+  para implementar las pruebas de aceptación, de la misma forma que la etapa de
+  pruebas de unidad si se obtiene un resultado positivo se continúa a la siguiente
+  etapa en caso contrario se detiene el proceso de despliegue.
+\item Ambientes de prueba: se hace el despliegue del sistema en los ambientes de
+  prueba, es decir, a los ambientes \textit{peatstage}, \textit{peattest} y
+  \textit{peatqa}. En esta etapa se realizan pruebas de rendimiento y de calidad
+  de forma manual y automatizada.
+\item Producción: se hace un despliegue a producción cuando la versión en los
+  sistemas de prueba han sido revisado de forma satisfactoria.
+\end{itemize}
+
+\rjcimage{1.1}{imagenes/Deployment-Pipeline.png}{Proceso de despliegue para
+  \texttt{PEAT}.}{pipeline}
+
+Las primeras etapas del proceso se desarrollan en forma completamente automatizada
+hasta llegar a la etapa de despliegue a los ambientes de pruebas, en esta etapa
+al principio se realizaban pruebas de calidad y rendimiento de forma manual, estas
+actividades se fueron automatizando una por una  haciendo uso de herramientas como
+\texttt{SauceLabs} y \texttt{CloudTest}. La ejecución para el despliegue al ambiente
+de producción se realiza de forma manual.
+
+\subsubsection{Herramientas}
+
+El proceso de despliegue se hace uso de un gran número de herramientas, las más
+importantes son:
+
+\begin{itemize}
+\item \texttt{AWS}: \textit{Amazon Web Services} (AWS), es un conjunto de servicios
+  de cómputo en la nube que permite la implementación de sistemas escalables.
+\item \texttt{Jenkins}: es un servidor de despliegue continuo, que permite
+  definir las etapas de un proceso de despliegue y las acciones que se realizan
+  según el resultado de la etapa.
+\item \texttt{Capistrano}: es una herramienta que facilita la creación de tareas
+  para el despliegue de sistemas en servidores remotos.
+\item \texttt{CloudTest}: es una herramienta para la ejecución de pruebas de
+  carga y rendimiento para aplicaciones móviles y web.
+\item \texttt{SauceLabs}: es una herramienta que permite ejecutar las pruebas de un
+  sistema en mas de 500 combinaciones de navegadores, sistema operativos
+  y dispositivos.
+\end{itemize}
+
+\subsection{Configuración y despliegue automatizado de ambientes}
+
+En la Sección \ref{sec:production} se hablo sobre la arquitectura del ambiente
+de producción para \texttt{PEAT} en donde se indicó el uso de servidores EC2
+proporcionados por \textit{Amazon Web Services} (AWS).
+
+\subsubsection{Capistrano}
+
+Para configurar los servidores EC2 para \texttt{PEAT} se usa \textit{Capistrano}
+que es una herramienta para definir y ejecutar tareas en
+múltiples servidores remotos por medio de SSH\footnote{Es un protocolo que permite
+  acceder a servidores remotos de forma segura a través de una red
+  \cite{29_ssh_protocol}.}. Esta herramienta define un DSL basado en Ruby para la
+definición de tareas de despliegue y mantenimiento.
+
+\textit{Capistrano} contiene tareas predefinidas para el despliegue de sistemás
+basados en el marco de trabajo Rails, sin embargo para el sistema \texttt{PEAT} se
+implementaron tareas adicionales para realizar un despliegue exitoso.
+
+\subsubsection{Configuración de ambientes}
+
+\lstinputlisting[language=Ruby]{code/deploy-vars.rb}
+
+El código anterior muestra la configuración base de variables para el
+despliegue del sistema \texttt{PEAT} usando el DSL definido por \texttt{Capistrano}.
+En las líneas 1-9 se definen las variables de configuración para el sistema
+\texttt{PEAT} y el servidor Nginx, los valores por defecto están definidos
+para un ambiente en producción, lo cual facilita conocer las diferencias
+entre el ambiente de producción y los ambientes de pruebas.
+
+En la línea 11 se definen los ambientes soportados, teniendo los cuatro
+ambientes descritos anteriormente, cabe señalar que cada ambiente tiene
+su propio archivo de configuración en donde se indican los cambios en variables
+y/o tareas con respecto a la configuración base.
+
+En las líneas 14-16 se indica el sistema de versiones, la dirección del repositorio
+y la rama\footnote{Es una versión etiquetada del código fuente en el control de
+  versiones Git.} a usar para obtener el código fuente del sistema.
+En \texttt{PEAT} el sistema de versiones es Git, donde la rama por defecto
+es \textquote{release/v1.0} que es la rama estable del sistema que
+se usa para producción, por medio de la variable de ambiente \texttt{BRANCH} es
+posible hacer el despliegue de cualquier versión del sistema.
+
+En las líneas 18-24 se tiene el uso de las declaraciones \texttt{after}
+y \texttt{before} que permiten el establecer que una tarea sea realizada
+antes o después de una segunda tarea. Cabe señalar que las tareas
+\texttt{deploy:setup} y \texttt{deploy:restart} son tareas definidas
+por \texttt{Capistrano}, la primera es una tarea para la configuración inicial
+de un ambiente\footnote{Esta tarea es solo ejecutada una única vez para preparar
+  un nuevo ambiente.} y la segunda tarea es realizada al reiniciar el sistema.
+
+\lstinputlisting[language=Ruby]{code/deploy-tasks.rb}
+
+En el código anterior se tiene las tareas más importantes para el
+despliegue del sistema. En las líneas 3-5 se define la tarea \texttt{upstart}
+la cual por medio del comando \texttt{foreman} genera la configuración para agregar
+al sistema \texttt{PEAT} como un servicio al sistema Upstart\footnote{Es un demonio
+  que maneja el inicio de tareas y servicios durante el arranque del servidor y la
+  supervisión de éstos mientras el servidor está funcionando.} usado en el sistema
+operativo Ubuntu 12.04 LTS que es el sistema operativo seleccionado para los
+servidores EC2.
+
+En las líneas 6-13 se definen las tareas para iniciar y parar el sistema
+\texttt{PEAT}, se hace uso de los comandos \texttt{start} y \texttt{stop}, así como
+de la configuración generada para el sistema Upstart en la tarea anterior para
+iniciar o parar fácilmente el sistema.
+
+En las líneas 15-19 se define la tarea \texttt{peat\_setup} la cual genera
+los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
+Nginx (\texttt{nginx.conf}) y posteriormente los transfiere a los servidores
+del ambiente, esta tarea se ejecuta solamente cuando se inicia un nuevo
+ambiente.
+
+En las líneas 21-27 se define la tarea \texttt{config\_sync} la cual
+realiza las tareas de generar los archivos de configuración, transferirlos y
+ejecuta el reinicio del sistema para que éste cargue los cambios de configuración.
+
+En las líneas 30-35 se define la tarea \texttt{config} la cual genera
+los archivos de configuración para \texttt{PEAT} (\texttt{peat.yml}) y
+Nginx (\texttt{nginx.conf}) por medio de \texttt{ConfigCreator}.
+
+\lstinputlisting[language=Ruby]{code/deploy-peatstage.rb}
+
+Como se mencionó anteriormente cada ambiente tiene su propio archivo de
+configuración, el código anterior es la configuración para el ambiente
+\texttt{peatstage}.
+
+En la línea 1-2 se define el servidor asociado al ambiente. En las líneas
+3-10 se redefinen varias variables de configuración para el ambiente siendo uno
+de los principales cambios que la rama por defecto es \textquote{master} la
+cual es la rama principal de desarrollo en el sistema \texttt{PEAT}.
+En las líneas 29-46 se redefinen las tareas \texttt{peat\_setup},
+\texttt{config\_sync} y \texttt{config} para que tomen en cuenta la configuración
+actualizada por medio del método \texttt{override\_defaults}.
+
+\vspace{2.5mm}
+
+\subsubsection{Despliegue automatizado de ambientes}
+
+La interacción con \texttt{Capistrano} es por medio del comando \texttt{cap}
+en la línea de comandos, así para hacer un despliegue al ambiente \texttt{peatprod}
+se ejecutaría el siguiente comando.
+
+\begin{verbatim}
+cap peatprod deploy
+\end{verbatim}
+
+El comando \texttt{cap} toma dos argumentos el primero es algunos de los
+ambientes definidos en la variable \texttt{stages} y el segundo es el nombre
+de la tarea a realizar.
+
+Como se puede ver por medio de \texttt{Capistrano} se puede realizar tanto
+la configuración inicial de los ambientes y el despliegue del sistema \texttt{PEAT}.
+
+El uso de \texttt{Capistrano} para el despliegue tiene las siguientes ventajas:
+\begin{itemize}
+\item Rápidamente se puede agregar un nuevo ambiente agregando su nombre a la
+  variable \texttt{stages} y agregando su archivo de configuración con los
+  cambios deseados para este nuevo ambiente.
+\item La configuración definida con \texttt{Capistrano} es parte del código fuente
+  del sistema y se encuentra en el sistema de versiones por lo que se tiene historia
+  de los cambios realizados en la configuración de los ambientes.
+\item El sistema es auto contenido, es decir, el código para realizar el despliegue
+  del sistema es parte del código fuente del sistema.
+\end{itemize}
+
+En el servidor \textit{Jenkins} se implementó una tarea que al tenerse un resultado
+positivo de las pruebas del sistema se hace uso del comando \texttt{cap}
+para efectuar el despliegue del sistema en los ambientes de prueba.
+
+\subsection{Pruebas de unidad y aceptación}
+
+En el servidor \textit{Jenkins} se definen las etapas del proceso de despliegue,
+siendo el inicio del proceso de despliegue cuando se detecta un cambio en el
+repositorio del sistema. Al detectarse este cambio se ejecuta la primera etapa
+que implica ejecutar las pruebas de unidad.
+
+\subsubsection{Pruebas de unidad}
+
+En la sección 2.3.2 se habló sobre la práctica del desarrollo guiado por
+comportamiento (\textit{Behavior Driven Development}, BDD) la cual involucra
+escribir las pruebas antes de escribir el código fuente y la refactorización
+continúa en el código fuente.
+
+En el desarrollo guiado por comportamiento las pruebas se enfocan en describir el
+comportamiento y la interacción de los módulos del sistema. Para el sistema
+\texttt{PEAT} se hace uso del marco de trabajo \textit{RSpec} la cual define un
+Lenguaje de Dominio Específico (LDE) para implementar las pruebas unitarias.
+
+RSpec da acceso al comando \texttt{rspec} que permite ejecutar y verificar
+que el sistema pasa todas las pruebas unitarias del sistema. En la primera
+etapa el servidor \textit{Jenkins} obtiene el código fuente del sistema y ejecuta el
+comando \texttt{rspec} el cual ejecuta todas las pruebas unitarias del sistema.
+
+\lstinputlisting[language=Ruby]{code/rspec-questions-controller.rb}
+
+El código anterior se tiene un ejemplo de una prueba unitaria para el controlador
+\texttt{QuestionsController} (línea 3) que maneja las acciones en relación
+a las preguntas asociadas al perfil de un edificio. En las líneas 4-13 se
+inicializan los modelos necesarios para llevar a cabo las pruebas de este
+controlador.
+En las líneas 16-20 se tiene por medio de la declaración \texttt{it} la
+prueba unitaria sobre la acción \texttt{next} la cual debe regresar
+la siguiente pregunta a contestar del perfil del edificio. En la línea
+17 se define la expectativa de que el controlador llama al método \texttt{next
+  \_question} del modelo \texttt{PEATEngine} para obtener la siguiente pregunta.
+
+Por medio de \texttt{RSpec} se tienen pruebas de los controladores y vistas
+principales del sistema \texttt{PEAT}. Los modelos no son probados directamente
+dado que los modelos hacen uso de la clase \texttt{Bezel::Base} de la biblioteca
+\texttt{Bezel} la cual también tiene pruebas de unidad por medio de \texttt{RSpec}.
+
+\subsubsection{Pruebas de aceptación}
+
+Para el sistema \texttt{PEAT} se hace uso del marco de trabajo \textit{Cucumber}
+el cual permite especificar y ejecutar pruebas de aceptación siguiendo el proceso
+del desarrollo guiado por comportamiento.
+
+\begin{lstlisting}
+  Característica:
+  Permitir a los usuarios el añadir una recomendación a su plan de ahorro
+  El usuario tiene una cuenta, una dirección de servicio y un edificio
+
+  Antecedentes:
+  Dado que ingreso como el usuario @juan por vez primera
+  Y que tengo una cuenta, una dirección de servicio y un edificio
+
+  @javascript
+  Escenario: Despliega la lista de recomendaciones
+  Cuando visitó la página de recomendaciones
+  Entonces debo ver un botón de añadir al plan en cada recomendación
+
+  @javascript
+  Escenario: Cambiar al estado "Completado" a una recomendación
+  Dado que visitó la página de recomendaciones
+  Y selecciono el primer botón añadir al plan
+  Debo ver un menú de selección
+  Cuando selecciono la opción "Completado" en el menú desplegable
+  Entonces el botón de añadir al plan debe indicar "Completado"
+
+  @javascript
+  Escenario: Añadir una recomendación al plan de ahorro
+  Dado que visitó la página de recomendaciones
+  Cuando selecciono "Añadir al plan" en la primera recomendación
+  Y selecciono "Guardar" en la ventana.
+  Entonces el botón de añadir al plan debe indicar "Agregado"
+  Y no debo ver el menú despegable
+\end{lstlisting}
+
+El código anterior es una prueba de aceptación sobre el requerimiento de que los
+usuarios puedan añadir una recomendación a su plan de ahorro.
+En las líneas 1-3 se documenta el objetivo de la característica que se esta
+probando, se prueba una sola característica por archivo pero se pueden tener
+varios escenarios por característica. En las líneas 5-7 se definen
+los antecedentes, es decir, el contexto inicial que comparten todos los
+escenarios. Cada escenario empieza con la declaración \texttt{Escenario:}
+con una breve descripción del escenario, las líneas posteriores indican
+tanto el contexto como la expectativa del escenario. Los escenarios
+pueden ser etiquetados en este ejemplo tienen la etiqueta \texttt{@javascript}
+lo que indica que estos escenarios hacen uso de un navegador con soporte
+a Javascript para ejecutar la prueba.
+
+Cabe señalar el parecido entre el caso de uso \textit{Administrar recomendaciones}
+y la prueba de aceptación, esto es una de las ventajas del uso de \textit{Gherkin}
+que es el lenguaje DLE definido por \textit{Cucumber} para facilitar la
+implementación de pruebas de aceptación a partir de casos de uso.
+
+\textit{Cucumber} da acceso al comando \texttt{cucumber} que permite ejecutar y
+verificar que el sistema pasa todas las pruebas de aceptación del sistema.
+El servidor \textit{Jenkins} ejecuta el comando \texttt{cucumber} si el resultado
+de las pruebas unitarias es exitoso. Si el resultado de las pruebas de aceptación es
+positivo entonces se hace un despliegue del sistema a los ambientes de prueba.
+
+\subsection{Ambientes de prueba}
+
+Después de que tanto las pruebas de unidad como las de aceptación dan resultados
+positivos el servidor \textit{Jenkins} realiza el despliegue del sistema al ambiente
+\textit{peatstage}.
+
+En el ambiente \textit{peatstage} se realizan pruebas de rendimiento por medio
+de la herramienta CloudTest, la cual permite realizar pruebas de carga y
+rendimiento para sistemas web, además esta herramienta tiene integración con
+\textit{Jenkins} por lo que se agregó como una etapa más en el proceso de despliegue.
+
+Usando CloudTest se tenían tres pruebas de carga, teniendo en cada prueba 500, 1000
+y 2000 usuarios concurrentes respectivamente. Si estas pruebas eran satisfactorias
+entonces el servidor \textit{Jenkins} hace un despliegue del sistema en los
+ambientes \textit{peattest} y \textit{peatqa}.
+
+\subsection{Ciclo de desarrollo}
+
+En \texttt{PEAT} se tiene que el modelo de desarrollo es una combinación tanto del
+modelo en cascada y del modelo incremental, teniendo en un inicio la creación de
+documentos sobre los requerimientos de los componentes del sistema y su
+arquitectura general. Luego se aplicó el modelo incremental al realizar la
+implementación de los componentes del sistema \texttt{PEAT} en forma incremental por
+medio de iteraciones con duración de dos semanas para cada iteración, de esta forma
+en cuanto se tenía suficiente información sobre los requerimientos de un componente
+se programaba el inicio de su implementación para la siguiente iteración.
+
+Durante el desarrollo se hizo uso de prácticas ágiles como:
+
+\begin{itemize}
+  \item Reunión diaria de sincronización del equipo.
+  \item Desarrollo guiado por pruebas.
+  \item Planeación por iteraciones.
+  \item Póker de planeación.
+  \item Retrospectivas al final de una iteración.
+  \item Despliegue continuo.
+\end{itemize}
+
+En el sistema \texttt{PEAT} se tenía el siguiente ciclo de desarrollo de
+software:
+
+\begin{enumerate}
+\item El programador crea una nueva rama de trabajo en el repositorio \texttt{Git}
+  para la implementación de una nueva característica del sistema.
+\item Conforme se van acumulando los cambios del código en la rama de trabajo
+  el servidor \textit{Jenkins} ejecuta solamente las pruebas de unidad y aceptación,
+  permitiendo una rápida retroalimentación del estado del sistema al programador.
+\item Cuando la implementación se considera terminada y las pruebas son positivas,
+  se realiza una revisión del código de la rama de trabajo por el resto del
+  equipo.
+\item Después de la revisión y dado el visto bueno del equipo se integra el
+  código de la rama de trabajo a la rama \textquote{master}, lo cual provoca el
+  inicio de todo el proceso de despliegue.
+\item El servidor ejecuta las pruebas de unidad y aceptación del sistema en
+  caso positivo realiza un despliegue al ambiente \textit{peatstage}, en caso
+  contrario el equipo es informado de cuales pruebas fallaron.
+\item El servidor ejecuta las pruebas de carga usando el ambiente \textit{peatstage}
+  si el resultado es positivo se hace un despliegue a los ambientes \textit{peattest}
+  y \textit{peatqa}, en caso contrario se informa al equipo sobre que partes del
+  sistema no tiene el rendimiento esperado.
+\item En coordinación con PG\&E se despliega la versión en uso en \textit{peattest}
+  al ambiente en producción.
+\end{enumerate}
+
+Cabe mencionar que al menos cada semana un representante de PG\&E se presentaba
+en las instalaciones de C3 Energy para discutir y hablar sobre los avances del
+sistema, aparte se tenia una comunicación electrónica continua con los resultados
+de las pruebas realizadas por PG\&E en los ambientes de pruebas.
+
+Cualquier falla se convertía en una tarea prioritaria para el equipo de desarrollo
+para evitar que el lapso de tiempo en que el sistema no puede ser desplegado sea
+el mínimo posible.
+
+Haciendo uso del despliegue continuo el equipo entero tiene conocimiento sobre el
+estado del sistema aunque el sistema \texttt{PEAT} se encuentre en un estado
+inconsistente por fallas, ya sea en las pruebas unitarias, aceptación o de carga,
+se tiene información sobre la naturaleza y origen de las fallas. Esta información
+permite al equipo arreglar el sistema de una forma eficiente.

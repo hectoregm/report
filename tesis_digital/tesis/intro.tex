@@ -1,0 +1,112 @@
+\chapter*{Introducción}
+\markboth{INTRODUCCIÓN}{INTRODUCCIÓN}
+\addcontentsline{toc}{chapter}{Introducción}
+El presente trabajo aborda el diseño e implementación del sistema \textit{Progressive
+  Energy Audit Tool}\ (\texttt{PEAT}), el cual es un sistema web que permite
+a los usuarios de pequeñas y medianas empresas (PyMES) identificar y monitorear
+sus gastos de energía eléctrica, con el fin de obtener un mayor control
+en los costos de ésta.
+
+Este trabajo se realizó siendo parte de la empresa C3 Energy en el cargo de Senior
+Software Engineer por un período de 10 meses, de Mayo de 2012 a Febrero de 2013.
+
+En una gran cantidad de proyectos resulta ser suficiente el hacer uso de un
+único lenguaje de programación para llevar a buen término el proyecto, es decir,
+terminarlo de forma exitosa. Sin embargo conforme pasa el tiempo, las necesidades
+de las compañías y usuarios cambian, lo cual provoca que hagamos uso de una serie de
+tecnologías no previstas en un inicio, lo que representa casi siempre el uso
+de más de un lenguaje de programación\footnote{Debido a que ningún
+lenguaje de programación actualmente es el mejor en todos los contextos
+posibles de uso.}.
+
+El proyecto de implementación del sistema PEAT cuenta con tres partes principales
+de desarrollo: (a) el \textit{backend}  implementado en su mayoría usando
+el lenguaje de programación Javascript, con un núcleo escrito en el lenguaje de
+programación Java, (b) una biblioteca en el lenguaje de programación Ruby que permite
+la interacción del \textit{backend} con aplicaciones web y (c) el \textit{frontend}
+escrito con Ruby, dada sus ventajas para realizar sistemas web.
+
+Durante este proyecto se implementó una biblioteca no solo para hacer uso de
+los servicios web ya existentes, sino para facilitar la creación
+de clases y objetos en Ruby basados en la jerarquía de clases definida
+en Javascript. Cabe mencionar que haciendo uso de una de las fortalezas de Ruby
+como lo es la metaprogramación para la creación de clases y sus
+atributos ``al vuelo'', según las especificaciones enviadas por el servidor,
+se mantiene así la jerarquía de clases de un lenguaje a otro.
+
+Otro punto de creciente importancia es el despliegue de una aplicación, ya que por un
+lado hace algunos años las aplicaciones web se desarrollaban bajo el modelo de
+tres capas: la base de datos, el servidor de la aplicación y el servidor web;
+actualmente se tienen más servicios que deben estar en línea sobre todo para
+garantizar un servicio concurrente; repositorios de memoria, balanceadores de carga,
+servidores de cola, etcétera. Por lo que automatizar el despliegue de una aplicación
+en sus diferentes contextos, desarrollo, producción y pruebas, es de vital
+importancia para el desarrollo de software en tiempo y en forma.
+
+Durante este proyecto se hace uso extensivo de técnicas como la metaprogramación
+y el despliegue continuo, para permitir un desarrollo acelerado, con el fin de
+obtener rápidamente retroalimentación del usuario final.
+
+\section*{Objetivo general}
+
+El objetivo general del sistema \texttt{PEAT} es dar la mayor utilidad posible
+a usuarios PyMES con la menor información disponible, fomentando en el usuario
+el compartir más información sobre su empresa, obteniendo un mejor control
+acerca de su consumo energético.
+
+El sistema debe además permitir el ingreso progresivo de información, por medio
+de una serie de preguntas específicas al usuario, dando mejores recomendaciones
+para bajar su consumo energético conforme el sistema obtiene mas información.
+
+A partir de la información obtenida el sistema debe permitir el monitoreo
+y revisión del consumo energético de forma detallada, ya sea en horas,
+días, meses y años.
+
+\section*{Objetivos secundarios}
+
+Los objetivos secundarios que apoyan al objetivo general de este trabajo son:
+\begin{itemize}
+\item Implementación de una interfaz que permita la obtención
+  de información del usuario de una forma eficaz y sencilla.
+\item Dar información útil aunque el usuario solo proporcione el
+  mínimo de información sobre su empresa.
+\item Proporcionar recomendaciones para disminuir sus
+  gastos en energía con base en el consumo e información proporcionada
+  hasta el momento.
+\item Autentificar a los usuarios mediante el uso de credenciales de acceso
+  obtenidas en el portal web de Pacific Gas and Electric Company (PG\&E).
+\item Diseñar e implementar un conjunto de pruebas unitarias, funcionales
+  y de integración para los módulos críticos del sistema.
+\item Soportar por lo menos a mil usuarios concurrentes.
+\item Implementar la infraestructura para el despliegue continuo de la
+  aplicación, permitiendo una retroalimentación contínua sobre el
+  funcionamiento del sistema.
+\end{itemize}
+
+\section*{Organización del trabajo}
+
+Este trabajo está dividido en cuatro capítulos los cuales son:
+\begin{itemize}
+\item Capítulo 1 titulado, \textit{Situación original}: se presenta una descripción
+  del contexto que dio pie al desarrollo del sistema \texttt{PEAT}, después se da una
+  descripción de la arquitectura y sistemas con los que se tuvo como punto de
+  partida para su implementación. Finalmente se define la propuesta de desarrollo
+  del sistema.
+\item Capítulo 2 que lleva por nombre, \textit{Fundamentos teóricos}: se expone un
+  resumen de los conceptos teóricos mas influyentes en el diseño e implementación del
+  sistema \texttt{PEAT}.
+\item Capítulo 3, \textit{Diseño e implementación del sistema PEAT}: se desarrolla y
+  describe la implementación del sistema \texttt{PEAT}, dando la justificación
+  de las decisiones tomadas durante su implementación.
+\item Capítulo 4, \textit{Despliegue del sistema}: se expone la infraestructura
+  del ambiente de producción y la implementación de un proceso de despliegue
+  continuo  del sistema \texttt{PEAT} y las decisiones tomadas para obtener un
+  rendimiento óptimo del sistema.
+\end{itemize}
+
+El sistema \texttt{PEAT} es resultado del trabajo en conjunto de tres compañías:
+Pacific Gas and Electric Company (PG\&E), C3 Energy y Software Next Door.
+Cabe mencionar que PG\&E es una compañía proveedora de gas natural y electricidad, una de las
+más grandes compañías de Estados Unidos con sede en San Francisco, California.
+El sistema \texttt{PEAT} es el resultado de una licitación iniciada por PG\&E,
+siendo ganadora de dicha licitación la compañía C3 Energy.

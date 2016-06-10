@@ -1,0 +1,1120 @@
+\chapter{Diseño e implementación del sistema PEAT}
+
+Para lograr los objetivos del sistema \texttt{PEAT} se dividió en cuatro
+componentes principales:
+
+\begin{itemize}
+\item Perfil sencillo del edificio (\textit{Simple Building Profile}): este
+  componente realiza la configuración inicial del edificio, realizando solamente
+  un número limitado de preguntas básicas para definir las características básicas
+  del mismo.
+\item Perfil detallado del edificio (\textit{Detailed Building Profile}):
+  este componente se encarga del manejo de las características básicas, detalladas y
+  opcionales de un edificio.
+\item Recomendaciones (\textit{Recommendations}): este componente genera una lista
+  de medidas de ahorro de energía considerando la información ingresada al sistema
+  hasta el momento. Además debe permitir al usuario obtener información detallada
+  sobre las recomendaciones dadas y permitir que el usuario se comprometa a
+  llevar acabo una recomendación.
+\item Plan de ahorro de energía (\textit{Energy Savings Plan}): este componente
+  presenta el consumo de energía del edificio al usuario, también presenta las
+  recomendaciones que el usuario se ha comprometido a poner en acción y el
+  ahorro que representa llevar acabo estas medidas.
+\end{itemize}
+
+El  modelo de edificio es el principal modelo dentro de \texttt{PEAT}, por lo que
+obtener una correspondencia correcta entre un edificio y su consumo energético
+es de vital importancia para dar la información y recomendaciones más útiles y
+fidedignas al usuario.
+
+\section{Modelo de información}
+
+El objetivo principal del modelo de información de \texttt{PEAT} es definir el
+modelo de edificio y su relación con el consumo energético del usuario. Así
+tenemos el concepto de edificio el cual es una estructura independiente a la
+que se le esta proporcionando un servicio ya sea de electricidad o gas.
+
+\subsection{Estructura de facturación de PG\&E}
+Para obtener esta correspondencia entre edificio-consumo es necesario
+tener en cuenta la estructura de facturación usada por PG\&E puesto
+que de esta estructura es que se obtiene el consumo de electricidad y gas.
+
+Los modelos se pueden categorizar en dos grupos: demográficos o geográficos.
+
+El usuario, la cuenta y el contrato de servicio representan el lado demográfico
+del modelo de información:
+
+\begin{itemize}
+\item Usuario: representa al empresario, el cual puede tener una o más cuentas.
+\item Cuenta: representa la contabilidad financiera del usuario. Tiene uno o más
+  contratos de servicio, uno por tipo de servicio (electricidad o gas), también
+  se tiene una o más direcciones de servicio asociadas.
+\item Contrato de servicio: representa los servicios que el cliente adquiere
+  de PG\&E, como la electricidad o el gas y puede tener uno o más puntos
+  de servicio asociados.
+\end{itemize}
+
+La dirección de servicio, el punto de servicio y el medidor representan
+la parte geográfica del modelo de información:
+
+\begin{itemize}
+\item Dirección de servicio: es una ubicación física en donde se prestan los
+  servicios, en \texttt{PEAT} son el modelo que se quiere asociar al modelo
+  de edificio para obtener el consumo del edificio, el cual puede tener uno o más
+  puntos de servicio.
+\item Punto de servicio: es una coordenada geográfica en donde se conectan los
+  servicios y puede tener uno o más medidores asociados.
+\item Medidor: es un dispositivo instalado en un punto de servicio que registra el
+  consumo del servicio proporcionado.
+\end{itemize}
+
+La relación entre todos estos modelos se puede ver en la Figura 3.1.
+
+\jcimage{1.0}{imagenes/PGE-facturacion.png}{Modelos principales para la facturación
+  en PG\&E.}
+
+\subsection{Relación Edificio-Facturación}
+
+Para que \texttt{PEAT} pueda cumplir sus requerimientos funcionales es necesario
+definir claramente la relación entre un edificio y su consumo energético calculado
+por uno o varios medidores.
+A pesar de que los medidores mantienen la información de consumo, el relacionar
+directamente un medidor con un edificio no es una tarea sencilla para un usuario,
+porque aunque el usuario generalmente conoce el número de medidores que tiene no
+conoce los identificadores para cada uno de éstos.
+
+Dado el escenario anterior para facilitar la creación del perfil de un edificio se
+solicita al usuario que haga la correspondencia entre las direcciones de servicio
+asociadas a su cuenta y el perfil de edificio que se está creando.
+El usuario al establecer esta correspondencia permite al sistema obtener de forma
+automatizada los puntos de servicio y sus medidores asociados al edificio, con el
+objetivo de obtener su consumo energético real.
+
+\section{Casos de uso}
+
+\subsection{Diagrama general}
+
+En la Figura 3.2 se muestra el diagrama general de casos de uso del sistema
+\texttt{PEAT}. Se tienen diez casos de uso en total, siendo siete de éstas definidas
+para \texttt{PEAT} y tres casos para la biblioteca \texttt{Bezel}.
+
+Los casos de uso se agrupan en los cuatro componentes principales de la
+siguiente manera:
+
+\begin{itemize}
+\item Perfil sencillo del edificio (\textit{Simple Building Profile}): Tiene
+  solo el caso de uso \textit{Crear perfil del edificio} pero este caso de uso
+  es uno de los más complejos en cuestión de interacción con el usuario y su
+  importancia para obtener las características básicas del edificio.
+\item Perfil detallado del edificio (\textit{Detailed Building Profile}): Contiene
+  los casos de uso \textit{Administrar perfil del edificio} y
+  \textit{Obtener información del edificio} los cuales se encargan de la
+  administración y obtención de información sobre el edificio.
+\item Recomendaciones (\textit{Recommendations}): Contiene los casos de uso
+  \textit{Administrar recomendaciones} y \textit{Ver recomendación}.
+\item Plan de ahorro de energía (\textit{Energy Savings Plan}): Contiene los
+  casos de uso \textit{Ver historial de consumo} y \textit{Administrar plan de
+    ahorro}, que se enfocan a la visualización del consumo eléctrico del usuario
+  y las posibles recomendaciones para disminuir su consumo.
+\end{itemize}
+
+\jcimageinline{1.1}{imagenes/Diagrama-General-CasosDeUso.png}{Diagrama general de
+  casos de uso de \texttt{PEAT}.}
+
+\subsection{Crear perfil del edificio}
+
+Para crear el perfil inicial de un edificio es necesario obtener las siguientes
+características:
+
+\begin{itemize}
+\item La industria que mejor describe el negocio del usuario.
+\item El tamaño del edificio (área).
+\item El tipo de edificio.
+\item La(s) dirección(es) de servicio asociada(s) al edificio.
+\end{itemize}
+
+Todas estas características se consideran básicas, es decir, vitales para el
+funcionamiento del sistema por lo que todas son requeridas para construir el perfil
+del edificio.
+
+En este caso de uso también se obtiene la relación entre el edificio y su consumo
+a partir de las direcciones de servicio que el usuario asocie al perfil.
+
+El caso de uso esta diseñado de forma que el proceso sea realizado solamente
+una vez por edificio. Las características básicas se mantienen accesibles por
+medio del perfil detallado del edificio.
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Crear perfil del edificio.}
+  \addfield{Descripción:}{Un usuario PyME ingresa al sistema  para crear un perfil
+    inicial de un edificio, respondiendo ciertas preguntas básicas sobre el
+    edificio.}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On}, SSO) asignado por el sistema de PG\&E.
+  \item Los datos de intervalo y de facturación del usuario se encuentran en el
+    sistema.
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+  \item El usuario debe ser capaz de completar el perfil del edificio en 20 segundos
+    o menos.
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema checa si el usuario tiene más de una cuenta.
+    \begin{enumerate}
+    \item Si hay más de una cuenta el sistema despliega una lista
+      de cuentas, y el sistema requiere que el usuario elija una cuenta.
+    \end{enumerate}
+  \item El sistema despliega información sobre la cuenta: número de cuenta y
+    direcciones de servicio asociadas.
+    \begin{enumerate}
+    \item Si la cuenta tiene más de una dirección de servicio
+      el sistema requiere que el usuario seleccione por lo menos una dirección
+      de servicio.
+    \end{enumerate}
+  \item El usuario selecciona las direcciones de servicio que apliquen
+    al edificio.
+  \item El usuario puede proporcionar un apodo para el edificio.
+  \item El usuario debe indicar la industria que mejor describe su negocio.
+  \item El usuario debe ingresar la siguiente información sobre el edificio:
+    \begin{enumerate}
+    \item Tipo.
+    \item Rango de tamaño.
+    \item Antigüedad.
+    \end{enumerate}
+  \item El usuario puede enviar los datos ingresados o cancelar.
+  \item El usuario puede añadir otro edificio o si ya tiene al menos un
+    perfil de edificio asociado puede proceder al plan de ahorro.
+  }
+  \addfield{Postcondiciones:}{
+    Se genera un identificador único para el perfil del edificio generado, el cual
+    está asociado a los datos de facturación de la cuenta seleccionada por el
+    usuario PyME.
+  }
+\end{usecase}
+
+\subsection{Administrar perfil del edificio}
+
+Para el sistema \texttt{PEAT} se tiene las siguientes características:
+\begin{itemize}
+\item Básicas: se refiere a las características esenciales de un edificio: tipo,
+  tamaño y antigüedad, las cuales son vitales para el funcionamiento del sistema.
+\item Detalladas: son las características más significativas y fáciles de
+  responder. Por ejemplo: horas de operación, número de empleados, número
+  de pisos, etcétera.
+\item Opcionales: son características técnicas más avanzadas sobre el equipo
+  y estructura de un edificio.
+\end{itemize}
+
+Las características básicas son definidas al crear el perfil inicial de un
+edificio como se documenta en el caso de uso anterior. Las características
+detalladas y opcionales son definidas por medio de dos rutas:
+
+\begin{itemize}
+\item Por medio del perfil detallado del edificio, en la que se despliega
+  las preguntas y respuestas sobre las características del edificio.
+  Esta ruta esta documentada en este caso de uso.
+\item Un componente que es embebido en varias partes del sistema
+  que realiza una sola pregunta al usuario para ir obteniendo progresivamente
+  más información sobre el edificio. Este componente llamado componente
+  de ingreso progresivo (\textit{Progressive Profile Widget} PPW).
+  Esta ruta es documentada en el caso de uso \textit{Obtener información
+    del edificio}.
+\end{itemize}
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Administrar perfil del edificio.}
+  \addfield{Descripción:}{
+    El usuario tiene acceso al perfil completo del edificio, es decir
+    a todas las preguntas y respuestas asociadas a las características
+    básicas, detalladas y opcionales de un edificio.}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+  \item Todas las acciones realizadas por el usuario deben ser procesadas
+    en menos de un segundo.
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema verifica si la cuenta tiene más de un edificio asociado.
+    \begin{itemize}
+    \item Si hay más de un edificio asociado a la cuenta, el usuario
+      tiene que seleccionar el edificio correspondiente.
+    \end{itemize}
+  \item El sistema despliega una lista de preguntas y respuestas, dividida en
+    secciones. Las secciones completadas están marcadas con una marca de terminado.
+    \begin{itemize}
+    \item Las secciones que se despliegan dependen del tipo de edificio.
+      Por ejemplo: construcción, iluminación, calefacción y refrigeración.
+    \item El usuario puede ver y actualizar sus respuestas a todas las
+      preguntas en una sola pantalla.
+    \end{itemize}
+  \item El usuario selecciona una sección, esta se expande para mostrar todas
+    las preguntas de la misma.
+  \item El usuario responde una o varias preguntas.
+    \begin{enumerate}
+    \item Las preguntas son ordenadas dentro de cada sección según un orden
+      predefinido. %\footnote{Las secciones también tienen un orden predefinido.}
+    \item Según vaya respondiendo el usuario se va actualizando un indicador
+      del progreso de llenado del perfil. Cada pregunta con su respuesta tiene el
+      mismo valor para calcular el progreso de llenado.
+    \end{enumerate}
+  \item El usuario puede elegir continuar con la siguiente sección o seleccionar
+    en el encabezado otra sección.
+  \item El sistema almacena la información en cuanto el usuario selecciona
+    una respuesta. Al obtener nueva información el sistema debe recalcular
+    las recomendaciones asociadas al edificio.
+  }
+  \additemizedfield{Postcondiciones:}{
+  \item Un perfil del edificio más detallado si el usuario dio respuesta a una
+    pregunta sin contestar sobre su edificio.
+  \item Si el usuario dio nueva información se recalculan las recomendaciones
+    asociadas al edificio.
+  }
+\end{usecase}
+
+\subsection{Obtener información del edificio}
+
+Uno de los requerimientos más importante para \texttt{PEAT} es el incentivar y
+obtener más información sobre las características de los edificios del usuario,
+ya que entre más datos se obtenga de éstos se podrán generar mejores planes
+de ahorro y recomendaciones para el usuario.
+
+La forma en como se aborda esta necesidad es por medio de la implementación
+de un componente que esta presente en las dos partes principales del sistema:
+el plan de ahorro y la lista de recomendaciones. Este elemento llamado
+componente de ingreso progresivo (\textit{Progressive Profile Widget}, PPW),
+tal componente realiza una sola pregunta al usuario obteniendo progresivamente
+mas información sobre el edificio.
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Obtener información del edificio.}
+  \addfield{Descripción:}{El sistema obtiene información
+    progresivamente del usuario haciendo uso de un componente que
+    realiza una pregunta al usuario en varias partes del sistema.
+    Este es conocido como componente de ingreso progresivo (\textit{Progressive
+      Profile Widget}, PPW).}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
+  }
+  \addfield{Requerimientos no funcionales:}{
+    Las actualizaciones a la página deben hacerse en forma
+    asíncrona y sin recargar la página completa.
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema despliega el componente PPW en la parte izquierda en las
+    pantallas de plan de ahorro y de recomendaciones.
+  \item Dentro del PPW, se presenta al usuario una pregunta a responder:
+    \begin{enumerate}
+    \item Dependiendo de la pregunta, el usuario puede seleccionar una
+      respuesta de una lista desplegable, seleccionar casillas,
+      responder si o no con un botón radial o ingresar un valor
+      en un campo.
+    \item Cada tipo de edificio tiene una lista predefinida ordenada de
+      preguntas a ser desplegadas en el componente.
+    \item Algunas preguntas tienen imágenes asociadas para facilitar
+      al usuario su respuesta.
+    \end{enumerate}
+  \item El usuario puede responder la pregunta o saltar la pregunta o
+    no hacer nada en el PPW.
+    \begin{enumerate}
+    \item Si el usuario responde:
+      \begin{enumerate}
+      \item La respuesta provoca un refinamiento del perfil del edificio y
+        el nuevo cálculo de las recomendaciones propuestas.
+        \begin{enumerate}[i.]
+        \item El perfil del edificio es actualizado, las recomendaciones
+          son recalculadas.
+        \item El sistema despliega un indicador de progreso mientras
+          se recalculan las recomendaciones.
+        \item Al finalizar el refinamiento el orden de las preguntas
+          o los valores del plan de ahorro deberán ser actualizados, sin recargar
+          la página completa.
+        \end{enumerate}
+      \item El sistema despliega la siguiente pregunta.
+      \item El sistema almacena la respuesta dada.
+      \end{enumerate}
+    \item Si el usuario elige saltar la pregunta entonces el sistema
+      despliega la siguiente pregunta sin necesitar de una respuesta por el usuario.
+    \end{enumerate}
+  \item Desde el PPW, el usuario puede seleccionar \textquote{Building Profile} para
+    ver el perfil detallado del edificio.
+  }
+  \additemizedfield{Postcondiciones:}{
+  \item Un perfil del edificio más detallado si el usuario dio respuesta a la
+    pregunta desplegada sobre su edificio.
+  \item Si el usuario dio nueva información se recalculan las recomendaciones
+    asociadas al edificio.
+  }
+\end{usecase}
+
+\subsection{Administrar recomendaciones}
+
+En los casos de uso anteriores se obtiene del usuario el perfil del edificio,
+al menos sus características básicas. Haciendo uso de esta información
+el sistema \texttt{PEAT} genera recomendaciones sobre como disminuir el consumo
+de energía a través de cambios de comportamiento y/o modernización de equipo.
+
+\vspace{2.5mm}
+
+Las recomendaciones se muestran en tres partes del sistema:
+\begin{enumerate}
+\item En el plan de ahorro.
+\item En las recomendaciones.
+\item En el perfil detallado del edificio.
+\end{enumerate}
+
+El comportamiento general al administrar las recomendaciones en estas tres
+secciones es definido en este caso de uso, teniéndose en los casos de uso
+posteriores los detalles particulares del comportamiento para esa sección.
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Administrar recomendaciones.}
+  \addfield{Descripción:}{El sistema despliega una lista de todas las
+    recomendaciones que se ajustan al perfil del edificio.}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
+  }
+  \additemizedfield{Requerimientos no funcionales:}{
+  \item Cualquier acción en una recomendación debe hacerse de forma
+    asíncrona y sin necesitar de recargar la página completa.
+  }
+  \pagebreak
+  \addscenario{Flujo normal:}{
+  \item El sistema despliega las recomendaciones, en el plan de ahorro,
+    la lista de recomendaciones o en el perfil detallado del edificio.
+  \item El usuario puede tomar las siguientes acciones:
+    \begin{itemize}
+    \item Añadir al plan (de ahorro).
+      \begin{enumerate}
+      \item Cuando el usuario selecciona \textquote{Añadir al plan}, una ventana
+        modal se abre y pregunta:
+        \textquote{¿ Cuando piensa completar esta acción ?}.
+      \item El sistema proporciona lista predefinida de rangos de tiempo:
+        una semana, un mes, tres meses, etcétera.
+      \item El usuario elige el rango de tiempo adecuado y selecciona la opción
+        \textquote{Añadir al plan}.
+      \item El sistema añade la recomendación al plan de ahorro del edificio.
+      \end{enumerate}
+    \item No aplica.
+      \begin{enumerate}
+      \item El sistema mueve la recomendación al final de la lista de
+        recomendaciones.
+      \item En cualquier momento, el usuario puede cambiar el estado de la
+        recomendación, es decir, añadir la recomendación al plan de ahorro
+        o indicar que no es aplicable al edificio.
+      \end{enumerate}
+    \item Ya terminado.
+      \begin{enumerate}
+      \item El sistema mueve la recomendación al final de la lista de
+        recomendaciones.
+      \item En cualquier momento, el usuario puede cambiar el estado de la
+        recomendación, es decir, añadir la recomendación al plan de ahorro
+        o indicar que no es aplicable al edificio.
+      \end{enumerate}
+    \end{itemize}
+  \item El sistema refina y reordena la lista de recomendaciones después de que
+    el usuario realiza cualquiera de las acciones anteriores.
+  }
+  \addscenario{Flujo alternativo:}{
+  \item El usuario contesta alguna pregunta en el PPW o en el perfil detallado del
+    edificio.
+  \item El sistema refina y reordena la lista de recomendaciones después de que
+    el usuario realiza cualquiera de las acciones anteriores.
+  }
+  \additemizedfield{Postcondiciones:}{
+  \item Si el usuario añadió una recomendación a su plan de ahorro, entonces
+    se tiene un plan de ahorro actualizado.
+  \item Si el usuario realizó cualquier acción en una recomendación, entonces
+    la lista de recomendaciones es actualizada y reordenada.
+  }
+\end{usecase}
+
+\subsection{Ver recomendación}
+
+En el plan de ahorro, la lista de recomendaciones o en el perfil detallado
+del edificio solo se despliega el título y una breve descripción de cada
+recomendación. Para dar mayor información sobre la recomendación a implementar se
+proporciona al usuario más información sobre los pasos para lograr su
+implementación.
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Ver recomendación}
+  \addfield{Descripción:}{El sistema despliega información adicional
+    sobre una recomendación para que el usuario pueda elegir
+    implementarla.}
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
+  }
+  \addfield{Requerimientos no funcionales:}{
+    Cualquier acción en una recomendación debe hacerse en forma
+    asíncrona y sin necesitar una recarga completa de la página.
+  }
+  \pagebreak
+  \addscenario{Flujo normal:}{
+  \item El usuario ve una recomendación que capta su atención y selecciona el título
+    de la recomendación.
+  \item El sistema despliega información adicional sobre la recomendación. Por
+    ejemplo, (1) cuanto ahorraría al realizar tal recomendación, (2) qué se necesita
+    hacer para obtener este ahorro, etcétera.
+  \item El usuario puede realizar las acciones definidas en el caso
+    de uso anterior, es decir, añadir la recomendación al plan de ahorro,
+    indicar que no aplica dicha recomendación o bien la recomendación ha sido
+    completada.
+  }
+  \addfield{Postcondiciones:}{
+    Si el usuario realizó cualquier acción en una recomendación, entonces
+    la lista de recomendaciones es actualizada y reordenada.
+  }
+\end{usecase}
+
+\subsection{Ver historial de consumo}
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Ver historial de consumo}
+  \addfield{Descripción:}{Se muestra el consumo energético del edificio
+    mediante un conjunto de gráficas con múltiples vistas para diferentes
+    rangos de tiempo y categorías de gasto (gas, electricidad y emisiones de carbón).
+  }
+  \addfield{Actor:}{Usuario PyME}
+  \additemizedfield{Precondiciones:}{
+  \item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+    de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  \item El usuario debió haber creado previamente el perfil básico del edificio.
+  }
+  \addfield{Requerimientos no funcionales:}{
+    Las actualizaciones a la página deben hacerse en forma asíncrona y sin necesitar
+    una recarga completa de la página.
+  }
+  \addscenario{Flujo normal:}{
+  \item El sistema despliega inicialmente una gráfica del gasto anual de
+    electricidad y gas del edificio.
+  \item El sistema muestra un menú con las siguientes opciones de visualización:
+    \begin{itemize}
+    \item Gasto: el cual es calculado en dolares con gráficas anuales, mensuales
+      y diarias.
+    \item Electricidad: se refiere al cálculo en kilowatt-hora con gráficas anuales,
+      mensuales y diarias.
+    \item Gas: el cual es medido en termia, con gráficas anuales, mensuales y
+      diarias
+    \item Emisiones de carbón: medido en toneladas, con gráficas anuales, mensuales
+      y diarias.
+    \item Análisis: gráfica que indica el consumo estimado según la categoría.
+      Las categorías son: refrigeración, iluminación, calefacción, etcétera.
+    \end{itemize}
+  }
+  \addfield{Postcondiciones:}{
+    El sistema se mantiene en el mismo estado.
+  }
+\end{usecase}
+
+\subsection{Administrar plan de ahorro}
+
+El plan de ahorro es un conjunto de recomendaciones que el usuario se ha comprometido
+a llevar a cabo en su edificio. La administración de esta lista es de vital
+importancia para el sistema \texttt{PEAT} puesto que permite al usuario tomar
+acciones concretas para reducir sus costos de energía.
+
+\begin{usecase}
+  \addtitle{Caso de Uso:}{Administrar plan de ahorro}
+  \addfield{Descripción:}{El sistema debe permitir la administración
+    del plan de ahorro del edificio, el cual consiste en un conjunto de
+    recomendaciones que el usuario sea ha comprometido a realizar o bien que ya ha
+    terminado para reducir su gasto energético.}
+  \addfield{Actor:}{Usuario PyME}
+  %\additemizedfield{Precondiciones:}{
+  %\item El usuario ha sido autentificado por medio de un elemento (\textit{token})
+  %  de autenticación (\textit{Single Sign On} SSO) asignado por el sistema de PG\&E.
+  %\item El usuario debió haber creado previamente el perfil básico del edificio.
+  %}
+  \addfield{Requerimientos no funcionales:}{
+    Las actualizaciones a la página deben hacerse en forma asíncrona y sin necesitar
+    una recarga completa de la página.
+  }
+  \addscenario{Flujo normal:}{
+  \item El usuario no ha agregado ninguna recomendación a su plan
+    \begin{enumerate}
+    \item Las tres mejores recomendaciones son desplegadas dentro del plan de ahorro.
+    \item El sistema elige estas recomendaciones por medio de la siguiente lógica:
+      \begin{itemize}
+      \item Son ordenadas según su período de recuperación (definido por el ahorro
+        anual en dólares / costo en dólares, por adelantado).
+      \item Recomendaciones con costo inicial cero (por ejemplo, acciones basadas
+        en comportamiento) se consideran que tienen un reembolso de dos años.
+      \item Las recomendaciones que han sido marcadas como completadas o que no aplican
+        no son parte de la selección para el plan de ahorro.
+      \end{itemize}
+    \end{enumerate}
+  \item El usuario a agregado una o más recomendaciones a su plan de ahorro.
+    \begin{itemize}
+    \item La mejor recomendación es desplegada debajo del componente PPW.
+    \item El sistema despliega una lista de las recomendaciones que el usuario
+      a agregado a su plan.
+      \begin{itemize}
+      \item El sistema debe indicar que la lista de recomendaciones es el plan
+        de ahorro.
+      \item El usuario puede agregar más recomendaciones desde la lista de
+        recomendaciones, cuando se añade una de estas solamente es
+        visible en el plan de ahorro ya no debe de aparecer en la lista de
+        recomendaciones
+      \item El usuario puede remover recomendaciones de su plan seleccionando
+        \textquote{Remover del plan} en un menú desplegable al lado del nombre de la
+        acción.
+      \end{itemize}
+    %\item El usuario puede ordenar la lista por nombre, categoría, costo, ahorro
+    %  o reembolso.
+    \item El usuario puede obtener más información al seleccionar una recomendación.
+    \item El usuario actualiza el estado de una recomendación a
+      \textquote{Completada} o \textquote{Remover}.
+      \begin{itemize}
+      \item Las recomendaciones dentro del plan de ahorro solo pueden tener
+        dos posibles estados: \textquote{Completada} y \textquote{Remover},
+        el estado base de una recomendación agregada al plan es de
+        \textquote{Añadida}.
+      \item Las recomendaciones con estado de \textquote{Completada} permanecen
+        en el plan de ahorro con la selección \textquote{Completada} desplegada
+        al lado del nombre de la acción.
+      \end{itemize}
+    \end{itemize}
+  }
+  \addfield{Postcondiciones:}{
+    Si el usuario realizó cualquier acción en una recomendación entonces el plan
+    de ahorro es actualizado y reordenado.
+  }
+\end{usecase}
+
+\section{Interfaz de usuario}
+
+Dados los requerimientos funcionales y no funcionales presentados en los
+casos de uso se encuentra que la interfaz de usuario debe tener las
+siguientes características:
+
+\begin{itemize}
+\item La interfaz debe ser simple y enfocada a la información que el
+  usuario necesita.
+\item La interfaz debe permitir realizar la mayoría de sus
+  acciones de forma asincrónica, sin necesidad de una recarga completa de
+  la página.
+\item Toda interacción debe completarse en menos de un segundo.
+\end{itemize}
+
+Para cumplir estos requerimientos fue necesario una cantidad considerable
+de código Javascript en la parte del \textit{frontend}, para realizar peticiones
+al servidor de forma asíncronas por medio de AJAX, y realizar las actualizaciones
+a la vista después de recibir la respuesta del servidor.
+
+Para permitir el reuso de código para la implementación de funcionalidad como
+el \textit{componente de ingreso progresivo} era necesario dar estructura a los
+componentes del \textit{frontend}, para este fin se eligió utilizar la biblioteca
+\textit{Backbone} pues permite definir una arquitectura MVC, es decir, permite
+definir modelos, vistas y controladores en la parte del \textit{frontend}.
+
+\subsection{Descripción general y navegación}
+
+La interfaz de usuario en el sistema \texttt{PEAT} está compuesta por ocho páginas
+de las cuales tres son páginas de PG\&E y las restantes son gestionadas por
+\texttt{PEAT}.
+
+Todas las páginas del sistema muestran un menú de navegación que permite al
+usuario navegar directamente a las páginas \textquote{Plan de ahorro},
+\textquote{Recomendaciones} y \textquote{Perfil detallado del edificio}.
+
+La descripción general de las páginas es la siguiente:
+
+\begin{enumerate}
+\item Un usuario ingresa al portal de PG\&E, luego a la página de ingreso del
+  sistema \textit{MyEnergy} de PG\&E, en este sistema es donde los usuarios PyME
+  realizan la administración de su perfil y cuentas con PG\&E. En el tablero de
+  \textit{MyEnergy} se tiene una liga que invita al usuario a conocer sobre
+  medidas para ahorrar, esta liga dirige al usuario al sistema \texttt{PEAT}
+  (Ver Figura 3.3 1).
+\item En el primer ingreso al sistema se dirige al usuario a la página
+  \textquote{Crear perfil del edificio} (Ver Figura 3.3 2), aquí el usuario
+  solo contesta las preguntas básicas sobre su edificio
+  (Ver caso de uso \textit{Crear perfil del edificio}).
+  El usuario regresa a esta página cuando requiere agregar más edificios a su cuenta.
+  Al finalizar la creación del perfil se redirige al usuario a la página de
+  \textquote{Plan de ahorro}.
+\item La página de \textquote{Plan de ahorro} es la página principal del sistema
+  \texttt{PEAT}, es decir, la página inicial (cuando el usuario cuenta por lo
+  menos con un un perfil de edificio) al ingresar por medio de su tablero en
+  \textit{MyEnergy} (Ver Figura 3.3 3).
+  El plan de ahorro presenta la siguiente funcionalidad al usuario:
+  \begin{itemize}
+  \item Parte superior: se proporciona al usuario capacidad para interactuar
+    con la facturación de sus gastos de energía por medio de gráficas comparativas
+    (Ver caso de uso \textit{Ver historial de consumo}).
+  \item Parte inferior: se muestra al usuario su plan de ahorro, es decir,
+    las recomendaciones que se ha comprometido a realizar para reducir su gasto
+    (Ver caso de uso \textit{Administrar plan de ahorro}).
+  \end{itemize}
+  El usuario puede navegar a la página de \textquote{Detalle de recomendación}
+  mostrada en su plan de ahorro.
+\item En la página de \textquote{Recomendaciones} se tienen dos componentes
+  (Ver Figura 3.3 4):
+  \begin{itemize}
+  \item El componente de ingreso progresivo que invita al usuario a
+    dar mas información sobre su edificio (Ver caso de uso \textit{Obtener
+      información del edificio}).
+  \item Una lista de recomendaciones para reducir sus costos de energía
+    basados en el perfil de su edificio (Ver caso de uso \textit{Administrar
+      recomendaciones}).
+  \end{itemize}
+  El usuario puede navegar a la página de \textquote{Detalle de recomendación}
+  de las recomendaciones mostradas en la lista de recomendaciones.
+\item La página de \textquote{Perfil detallado del edificio} (Ver Figura 3.3 5) es
+  donde el usuario puede responder o actualizar las respuestas a las preguntas
+  sobre su edificio (Ver caso de uso \textit{Administrar perfil del edificio}).
+\item La página de \textquote{Detalle de recomendación} (Ver Figura 3.3 6) muestra
+  los pormenores sobre las medidas que se necesitan realizar para lograr reducir
+  el consumo en el edificio (Ver caso de uso \textit{Ver recomendación}).
+\end{enumerate}
+
+\rjcimage{0.7}{imagenes/UI-Navegacion.png}{Diagrama de alto nivel de
+  la navegación en el sistema \texttt{PEAT}.}{ui-navegation}
+
+\subsection{Encabezado general}
+
+Todas las páginas del sistema \texttt{PEAT} comparten el mismo encabezado,
+como se muestra en la Figura \ref{fig:global-header}, el cual tiene las
+siguientes secciones:
+
+\begin{enumerate}[a)]
+\item Componente de selección de edificios: este control muestra un menú
+  desplegable con todos los edificios asociados al usuario.
+\item Nombre del sistema: el nombre es \textquote{Chequeo de energía del negocio}
+  (\textit{Business Energy Checkup}), el nombre interno del sistema es \texttt{PEAT}.
+\item Menú de navegación del sistema.
+  \begin{itemize}
+  \item Plan de ahorro (\textit{Energy Plan}): dirige al usuario a la página de
+    \textquote{Plan de ahorro}.
+  \item Formas de ahorrar (\textit{Ways to Save}): dirige al usuario a la página de
+    \textquote{Recomendaciones}.
+  \item Perfil de negocio (\textit{Business Profile}): dirige al usuario a la página
+    de \textquote{Perfil detallado del edificio}.
+  \item Tomar un recorrido (\textit{Take a tour}): se muestra al usuario
+    las diferentes páginas y secciones del sistema.
+  \end{itemize}
+\item Título de la página actual.
+\item Componente de potencial de ahorro: este control muestra en todo momento
+  el potencial de ahorro del edificio y el ahorro que se obtiene por el plan
+  de ahorro del edificio.
+\end{enumerate}
+
+\rjcimage{1.0}{imagenes/Disposicion-Encabezado.png}{Encabezado principal
+  del sistema \texttt{PEAT}.}{global-header}
+
+
+\subsection{Crear perfil del edificio}
+
+La página para \textquote{Crear perfil del edificio} es la página inicial del
+sistema cuando el usuario no tiene ningún perfil del edificio asociado, esta página
+también es usada cuando el usuario agrega más edificios a su cuenta.
+
+Esta página tuvo varias iteraciones por la retroalimentación obtenida por las
+pruebas con los usuarios, en las primeras iteraciones la página requería que el
+usuario contestara toda la información requerida según el caso de uso
+\textit{Crear perfil del edificio} como se muestra en la Figura 3.5, lo cual
+representaba mucho trabajo al usuario.
+
+\jcimagefull{1.0}{imagenes/SBP-Wireframe.png}{Versión inicial para crear
+  un perfil de edificio.}
+
+Para facilitar al usuario el ingreso de información se decidió implementar
+las siguientes mejoras:
+
+\begin{enumerate}
+\item Se redujo el número de opciones para el tipo de industria, inicialmente
+  esta lista era numerosa lo que implicaba mas trabajo al usuario, se redujo
+  a cinco opciones que son visibles inmediatamente.
+\item Se dividió el ingreso de información en dos partes.
+\end{enumerate}
+
+En la versión final el sistema inicialmente pide al usuario seleccionar el tipo
+de industria que mejor describe su negocio, las opciones son: comercial, industrial,
+agrícola, multifamiliar y otro como se puede ver en la Figura 3.6.
+
+\rjcimage{0.75}{imagenes/SBP-Modal1.png}{Se pide al usuario
+  el seleccionar el tipo de industria de su negocio.}{sdp-modal1}
+
+Después el sistema pide al usuario seleccionar su cuenta y dirección
+de servicio, el alias del edificio, el tipo de edificio y su área
+como se puede ver en la Figura 3.7.
+
+\rjcimage{0.6}{imagenes/SBP-Modal2.png}{Se pide al usuario ingresar
+  las características básicas de su edificio.}{sdp-modal2}
+
+Al ingresar esta información el usuario es redirigido a la página de
+\textquote{Plan de ahorro} del perfil creado.
+
+\subsection{Plan de ahorro}
+
+La página de \textquote{Plan de ahorro} es la página principal del sistema
+\texttt{PEAT} dado que implementa la funcionalidad principal del sistema
+pues tiene la capacidad para interactuar con los datos sobre los gastos de
+energía y la administración del plan de ahorro del edificio.
+
+La página está dividida en dos secciones principales, en la sección superior
+se da el manejo de las gráficas para visualizar los gastos de energía y en la
+sección inferior se tiene la administración del plan de ahorro.
+
+\subsubsection{Visualización}
+
+La sección superior consta de las siguientes partes:
+\begin{itemize}
+\item Menú de vistas: En este menú el usuario puede seleccionar
+  que tipo de datos se despliega en las gráficas. Se tienen cuatro tipos
+  de vista: gasto (\textit{Spending}), electricidad (\textit{Electricity}), gas
+  (\textit{Gas}), emisiones de carbono (\textit{Carbon Emissions}) y análisis
+  (\textit{Energy Use}). También en este menú en la parte derecha se
+  tiene un estimado del ahorro que se puede obtener en el edificio
+  si se implementan las recomendaciones (Ver Figura 3.8).
+  \jcimage{1.0}{imagenes/Barra-Vistas-Ahorro.png}{Menú de vistas.}
+\item Menú de rango de tiempo: Esta sección se encuentra enseguida del menú de
+  vistas, aquí el usuario puede seleccionar entre los rangos de tiempo anual
+  (\textit{Annually}), mensual (\textit{Monthly}) o diario (\textit{Daily}) de la
+  vista seleccionada, en ciertas vistas se tienen opciones extra en la parte
+  derecha como por ejemplo agregar datos de clima o de periodos anteriores
+  a la vista actual (Ver Figura 3.9).
+  \jcimage{1.0}{imagenes/Barra-Rango.png}{Menú de rango de tiempo.}
+\item Área de visualización: En esta sección se despliega los datos de consumo
+  del edificio mostrando los datos y rango de tiempo que el usuario ha seleccionado
+  en los dos menús anteriores (Ver Figura 3.10).
+  \jcimage{1.0}{imagenes/Grafica.png}{Visualización del gasto de electricidad.}
+\end{itemize}
+
+Para la implementación de las gráficas se utilizó el marco de trabajo
+Ext JS, este marco de trabajo está diseñado para implementar aplicaciones
+de tipo \textit{SPA} por medio del lenguaje de programación Javascript.
+Ext JS implementa un gran número de controles de interfaz como paneles,
+barras de herramientas, pestañas, etcétera.
+
+Ext JS es una elección natural para el sistema \texttt{PEAT} dado que tiene un
+excelente paquete de graficación el cual permite presentar visualmente una gran
+cantidad de datos por medio de una amplia gama de gráficas: líneas, barras,
+circulares, etcétera. Otro punto a favor de Ext JS es que el equipo de programadores
+del \textit{frontend} estaba ampliamente familiarizado con este marco de trabajo.
+
+Dada la capacidad de Ext JS para crear interfaces se tenía el plan inicial
+de implementar toda la interfaz con este marco de trabajo sin embargo Ext JS tiene
+una gran desventaja ya que requiere de tiempo para inicializar sus componentes
+demasiado grande, (mas de un segundo), lo cual se contrapone a los requerimientos
+del cliente.
+Así se decidió hacer uso solamente del módulo de graficación de Ext JS y
+hacer la implementación de los controles necesarios para la interfaz desde cero
+haciendo uso de \texttt{Backbone}.
+
+Para cada rango de tiempo se utiliza un tipo de gráfico y/o visualización diferente:
+
+\begin{itemize}
+\item Anual: se hace una comparativa entre el gasto del edificio en los últimos doce
+  meses, el promedio de gasto de un edificio de características similares y
+  el gasto de un edificio eficiente en su consumo energético. Para hacer estas
+  comparaciones se utiliza gráficas de barras como se puede ver en la Figura 3.11.
+  \jcimage{1.0}{imagenes/Vista-Anual.png}{Visualización anual del gasto de
+    electricidad.}
+\item Mensual: se muestra una gráfica de líneas del gasto del edificio
+  en los últimos 12 meses, además permite comparar con el gasto del año anterior
+  como se puede observar en la Figura 3.12. Además se pueden agregar los datos sobre
+  el clima durante el período que se está visualizando.
+  \jcimage{0.9}{imagenes/Vista-Mensual.png}{Visualización mensual del gasto de
+    electricidad.}
+\item Diario: Se muestra una gráfica similar a la vista mensual, pero en este caso
+  se visualizan los últimos treinta días de gasto como se muestra en la Figura 3.13.
+  \jcimage{0.9}{imagenes/Vista-Diaria.png}{Visualización diaria del gasto de
+    electricidad, con la comparativa al gasto del año pasado y datos del
+    clima.}
+\item Análisis: Se muestra un análisis del gasto del edificio en categorías
+  por medio de una gráfica circular como se puede observar en la Figura 3.14, este
+  análisis es realizado usando aprendizaje de máquina por lo que este análisis es
+  solo una estimación.
+  \jcimage{0.9}{imagenes/Vista-Analisis.png}{Visualización del análisis del gasto de
+    electricidad.}
+\end{itemize}
+
+Aunque las figuras solo muestran el caso del gasto en electricidad las
+visualizaciones son idénticas para el gasto en gas.
+
+\subsubsection{Administración}
+
+La sección inferior como se muestra en la Figura 3.15 consta de las siguientes partes:
+\begin{itemize}
+\item Componente de ingreso progresivo: en este se despliega una pregunta
+  sobre el edificio del usuario, las características de este componente
+  se verán en detalle en la sección \ref{subsec:recomendaciones}.
+\item Componente lista de recomendaciones: en este componente se despliega la
+  lista de recomendaciones que forman el plan de ahorro del edificio,
+  las características de este componente se verán a detalle en la sección
+  \ref{subsec:componentes}.
+  \jcimage{0.9}{imagenes/Plan-Energia-Inicial.png}{Plan de energía inicial con
+    recomendaciones.}
+\end{itemize}
+
+\subsection{Recomendaciones}
+\label{subsec:recomendaciones}
+
+La página de \textquote{Recomendaciones} muestra al usuario una lista de
+sugerencias acerca de las medidas que se pueden realizar en el edificio
+para lograr disminuir el consumo energético del edificio. En esta lista se
+tienen todas las recomendaciones aplicables que no están ya en el plan
+de ahorro del edificio.
+
+La página tiene dos secciones: la sección lateral contiene el componente de
+ingreso progresivo y en la sección principal se tiene el componente lista
+de recomendaciones.
+
+\subsubsection{Componente de lista de recomendaciones}
+
+El componente de lista de recomendaciones consta de las siguientes secciones:
+
+\begin{itemize}
+\item Encabezado: se muestran las características principales por las cuales
+  el usuario puede ordenar la lista ya sea por nombre, categoría, costo, ahorro
+  y recuperación de la inversión, como se puede ver en la Figura 3.16.
+  \jcimage{1.0}{imagenes/Recomendaciones-Encabezado.png}{Encabezado de la lista
+    de recomendaciones.}
+\item Renglón: por cada recomendación en la lista se despliegan las
+  características principales definidas en el encabezado, además se tiene un botón
+  que permite al usuario cambiar el estado de la recomendación.
+  Para cada recomendación se tiene las siguientes secciones como se puede
+  ver en la Figura 3.17:
+  \begin{enumerate}[a)]
+  \item Imagen representativa de la recomendación.
+  \item Descripción de una línea de la recomendación.
+  \item Categoría de la recomendación.
+  \item Costo de implementar la recomendación.
+  \item Ahorro que trae la recomendación en un año.
+  \item Tiempo para recuperar la inversión, es decir, cuanto tiempo el ahorro
+    obtenido al implantar la recomendación es igual o superior al costo
+    de su implementación.
+  \item Breve descripción de las medidas necesarias para implementar la
+    recomendación.
+  \item Componente añadir al plan, este componente permite al usuario definir el
+    estado de la recomendación, es decir, si la recomendación es parte
+    del plan de ahorro, ya fue implementada o no aplica al edificio.
+  \end{enumerate}
+  \jcimage{1.0}{imagenes/Recomendaciones-Renglon.png}{Las secciones de una
+    recomendación.}
+\end{itemize}
+
+\subsubsection{Componente añadir al plan de ahorro}
+
+El componente \textquote{Añadir al plan} permite al usuario cambiar el estado
+de una recomendación, los estados posibles son:
+
+\begin{itemize}
+\item Por implementar: en este estado la recomendación no es parte
+  del plan de ahorro del edificio, este hace referencia al estado inicial de
+  las recomendaciones.
+\item Añadido: este estado indica que el usuario ha elegido implementar la
+  recomendación y por lo tanto es parte del plan de ahorro del edificio.
+\item No aplicable: este estado indica que la recomendación no es aplicable al
+  edificio.
+\item Completada: se refiere a la recomendación terminada la cual ya fue implementada
+  con éxito en el edificio, ésta se considera parte del plan de ahorro.
+\end{itemize}
+
+Mediante la interacción con este componente el usuario modifica el estado
+de una recomendación. Este componente tiene dos formas de interacción:
+\begin{itemize}
+\item Presionando su parte izquierda: se realiza la acción de agregar la
+  recomendación al plan de ahorro.
+\item Presionando su parte derecha: se despliega un menú de acciones
+  secundarias que dependen del estado actual de la recomendación.
+\end{itemize}
+
+Como se indico anteriormente para realizar la transición del estado
+\textquote{Por implementar} al estado \textquote{Añadido} el usuario solo tiene
+que presionar el control en su parte izquierda como se puede ver en las Figuras
+\ref{fig:boton-inicial} y \ref{fig:boton-final}.
+
+\rjcimage{0.4}{imagenes/Boton-Plan-Inicial.png}{Vista inicial del control
+  de añadir al plan.}{boton-inicial}
+\rjcimage{0.4}{imagenes/Boton-Plan-Anadido.png}{Vista cuando la recomendación
+  a sido añadida al plan.}{boton-final}
+
+El sistema despliega una ventana como se puede ver en la Figura
+\ref{fig:estimacion-recomendacion} preguntando al usuario una estimación
+del tiempo en que se podrá implementar las medidas propuestas por la
+recomendación que se esta agregando al plan de ahorro.
+\rjcimage{0.5}{imagenes/Recomendaciones-Estimacion.png}{Al agregar una
+  recomendación al plan el sistema pregunta el tiempo estimado para completar
+  la recomendación.}{estimacion-recomendacion}
+
+Para realizar otras acciones sobre la recomendación el usuario presiona la parte
+derecha del componente en la parte donde se encuentra un triángulo que indica la
+presencia de un menú despegable.
+Estando la recomendación es un estado inicial \textquote{Por implementar} las
+acciones en el menu despegable son para indicar que se ha completado la recomendación
+(estado \textquote{Completada}) o que no es aplicable
+(estado \textquote{No aplicable}) como se puede observar en la Figura
+\ref{fig:menu-anadir-inicial}.
+
+\rjcimage{0.5}{imagenes/Boton-Plan-Menu-Inicial.png}{Las acciones de
+  completar o indicar no aplicable en el menú despegable.}{menu-anadir-inicial}
+
+Cuando la recomendación se encuentra en el estado de \textquote{Añadido} las
+acciones en el menú despegable son las relacionadas con completar, remover o indicar
+que no es aplicable a la recomendación como se muestra en la Figura
+\ref{fig:menu-anadir-anadido}.
+
+\rjcimage{0.35}{imagenes/Boton-Plan-Menu-Anadido.png}{Las acciones de
+  completar, remover o indicar no aplicable en el menú despegable.}{menu-anadir-anadido}
+
+\subsection{Detalle de recomendación}
+
+La página de \textquote{Detalle de recomendación} describe de forma detallada la
+recomendación y las medidas que se tienen que implementar para lograr reducir
+el consumo energético del edificio.
+
+La página está dividida en las siguientes secciones:
+\begin{itemize}
+\item Encabezado: se muestra una descripción breve de la recomendación y a su
+  derecha se tiene el componente \textquote{Añadir al plan} como se muestra
+  en la Figura \ref{fig:recomendacion-encabezado}.
+  \rjcimage{1.0}{imagenes/Recomendacion-Titulo.png}{Encabezado de la recomendación
+    para la instalación de un sistema de paneles solares.}{recomendacion-encabezado}
+\item Descripción: se describe a detalle la información sobre las medidas
+  necesarias para reducir el consumo energético del edificio.
+\item Preguntas:  Como se puede observar en la Figura
+  \ref{fig:recomendacion-descripcion} después de la descripción se pueden
+  tener una o varias preguntas al usuario para obtener mas datos con el fin de
+  establecer una mejor estimación sobre los costos y ahorro esperados al completar
+  la recomendación.
+  En la sección lateral se despliega el resultado del cálculo estimado
+  de costos y ahorro al completar la recomendación, estos datos son
+  actualizados de forma asíncrona cuando el usuario contesta o cambia
+  la respuesta a alguna de las preguntas presentadas en el contenido
+  principal.
+  \rjcimage{1.0}{imagenes/Recomendacion-Descripcion.png}{Descripción detallada
+    de la recomendación, con la estimación de costo y ahorro en la sección lateral.}{recomendacion-descripcion}
+\end{itemize}
+
+\subsection{Perfil detallado del edificio}
+
+La página de \textquote{Perfil detallado del edificio} permite al usuario el ingreso
+o actualización de las características de su edificio por medio de un
+conjunto de preguntas y respuestas divididas en categorías, como se puede
+observar en la Figura \ref{fig:perfil-categorias}.
+
+La página se encuentra dividida en varias secciones\footnote{Una sección por
+  categoría}:
+\begin{itemize}
+\item Edificio (\textit{Building}).
+\item Iluminación (\textit{Lighting}).
+\item Calefacción, ventilación y aire acondicionado (\textit{Heating, Ventilation and Air Conditioning} HVAC).
+\item Refrigeración (\textit{Refrigeration}).
+\item Cocina (\textit{Cooking}).
+\item Calefacción de agua (\textit{Water-Heating}).
+\item Miscelánea (\textit{Misc}).
+\end{itemize}
+
+Varias categorías como cocina y refrigeración solo son mostradas
+para ciertos tipos de edificios.
+
+\rjcimage{1.0}{imagenes/Perfil-Secciones.png}{Las preguntas y respuestas sobre
+  el edificio se organizan en categorías.}{perfil-categorias}
+
+El usuario selecciona una categoría seleccionando el título de una categoría,
+para que esa sección presente las preguntas y respuestas asociadas a ésta.
+
+Cada sección está dividida, como se muestra en la Figura \ref{fig:perfil-seccion},
+en las siguientes partes:
+\begin{enumerate}
+\item Encabezado de la sección: cada encabezado tiene un ícono característico,
+  el nombre de la categoría y en la parte derecha un marcador indica
+  si todas las preguntas de la sección han sido respondidas por el usuario
+  (Ver Figura \ref{fig:perfil-seccion} 1).
+\item Preguntas y respuestas: las preguntas son breves y se refieren a una
+  característica particular del edificio. La mayoría de las preguntas
+  tiene respuestas definidas\footnote{Se cuenta solo con un reducido número de
+    preguntas donde se espera el ingreso de un valor numérico}. Las respuestas se
+  presentan de las siguientes formas (Ver Figura \ref{fig:perfil-seccion} 2):
+  \begin{enumerate}[a)]
+  \item Menú desplegable: para preguntas que tienen mas de tres respuestas
+    posibles excluyentes.
+  \item Casillas de selección múltiple: para preguntas en que las respuestas
+    pueden ser validas al mismo tiempo.
+  \item Campo de texto limitado (solo un valor numérico): para las preguntas
+    en que se necesita un valor numérico exacto.
+  \item Botón de opción (con texto o imagen): para preguntas que tiene un
+    número limitado de respuestas posibles. Se hace uso de imágenes para las
+    preguntas más técnicas para facilitar al usuario el contestar la pregunta.
+  \end{enumerate}
+\item Botón siguiente: para progresar a la siguiente categoría (Ver Figura \ref{fig:perfil-seccion} 3).
+\end{enumerate}
+
+\rjcimage{0.85}{imagenes/Perfil-Preguntas.png}{Las preguntas de las secciones
+  Edificio y HVAC.}{perfil-seccion}
+
+\subsection{Componentes reusables}
+\label{subsec:componentes}
+
+En \texttt{PEAT} se tienen varios componentes como el componente de ingreso
+progresivo o el componente para añadir al plan de ahorro cuya presencia es necesaria
+en varias de las páginas del sistema por la funcionalidad que proporcionan.
+Para permitir el reuso de código y diseño de estos componentes se decidió hacer uso
+de la biblioteca \texttt{Backbone}, dado que permite dar estructura (definiendo
+modelos, vistas y controladores) al implementar la funcionalidad requerida.
+
+Los componentes que se implementaron son los siguientes:
+\begin{itemize}
+\item Componente de ingreso progresivo.
+\item Componente del potencial de ahorro.
+\item Componente para lista de recomendaciones.
+\item Componente para añadir al plan de ahorro.
+\end{itemize}
+
+\subsubsection{Componente de ingreso progresivo}
+
+Este componente muestra al usuario una pregunta y sus posibles respuestas sobre el
+perfil del edificio. Este componente es usado en las páginas de
+\textquote{Plan de ahorro} y de \textquote{Recomendaciones}.
+
+El componente, como se puede ver en la Figura \ref{fig:ingreso-progresivo}, tiene
+las siguientes partes:
+\begin{enumerate}[a)]
+\item Pregunta y respuesta: se despliega una sola pregunta y
+  las respuestas se presentan según los tipos de respuesta expuestos
+  en el perfil del edifico.
+\item Botón saltar (\textit{Skip}): permite al usuario omitir dicha pregunta
+  mostrada y pasar a la siguiente pregunta sin contestar del perfil
+  de su edificio.
+\item Botón siguiente (\textit{Next}): permite al usuario enviar la respuesta
+  seleccionada de la pregunta mostrada.
+\item Liga al perfil detallado: permite al usuario navegar al perfil
+  detallado de su edificio.
+\end{enumerate}
+\rjcimage{0.5}{imagenes/PPW.png}{Componente de ingreso progresivo.}{ingreso-progresivo}
+
+\subsubsection{Componente del potencial de ahorro}
+
+Este componente permite al usuario conocer el potencial de ahorro del edificio y su
+ahorro esperado establecido en su plan de ahorro.
+
+\subsubsection{Componente lista de recomendaciones}
+
+Este componente lista las recomendaciones que se pueden realizar en un edificio para
+reducir sus gastos energéticos, la descripción detallada de este componente se
+encuentra en la Sección \ref{subsec:recomendaciones}.
+
+\subsubsection{Componente para añadir al plan de ahorro}
+
+Este componente permite modificar el estado de una recomendación,
+la descripción detallada de éste se encuentra en la Sección
+\ref{subsec:recomendaciones}. Este componente es usado en las páginas de
+\textquote{Plan de ahorro}, \textquote{Recomendaciones} y
+\textquote{Detalle recomendación}.

@@ -1,0 +1,476 @@
+\chapter{Fundamentos teóricos}
+
+En este capitulo se presentan los conceptos teóricos que permitieron
+el diseño e implementación del sistema \texttt{PEAT}.
+
+\section{Patrón Modelo-Vista-Controlador (MVC)}
+El patrón Modelo Vista Controlador (MVC) es probablemente el patrón
+mas utilizado y citado para el desarrollo de interfaces de usuario y sistemas web.
+MVC consiste de tres tipos de objetos \cite{22_martin_fowler_mvc}:
+
+\begin{itemize}
+\item Modelo: representación de la información de dominio del sistema.
+\item Vista: representación visual del modelo.
+\item Controlador: define la forma en que la interfaz reacciona a la entrada
+  del usuario.
+\end{itemize}
+
+\jcimage{1.0}{imagenes/MVC-Web.png}{Patrón MVC para sistemas web \cite{15_agile_hansson}.}
+
+MVC fue ideado originalmente para aplicaciones gráficas convencionales,
+donde los desarrolladores encontraron que la separación de responsabilidades,
+entre la presentación (vista y controlador) y el dominio (modelo), fomentadas
+por el patrón llevan a un menor acoplamiento lo que con lleva una escritura
+de código fuente y mantenimiento del mismo mucho mas sencillas (Ver Figura 2.1).
+
+MVC desacopla vistas y modelos mediante el establecimiento de un
+protocolo de suscripción / notificación. La vista debe asegurar que el
+aspecto visual refleje el estado del modelo. Cada vez que cambian
+los datos del modelo, el modelo notifica a las vistas que dependen de ella.
+Este enfoque permite conectar múltiples vistas a un modelo para proporcionar
+diferentes presentaciones. También puede crear nuevas vistas para un modelo
+sin reescribir este último \cite{14_gamma_1995}.
+
+\subsection{MVC y Rails}
+El marco de trabajo Rails hace uso de MVC como patrón de arquitectura
+para implementar sistemas web. En Rails los modelos se definen haciendo
+uso de la biblioteca \textit{ActiveRecord}, la cual implementa el
+patrón de mapeo objeto-relacional (\textit{Object-relational mapping},
+ORM) esto facilita el acceso de información contenida en
+bases de datos relacionales, dado que es el caso típico en sistemas web
+convencionales.
+
+En Rails, la vista es responsable de la creación de la respuesta dada para
+ser mostrada en un navegador. En su forma mas simple, una vista \textquote{es un
+  trozo de código HTML que muestra un texto fijo} \cite{15_agile_hansson}.
+Frecuentemente se requiere mostrar contenido dinámico creado por una acción en un
+controlador, por lo que el contenido dinámico es generado por medio de plantillas,
+el esquema más común de plantillas es llamado Ruby Embebido (\textit{Embedded Ruby},
+ERB), el cual inserta pedazos de código de Ruby dentro de una vista, similar a la
+forma como se hace en otros marcos de trabajo como PHP o JSP. También se pude hacer
+uso de Ruby Embebido para incrustar pedazos de código Javascript en el servidor,
+que serán ejecutados en el navegador, lo cual permite crear interfases
+dinámicas haciendo uso de \textit{Asynchronous Javascript and XML} (AJAX).
+
+Finalmente en Rails los controladores son el centro lógico del sistema, ya que
+coordinan la interacción entre el usuario, las vistas y el modelo
+\cite{15_agile_hansson}.
+
+\subsection{MVC y PEAT}
+\texttt{PEAT} saca provecho del patrón MVC de las siguientes maneras \cite{15_agile_hansson}:
+
+\begin{enumerate}
+\item Modelo: dado que en un principio los servicios web de recomendaciones y
+  desa\-gregación estaban en construcción se utilizó la biblioteca
+  \textit{ActiveRecord} con el fin de tener datos reales estáticos que
+  permitieran la implementación de la interfaz de usuario.
+  Posteriormente se reemplazaron éstos por nuevos modelos que hacían
+  uso de los servicios web del \textit{backend}, por medio de la biblioteca
+  \texttt{Bezel}.
+  Estos cambios no tuvieron un alto impacto en el desarrollo del sistema per se,
+  dado el desacoplamiento existente entre los modelos y las vistas.
+\pagebreak
+\item Vista: haciendo uso de plantillas se generan representaciones de los
+  principales modelos del sistema en HTML y JSON.
+
+  Sin embargo, para ciertos modelos, como las \textit{recomendaciones} y los
+  \textit{reportes de consumo}, se contaba con una tercera representación en forma
+  de PDF del modelo.
+\end{enumerate}
+
+\section{Servicios web RESTful}
+La \textit{World Wide Web Consortium}, W3C, define que un servicio web
+en general es un sistema de software diseñado para dar soporte a interacciones
+máquina-máquina a través de una red informática \cite{17_w3c_webservice}.
+Su implementación nació de tener diferentes sistemas que puedan intercambiar
+datos entre ellos.
+
+Transferencia de Estado Representacional (\textit{Representational State Transfer}, REST)
+es una arquitectura de software para la implementación de servicios web.
+En REST se define la existencia de recursos (elementos de información), donde
+cada recurso tiene un conjunto de representaciones posibles.
+Por ejemplo una lista de errores por arreglar (recurso) puede ser presentado en
+forma de un documento XML, una página HTML o un archivo CSV (representaciones).
+
+\vspace{2.5mm}
+
+Se tienen cuatro características principales \cite{1_richardson_2007}:
+
+\begin{itemize}
+\item Protocolo cliente/servidor sin estado (\textit{stateless}): cada mensaje
+  HTTP contiene toda la información necesaria para comprender la petición.
+  Esto implica que ni el cliente ni el servidor necesitan recordar ningún
+  tipo de estado.
+\item Conectividad (\textit{connectedness}): las representaciones son un hipermedio
+  en el cual se tienen ligas a otros recursos, como resultado de esto, es posible
+  navegar de un recurso REST a muchos otros, sin necesidad de una
+  infraestructura adicional.
+\item Direccionabilidad (\textit{addressability}): la capacidad para
+  identificar los recursos del sistema. Cada recurso es direccionable únicamente
+  a través de su Identificador de Recursos Uniforme (\textit{Uniform Resource Identifier}, URI).
+\item Interfaz uniforme (\textit{uniform interface}): se tiene un conjunto de
+  operaciones bien definidas que se aplican a todos los recursos del sistema.
+  Se usan los métodos de HTTP para definir las operaciones más importantes
+  como son GET, POST, PUT, PATCH y DELETE.
+\end{itemize}
+
+Los servicios web que implementan una arquitectura REST se suelen llamar
+servicios web RESTful.
+
+\subsection{REST y Rails}
+
+La arquitectura REST es parte vital de Rails, todo el enrutamiento y
+manejo de peticiones se basa en esta arquitectura.
+
+En REST se hace uso de un conjunto finito de verbos para operar sobre otro
+conjunto de objetos. Dado que estamos usando HTTP como capa de transporte, los
+verbos corresponden a los métodos HTTP (GET, POST, PUT, PATCH, y DELETE).
+Los objetos corresponden a los recursos del sistema, los cuales son etiquetados
+usando un (\textit{Uniform Resource Locator}, URL).
+
+Un navegador solicita páginas de Rails al hacer una petición para una dirección URI
+haciendo uso de un método HTTP específico, como GET o POST. Cada método es una
+petición para realizar una operación sobre el recurso.
+
+Haciendo uso de la interfaz uniforme, Rails define todo un conjunto de rutas
+para un recurso, tomando como ejemplo el concepto de edificio (\textit{Building}),
+entonces se define el recurso y sus rutas asociadas con lo siguiente:
+
+\begin{verbatim}
+resources :buildings
+\end{verbatim}
+
+En la Tabla \ref{table:rest} se pueden ver las rutas y métodos asociados para
+las principales operaciones sobre el recurso \textit{buildings}, esto acelera
+en gran medida el desarrollo de servicios web.
+
+\begin{table}[h!]
+  %\centering
+  \begin{tabular}{|m{1.2cm}|m{2.5cm}|m{3cm}|m{3.5cm}|}
+    \hline
+    \rowcolor{lightgray}
+    \multicolumn{1}{|>{\centering\arraybackslash}m{14mm}|}{\textbf{Método HTTP}}
+    & \multicolumn{1}{>{\centering\arraybackslash}m{25mm}|}{\textbf{Ruta}}
+    & \multicolumn{1}{>{\centering\arraybackslash}m{30mm}|}{\textbf{Controlador\#Acción}}
+    & \multicolumn{1}{>{\centering\arraybackslash}m{35mm}|}{\textbf{Usado para}} \tabularnewline
+    %\rowcolor{lightgray} \textbf{Método HTTP} & \textbf{Ruta} & \textbf{Controlador\#Acción} & \textbf{Usado para}\\
+    \hline\hline
+    GET & /buildings & buildings\#index & Listar todos los edificios\\
+    \hline
+    GET & /buildings/new & buildings\#new & Regresar una forma para crear un edificio\\ [2ex]
+    \hline
+    POST & /buildings & buildings\#create & Crear un nuevo edificio\\
+    \hline
+    GET & /buildings/:id & buildings\#show & Mostrar un edificio especifico\\
+    \hline
+    GET & /buildings/:id/edit & buildings\#edit & Regresar una forma para editar un edificio\\
+    \hline
+    PATCH & /buildings/:id & buildings\#update & Actualizar un edificio\\
+    \hline
+    DELETE & /buildings/:id & buildings\#destroy & Borrar un edificio\\
+    \hline
+  \end{tabular}
+  \caption{Rutas y métodos para el recurso \textit{buildings} \cite{18_rails_rest}.}
+  \label{table:rest}
+\end{table}
+
+\subsection{REST y PEAT}
+La arquitectura REST influye en las tres partes principales de \texttt{PEAT}.
+
+\begin{itemize}
+\item \textit{Frontend}: por medio de Rails se implementa un servicio web RESTful
+  para proveer de información a la interfaz gráfica del sistema.
+\item \textit{Backend}: los servicios web que componen el \textit{backend}, como el
+  sistema de recomendaciones, son del tipo RESTful. El recurso principal del sistema
+  es el de edificio (\textit{Building}) el cual se encuentra alrededor de los demás
+  recursos del sistema.
+\item \textit{Middleware}: la biblioteca \texttt{Bezel} se beneficia gracias al hecho
+  de que el \textit{backend} sea de tipo RESTful, pues facilita la integración del
+  sistema, dado que hace un mapeo casi directo de los recursos a clases y objetos.
+
+\end{itemize}
+
+
+\section{Desarrollo guiado por pruebas y comportamiento}
+El tener código fuente que sea limpio y que además tenga la funcionalidad deseada
+es uno de los principales objetivos en cualquier sistema. Cabe señalar que
+por código limpio se entenderá en este trabajo, aquel código fuente que sea fácil
+de entender y de modificar \cite{4_beck_2003}.
+
+El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) y el
+desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
+son prácticas de ingeniería de software que tiene por objetivo el obtener código
+limpio y funcional.
+
+\subsection{Desarrollo guiado por pruebas (TDD)}
+El desarrollo guiado por pruebas (\textit{Test Driven Development}, TDD) es una
+buena práctica de software que involucra el escribir las pruebas antes de
+realizar la implementación, esto mejora el diseño y eficacia de la implementación.
+Al escribir las pruebas antes que el código fuente, contrario al proceso habitual,
+permite que las pruebas ayuden a guiar el diseño del código fuente en pequeños
+pasos. En el largo plazo este proceso implementa un código fuente bien
+estructurado que es fácil de mantener y de modificar\cite{4_beck_2003}.
+
+\vspace{2.5mm}
+
+El proceso clásico en TDD es el siguiente \cite{12_rappin_2010}:
+\begin{enumerate}
+\item Implementar una prueba: esta prueba debe ser breve y debe probar
+  solamente una unidad de código (función, clase o módulo).
+\item Asegurar que la prueba falle: se verifica que la prueba falle antes
+  de escribir cualquier código. Esto es para asegurar que la prueba realmente
+  hace lo que se espera de ella.
+\item Implementar la nueva funcionalidad: se implementa el mínimo código de
+  forma que la prueba pase satisfactoriamente.
+\item Mejorar el código fuente: se elimina toda repetición que se originó al
+  implementar la nueva funcionalidad para lograr que la prueba pase
+  satisfactoriamente, dentro de esta fase también se realiza cualquier
+  otra optimización y/o abstracción necesaria. Este proceso recibe el nombre de
+  refactorización, el cual es parte vital del proceso.
+\end{enumerate}
+
+Este proceso se repite hasta que se termina de implementar toda la funcionalidad
+del sistema. Al seguir este proceso, en teoría, se asegura que el código fuente
+siempre se mantiene lo mas simple posible y se encuentra verificado completamente.
+
+\subsubsection{Ventajas}
+TDD va mas allá de la mera verificación al hacer uso de las pruebas para
+mejorar la estructura del código fuente, por esto es que TDD es una práctica
+de software y no solamente una herramienta de verificación.
+
+Al alinear continuamente el código fuente con las pruebas se obtiene código fuente
+conformado por pequeños métodos, cada uno de los cuales tiene solamente una sola
+responsabilidad. Estos métodos tienden a tener bajo acoplamiento y
+con pocos efectos laterales, lo que facilita su comprensión y mantenimiento.
+
+\subsubsection{Desventajas}
+TDD no es un substituto para pruebas de aceptación, es decir, pruebas que confirman
+que el software funciona según los requerimientos del cliente.
+
+TDD asume que se conoce el resultado esperado que se quiere verificar,
+cuando los requerimientos no son totalmente claros, entonces TDD no resulta adecuado
+puesto que es difícil escribir las pruebas de un proceso que no se conoce en
+detalle.
+
+\subsubsection{RSpec}
+\textit{RSpec} es un marco de trabajo del proceso TDD/BDD para el lenguaje de
+programación Ruby. \textit{RSpec} define un lenguaje de dominio específico (DSL)
+para implementar pruebas unitarias y de aceptación \cite{23_chelimsky_2010}.
+
+\vspace{2.5mm}
+
+Un ejemplo de una prueba unitaria haciendo uso de \textit{RSpec}:
+% Ejemplo de prueba en RSpec
+\lstinputlisting[language=Ruby]{code/rspec-example.rb}
+
+El método \textit{it} (en la línea 6) crea un ejemplo del comportamiento de
+\textit{Bezel::Client} dentro de un contexto, el cual es que el servidor C3
+esta corriendo la versión 2.
+
+\subsection{Desarrollo guiado por comportamiento (BDD)}
+En desarrollo guiado por comportamiento (\textit{Behavior Driven Development}, BDD)
+es una práctica de software surgida de el TDD, al igual que esta última
+involucra escribir las pruebas antes de escribir el código fuente y la
+refactorización contínua del código fuente. Así mientras que el TDD se enfoca
+en describir el comportamiento de unidades de código el BDD se enfoca en
+describir el comportamiento de la interacción entre varios módulos del sistema.
+
+En BDD la unidad de prueba, es conocida como las pruebas de aceptación, las cuales
+definen una serie de escenarios, los cuales surgen de los casos de uso del sistema.
+Estos escenarios casi siempre se especifican en un lenguaje DSL que hace uso
+de lenguaje natural (casi siempre inglés) para definir así el comportamiento
+esperado del sistema \cite{23_chelimsky_2010}.
+
+\subsubsection{Ventajas}
+En BDD el diseño del código fuente del sistema se guía a través de las pruebas
+de aceptación desarrolladas junto con el cliente, por lo que obtenemos software
+que funciona según los requerimientos del cliente.
+
+\subsubsection{Desventajas}
+BDD no es un substituto para pruebas unitarias, dado que el enfoque de
+las pruebas de aceptación es sobre el comportamiento de grandes bloques
+del sistema y no en los detalles del mismo.
+
+Para obtener el mayor beneficio con BDD es necesario especificar las pruebas
+de aceptación con el cliente y gente relacionada con el negocio, lo cual no
+siempre es posible \cite{12_rappin_2010}.
+
+\subsubsection{Cucumber}
+\textit{Cucumber} es un marco de trabajo que permite especificar y ejecutar
+pruebas de aceptación siguiendo el proceso BDD. Define un lenguaje llamado
+\textit{Gherkin} que permite escribir escenarios en lenguaje natural. De esta manera
+facilita que personas no técnicas, como el cliente o gente de negocio,
+puedan ayudar a escribir o dar el visto bueno a las pruebas de aceptación
+\cite{23_chelimsky_2010}.
+
+\vspace{2.5mm}
+
+Un ejemplo de prueba de aceptación es el siguiente:
+\begin{lstlisting}
+Característica:
+  Para disminuir mis costos de energía eléctrica
+  Como un usuario del sistema PEAT
+  Quiero saber sobre las posibles mejoras a mi edificio
+
+  Escenario: Desplegar la lista de recomendaciones
+    Dado que ingresó al sistema como el usuario @juan por primera vez
+    Y que tengo una cuenta y un edificio
+    Cuando entró a la página de recomendaciones
+    Entonces Yo debo ver un botón de "Añadir al plan" en cada recomendación
+\end{lstlisting}
+
+\textit{Gherkin} es un lenguaje que usa la identación para definir su estructura,
+de manera que los saltos de línea dividen las diferentes declaraciones,
+la mayoría de las líneas empiezan con palabras clave.
+
+\vspace{2.5mm}
+
+En los escenarios se tiene tres principales palabras clave:
+\begin{itemize}
+\item Dado (\textit{Given}): el propósito de esta declaración es el poner
+  el sistema en el estado deseado para iniciar la prueba correspondiente,
+  antes de que el usuario (o un sistema externo) interactué con el sistema.
+\item Cuando (\textit{When}): el propósito de esta declaración es el describir
+  la acción que se realiza por el usuario, la cual vamos a probar.
+\item Entonces (\textit{Then}): el propósito de esta declaración es observar
+  los resultado de la acción realizada, estas observaciones debe ser visibles
+  para el usuario o sistema externo.
+\end{itemize}
+
+\subsection{TDD/BDD y PEAT}
+Dado que TDD y BDD se enfocan en el comportamiento a diferentes niveles
+de un sistema éstos son complementarios y permiten subsanar sus respectivas
+desventajas. Así que en la implementación del sistema PEAT está basado en
+TDD y BDD para guiar el diseño del sistema, haciendo uso de los marcos
+de trabajo \textit{RSpec} y \textit{Cucumber} para realizar la especificación
+de las pruebas unitarias y de aceptación del sistema.
+
+Cabe mencionar que el uso de pruebas de aceptación permite a su vez que la
+transición del uso de datos estáticos al uso del API final sea lo mas fluído
+posible, ya que se indicaban los puntos críticos en los que se tiene que realizar
+cambios para obtener nuevamente el comportamiento esperado por el cliente.
+
+\section{Ruby, metaprogramación y lenguajes DSL}
+El lenguaje de programación Ruby es un lenguaje dinámico con una gramática compleja
+pero expresiva y cuenta con una biblioteca estándar extensa y poderosa.
+Ruby toma inspiración de otros lenguajes de programación como Lisp, Smalltalk y Perl
+\cite{24_matsumoto_2008}.
+
+Ruby es un lenguaje orientado a objetos puro, sin embargo permite el uso de
+otros paradigmas como el funcional o imperativo, incluye capacidades para la
+metaprogramación las cuales son usadas para crear fácilmente lenguajes de
+dominio especifico (\textit{Domain Specific Language}, DSL)\cite{24_matsumoto_2008}.
+
+\subsection{Metaprogramación y Ruby}
+La metaprogramación consiste en escribir programas que implementan o manipulan otros
+programas (o asimismos). Los ejemplos más comúnes de metaprogramación son los
+compiladores y generadores de código automatizado.
+
+En Ruby la metaprogramación se enfoca en código que se manipula asimismo en tiempo
+de ejecución, a este tipo de metaprogramación se le da el nombre de metaprogramación
+dinámica, para así diferenciarla de la metaprogramación asociada típicamente a
+los generadores de código y compiladores \cite{2_perrotta_2010}.
+
+Ruby es un lenguaje de programación muy dinámico:
+\begin{itemize}
+\item Permite crear clases y módulos en tiempo de ejecución.
+\item Permite agregar nuevos métodos a clases en tiempo de ejecución.
+\item Define varias llamadas (\textit{callbacks}) a eventos relacionados con
+  clases, módulos y métodos.
+\end{itemize}
+
+También se tiene un API de reflexión, el cual permite que un programa examine
+su estado y estructura, además permite que un programa altere su propio estado
+y estructura.
+
+El API de reflexión junto con el uso de bloques e iteradores y el uso opcional de
+paréntesis para la aplicación de funciones hacen de Ruby un lenguaje
+ideal para la metaprogramación \cite{24_matsumoto_2008}.
+
+\subsection{Lenguajes de dominio especifico}
+
+Lenguajes de programación como Ruby o C++ son Lenguajes de Propósito General
+(\textit{General Purpose Language}, GPL), es decir, lenguajes que son diseñados
+para ser usados para implementar software en una gran variedad de dominios.
+
+En contrapuesto se tienen los Lenguajes de Dominio Específico
+(\textit{Domain Specific Language}, DSL) los cuales están diseñados para resolver
+problemas en un dominio específico \cite{25_shriram_2003}.
+
+\subsubsection{DSL internos y externos}
+
+Para implementar un DSL se tienen dos rutas:
+\begin{itemize}
+\item Definir la gramática del lenguaje haciendo uso de herramientas como
+  ANTLR o Yacc, los cuales son DSL para escribir analizadores sintácticos
+  de lenguajes. Posteriormente se tiene que escribir un intérprete para
+  la gramática definida. Este tipo de lenguajes se les conoce como DSL externos.
+\item Tomar un lenguaje GPL y modificarlo para que se asemeje al DSL que
+  se necesita. A este tipo de DSL se les conoce por el nombre de DSL internos.
+\end{itemize}
+
+En el lenguaje de programación Ruby se tiene una gran cantidad de lenguajes
+DSL internos dada la flexibilidad de la sintaxis del lenguaje.
+
+En el siguiente ejemplo se tiene código Ruby que usa la biblioteca
+\textit{Markaby} para generar HTML. En este caso se tiene un DSL para generar HTML
+haciendo uso de Ruby como lenguaje GPL base.
+
+\pagebreak
+
+\lstinputlisting[language=Ruby]{code/dsl-example.rb}
+
+El ejemplo anterior muestra un código válido en Ruby, pero tiene la forma de un
+lenguaje específico para generar HTML. \textit{Markaby} define un DSL interno,
+ya que hace uso de Ruby para implementar su DSL.
+
+Una gran ventaja de los DSL internos es que se puede hacer uso del GPL subyacente
+fácilmente cuando sea necesario, aunque la sintaxis del DSL interno esta limitado
+por la sintaxis del lenguaje GPL. Este puede ser un gran limitante en otros lenguajes
+como en Java, en el cual es posible implementar DSL internos \cite{25_shriram_2003}.
+Cabe mencionar que éstos no dejan de tener un gran parecido a Java por lo rígido de
+su sintaxis, mientras que la sintaxis de Ruby es flexible lo que permite que los DSL
+internos definidos con este se vean mas adaptados al problema en cuestión.
+
+En este capítulo se vieron tanto patrones de arquitectura como prácticas de software
+que influyeron en gran medida en la implementación del sistema \texttt{PEAT}.
+También se expuso el concepto de metaprogramación y sus beneficios en contexto del
+lenguaje de programación Ruby. La aplicación de la metaprogramación fue pieza clave
+para la rápida implementación de la biblioteca \texttt{Bezel} como se mostrará en la
+Sección \ref{sec:bezel}.
+
+\section{Conocimiento obtenido durante la carrera}
+
+Durante la implementación del sistema \texttt{PEAT} hice uso del conocimiento
+obtenido durante mi paso por la carrera de Ciencias de la Computación, materias
+como Matemáticas Discretas y Análisis Lógico me han servido para ser un mejor
+programador. El resto de las materias relacionadas con matemáticas puras me
+ayudaron a tener en mente varias forma de abordar y resolver los problemas que se
+presentaban durante la implementación del sistema PEAT.
+
+De las materias restantes adquirí conceptos y conocimiento que fueron de gran
+utilidad para la implementación de \texttt{PEAT}:
+
+\begin{itemize}
+\item Lenguajes de Programación: los conceptos adquiridos en esta materia me
+  han permitido aprender rápidamente nuevos lenguajes de programación, también
+  el saber los diferentes paradigmas (estructurado, funcional, orientado a objetos)
+  permite obtener la mayor productividad en relación al problema a solucionar.
+  El concepto de lenguaje de dominio especifico (LDE) fue de vital importancia para
+  la implementación exitosa del sistema \texttt{PEAT} puesto que permitió el
+  diseño e implementación de la biblioteca \texttt{Bezel} la cual define un LDE
+  para definir modelos y sus asociaciones en base a tipos obtenidos del servidor C3.
+\item Sistema Operativos: el conocimiento obtenido sobre manejo de procesos
+  y memoria fue pieza fundamental para obtener mejoras en el tiempo de inicialización
+  del sistema \texttt{PEAT} y de su rendimiento en general.
+\item Computación Distribuida: me dio herramientas para poder solucionar problemas
+  que se presentan en sistemas distribuidos como sincronización de sesiones y
+  datos, permitiendo conocer las ventajas y desventajas de hacer uso de memoria
+  compartida distribuida para comunicación de sesiones y datos entre las diferentes
+  instancias del sistema \texttt{PEAT}.
+\item Redes de Computadoras: al tener un conocimiento de los protocolos
+  TCP/IP y del protocolo HTTP permite el uso óptimo de la arquitectura REST.
+\item Ingeniería de software: permitió ver la necesidad de detalle en varios
+  de los requerimientos iniciales, detectar deficiencias en los primeros
+  borradores de los casos de uso del sistema.
+\end{itemize}

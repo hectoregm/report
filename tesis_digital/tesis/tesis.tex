@@ -1,0 +1,253 @@
+\documentclass[letterpaper,twoside,openright]{book}
+%\usepackage[left=4cm,right=4cm,top=4cm,bottom=4cm,letterpaper]{geometry}
+\usepackage[spanish,mexico]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{mathptmx}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{listings}
+\usepackage[backend=biber,style=trad-abbrv]{biblatex}
+\usepackage{usecases}
+\usepackage{enumerate}
+\usepackage{csquotes}
+\usepackage{color}
+\usepackage{placeins}
+
+\let\Oldsection\section
+\renewcommand{\section}{\FloatBarrier\Oldsection}
+
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\usepackage{inconsolata}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    basicstyle=\ttfamily\small,
+    numberstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {ó}{{\'o}}1 {í}{{\'i}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1,
+    escapeinside={\%*}{*)}
+}
+ 
+\lstset{style=mystyle}
+
+\addbibresource{biblio.bib}
+
+\newcommand{\jcimage}[3]{\begin{figure}[h!]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\end{figure}\vskip10pt}
+
+\newcommand{\rjcimage}[4]{\begin{figure}[h!]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\label{fig:#4}\end{figure}}
+
+\newcommand{\rjcimagefull}[4]{\begin{figure}[p]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\label{fig:#4}\end{figure}}
+
+\newcommand{\jcimageinline}[3]{\begin{figure}[tb]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\end{figure}}
+\newcommand{\jcimagefull}[3]{\begin{figure}[p]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\end{figure}}
+\renewcommand{\arraystretch}{1.5}
+
+\newcommand{\imagefull}[4]{\begin{figure}\makebox[\textwidth][c]{\includegraphics[width=#1\textwidth]{#2}}\caption{#3}\label{fig:#4}\end{figure}}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\frontmatter
+
+\begin{minipage}{.3\textwidth}
+  \flushleft
+  \center{\includegraphics[scale=.09]{imagenes/unam.pdf}}
+
+  \vspace{20pt}
+
+  \center{
+    \rule{.5pt}{.6\textheight}
+    \hspace{7pt}
+    \rule{2pt}{.6\textheight}
+    \hspace{7pt}
+    \rule{.5pt}{.6\textheight}
+  } \\
+
+  \center{\includegraphics[scale=.22]{imagenes/ciencias.pdf}}
+\end{minipage}
+\begin{minipage}{.7\textwidth}
+\flushright
+
+\center{
+
+  \center{
+    \LARGE{U}\large{NIVERSIDAD} \LARGE{N}\large{ACIONAL} 
+    \LARGE{A}\large{UTÓNOMA} \\[10pt]
+    \large{DE} 
+    \LARGE{M}\large{ÉXICO} 
+  } \\
+  \rule{\textwidth}{2pt}
+  \\
+  \hrulefill\\[1cm]
+  
+  \LARGE{F}\large{ACULTAD DE } \LARGE{C}\large{IENCIAS}\\[2cm]
+
+  \large{
+Diseño e implementación del sistema PEAT (Progressive Energy Audit Tool)  }\\[2cm]
+
+  \huge{
+REPORTE DE TRABAJO PROFESIONAL  }\\[1cm]
+
+  \large{QUE PARA OBTENER EL TÍTULO DE:}\\[1cm]
+
+  \large{
+Licenciado en Ciencias de la Computación  }\\[1cm]
+
+  \large{PRESENTA:}\\[0.5cm]
+
+  \large{
+Héctor Enrique Gómez Morales  }\\[1cm]
+
+  \large{
+TUTORA  }\\[0.5cm]
+
+  \large{
+M. en I. Karla Ramírez Pulido  }\\[0.5cm]
+
+  \large{
+    2016  }\\
+}
+
+\end{minipage}
+
+\null\newpage
+\null\newpage
+\noindent
+\textbf{Hoja de Datos del Jurado}\\
+
+\noindent
+1. Datos del alumno\\
+Gómez\\
+Morales\\
+Héctor Enrique\\
+5518505001\\
+Universidad Nacional Autónoma de México\\
+Facultad de Ciencias\\
+Ciencias de la Computación\\
+401048742\\
+
+\noindent
+2. Datos del tutor\\
+M en I\\
+Karla\\
+Ramírez\\
+Pulido\\
+
+\noindent
+3. Datos del sinodal 1\\
+Dra\\
+María de Luz\\
+Gasca\\
+Soto\\
+
+\noindent
+4. Datos del sinodal 2\\
+Dr\\
+Daniel\\
+Trejo\\
+Medina\\
+
+\noindent
+5. Datos del sinodal 3\\
+Dr\\
+Jorge Luis\\
+Ortega\\
+Arjona\\
+
+\noindent
+6. Datos del sinodal 4\\
+Act\\
+Carlos Ernesto\\
+López\\
+Natarén\\
+
+\noindent
+7. Datos del trabajo escrito\\
+Diseño e implementación del sistema PEAT (Progressive Energy Audit Tool)\\
+100 p\\
+2016\\
+
+
+\chapter*{Agradecimientos}
+\markboth{AGRADECIMIENTOS}{AGRADECIMIENTOS} % encabezado
+
+Agradezco el inagotable amor y apoyo de mis padres, sin ellos este trabajo
+nunca hubiera sido posible.
+
+A mis hermanos Javier y Lilian que durante muchos años fueron mis segundos padres
+y de los cuales he aprendido tanto.
+
+A mi tutora Karla Ramírez Pulido le tengo un eterno agradecimiento por la constante
+ayuda y asesoría dada no solamente para la elaboración de este reporte si no durante
+mi paso por la facultad. También agradezco la oportunidad de haber sido su ayudante
+en uno de mis cursos favoritos que es Lenguajes de Programación.
+
+Agradezco a mis sinodales Dr. Maria de Luz Gasca Soto, Dr. Daniel Trejo Medina, Dr
+Jorge Luis Ortega Arjona y al Act. Carlos Ernesto López Natarén por los comentarios
+realizados ya que éstos enriquecieron mi trabajo.
+
+A mis amigos David García Gudiño, Víctor Hugo Ortiz Hernández, Pavel David Sulca
+Cavero y María Margarita López Titla por su apoyo y amistad que ha resistido el
+tiempo y distancia.
+
+También agradezco la amistad y apoyo de mis colegas Juan Germán Castañeda Echevarría,
+Jesús Alejandro Juárez Robles y César Octavio López Natarén por su gran pasion y
+profesionalismo por nuestra profesión que ha sido una gran inspiración para mi.
+
+Agradezco a la Facultad de Ciencias y a la Universidad Nacional Autónoma de México
+por darme acceso a tan excelentes profesores que me han formado.
+
+\tableofcontents
+
+\mainmatter
+
+\include{intro}
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{bezel}
+\include{chapter4}
+
+\backmatter
+
+\include{conclusions}
+
+\printbibliography
+
+\end{document}

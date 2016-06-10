@@ -1,0 +1,54 @@
+\chapter{Conclusiones}
+
+En este documento se expuso el diseño e implementación del sistema \texttt{PEAT} que
+permite a sus usuarios el identificar y monitorear su consumo energético. En C3
+Energy se tienen varios sistemas en producción haciendo uso de lenguajes de
+programación como Java y Javascript y herramientas como Rhino y Ext JS.
+
+En la implementación de \texttt{PEAT} se presentaron nuevas retos como la necesidad
+de una interfaz simple y de rápida respuesta a las acciones del usuario y
+dar servicio a un número considerable de usuarios.
+Estos requerimientos no se podían solucionar de forma óptima haciendo uso de los
+lenguajes y herramientas usadas hasta ese momento. Es por eso que al iniciar
+la implementación del sistema \texttt{PEAT} se eligió tener un ambiente de
+desarrollo multi-lenguaje en el cual se hace uso de un lenguaje de programación
+o herramienta en los contextos en que éstos dan la mayor ventaja. Un ambiente
+multi-lenguaje trae consigo sus propios retos como la integración con sistemas ya
+existentes y el despliegue exitoso de los sistemas a producción.
+
+Haciendo uso de las capacidades de metaprogramación del lenguaje de programación
+Ruby y de la creación de un lenguaje de dominio específico en la biblioteca
+\texttt{Bezel} se facilitó la implementación de los modelos necesarios para
+el funcionamiento del sistema de forma eficiente y con la flexibilidad necesaria
+para lograr la integración del sistema \texttt{PEAT} con los subsistemas ya
+existentes, permitiendo al programador definir modelos y sus asociaciones con
+pocas líneas de código.
+
+El uso de lenguajes de dominio específico fue el aspecto más sobresaliente
+para el desarrollo exitoso del sistema \texttt{PEAT} por su ayuda en la
+integración con los subsistemas ya existentes y en la automatización de la
+configuración y despliegue del sistema.
+
+El uso del despliegue continuo y de pruebas con usuarios finales fueron vitales para
+que el sistema cumpliera con su objetivo de dar la mayor utilidad posible
+a los usuarios PyMES sobre su consumo energético. La retroalimentación continúa
+obtenida por los ambientes de prueba permitió detectar deficiencias tanto en el
+\texttt{backend} como en la interfaz del usuario, siendo la principal deficiencia
+detectada la dificultad de ingreso de la información inicial para crear un perfil
+de un edificio. Gracias a esta retroalimentación se pudo obtener una interfaz
+mas intuitiva para el usuario sin afectar el tiempo de entrega.
+
+También por medio del despliegue continuo se logró tener un lanzamiento a la etapa
+de producción sin problemas, dado el que con anterioridad se realizaron varios
+despliegues en ambientes de prueba los cuales eran idénticos al ambiente de
+producción.
+
+\pagebreak
+
+El sistema \texttt{PEAT} fue recibido muy bien por los usuarios y el cliente PG\&E
+ya que desde hace cuatro años se encuentra en funcionamiento dando servicio a cerca
+de 250,000 usuarios PyMES a la fecha\cite{30_pge_annual_report}. Su éxito provocó que
+el sistema fuera también adoptado por otras compañías proveedoras de electricidad y
+gas como San Diego Gas \& Electric\cite{32_reuters_c3} y Southern California Edison,
+que prácticamente abarca el estado de California en los Estados Unidos de
+América\cite{31_energy_map}.
